@@ -228,20 +228,6 @@ if (!isset($flag_disable_right) || !$flag_disable_right) {
   }
 ?>
 <!--eof- parse time display -->
-<!--bof- banner #6 display -->
-<?php
-  if (SHOW_BANNERS_GROUP_SET6 != '' && $banner = zen_banner_exists('dynamic', SHOW_BANNERS_GROUP_SET6)) {
-    if ($banner->RecordCount() > 0) {
-?>
-<div id="bannerSix" class="banners"><?php echo zen_display_banner('static', $banner); ?></div>
-<?php
-    }
-  }
-?>
-<!--eof- banner #6 display -->
-
-
-
 
  <?php
 if  ($detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
