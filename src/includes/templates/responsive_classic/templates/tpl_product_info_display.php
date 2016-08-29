@@ -41,34 +41,100 @@ require($template->get_template_dir('/tpl_modules_category_icon_display.php',DIR
 require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_products_next_previous.php'); ?>
 <?php } ?>
 <!--eof Prev/Next top position-->
+<style>
 
+ul.nostyle li {
+	list-style: none;
+}
+
+li.item img {
+	max-width: none!important;
+}
+
+.spacing-small {
+	margin-bottom: 10px!important;
+}
+
+.thumbnail {
+	line-height: 100%;
+	height: 40px;
+	display: inline-block;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #a2a6ac;
+	border-radius: 2px;;
+	cursor: pointer;
+}
+
+.thumbnail:hover {
+	box-shadow: 0 0 3px 2px rgba(228,121,17,.5);
+}
+
+.button-selected {
+	border-color: #e77600;
+}
+
+
+</style>
 <div id="prod-info-top">
-<!--bof Product Name-->
-<h1 id="productName" class="productGeneral"><?php echo $products_name; ?></h1>
-<!--eof Product Name-->
+	<div style="width: 100%">
+		<div style="width: 48.5%; float:left;">
+		<div style="padding-left:32px;">
+			<div style="float:left; width:40px; margin-left: -45px">
+				 <ul class="nostyle" style="margin: 0; margin-top: 4px; padding:0">
+					<li class="thumbnail item spacing-small">
+						<img src="/images/II/2016/08/1/1_40.jpg" data-img="/images/II/2016/08/1/1_450.jpg" />
+					</li>
+					<li class="thumbnail item spacing-small">
+						<img src="/images/II/2016/08/1/2_40.jpg" data-img="/images/II/2016/08/1/2_450.jpg" />
+					</li>
+					<li class="thumbnail item spacing-small">
+						<img src="/images/II/2016/08/1/3_40.jpg" data-img="/images/II/2016/08/1/3_450.jpg" />
+					</li>
+					<li class="thumbnail item spacing-small">
+						<img src="/images/II/2016/08/1/4_40.jpg" data-img="/images/II/2016/08/1/4_450.jpg" />
+					</li>
+					<li class="thumbnail item spacing-small">
+						<img src="/images/II/2016/08/1/5_40.jpg" data-img="/images/II/2016/08/1/5_450.jpg" />
+					</li>
+					<li class="thumbnail item spacing-small">
+						<img src="/images/II/2016/08/1/6_40.jpg" data-img="/images/II/2016/08/1/6_450.jpg" />
+					</li>
+				</ul>
+			</div>
+			<div style="float:left;">
+				<img id="zoomimg" src="/images/II/2016/08/1/1_450.jpg" style="max-width: 442px; max-height:442px;" />
+			</div>
+		</div>
+
+		</div>
+		<div style="margin-left: 50%;">
+			<div style="width: 100%">
+			<h1 id="productName" class="productGeneral"><?php echo $products_name; ?></h1>
+			<hr style="width: 100%">
+			</div>
+		</div>
+		<div style="clear: both"></div>
+	</div>
+<script>
+$('.thumbnail').each(function(i,o){
+	var lilength = $('.thumbnail').length;
+	$(o).hover(function(){
+		$(o).siblings().removeClass('button-selected');
+		$(o).addClass('button-selected');
+		$('#zoomimg').attr('src', $(o).find('img').attr('data-img'));
+		$('#zoomimg').attr('jqimg', $(o).find('img').attr('data-big'));
+	});
+})
+</script>
+
 
 <div id="pinfo-left" class="group">
-<!--bof Main Product Image -->
 <?php
   if (zen_not_null($products_image)) {
-  ?>
-<?php
-/**
- * display the main product image
- */
-   require($template->get_template_dir('/tpl_modules_main_product_image.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_main_product_image.php'); ?>
-<?php
+   require($template->get_template_dir('/tpl_modules_main_product_image.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_main_product_image.php'); 
   }
 ?>
-<!--eof Main Product Image-->
-
-<!--bof Additional Product Images -->
-<?php
-/**
- * display the products additional images
- */
-  require($template->get_template_dir('/tpl_modules_additional_images.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_additional_images.php'); ?>
-<!--eof Additional Product Images -->
 </div>
 
 <div id="pinfo-right" class="group grids">
