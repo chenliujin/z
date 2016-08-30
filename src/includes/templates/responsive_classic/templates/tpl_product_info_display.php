@@ -78,7 +78,7 @@ li.item img {
 </style>
 <div id="prod-info-top">
 	<div style="width: 100%">
-		<div style="width: 48.5%; float:left;">
+		<div style="width: 43%; float:left;">
 		<div style="padding-left:32px;">
 			<div style="float:left; width:40px; margin-left: -45px">
 				 <ul class="nostyle" style="margin: 0; margin-top: 4px; padding:0">
@@ -108,11 +108,9 @@ li.item img {
 		</div>
 
 		</div>
-		<div style="margin-left: 50%;">
-			<div style="width: 100%">
+		<div style="margin-left: 43%;">
 			<h1 id="productName" class="productGeneral"><?php echo $products_name; ?></h1>
-			<hr style="width: 100%">
-			</div>
+			<hr>
 		</div>
 		<div style="clear: both"></div>
 	</div>
