@@ -59,32 +59,15 @@ class shipping extends base {
 				}
 				$this->enabled = TRUE;
 				$this->notify('NOTIFY_SHIPPING_MODULE_ENABLE', $include_modules[$i]['class'], $include_modules[$i]['class']);
-				if ($this->enabled)
-				{
+
+				if ($this->enabled) {
 					include_once($module_file);
 					$GLOBALS[$include_modules[$i]['class']] = new $include_modules[$i]['class'];
-
-					$enabled = $this->check_enabled($GLOBALS[$include_modules[$i]['class']]);
-					if ($enabled == FALSE ) unset($GLOBALS[$include_modules[$i]['class']]);
 				}
 			}
 		}
 	}
-	function check_enabled($class)
-	{
-		$enabled = $class->enabled;
-		if (method_exists($class, 'check_enabled_for_zone') && $class->enabled)
-		{
-			$enabled = $class->check_enabled_for_zone();
-		}
-		$this->notify('NOTIFY_SHIPPING_CHECK_ENABLED_FOR_ZONE', array(), $class, $enabled);
-		if (method_exists($class, 'check_enabled') && $enabled)
-		{
-			$enabled = $class->check_enabled();
-		}
-		$this->notify('NOTIFY_SHIPPING_CHECK_ENABLED', array(), $class, $enabled);
-		return $enabled;
-	}
+
 	function calculate_boxes_weight_and_tare() {
 		global $total_weight, $shipping_weight, $shipping_quoted, $shipping_num_boxes;
 
