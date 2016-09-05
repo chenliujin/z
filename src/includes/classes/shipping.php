@@ -97,45 +97,7 @@ class shipping extends base {
 			$shipping_num_boxes = 1;
 			$shipping_weight = $total_weight;
 
-			$za_tare_array = preg_split("/[:,]/" , str_replace(' ', '', SHIPPING_BOX_WEIGHT));
-			$zc_tare_percent= $za_tare_array[0];
-			$zc_tare_weight= $za_tare_array[1];
-
-			$za_large_array = preg_split("/[:,]/" , str_replace(' ', '', SHIPPING_BOX_PADDING));
-			$zc_large_percent= $za_large_array[0];
-			$zc_large_weight= $za_large_array[1];
-
-			// SHIPPING_BOX_WEIGHT = tare
-			// SHIPPING_BOX_PADDING = Large Box % increase
-			// SHIPPING_MAX_WEIGHT = Largest package
-
-	  /*
-	  if (SHIPPING_BOX_WEIGHT >= $shipping_weight*SHIPPING_BOX_PADDING/100) {
-		$shipping_weight = $shipping_weight+SHIPPING_BOX_WEIGHT;
-	  } else {
-		$shipping_weight = $shipping_weight + ($shipping_weight*SHIPPING_BOX_PADDING/100);
-	  }
-	   */
-
-			switch (true) {
-				// large box add padding
-			case(SHIPPING_MAX_WEIGHT <= $shipping_weight):
-				$shipping_weight = $shipping_weight + ($shipping_weight*($zc_large_percent/100)) + $zc_large_weight;
-				break;
-			default:
-				// add tare weight < large
-				$shipping_weight = $shipping_weight + ($shipping_weight*($zc_tare_percent/100)) + $zc_tare_weight;
-				break;
-			}
-
-			// total weight with Tare
 			$_SESSION['shipping_weight'] = $shipping_weight;
-			if ($shipping_weight > SHIPPING_MAX_WEIGHT) { // Split into many boxes
-				//        $shipping_num_boxes = ceil($shipping_weight/SHIPPING_MAX_WEIGHT);
-				$zc_boxes = zen_round(($shipping_weight/SHIPPING_MAX_WEIGHT), 2);
-				$shipping_num_boxes = ceil($zc_boxes);
-				$shipping_weight = $shipping_weight/$shipping_num_boxes;
-			}
 		}
 		$this->notify('NOTIFY_SHIPPING_MODULE_CALCULATE_BOXES_AND_TARE', array(), $total_weight, $shipping_weight, $shipping_quoted, $shipping_num_boxes);
 	}
