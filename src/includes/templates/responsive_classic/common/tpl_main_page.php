@@ -181,30 +181,6 @@ if (!isset($flag_disable_left) || !$flag_disable_left) {
   }
 ?>
   </div>
-
-
-<?php
-//if (COLUMN_RIGHT_STATUS == 0 || (CUSTOMERS_APPROVAL == '1' and $_SESSION['customer_id'] == '') || (CUSTOMERS_APPROVAL_AUTHORIZATION == 1 && CUSTOMERS_AUTHORIZATION_COLUMN_RIGHT_OFF == 'true' && $_SESSION['customers_authorization'] != 0)) {
-if (COLUMN_RIGHT_STATUS == 0 || (CUSTOMERS_APPROVAL == '1' and $_SESSION['customer_id'] == '') || (CUSTOMERS_APPROVAL_AUTHORIZATION == 1 && CUSTOMERS_AUTHORIZATION_COLUMN_RIGHT_OFF == 'true' and ($_SESSION['customers_authorization'] != 0 or $_SESSION['customer_id'] == ''))) {
-  // global disable of column_right
-  $flag_disable_right = true;
-}
-if (!isset($flag_disable_right) || !$flag_disable_right) {
-?>
-  <div class="<?php echo $box_width_right_new; ?>">
-<?php
- /**
-  * prepares and displays right column sideboxes
-  *
-  */
- require(DIR_WS_MODULES . zen_get_module_directory('column_right.php'));
-?>
-  </div>
-
-<?php
-}
-?>
-
 </div>
 
 <?php
