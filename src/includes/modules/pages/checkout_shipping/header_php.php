@@ -144,26 +144,20 @@ if ( isset($_POST['action']) && ($_POST['action'] == 'process') ) {
 	$comments = $_SESSION['comments'];
 	$quote = array();
 
-	if ( (zen_count_shipping_modules() > 0) || ($free_shipping == true) ) {
+	if ( zen_count_shipping_modules() > 0 ) {
 		if ( (isset($_POST['shipping'])) && (strpos($_POST['shipping'], '_')) ) {
-			/**
-			 * check to be sure submitted data hasn't been tampered with
-			 */
-			if ($_POST['shipping'] == 'free_free' && ($order->content_type != 'virtual' && !$pass)) {
-				$quote['error'] = 'Invalid input. Please make another selection.';
-			}
 			list($module, $method) = explode('_', $_POST['shipping']);
 
 			$quote = $shipping_modules->quote($method, $module);
 
-			if (empty($quote) || isset($quote[0]['error'])) {
+			if ( empty($quote) ) {
 				unset($_SESSION['shipping']);
 			} else {
 				if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) {
 					$_SESSION['shipping'] = array(
-						'id' => $_POST['shipping'],
-						'title' => (($free_shipping == true) ?  $quote[0]['methods'][0]['title'] : $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')'),
-						'cost' => $quote[0]['methods'][0]['cost']
+						'id'	=> $_POST['shipping'],
+						'title'	=> $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')',
+						'cost'	=> $quote[0]['methods'][0]['cost']
 					);
 
 					zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
@@ -202,7 +196,12 @@ if (isset($_SESSION['shipping'])) {
 // If the module's status was changed when none were available, to save on implementing
 // a javascript force-selection method, also automatically select the cheapest shipping
 // method if more than one module is now enabled
-if ((!isset($_SESSION['shipping']) || (!isset($_SESSION['shipping']['id']) || $_SESSION['shipping']['id'] == '') && zen_count_shipping_modules() >= 1)) $_SESSION['shipping'] = $shipping_modules->cheapest();
+if (
+	(
+		!isset($_SESSION['shipping']) || 
+		(!isset($_SESSION['shipping']['id']) || $_SESSION['shipping']['id'] == '') && zen_count_shipping_modules() >= 1
+	)
+) $_SESSION['shipping'] = $shipping_modules->cheapest();
 
 // Should address-edit button be offered?
 $displayAddressEdit = (MAX_ADDRESS_BOOK_ENTRIES >= 2);
