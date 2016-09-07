@@ -74,9 +74,12 @@ class shipping extends base {
 		}
 	}
 
-	function quote($method = '', $module = '') {
-		global $total_weight;
-
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-08
+	 */
+	public function quote($method = '', $module = '') 
+	{
 		$quotes_array = array();
 
 		$params = ['status' => 1];
