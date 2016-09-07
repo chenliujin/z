@@ -153,29 +153,21 @@ if ( isset($_POST['action']) && ($_POST['action'] == 'process') ) {
 				$quote['error'] = 'Invalid input. Please make another selection.';
 			}
 			list($module, $method) = explode('_', $_POST['shipping']);
-			if ( is_object($$module) || ($_POST['shipping'] == 'free_free') ) {
-				if ($_POST['shipping'] == 'free_free') {
-					$quote[0]['methods'][0]['title'] = FREE_SHIPPING_TITLE;
-					$quote[0]['methods'][0]['cost'] = '0';
-					$quote[0]['methods'][0]['icon'] = '';
-				} else {
-					$quote = $shipping_modules->quote($method, $module);
-				}
-				if (isset($quote[0]['error'])) {
-					unset($_SESSION['shipping']);
-				} else {
-					if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) {
-						$_SESSION['shipping'] = array(
-							'id' => $_POST['shipping'],
-							'title' => (($free_shipping == true) ?  $quote[0]['methods'][0]['title'] : $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')'),
-							'cost' => $quote[0]['methods'][0]['cost']
-						);
 
-						zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
-					}
-				}
-			} else {
+			$quote = $shipping_modules->quote($method, $module);
+
+			if (empty($quote) || isset($quote[0]['error'])) {
 				unset($_SESSION['shipping']);
+			} else {
+				if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) {
+					$_SESSION['shipping'] = array(
+						'id' => $_POST['shipping'],
+						'title' => (($free_shipping == true) ?  $quote[0]['methods'][0]['title'] : $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')'),
+						'cost' => $quote[0]['methods'][0]['cost']
+					);
+
+					zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
+				}
 			}
 		}
 	} else {
