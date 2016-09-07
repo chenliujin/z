@@ -37,7 +37,10 @@ class shipping extends base {
 				reset($this->modules);
 				while (list(, $value) = each($this->modules)) {
 					$class = substr($value, 0, strrpos($value, '.'));
-					$include_modules[] = array('class' => $class, 'file' => $value);
+					$include_modules[] = array(
+						'class' => $class, 
+						'file' => $value
+					);
 				}
 			}
 
@@ -59,43 +62,25 @@ class shipping extends base {
 						$messageStack->add_session(WARNING_COULD_NOT_LOCATE_LANG_FILE . $lang_file, 'caution');
 					}
 				}
-				$this->enabled = TRUE;
-				$this->notify('NOTIFY_SHIPPING_MODULE_ENABLE', $include_modules[$i]['class'], $include_modules[$i]['class']);
 
-				if ($this->enabled) {
-					include_once($module_file);
-					$GLOBALS[$include_modules[$i]['class']] = new $include_modules[$i]['class'];
-				}
+				$this->enabled = TRUE;
+
+				include_once($module_file);
+				$GLOBALS[$include_modules[$i]['class']] = new $include_modules[$i]['class'];
 			}
 		}
 	}
 
-	function calculate_boxes_weight_and_tare() {
-		global $total_weight, $shipping_weight, $shipping_quoted, $shipping_num_boxes;
-
-		$this->abort_legacy_calculations = FALSE;
-		$this->notify('NOTIFY_SHIPPING_MODULE_PRE_CALCULATE_BOXES_AND_TARE', array(), $total_weight, $shipping_weight, $shipping_quoted, $shipping_num_boxes);
-		if ($this->abort_legacy_calculations) return;
+	function quote($method = '', $module = '', $calc_boxes_weight_tare = true, $insurance_exclusions = array()) {
+		global $total_weight, $shipping_weight, $uninsurable_value, $shipping_quoted, $shipping_num_boxes;
+		$quotes_array = array();
 
 		if (is_array($this->modules)) {
 			$shipping_quoted = '';
 			$shipping_num_boxes = 1;
 			$shipping_weight = $total_weight;
-
 			$_SESSION['shipping_weight'] = $shipping_weight;
-		}
-		$this->notify('NOTIFY_SHIPPING_MODULE_CALCULATE_BOXES_AND_TARE', array(), $total_weight, $shipping_weight, $shipping_quoted, $shipping_num_boxes);
-	}
 
-	function quote($method = '', $module = '', $calc_boxes_weight_tare = true, $insurance_exclusions = array()) {
-		global $shipping_weight, $uninsurable_value;
-		$quotes_array = array();
-
-		if ($calc_boxes_weight_tare) $this->calculate_boxes_weight_and_tare();
-		// calculate amount not to be insured on shipping
-		$uninsurable_value = (method_exists($this, 'get_uninsurable_value')) ? $this->get_uninsurable_value($insurance_exclusions) : 0;
-
-		if (is_array($this->modules)) {
 			$include_quotes = array();
 
 			reset($this->modules);
@@ -112,15 +97,18 @@ class shipping extends base {
 
 			$size = sizeof($include_quotes);
 			for ($i=0; $i<$size; $i++) {
-				if (method_exists($GLOBALS[$include_quotes[$i]], 'update_status')) $GLOBALS[$include_quotes[$i]]->update_status();
 				if (FALSE == $GLOBALS[$include_quotes[$i]]->enabled) continue;
+
 				$save_shipping_weight = $shipping_weight;
 				$quotes = $GLOBALS[$include_quotes[$i]]->quote($method);
 				$shipping_weight = $save_shipping_weight;
+
 				if (is_array($quotes)) $quotes_array[] = $quotes;
 			}
 		}
+
 		$this->notify('NOTIFY_SHIPPING_MODULE_GET_ALL_QUOTES', $quotes_array, $quotes_array);
+
 		return $quotes_array;
 	}
 
