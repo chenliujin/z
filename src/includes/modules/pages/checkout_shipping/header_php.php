@@ -144,30 +144,26 @@ if ( isset($_POST['action']) && ($_POST['action'] == 'process') ) {
 	$comments = $_SESSION['comments'];
 	$quote = array();
 
-	if ( zen_count_shipping_modules() > 0 ) {
-		if ( (isset($_POST['shipping'])) && (strpos($_POST['shipping'], '_')) ) {
-			list($module, $method) = explode('_', $_POST['shipping']);
+	if ( (isset($_POST['shipping'])) && (strpos($_POST['shipping'], '_')) ) {
+		list($module, $method) = explode('_', $_POST['shipping']);
 
-			$quote = $shipping_modules->quote($method, $module);
+		$quote = $shipping_modules->quote($method, $module);
 
-			if ( empty($quote) ) {
-				unset($_SESSION['shipping']);
-			} else {
-				if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) {
-					$_SESSION['shipping'] = array(
-						'id'	=> $_POST['shipping'],
-						'title'	=> $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')',
-						'cost'	=> $quote[0]['methods'][0]['cost']
-					);
+		if ( empty($quote) ) {
+			unset($_SESSION['shipping']);
 
-					zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
-				}
+			zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
+		} else {
+			if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) {
+				$_SESSION['shipping'] = array(
+					'id'	=> $_POST['shipping'],
+					'title'	=> $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')',
+					'cost'	=> $quote[0]['methods'][0]['cost']
+				);
+
+				zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
 			}
 		}
-	} else {
-		unset($_SESSION['shipping']);
-
-		zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
 	}
 }
 
