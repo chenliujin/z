@@ -107,8 +107,6 @@ class shipping extends base {
 			}
 		}
 
-		$this->notify('NOTIFY_SHIPPING_MODULE_GET_ALL_QUOTES', $quotes_array, $quotes_array);
-
 		return $quotes_array;
 	}
 
