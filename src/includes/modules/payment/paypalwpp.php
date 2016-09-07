@@ -2273,28 +2273,32 @@ if (false) { // disabled until clarification is received about coupons in PayPal
       }
     }
   }
+
   /**
+   * @author chenliujin <liujin.chen@qq.com>
+   * @since 2016-09-08
    * Determine the appropriate shipping method if applicable
    * By default, selects the lowest-cost quote
    */
-  function setShippingMethod() {
-    global $total_count, $total_weight;
-    // ensure that cart contents is calculated properly for weight and value
-    if (!isset($total_weight)) $total_weight = $_SESSION['cart']->show_weight();
-    if (!isset($total_count)) $total_count = $_SESSION['cart']->count_contents();
-    // set the shipping method if one is not already set
-    // defaults to the cheapest shipping method
-    if ((!isset($_SESSION['shipping']) || (!isset($_SESSION['shipping']['id']) || $_SESSION['shipping']['id'] == '') && zen_count_shipping_modules() >= 1)) {
-      require_once(DIR_WS_CLASSES . 'http_client.php');
-      require_once(DIR_WS_CLASSES . 'shipping.php');
-      $shipping_Obj = new shipping;
+  function setShippingMethod() 
+  {
+	  global $total_count, $total_weight;
+	  // ensure that cart contents is calculated properly for weight and value
+	  if (!isset($total_weight)) $total_weight = $_SESSION['cart']->show_weight();
+	  if (!isset($total_count)) $total_count = $_SESSION['cart']->count_contents();
+	  // set the shipping method if one is not already set
+	  // defaults to the cheapest shipping method
+	  if ( !isset($_SESSION['shipping']) || empty($_SESSION['shipping']['id']) ) {
+		  require_once(DIR_WS_CLASSES . 'http_client.php');
+		  require_once(DIR_WS_CLASSES . 'shipping.php');
+		  $shipping_Obj = new shipping;
 
-      // generate the quotes
-      $shipping_Obj->quote();
+		  // generate the quotes
+		  $shipping_Obj->quote();
 
-      // set the cheapest one
-      $_SESSION['shipping'] = $shipping_Obj->cheapest();
-    }
+		  // set the cheapest one
+		  $_SESSION['shipping'] = $shipping_Obj->cheapest();
+	  }
   }
   /**
    * Get Override Address (uses sendto if set, otherwise uses customer's primary address)
