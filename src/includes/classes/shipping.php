@@ -75,7 +75,7 @@ class shipping extends base {
 	}
 
 	function quote($method = '', $module = '') {
-		global $total_weight, $shipping_weight, $shipping_num_boxes;
+		global $total_weight;
 
 		$quotes_array = array();
 
