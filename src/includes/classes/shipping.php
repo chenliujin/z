@@ -11,6 +11,9 @@
 if (!defined('IS_ADMIN_FLAG')) {
 	die('Illegal Access');
 }
+
+include_once('z/model/transportation.php');
+include_once('z/model/transportation_zone.php');
 /**
  * shipping class
  * Class used for interfacing with shipping modules
@@ -71,15 +74,15 @@ class shipping extends base {
 		}
 	}
 
-	function quote($method = '', $module = '', $calc_boxes_weight_tare = true, $insurance_exclusions = array()) {
-		global $total_weight, $shipping_weight, $uninsurable_value, $shipping_quoted, $shipping_num_boxes;
+	function quote($method = '', $module = '') {
+		global $total_weight, $shipping_weight, $shipping_num_boxes;
+
 		$quotes_array = array();
 
+		/*
 		if (is_array($this->modules)) {
-			$shipping_quoted = '';
 			$shipping_num_boxes = 1;
 			$shipping_weight = $total_weight;
-			$_SESSION['shipping_weight'] = $shipping_weight;
 
 			$include_quotes = array();
 
@@ -97,13 +100,33 @@ class shipping extends base {
 
 			$size = sizeof($include_quotes);
 			for ($i=0; $i<$size; $i++) {
-				if (FALSE == $GLOBALS[$include_quotes[$i]]->enabled) continue;
-
 				$save_shipping_weight = $shipping_weight;
 				$quotes = $GLOBALS[$include_quotes[$i]]->quote($method);
 				$shipping_weight = $save_shipping_weight;
 
 				if (is_array($quotes)) $quotes_array[] = $quotes;
+			}
+		}
+
+		return $quotes_array;
+		 */
+
+
+
+		$params = ['status' => 1];
+
+		if ($module) $params['code'] = $module;
+
+		var_dump($module);
+
+		$transportation 		= new \z\transportation;
+		$transportation_list 	= $transportation->findAll($params);
+
+		foreach ($transportation_list as $transportation) {
+			try {
+				$quotes_array[] = $transportation->quote();
+			} catch (\Exception $e) {
+				error_log(var_export($e, TRUE));
 			}
 		}
 
