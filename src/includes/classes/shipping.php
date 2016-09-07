@@ -79,45 +79,9 @@ class shipping extends base {
 
 		$quotes_array = array();
 
-		/*
-		if (is_array($this->modules)) {
-			$shipping_num_boxes = 1;
-			$shipping_weight = $total_weight;
-
-			$include_quotes = array();
-
-			reset($this->modules);
-			while (list(, $value) = each($this->modules)) {
-				$class = substr($value, 0, strrpos($value, '.'));
-				if (zen_not_null($module)) {
-					if ( ($module == $class) && (isset($GLOBALS[$class]) && $GLOBALS[$class]->enabled) ) {
-						$include_quotes[] = $class;
-					}
-				} elseif (isset($GLOBALS[$class]) && $GLOBALS[$class]->enabled) {
-					$include_quotes[] = $class;
-				}
-			}
-
-			$size = sizeof($include_quotes);
-			for ($i=0; $i<$size; $i++) {
-				$save_shipping_weight = $shipping_weight;
-				$quotes = $GLOBALS[$include_quotes[$i]]->quote($method);
-				$shipping_weight = $save_shipping_weight;
-
-				if (is_array($quotes)) $quotes_array[] = $quotes;
-			}
-		}
-
-		return $quotes_array;
-		 */
-
-
-
 		$params = ['status' => 1];
 
 		if ($module) $params['code'] = $module;
-
-		var_dump($module);
 
 		$transportation 		= new \z\transportation;
 		$transportation_list 	= $transportation->findAll($params);
