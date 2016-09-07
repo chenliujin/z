@@ -165,9 +165,11 @@ if ( isset($_POST['action']) && ($_POST['action'] == 'process') ) {
 					unset($_SESSION['shipping']);
 				} else {
 					if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) {
-						$_SESSION['shipping'] = array('id' => $_POST['shipping'],
+						$_SESSION['shipping'] = array(
+							'id' => $_POST['shipping'],
 							'title' => (($free_shipping == true) ?  $quote[0]['methods'][0]['title'] : $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')'),
-							'cost' => $quote[0]['methods'][0]['cost']);
+							'cost' => $quote[0]['methods'][0]['cost']
+						);
 
 						zen_redirect(zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL'));
 					}
