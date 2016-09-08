@@ -22,25 +22,6 @@
 
 <?php if ($messageStack->size('product_info') > 0) echo $messageStack->output('product_info'); ?>
 
-<!--bof Category Icon -->
-<?php if ($module_show_categories != 0) {?>
-<?php
-/**
- * display the category icons
- */
-require($template->get_template_dir('/tpl_modules_category_icon_display.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_category_icon_display.php'); ?>
-<?php } ?>
-<!--eof Category Icon -->
-
-<!--bof Prev/Next top position -->
-<?php if (PRODUCT_INFO_PREVIOUS_NEXT == 1 or PRODUCT_INFO_PREVIOUS_NEXT == 3) { ?>
-<?php
-/**
- * display the product previous/next helper
- */
-require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_products_next_previous.php'); ?>
-<?php } ?>
-<!--eof Prev/Next top position-->
 <style>
 
 ul.nostyle li {
@@ -111,31 +92,7 @@ li.item img {
 		<div style="margin-left: 43%;">
 			<h1 id="productName" class="productGeneral"><?php echo $products_name; ?></h1>
 			<hr>
-		</div>
-		<div style="clear: both"></div>
-	</div>
-<script>
-$('.thumbnail').each(function(i,o){
-	var lilength = $('.thumbnail').length;
-	$(o).hover(function(){
-		$(o).siblings().removeClass('button-selected');
-		$(o).addClass('button-selected');
-		$('#zoomimg').attr('src', $(o).find('img').attr('data-img'));
-		$('#zoomimg').attr('jqimg', $(o).find('img').attr('data-big'));
-	});
-})
-</script>
-
-
-<div id="pinfo-left" class="group">
-<?php
-  if (zen_not_null($products_image)) {
-   require($template->get_template_dir('/tpl_modules_main_product_image.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_main_product_image.php'); 
-  }
-?>
-</div>
-
-<div id="pinfo-right" class="group grids">
+<div id="pinfo-right" class="group grids" style="width: 100%">
 <!--bof Product Price block -->
 <!--bof Product details list  -->
 <?php if ( (($flag_show_product_info_model == 1 and $products_model != '') or ($flag_show_product_info_weight == 1 and $products_weight !=0) or ($flag_show_product_info_quantity == 1) or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))) ) { ?>
@@ -157,7 +114,7 @@ $('.thumbnail').each(function(i,o){
 <!--eof free ship icon  -->
 </div>
 
-<div id="cart-box" class="grids">
+<div id="cart-box" class="grids" style="width: 100%; padding: 1em 0">
 <h2 id="productPrices" class="productGeneral">
 <?php
 // base price
@@ -228,7 +185,20 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 </div>
 
 
-
+		</div>
+		<div style="clear: both"></div>
+	</div>
+<script>
+$('.thumbnail').each(function(i,o){
+	var lilength = $('.thumbnail').length;
+	$(o).hover(function(){
+		$(o).siblings().removeClass('button-selected');
+		$(o).addClass('button-selected');
+		$('#zoomimg').attr('src', $(o).find('img').attr('data-img'));
+		$('#zoomimg').attr('jqimg', $(o).find('img').attr('data-big'));
+	});
+})
+</script>
 
 <!--bof Product description -->
 <?php if ($products_description != '') { ?>

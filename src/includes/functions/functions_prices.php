@@ -115,13 +115,20 @@
 // computes products_price + option groups lowest attributes price of each group when on
   function zen_get_products_base_price($products_id) {
     global $db;
-      $product_check = $db->Execute("select products_price, products_priced_by_attribute from " . TABLE_PRODUCTS . " where products_id = '" . (int)$products_id . "'");
+	$product_check = $db->Execute("
+		select products_price, products_priced_by_attribute 
+		from " . TABLE_PRODUCTS . " 
+		where products_id = '" . (int)$products_id . "'");
 
 // is there a products_price to add to attributes
       $products_price = $product_check->fields['products_price'];
 
       // do not select display only attributes and attributes_price_base_included is true
-      $product_att_query = $db->Execute("select options_id, price_prefix, options_values_price, attributes_display_only, attributes_price_base_included, round(concat(price_prefix, options_values_price), 5) as value from " . TABLE_PRODUCTS_ATTRIBUTES . " where products_id = '" . (int)$products_id . "' and attributes_display_only != '1' and attributes_price_base_included='1'". " order by options_id, value");
+	$product_att_query = $db->Execute("
+		select options_id, price_prefix, options_values_price, attributes_display_only, attributes_price_base_included, round(concat(price_prefix, options_values_price), 5) as value 
+		from " . TABLE_PRODUCTS_ATTRIBUTES . " 
+		where products_id = '" . (int)$products_id . "' and attributes_display_only != '1' and attributes_price_base_included='1'". " 
+		order by options_id, value");
 
       $the_options_id= 'x';
       $the_base_price= 0;
@@ -194,7 +201,10 @@
     }
 
     // $new_fields = ', product_is_free, product_is_call, product_is_showroom_only';
-    $product_check = $db->Execute("select products_tax_class_id, products_price, products_priced_by_attribute, product_is_free, product_is_call, products_type from " . TABLE_PRODUCTS . " where products_id = '" . (int)$products_id . "'" . " limit 1");
+	$product_check = $db->Execute("
+		select products_tax_class_id, products_price, products_priced_by_attribute, product_is_free, product_is_call, products_type 
+		from " . TABLE_PRODUCTS . " 
+		where products_id = '" . (int)$products_id . "'" . " limit 1");
 
     // no prices on Document General
     if ($product_check->fields['products_type'] == 3) {

@@ -640,11 +640,6 @@ if (!defined('IS_ADMIN_FLAG')) {
   }
 
 ////
-  function zen_count_shipping_modules() {
-    return zen_count_modules(MODULE_SHIPPING_INSTALLED);
-  }
-
-////
   function zen_array_to_string($array, $exclude = '', $equals = '=', $separator = '&') {
     if (!is_array($exclude)) $exclude = array();
     if (!is_array($array)) $array = array();
