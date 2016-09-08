@@ -17,9 +17,7 @@ define('TEXT_CHOOSE_SHIPPING_DESTINATION', 'Your order will be shipped to the ad
 define('TITLE_SHIPPING_ADDRESS', 'Shipping Information:');
 
 define('TABLE_HEADING_SHIPPING_METHOD', 'Shipping Method:');
-define('TEXT_CHOOSE_SHIPPING_METHOD', 'Please select the preferred shipping method to use on this order.');
 define('TITLE_PLEASE_SELECT', 'Please Select');
-define('TEXT_ENTER_SHIPPING_INFORMATION', 'This is currently the only shipping method available to use on this order.');
 define('TITLE_NO_SHIPPING_AVAILABLE', 'Not Available At This Time');
 define('TEXT_NO_SHIPPING_AVAILABLE','<span class="alert">Sorry, we are not shipping to your region at this time.</span><br />Please contact us for alternate arrangements.');
 

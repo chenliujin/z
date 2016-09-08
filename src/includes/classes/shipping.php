@@ -82,21 +82,17 @@ class shipping extends base
 					);
 				}
 			}
-
 		}
 
 		$cheapest = false;
 		$size = sizeof($rates);
 		for ($i=0; $i<$size; $i++) {
 			if (is_array($cheapest)) {
-				// never quote storepickup as lowest - needs to be configured in shipping module
-				if ($rates[$i]['cost'] < $cheapest['cost'] and $rates[$i]['module'] != 'storepickup') {
+				if ( $rates[$i]['cost'] < $cheapest['cost'] ) {
 					$cheapest = $rates[$i];
 				}
 			} else {
-				if ($rates[$i]['module'] != 'storepickup') {
-					$cheapest = $rates[$i];
-				}
+				$cheapest = $rates[$i];
 			}
 		}
 		$this->notify('NOTIFY_SHIPPING_MODULE_CALCULATE_CHEAPEST', $cheapest, $cheapest, $rates);

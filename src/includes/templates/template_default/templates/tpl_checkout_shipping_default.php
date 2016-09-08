@@ -32,80 +32,52 @@
 <br class="clearBoth" />
  
 <?php
-if ( !empty($quotes) ) { 
-	?>
- 
+if ( !empty($quotes) ) { ?>
 	<h2 id="checkoutShippingHeadingMethod"><?php echo TABLE_HEADING_SHIPPING_METHOD; ?></h2>
- 
+<style>
+table {
+	padding: 0 20px;
+}
+tr td {
+	padding: 20px 0;
+	border-bottom: 1px solid #e8e8e8;
+}
+</style>
+	<table>
+		<tr>
+			<th></th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
 	<?php
-	if (sizeof($quotes) > 1 && sizeof($quotes[0]) > 1) { 
-		?> 
-			<div id="checkoutShippingContentChoose" class="important"><?php echo TEXT_CHOOSE_SHIPPING_METHOD; ?></div> 
-		<?php
-	} elseif ($free_shipping == false) { 
-		?>
-			<div id="checkoutShippingContentChoose" class="important"><?php echo TEXT_ENTER_SHIPPING_INFORMATION; ?></div> 
-		<?php
-    }
-
-    if ($free_shipping == true) { ?>
-		<div id="freeShip" class="important" ><?php echo FREE_SHIPPING_TITLE; ?>&nbsp;<?php echo $quotes[$i]['icon']; ?></div>
-		<div id="defaultSelected"><?php echo sprintf(FREE_SHIPPING_DESCRIPTION, $currencies->format(MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING_OVER)) . zen_draw_hidden_field('shipping', 'free_free'); ?></div> <?php
-    } else {
-		$radio_buttons = 0;
-		for ($i=0, $n=sizeof($quotes); $i<$n; $i++) {
-			// bof: field set
-			// allows FedEx to work comment comment out Standard and Uncomment FedEx
-			//      if ($quotes[$i]['id'] != '' || $quotes[$i]['module'] != '') { // FedEx
-			if ($quotes[$i]['module'] != '') { // Standard
-				?>
-				<fieldset>
-				<legend><?php echo $quotes[$i]['module']; ?>&nbsp;<?php if (isset($quotes[$i]['icon']) && zen_not_null($quotes[$i]['icon'])) { echo $quotes[$i]['icon']; } ?></legend>
-				<?php
-				if (isset($quotes[$i]['error'])) { 
-					?>
-						<div><?php echo $quotes[$i]['error']; ?></div>
-					<?php
-				} else {
-					for ($j=0, $n2=sizeof($quotes[$i]['methods']); $j<$n2; $j++) {
-						// set the radio button to be checked if it is the method chosen
-						$checked = FALSE;
-						if (isset($_SESSION['shipping']) && isset($_SESSION['shipping']['id'])) {
-							$checked = ($quotes[$i]['id'] . '_' . $quotes[$i]['methods'][$j]['id'] == $_SESSION['shipping']['id']);
-						}
-						if ( ($checked == true) || ($n == 1 && $n2 == 1) ) {
-							//echo '      <div id="defaultSelected" class="moduleRowSelected">' . "\n";
-							//} else {
-							//echo '      <div class="moduleRow">' . "\n";
-						}
-
-						if ( ($n > 1) || ($n2 > 1) ) { ?>
-							<div class="important forward"><?php echo $currencies->format(zen_add_tax($quotes[$i]['methods'][$j]['cost'], (isset($quotes[$i]['tax']) ? $quotes[$i]['tax'] : 0))); ?></div> <?php 
-						} else { ?>
-						<div class="important forward"><?php echo $currencies->format(zen_add_tax($quotes[$i]['methods'][$j]['cost'], $quotes[$i]['tax'])) . zen_draw_hidden_field('shipping', $quotes[$i]['id'] . '_' . $quotes[$i]['methods'][$j]['id']); ?></div> <?php 
-						}
-
-						echo zen_draw_radio_field(
-							'shipping', 
-							$quotes[$i]['id'] . '_' . $quotes[$i]['methods'][$j]['id'], 
-							$checked, 
-							'id="ship-'.$quotes[$i]['id'] . '-' . str_replace(' ', '-', $quotes[$i]['methods'][$j]['id']) .'"'
-						); 
-						?>
-
-						<label for="ship-<?php echo $quotes[$i]['id'] . '-' . str_replace(' ', '-', $quotes[$i]['methods'][$j]['id']); ?>" class="checkboxLabel" ><?php echo $quotes[$i]['methods'][$j]['title']; ?></label>
-						<!--</div>-->
-						<br class="clearBoth" /> <?php
-						$radio_buttons++;
-					}
-				} ?> 
-				</fieldset> <?php
-			}
-			// eof: field set
+	foreach ($quotes as $quote) { 
+		$checked = FALSE;
+		if (isset($_SESSION['shipping']) && isset($_SESSION['shipping']['id'])) {
+			$checked = ($quote['id'] . '_' . $quote['methods'][0]['id'] == $_SESSION['shipping']['id']);
 		}
+
+
+		?>
+		<tr>
+		<td><?php
+		echo zen_draw_radio_field(
+			'shipping', 
+			$quote['id'] . '_' . $quote['methods'][0]['id'], 
+			$checked, 
+			'id="ship-'.$quote['id'] . '-' . str_replace(' ', '-', $quote['methods'][0]['id']) .'"'
+		); 
+?>
+			</td>
+			<td><label for="ship-<?php echo $quote['id'] . '-' . str_replace(' ', '-', $quote['methods'][0]['id']); ?>" class="checkboxLabel" ><img src="<?php echo $quote['icon']; ?>" width="100" /></label></td>
+			<td><label for="ship-<?php echo $quote['id'] . '-' . str_replace(' ', '-', $quote['methods'][0]['id']); ?>" class="checkboxLabel" ><?php echo $quote['module']; ?></label></td>
+			<td><div class="important forward"><?php echo $currencies->format(zen_add_tax($quote['methods'][0]['cost'], 0)); ?></div></td>
+		</tr>
+		<?php
 	}
-
-
+	?>
+	</table>
+<?php
 } else { ?>
 	<h2 id="checkoutShippingHeadingMethod"><?php echo TITLE_NO_SHIPPING_AVAILABLE; ?></h2>
 	<div id="checkoutShippingContentChoose" class="important"><?php echo TEXT_NO_SHIPPING_AVAILABLE; ?></div><?php
