@@ -1131,27 +1131,41 @@ if (false) { // disabled until clarification is received about coupons in PayPal
 	  }
 	}
   }
-  /**
-   * Set the currency code -- use defaults if active currency is not a currency accepted by PayPal
-   */
-  function selectCurrency($val = '', $subset = 'EC') {
-	$ec_currencies = array('CAD', 'EUR', 'GBP', 'JPY', 'USD', 'AUD', 'CHF', 'CZK', 'DKK', 'HKD', 'HUF', 'NOK', 'NZD', 'PLN', 'SEK', 'SGD', 'THB', 'MXN', 'ILS', 'PHP', 'TWD', 'BRL', 'MYR', 'TRY', 'RUB');
-	$dp_currencies = array('CAD', 'EUR', 'GBP', 'JPY', 'USD', 'AUD');
-	$paypalSupportedCurrencies = ($subset == 'EC') ? $ec_currencies : $dp_currencies;
 
-	// if using Pro 2.0 (UK), only the 6 currencies are supported.
-	$paypalSupportedCurrencies = (MODULE_PAYMENT_PAYPALWPP_MODULE_MODE == 'Payflow-UK') ? $dp_currencies : $paypalSupportedCurrencies;
+	/**
+	 * @modified chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-09
+	 * Set the currency code -- use defaults if active currency is not a currency accepted by PayPal
+	 */
+	public function selectCurrency($val = '', $subset = 'EC') 
+	{
+		$ec_currencies = [
+			'CAD', 'EUR', 'GBP', 'JPY', 'USD', 'AUD', 
+			'CHF', 'CZK', 'DKK', 'HKD', 'HUF', 'NOK', 
+			'NZD', 'PLN', 'SEK', 'SGD', 'THB', 'MXN', 
+			'ILS', 'PHP', 'TWD', 'BRL', 'MYR', 'TRY', 
+			'RUB'];
 
-	$my_currency = substr(MODULE_PAYMENT_PAYPALWPP_CURRENCY, 5);
-	if (MODULE_PAYMENT_PAYPALWPP_CURRENCY == 'Selected Currency') {
-	  $my_currency = ($val == '') ? $_SESSION['currency'] : $val;
+		$dp_currencies = ['CAD', 'EUR', 'GBP', 'JPY', 'USD', 'AUD'];
+
+		$paypalSupportedCurrencies = ($subset == 'EC') ? $ec_currencies : $dp_currencies;
+
+		// if using Pro 2.0 (UK), only the 6 currencies are supported.
+		$paypalSupportedCurrencies = (MODULE_PAYMENT_PAYPALWPP_MODULE_MODE == 'Payflow-UK') ? $dp_currencies : $paypalSupportedCurrencies;
+
+		$my_currency = substr(MODULE_PAYMENT_PAYPALWPP_CURRENCY, 5);
+
+		if (MODULE_PAYMENT_PAYPALWPP_CURRENCY == 'Selected Currency') {
+			$my_currency = ($val == '') ? $_SESSION['currency'] : $val;
+		}
+
+		if (!in_array($my_currency, $paypalSupportedCurrencies)) {
+			$my_currency = (MODULE_PAYMENT_PAYPALWPP_MODULE_MODE == 'Payflow-UK') ? 'GBP' : 'USD';
+		}
+
+		return $my_currency;
 	}
 
-	if (!in_array($my_currency, $paypalSupportedCurrencies)) {
-	  $my_currency = (MODULE_PAYMENT_PAYPALWPP_MODULE_MODE == 'Payflow-UK') ? 'GBP' : 'USD';
-	}
-	return $my_currency;
-  }
   /**
    * Calculate the amount based on acceptable currencies
    */
@@ -1206,7 +1220,8 @@ if (false) { // disabled until clarification is received about coupons in PayPal
   /**
    * Prepare subtotal and line-item detail content to send to PayPal
    */
-  function getLineItemDetails($restrictedCurrency) {
+  public function getLineItemDetails($restrictedCurrency)
+  {
 	  global $order, $currencies, $order_totals, $order_total_modules;
 
 	  // if not default currency, do not send subtotals or line-item details
