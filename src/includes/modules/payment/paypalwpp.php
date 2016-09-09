@@ -1623,8 +1623,11 @@ class paypalwpp extends base
 			. ($stDiffRounded + 0) 
 			. ')');
 
-		if ( $stDiffRounded != 0) {
+		if ( $stDiffRounded != 0 ) {
 			$this->zcLog('getLineItemDetails 9', 'Subtotals Bad. Skipping line-item/subtotal details');
+
+			throw new \Exception('Subtotal Bad');
+
 			return array();
 		}
 
