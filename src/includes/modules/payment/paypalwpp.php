@@ -1425,39 +1425,6 @@ if (false) { // disabled until clarification is received about coupons in PayPal
 	  }
 	}
 
-//    // Sanity check -- if tax-included pricing is causing problems, remove the numbers and put them in a comment instead:
-//    $stDiffTaxOnly = (strval($sumOfLineItems - $sumOfLineTax - round($optionsST['AMT'], 2)) + 0);
-//    $this->zcLog('tax sanity check', 'stDiffTaxOnly: ' . $stDiffTaxOnly . "\nsumOfLineItems: " . $sumOfLineItems . "\nsumOfLineTax: " . $sumOfLineTax . ' ' . $subTotalTax . ' ' . print_r(array_merge($optionsST, $optionsLI), true));
-//    if (DISPLAY_PRICE_WITH_TAX == 'true' && $stDiffTaxOnly == 0 && ($optionsST['TAXAMT'] != 0 && $sumOfLineTax != 0)) {
-//      $optionsNB['DESC'] = 'Tax included in prices: ' . $sumOfLineTax . ' (' . $optionsST['TAXAMT'] . ') ';
-//      $optionsST['TAXAMT'] = 0;
-//      for ($k=0, $n=$numberOfLineItemsProcessed+1; $k<$n; $k++) {
-//        if (isset($optionsLI["L_TAXAMT$k"])) unset($optionsLI["L_TAXAMT$k"]);
-//      }
-//    }
-
-//    // Do sanity check -- if any of the line-item subtotal math doesn't add up properly, skip line-item details,
-//    // so that the order can go through even though PayPal isn't being flexible to handle Zen Cart's diversity
-//    if ((strval($subTotalTax) - strval($sumOfLineTax)) > 0.02) {
-//      $this->zcLog('getLineItemDetails 3', 'Tax Subtotal does not match sum of taxes for line-items. Tax details are being removed from line-item submission data.' . "\n" . $sumOfLineTax . ' ' . $subTotalTax . print_r(array_merge($optionsST, $optionsLI), true));
-//      for ($k=0, $n=$numberOfLineItemsProcessed+1; $k<$n; $k++) {
-//        if (isset($optionsLI["L_TAXAMT$k"])) unset($optionsLI["L_TAXAMT$k"]);
-//      }
-//      $subTotalTax = 0;
-//      $sumOfLineTax = 0;
-//    }
-
-//    // If coupons exist and there's a calculation problem, then it's likely that taxes are incorrect, so reset L_TAXAMTn values
-//    if ($creditsApplied > 0 && (strval($optionsST['TAXAMT']) != strval($sumOfLineTax))) {
-//      $pre = $optionsLI;
-//      for ($k=0, $n=$numberOfLineItemsProcessed+1; $k<$n; $k++) {
-//        if (isset($optionsLI["L_TAXAMT$k"])) unset($optionsLI["L_TAXAMT$k"]);
-//      }
-//      $this->zcLog('getLineItemDetails 4', 'Coupons/Discounts have affected tax calculations, so tax details are being removed from line-item submission data.' . "\n" . $sumOfLineTax . ' ' . $optionsST['TAXAMT'] . "\n" . print_r(array_merge($optionsST, $pre, $optionsNB), true) . "\nAFTER:" . print_r(array_merge($optionsST, $optionsLI, $optionsNB), TRUE));
-//      $subTotalTax = 0;
-//      $sumOfLineTax = 0;
-//    }
-
 	// disable line-item tax details, leaving only TAXAMT subtotal as tax indicator
 	for ($k=0, $n=$numberOfLineItemsProcessed+1; $k<$n; $k++) {
 	  if (isset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"])) unset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"]);
