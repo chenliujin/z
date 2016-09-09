@@ -84,9 +84,11 @@
 
 
 
-       <td class="cartProductDisplay">
-
-<a href="<?php echo $product['linkProductsName']; ?>"><span class="cartImage back"><?php echo $product['productsImage']; ?></span><span class="cartProdTitle"><?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?></span></a>
+	   <td class="cartProductDisplay">
+			<a href="<?php echo $product['linkProductsName']; ?>">
+				<span class="cartImage back"><?php echo $product['productsImage']; ?></span>
+				<span class="text-bold size-medium"><?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?></span>
+			</a>
 <br class="clearBoth" />
 <?php
   echo $product['attributeHiddenField'];
@@ -125,8 +127,8 @@
   }  ?>
 
 
-       <td class="price cartUnitDisplay"><?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; } ?><?php echo $product['productsPriceEach']; ?></td>
-       <td class="price cartTotalDisplay"><?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {echo '<b class="hide">' . TABLE_HEADING_TOTAL . '&#58;&nbsp;&nbsp;</b>'; } ?><?php echo $product['productsPrice']; ?></td>
+       <td class="price size-medium text-bold  cartUnitDisplay"><?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; } ?><?php echo $product['productsPriceEach']; ?></td>
+       <td class="price size-medium text-bold cartTotalDisplay"><?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {echo '<b class="hide">' . TABLE_HEADING_TOTAL . '&#58;&nbsp;&nbsp;</b>'; } ?><?php echo $product['productsPrice']; ?></td>
        <td class="cartRemoveItemDisplay">
 <?php
   if ($product['buttonDelete']) {
@@ -146,9 +148,9 @@
        <!-- Finished loop through all products /-->
 </table>
 
-<div id="cartSubTotal">
+<div id="cartSubTotal" class="size-medium text-bold">
 	<?php echo SUB_TITLE_SUB_TOTAL; ?>
-	<span class="price"><?php echo $cartShowTotal; ?></span>
+	<span class="price size-medium text-bold"><?php echo $cartShowTotal; ?></span>
 </div>
 <br class="clearBoth" />
 

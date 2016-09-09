@@ -1,7 +1,7 @@
 /*bof font colors*/
 body, .messageStackSuccess, .messageStackCaution, #tagline, #productQuantityDiscounts table, .categoryListBoxContents a, h2.greeting a {color:#000000;}
 a:link, #navEZPagesTOC ul li a, a:hover, #navEZPagesTOC ul li a:hover, #navMain ul li a:hover, #navSupp ul li a:hover, .sideBoxContent a:visited, fieldset fieldset legend, #navBreadCrumb a:visited, #siteinfoLegal a, h3.rightBoxHeading a:hover, h3.leftBoxHeading a:hover, .cartTotalDisplay, .cartOldItem, .specialsListBoxContents, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, .list-price, .itemTitle a, h2.greeting, #icon, h1, .header .fa-bars {color:#05a5cb;}
-a:visited, .cat-count, .itemTitle a:hover, h2.greeting a:hover {color:#666;}
+.cat-count, .itemTitle a:hover, h2.greeting a:hover {color:#666;}
 a:active {color:#0000ff;}
 h2, h3, .cartAttribsList, #cart-box {color:#444;}
 .blue{color:#05a5cb !important;}

@@ -17,7 +17,7 @@ define('TABLE_HEADING_QUANTITY', 'Qty.');
 define('TABLE_HEADING_MODEL', 'Model');
 define('TABLE_HEADING_PRICE','Unit');
 define('TEXT_CART_EMPTY', 'Your Shopping Cart is empty.');
-define('SUB_TITLE_SUB_TOTAL', 'Sub-Total:');
+define('SUB_TITLE_SUB_TOTAL', 'Subtotal:');
 define('SUB_TITLE_TOTAL', 'Total:');
 
 define('OUT_OF_STOCK_CANT_CHECKOUT', 'Products marked with ' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . ' are out of stock or there are not enough in stock to fill your order.<br />Please change the quantity of products marked with (' . STOCK_MARK_PRODUCT_OUT_OF_STOCK . '). Thank you');

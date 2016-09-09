@@ -57,7 +57,7 @@
 <?php
     }
 ?>
-        <td class="accountTotalDisplay">
+        <td class="accountTotalDisplay price">
         <?php
          $ppe = zen_round(zen_add_tax($order->products[$i]['final_price'], $order->products[$i]['tax']), $currencies->get_decimal_places($order->info['currency']));
          $ppt = $ppe * $order->products[$i]['qty'];
@@ -74,8 +74,8 @@
 <?php
   for ($i=0, $n=sizeof($order->totals); $i<$n; $i++) {
 ?>
-     <div class="amount larger forward"><?php echo $order->totals[$i]['text'] ?></div>
-     <div class="lineTitle larger forward"><?php echo $order->totals[$i]['title'] ?></div>
+     <div class="amount forward price text-bold size-medium"><?php echo $order->totals[$i]['text'] ?></div>
+     <div class="lineTitle forward text-bold size-medium"><?php echo $order->totals[$i]['title'] ?></div>
 <br class="clearBoth" />
 <?php
   }

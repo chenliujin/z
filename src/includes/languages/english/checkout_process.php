@@ -30,7 +30,7 @@ define('EMAIL_TEXT_INVOICE_URL', 'Detailed Invoice:');
 define('EMAIL_TEXT_INVOICE_URL_CLICK', 'Click here for a Detailed Invoice');
 define('EMAIL_TEXT_DATE_ORDERED', 'Date Ordered:');
 define('EMAIL_TEXT_PRODUCTS', 'Products');
-define('EMAIL_TEXT_SUBTOTAL', 'Sub-Total:');
+define('EMAIL_TEXT_SUBTOTAL', 'Subtotal:');
 define('EMAIL_TEXT_TAX', 'Tax:        ');
 define('EMAIL_TEXT_SHIPPING', 'Shipping: ');
 define('EMAIL_TEXT_TOTAL', 'Total:    ');

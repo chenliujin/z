@@ -228,7 +228,7 @@ ul.list-links li:hover, ol.list-links li:hover{}
 #ezPageBoxList ul {list-style-type:none;}
 #ezPageBoxList li, .cartBoxTotal {margin:0;padding: 0.2em 0;}
 #cartBoxEmpty, #cartBoxVoucherBalance {font-weight:bold;}
-.totalBox {width:5.5em;text-align:right;padding:0.2em;}
+.totalBox {text-align:right;padding:0.2em;}
 .lineTitle, .amount {text-align:right;padding:0.2em;}
 .amount {width:5.5em;}
 #shoppingcartBody #shippingEstimatorContent {clear:both;}
@@ -238,7 +238,6 @@ ul.list-links li:hover, ol.list-links li:hover{}
 TR.tableHeading {}
 .rowOdd {height:1.5em;vertical-align:top;}
 .rowEven {height:1.5em;vertical-align:top;}
-.cartProdTitle{font-size:120%;}
 .cartProductDisplay a{text-decoration:none;}
 /*shipping estimator styles*/
 #shippingEstimatorContent h2{padding:20px 0;font-weight:normal;text-align:center;}
@@ -485,6 +484,22 @@ table{border:none;padding:0;margin:0; border-spacing:0;border-collapse:collapse;
 .tableBorder1 td {}
 
 
+a, a:active, a:link, a:visited {
+	text-decoration: none;
+	color: #0066c0;
+}
+
 .price {
 	color: #b12704!important;
+}
+
+.size-medium {
+	font-size: 17px!important;
+	line-height: 1.255!important;
+	font-family: Arial,sans-serif;
+	text-rendering: optimizeLegibility;
+}
+
+.text-bold {
+	font-weight: 700!important;
 }
