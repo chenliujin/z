@@ -1399,10 +1399,6 @@ if (false) { // disabled until clarification is received about coupons in PayPal
 		  $optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"] = substr($optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"], 0, 127);
 		}
 	  }
-
-//      if (isset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"]) && ($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"] != '' || $optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"] > 0)) {
-//        $optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"] = round($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"], 2);
-//      }
 	}
 
 	// Sanity Check of line-item subtotals
