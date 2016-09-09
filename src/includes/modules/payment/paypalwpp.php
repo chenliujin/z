@@ -1539,234 +1539,235 @@ if (false) { // disabled until clarification is received about coupons in PayPal
    * There, they will log in to their PayPal account, choose a funding source and shipping method
    * and then return to our store site with an EC token
    */
-  function ec_step1() {
-	global $order, $order_totals, $db, $doPayPal;
+  function ec_step1() 
+  {
+	  global $order, $order_totals, $db, $doPayPal;
 
-	// if cart is empty due to timeout on login or shopping cart page, go to timeout screen
-	if ($_SESSION['cart']->count_contents() == 0) {
-	  $message = 'Logging out due to empty shopping cart.  Is session started properly? ... ' . "\nSESSION Details:\n" . print_r($_SESSION, TRUE) . 'GET:' . "\n" . print_r($_GET, TRUE);
-	  include_once(DIR_WS_MODULES . 'payment/paypal/paypal_functions.php');
-	  ipn_debug_email($message);
-	  zen_redirect(zen_href_link(FILENAME_TIME_OUT, '', 'SSL'));
-	}
-
-	// init new order object
-	require(DIR_WS_CLASSES . 'order.php');
-	$order = new order;
-
-	// load the selected shipping module so that shipping taxes can be assessed
-	require(DIR_WS_CLASSES . 'shipping.php');
-	$shipping_modules = new shipping($_SESSION['shipping']);
-
-	// load OT modules so that discounts and taxes can be assessed
-	require(DIR_WS_CLASSES . 'order_total.php');
-	$order_total_modules = new order_total;
-	$order_totals = $order_total_modules->pre_confirmation_check();
-	$order_totals = $order_total_modules->process();
-
-	$doPayPal = $this->paypal_init();
-	$options = array();
-
-	// build line item details
-	$options = $this->getLineItemDetails($this->selectCurrency());
-
-	// Set currency and amount
-	$options['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->selectCurrency();
-	$order_amount = $this->calc_order_amount($order->info['total'], $options['PAYMENTREQUEST_0_CURRENCYCODE']);
-
-	// Determine the language to use when visiting the PP site
-	$lc_code = $this->getLanguageCode();
-	if ($lc_code != '') $options['LOCALECODE'] = $lc_code;
-
-	//Gift Options
-	$options['GIFTMESSAGEENABLE'] = 0;
-	$options['GIFTRECEIPTEENABLE'] = 0;
-	$options['GIFTWRAPENABLE'] = 0;
-	$options['GIFTWRAPNAME'] = '';
-	$options['GIFTWRAPAMOUNT'] = 0;
-
-	$options['BUYEREMAILOPTINENABLE'] = 0;
-
-	$options['CUSTOMERSERVICENUMBER'] = (defined('STORE_TELEPHONE_CUSTSERVICE') && STORE_TELEPHONE_CUSTSERVICE != '') ? substr(STORE_TELEPHONE_CUSTSERVICE, 0, 16) : '';
-
-	// Store Name to appear on PayPal page
-	$options['BRANDNAME'] = (defined('MODULE_PAYMENT_PAYPALWPP_BRANDNAME') && strlen(MODULE_PAYMENT_PAYPALWPP_BRANDNAME) > 3) ? substr(MODULE_PAYMENT_PAYPALWPP_BRANDNAME, 0, 127) : substr(STORE_NAME, 0, 127);
-
-	// Payment Transaction/Authorization Mode
-	$options['PAYMENTREQUEST_0_PAYMENTACTION'] = (MODULE_PAYMENT_PAYPALWPP_TRANSACTION_MODE == 'Auth Only') ? 'Authorization' : 'Sale';
-	// for future:
-	if (MODULE_PAYMENT_PAYPALWPP_TRANSACTION_MODE == 'Order') $options['PAYMENTREQUEST_0_PAYMENTACTION'] = 'Order';
-	// Allow delayed payments such as eCheck? (can only use InstantPayment if Action is Sale)
-	if (MODULE_PAYMENT_PAYPALWPP_TRANSACTION_MODE != 'Auth Only' && MODULE_PAYMENT_PAYPALWPP_TRANSACTION_MODE != 'Sale' && $options['PAYMENTACTION'] == 'Sale' && defined('MODULE_PAYMENT_PAYPALEC_ALLOWEDPAYMENT') && MODULE_PAYMENT_PAYPALEC_ALLOWEDPAYMENT == 'Instant Only') $options['PAYMENTREQUEST_0_ALLOWEDPAYMENTMETHOD'] = 'InstantPaymentOnly';
-
-	$options['ALLOWNOTE'] = 1;  // allow customer to enter a note on the PayPal site, which will be copied to order comments upon return to store.
-
-	$options['SOLUTIONTYPE'] = 'Sole';  // Use 'Mark' for normal Express Checkout (where customer has a PayPal account), 'Sole' for Account-Optional. But Account-Optional must be enabled in your PayPal account under Selling Preferences.
-
-	// PayPal has acknowledged that they have a bug which prevents Account-Optional from working in InContext mode, so we have to use 'Mark' for InContext to work as of Dec 2015:
-	if ($this->use_incontext_checkout && $options['SOLUTIONTYPE'] == 'Sole') $options['SOLUTIONTYPE'] = 'Mark';
-
-	$options['LANDINGPAGE'] = 'Billing';  // "Billing" or "Login" selects the style of landing page on PayPal site during checkout (ie: which "section" is expanded when arriving there)
-	//$options['USERSELECTEDFUNDINGSOURCE'] = 'Finance';  // 'Finance' is for PayPal BillMeLater.  Requires LANDINGPAGE=Billing.
-
-	// Set the return URL if they click "Submit" on PayPal site
-	$return_url = str_replace('&amp;', '&', zen_href_link('ipn_main_handler.php', 'type=ec', 'SSL', true, true, true));
-	// Select the return URL if they click "cancel" on PayPal site or click to return without making payment or login
-	$cancel_url = str_replace('&amp;', '&', zen_href_link(($_SESSION['customer_first_name'] != '' && $_SESSION['customer_id'] != '' ? FILENAME_CHECKOUT_SHIPPING : FILENAME_SHOPPING_CART), 'ec_cancel=1', 'SSL'));
-
-	// debug
-	$val = $_SESSION; unset($val['navigation']);
-	$this->zcLog('ec_step1 - 1', 'Checking to see if we are in markflow' . "\n" . 'cart contents: ' . $_SESSION['cart']->get_content_type() . "\n\nNOTE: " . '$this->showPaymentPage = ' . (int)$this->showPaymentPage . "\nCustomer ID: " . (int)$_SESSION['customer_id'] . "\nSession Data: " . print_r($val, true));
-
-	/**
-	 * Check whether shipping is required on this order or not.
-	 * If not, tell PayPal to skip all shipping options
-	 * ie: don't ask for any shipping info if cart content is strictly virtual and customer is already logged-in
-	 * (if not logged in, we need address information only to build the customer record)
-	 */
-	if ($_SESSION['cart']->get_content_type() == 'virtual' && isset($_SESSION['customer_id']) && $_SESSION['customer_id'] > 0) {
-	  $this->zcLog('ec-step1-addr_check', "cart contents is virtual and customer is logged in ... therefore options['NOSHIPPING']=1");
-	  $options['NOSHIPPING'] = 1;
-	} else {
-	  $this->zcLog('ec-step1-addr_check', "cart content is not all virtual (or customer is not logged in) ... therefore will be submitting address details");
-	  $options['NOSHIPPING'] = 0;
-	  // If we are in a "mark" flow and the customer has a usable address, set the addressoverride variable to 1.
-	  // This will override the shipping address in PayPal with the shipping address that is selected in Zen Cart.
-	  // @TODO: consider using address-validation against Paypal's addresses via API to help customers understand why they may be having difficulties during checkout
-	  if (MODULE_PAYMENT_PAYPALWPP_CONFIRMED_ADDRESS != 'Yes' && ($address_arr = $this->getOverrideAddress()) !== false) {
-		$address_error = false;
-		foreach(array('entry_firstname','entry_lastname','entry_street_address','entry_city','entry_postcode','zone_code','countries_iso_code_2') as $val) {
-		  if ($address_arr[$val] == '') $address_error = true;
-		  if ($address_error == true) $this->zcLog('ec-step1-addr_check2', '$address_error = true because ' .$val . ' is blank.');
-		}
-		if ($address_error == false) {
-		  // set the override var
-		  $options['ADDROVERRIDE'] = 1;
-
-		  // set the address info
-		  $options['PAYMENTREQUEST_0_SHIPTONAME']    = substr($address_arr['entry_firstname'] . ' ' . $address_arr['entry_lastname'], 0, 128);
-		  $options['PAYMENTREQUEST_0_SHIPTOSTREET']  = substr($address_arr['entry_street_address'], 0, 100);
-		  if ($address_arr['entry_suburb'] != '') $options['PAYMENTREQUEST_0_SHIPTOSTREET2'] = substr($address_arr['entry_suburb'], 0, 100);
-		  $options['PAYMENTREQUEST_0_SHIPTOCITY']    = substr($address_arr['entry_city'], 0, 40);
-		  $options['PAYMENTREQUEST_0_SHIPTOZIP']     = substr($address_arr['entry_postcode'], 0, 20);
-		  $options['PAYMENTREQUEST_0_SHIPTOSTATE']   = substr($address_arr['zone_code'], 0, 40);
-		  $options['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE'] = substr($address_arr['countries_iso_code_2'], 0, 2);
-		  $options['PAYMENTREQUEST_0_SHIPTOPHONENUM'] = substr($address_arr['entry_telephone'], 0, 20);
-		}
+	  // if cart is empty due to timeout on login or shopping cart page, go to timeout screen
+	  if ($_SESSION['cart']->count_contents() == 0) {
+		  $message = 'Logging out due to empty shopping cart.  Is session started properly? ... ' . "\nSESSION Details:\n" . print_r($_SESSION, TRUE) . 'GET:' . "\n" . print_r($_GET, TRUE);
+		  include_once(DIR_WS_MODULES . 'payment/paypal/paypal_functions.php');
+		  ipn_debug_email($message);
+		  zen_redirect(zen_href_link(FILENAME_TIME_OUT, '', 'SSL'));
 	  }
-	  $this->zcLog('ec-step1-addr_check3', 'address details from override check:'.($address_arr == FALSE ? ' <NONE FOUND>' : print_r($address_arr, true)));
 
-	  // Do we require a "confirmed" shipping address ?
-	  if (MODULE_PAYMENT_PAYPALWPP_CONFIRMED_ADDRESS == 'Yes') {
-		$options['REQCONFIRMSHIPPING'] = 1;
+	  // init new order object
+	  require(DIR_WS_CLASSES . 'order.php');
+	  $order = new order;
+
+	  // load the selected shipping module so that shipping taxes can be assessed
+	  require(DIR_WS_CLASSES . 'shipping.php');
+	  $shipping_modules = new shipping($_SESSION['shipping']);
+
+	  // load OT modules so that discounts and taxes can be assessed
+	  require(DIR_WS_CLASSES . 'order_total.php');
+	  $order_total_modules = new order_total;
+	  $order_totals = $order_total_modules->pre_confirmation_check();
+	  $order_totals = $order_total_modules->process();
+
+	  $doPayPal = $this->paypal_init();
+	  $options = array();
+
+	  // build line item details
+	  $options = $this->getLineItemDetails($this->selectCurrency());
+
+	  // Set currency and amount
+	  $options['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->selectCurrency();
+	  $order_amount = $this->calc_order_amount($order->info['total'], $options['PAYMENTREQUEST_0_CURRENCYCODE']);
+
+	  // Determine the language to use when visiting the PP site
+	  $lc_code = $this->getLanguageCode();
+	  if ($lc_code != '') $options['LOCALECODE'] = $lc_code;
+
+	  //Gift Options
+	  $options['GIFTMESSAGEENABLE'] = 0;
+	  $options['GIFTRECEIPTEENABLE'] = 0;
+	  $options['GIFTWRAPENABLE'] = 0;
+	  $options['GIFTWRAPNAME'] = '';
+	  $options['GIFTWRAPAMOUNT'] = 0;
+
+	  $options['BUYEREMAILOPTINENABLE'] = 0;
+
+	  $options['CUSTOMERSERVICENUMBER'] = (defined('STORE_TELEPHONE_CUSTSERVICE') && STORE_TELEPHONE_CUSTSERVICE != '') ? substr(STORE_TELEPHONE_CUSTSERVICE, 0, 16) : '';
+
+	  // Store Name to appear on PayPal page
+	  $options['BRANDNAME'] = (defined('MODULE_PAYMENT_PAYPALWPP_BRANDNAME') && strlen(MODULE_PAYMENT_PAYPALWPP_BRANDNAME) > 3) ? substr(MODULE_PAYMENT_PAYPALWPP_BRANDNAME, 0, 127) : substr(STORE_NAME, 0, 127);
+
+	  // Payment Transaction/Authorization Mode
+	  $options['PAYMENTREQUEST_0_PAYMENTACTION'] = (MODULE_PAYMENT_PAYPALWPP_TRANSACTION_MODE == 'Auth Only') ? 'Authorization' : 'Sale';
+	  // for future:
+	  if (MODULE_PAYMENT_PAYPALWPP_TRANSACTION_MODE == 'Order') $options['PAYMENTREQUEST_0_PAYMENTACTION'] = 'Order';
+	  // Allow delayed payments such as eCheck? (can only use InstantPayment if Action is Sale)
+	  if (MODULE_PAYMENT_PAYPALWPP_TRANSACTION_MODE != 'Auth Only' && MODULE_PAYMENT_PAYPALWPP_TRANSACTION_MODE != 'Sale' && $options['PAYMENTACTION'] == 'Sale' && defined('MODULE_PAYMENT_PAYPALEC_ALLOWEDPAYMENT') && MODULE_PAYMENT_PAYPALEC_ALLOWEDPAYMENT == 'Instant Only') $options['PAYMENTREQUEST_0_ALLOWEDPAYMENTMETHOD'] = 'InstantPaymentOnly';
+
+	  $options['ALLOWNOTE'] = 1;  // allow customer to enter a note on the PayPal site, which will be copied to order comments upon return to store.
+
+	  $options['SOLUTIONTYPE'] = 'Sole';  // Use 'Mark' for normal Express Checkout (where customer has a PayPal account), 'Sole' for Account-Optional. But Account-Optional must be enabled in your PayPal account under Selling Preferences.
+
+	  // PayPal has acknowledged that they have a bug which prevents Account-Optional from working in InContext mode, so we have to use 'Mark' for InContext to work as of Dec 2015:
+	  if ($this->use_incontext_checkout && $options['SOLUTIONTYPE'] == 'Sole') $options['SOLUTIONTYPE'] = 'Mark';
+
+	  $options['LANDINGPAGE'] = 'Billing';  // "Billing" or "Login" selects the style of landing page on PayPal site during checkout (ie: which "section" is expanded when arriving there)
+	  //$options['USERSELECTEDFUNDINGSOURCE'] = 'Finance';  // 'Finance' is for PayPal BillMeLater.  Requires LANDINGPAGE=Billing.
+
+	  // Set the return URL if they click "Submit" on PayPal site
+	  $return_url = str_replace('&amp;', '&', zen_href_link('ipn_main_handler.php', 'type=ec', 'SSL', true, true, true));
+	  // Select the return URL if they click "cancel" on PayPal site or click to return without making payment or login
+	  $cancel_url = str_replace('&amp;', '&', zen_href_link(($_SESSION['customer_first_name'] != '' && $_SESSION['customer_id'] != '' ? FILENAME_CHECKOUT_SHIPPING : FILENAME_SHOPPING_CART), 'ec_cancel=1', 'SSL'));
+
+	  // debug
+	  $val = $_SESSION; unset($val['navigation']);
+	  $this->zcLog('ec_step1 - 1', 'Checking to see if we are in markflow' . "\n" . 'cart contents: ' . $_SESSION['cart']->get_content_type() . "\n\nNOTE: " . '$this->showPaymentPage = ' . (int)$this->showPaymentPage . "\nCustomer ID: " . (int)$_SESSION['customer_id'] . "\nSession Data: " . print_r($val, true));
+
+	  /**
+	   * Check whether shipping is required on this order or not.
+	   * If not, tell PayPal to skip all shipping options
+	   * ie: don't ask for any shipping info if cart content is strictly virtual and customer is already logged-in
+	   * (if not logged in, we need address information only to build the customer record)
+	   */
+	  if ($_SESSION['cart']->get_content_type() == 'virtual' && isset($_SESSION['customer_id']) && $_SESSION['customer_id'] > 0) {
+		  $this->zcLog('ec-step1-addr_check', "cart contents is virtual and customer is logged in ... therefore options['NOSHIPPING']=1");
+		  $options['NOSHIPPING'] = 1;
+	  } else {
+		  $this->zcLog('ec-step1-addr_check', "cart content is not all virtual (or customer is not logged in) ... therefore will be submitting address details");
+		  $options['NOSHIPPING'] = 0;
+		  // If we are in a "mark" flow and the customer has a usable address, set the addressoverride variable to 1.
+		  // This will override the shipping address in PayPal with the shipping address that is selected in Zen Cart.
+		  // @TODO: consider using address-validation against Paypal's addresses via API to help customers understand why they may be having difficulties during checkout
+		  if (MODULE_PAYMENT_PAYPALWPP_CONFIRMED_ADDRESS != 'Yes' && ($address_arr = $this->getOverrideAddress()) !== false) {
+			  $address_error = false;
+			  foreach(array('entry_firstname','entry_lastname','entry_street_address','entry_city','entry_postcode','zone_code','countries_iso_code_2') as $val) {
+				  if ($address_arr[$val] == '') $address_error = true;
+				  if ($address_error == true) $this->zcLog('ec-step1-addr_check2', '$address_error = true because ' .$val . ' is blank.');
+			  }
+			  if ($address_error == false) {
+				  // set the override var
+				  $options['ADDROVERRIDE'] = 1;
+
+				  // set the address info
+				  $options['PAYMENTREQUEST_0_SHIPTONAME']    = substr($address_arr['entry_firstname'] . ' ' . $address_arr['entry_lastname'], 0, 128);
+				  $options['PAYMENTREQUEST_0_SHIPTOSTREET']  = substr($address_arr['entry_street_address'], 0, 100);
+				  if ($address_arr['entry_suburb'] != '') $options['PAYMENTREQUEST_0_SHIPTOSTREET2'] = substr($address_arr['entry_suburb'], 0, 100);
+				  $options['PAYMENTREQUEST_0_SHIPTOCITY']    = substr($address_arr['entry_city'], 0, 40);
+				  $options['PAYMENTREQUEST_0_SHIPTOZIP']     = substr($address_arr['entry_postcode'], 0, 20);
+				  $options['PAYMENTREQUEST_0_SHIPTOSTATE']   = substr($address_arr['zone_code'], 0, 40);
+				  $options['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE'] = substr($address_arr['countries_iso_code_2'], 0, 2);
+				  $options['PAYMENTREQUEST_0_SHIPTOPHONENUM'] = substr($address_arr['entry_telephone'], 0, 20);
+			  }
+		  }
+		  $this->zcLog('ec-step1-addr_check3', 'address details from override check:'.($address_arr == FALSE ? ' <NONE FOUND>' : print_r($address_arr, true)));
+
+		  // Do we require a "confirmed" shipping address ?
+		  if (MODULE_PAYMENT_PAYPALWPP_CONFIRMED_ADDRESS == 'Yes') {
+			  $options['REQCONFIRMSHIPPING'] = 1;
+		  }
 	  }
-	}
-	// if we know customer's email address, supply it, so as to pre-fill the signup box at PayPal (useful for new PayPal accounts only)
-	if (!empty($_SESSION['customer_first_name']) && !empty($_SESSION['customer_id'])) {
-	  $sql = "select * from " . TABLE_CUSTOMERS . " where customers_id = :custID ";
-	  $sql = $db->bindVars($sql, ':custID', $_SESSION['customer_id'], 'integer');
-	  $zc_getemail = $db->Execute($sql);
-	  if ($zc_getemail->RecordCount() > 0 && $zc_getemail->fields['customers_email_address'] != '') {
-		$options['EMAIL'] = $zc_getemail->fields['customers_email_address'];
+	  // if we know customer's email address, supply it, so as to pre-fill the signup box at PayPal (useful for new PayPal accounts only)
+	  if (!empty($_SESSION['customer_first_name']) && !empty($_SESSION['customer_id'])) {
+		  $sql = "select * from " . TABLE_CUSTOMERS . " where customers_id = :custID ";
+		  $sql = $db->bindVars($sql, ':custID', $_SESSION['customer_id'], 'integer');
+		  $zc_getemail = $db->Execute($sql);
+		  if ($zc_getemail->RecordCount() > 0 && $zc_getemail->fields['customers_email_address'] != '') {
+			  $options['EMAIL'] = $zc_getemail->fields['customers_email_address'];
+		  }
+		  if ($zc_getemail->RecordCount() > 0 && $zc_getemail->fields['customers_telephone'] != '' && (!isset($options['ADDROVERRIDE']) || isset($options['ADDROVERRIDE']) && $options['ADDROVERRIDE'] != 1)) {
+			  $options['PAYMENTREQUEST_0_SHIPTOPHONENUM'] = $zc_getemail->fields['customers_telephone'];
+		  }
 	  }
-	  if ($zc_getemail->RecordCount() > 0 && $zc_getemail->fields['customers_telephone'] != '' && (!isset($options['ADDROVERRIDE']) || isset($options['ADDROVERRIDE']) && $options['ADDROVERRIDE'] != 1)) {
-		$options['PAYMENTREQUEST_0_SHIPTOPHONENUM'] = $zc_getemail->fields['customers_telephone'];
-	  }
-	}
 
-	if (!isset($options['PAYMENTREQUEST_0_AMT'])) $options['PAYMENTREQUEST_0_AMT'] = number_format($order_amount, 2);
+	  if (!isset($options['PAYMENTREQUEST_0_AMT'])) $options['PAYMENTREQUEST_0_AMT'] = number_format($order_amount, 2);
 
-	$this->zcLog('ec_step1 - 2 -submit', print_r(array_merge($options, array('RETURNURL' => $return_url, 'CANCELURL' => $cancel_url)), true));
+	  $this->zcLog('ec_step1 - 2 -submit', print_r(array_merge($options, array('RETURNURL' => $return_url, 'CANCELURL' => $cancel_url)), true));
 
-	$this->notify('NOTIFY_PAYMENT_PAYPALEC_BEFORE_SETEC', array(), $options, $order, $order_totals);
+	  $this->notify('NOTIFY_PAYMENT_PAYPALEC_BEFORE_SETEC', array(), $options, $order, $order_totals);
 
 
-	/**
-	 * Ask PayPal for the token with which to initiate communications
-	 */
-	$response = $doPayPal->SetExpressCheckout($return_url, $cancel_url, $options);
-
-	$this->notify('NOTIFY_PAYMENT_PAYPALEC_TOKEN', $response, $options);
-
-  $submissionCheckOne = TRUE;
-  $submissionCheckTwo = TRUE;
-  if ($submissionCheckOne) {
-	// If there's an error on line-item details, remove tax values and resubmit, since the most common cause of 10413 is tax mismatches
-	if ($response['L_ERRORCODE0'] == '10413') {
-	  $this->zcLog('ec_step1 - 3 - removing tax portion', 'Tax Subtotal does not match sum of taxes for line-items. Tax details removed from line-item submission data.' . "\n" . print_r($options, true));
-		  //echo '1st submission REJECTED. {'.$response['L_ERRORCODE0'].'}<pre>'.print_r($options, true) . urldecode(print_r($response, true));
-	  $tsubtotal = 0;
-	  foreach ($options as $key=>$value) {
-		if (substr($key, -6) == 'TAXAMT') {
-		  $tsubtotal += preg_replace('/[^0-9.\-]/', '', $value);
-		  unset($options[$key]);
-		}
-	  }
-	  $options['PAYMENTREQUEST_0_TAXAMT'] = $tsubtotal;
-	  $amt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_AMT']);
-//      echo 'oldAMT:'.$amt;
-//      echo ' newTAXAMT:'.$tsubtotal;
-	  $taxamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_TAXAMT']);
-	  $shipamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_SHIPPINGAMT']);
-	  $itemamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_ITEMAMT']);
-	  $calculatedAmount = $itemamt + $taxamt + $shipamt;
-	  if ($amt != $calculatedAmount) $amt = $calculatedAmount;
-//      echo ' newAMT:'.$amt;
-	  $options['PAYMENTREQUEST_0_AMT'] = $amt;
+	  /**
+	   * Ask PayPal for the token with which to initiate communications
+	   */
 	  $response = $doPayPal->SetExpressCheckout($return_url, $cancel_url, $options);
-//echo '<br>2nd submission. {'.$response['L_ERRORCODE0'].'}<pre>'.print_r($options, true);
-	}
-	if ($submissionCheckTwo) {
-	if ($response['L_ERRORCODE0'] == '10413') {
-	  $this->zcLog('ec_step1 - 4 - removing line-item details', 'PayPal designed their own mathematics rules. Dumbing it down for them.' . "\n" . print_r($options, true));
-//echo '2nd submission REJECTED. {'.$response['L_ERRORCODE0'].'}<pre>'.print_r($options, true) . urldecode(print_r($response, true));
-	  foreach ($options as $key=>$value) {
-		if (substr($key, 0, 2) == 'L_') {
-		  unset($options[$key]);
-		}
+
+	  $this->notify('NOTIFY_PAYMENT_PAYPALEC_TOKEN', $response, $options);
+
+	  $submissionCheckOne = TRUE;
+	  $submissionCheckTwo = TRUE;
+	  if ($submissionCheckOne) {
+		  // If there's an error on line-item details, remove tax values and resubmit, since the most common cause of 10413 is tax mismatches
+		  if ($response['L_ERRORCODE0'] == '10413') {
+			  $this->zcLog('ec_step1 - 3 - removing tax portion', 'Tax Subtotal does not match sum of taxes for line-items. Tax details removed from line-item submission data.' . "\n" . print_r($options, true));
+			  //echo '1st submission REJECTED. {'.$response['L_ERRORCODE0'].'}<pre>'.print_r($options, true) . urldecode(print_r($response, true));
+			  $tsubtotal = 0;
+			  foreach ($options as $key=>$value) {
+				  if (substr($key, -6) == 'TAXAMT') {
+					  $tsubtotal += preg_replace('/[^0-9.\-]/', '', $value);
+					  unset($options[$key]);
+				  }
+			  }
+			  $options['PAYMENTREQUEST_0_TAXAMT'] = $tsubtotal;
+			  $amt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_AMT']);
+			  //      echo 'oldAMT:'.$amt;
+			  //      echo ' newTAXAMT:'.$tsubtotal;
+			  $taxamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_TAXAMT']);
+			  $shipamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_SHIPPINGAMT']);
+			  $itemamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_ITEMAMT']);
+			  $calculatedAmount = $itemamt + $taxamt + $shipamt;
+			  if ($amt != $calculatedAmount) $amt = $calculatedAmount;
+			  //      echo ' newAMT:'.$amt;
+			  $options['PAYMENTREQUEST_0_AMT'] = $amt;
+			  $response = $doPayPal->SetExpressCheckout($return_url, $cancel_url, $options);
+			  //echo '<br>2nd submission. {'.$response['L_ERRORCODE0'].'}<pre>'.print_r($options, true);
+		  }
+		  if ($submissionCheckTwo) {
+			  if ($response['L_ERRORCODE0'] == '10413') {
+				  $this->zcLog('ec_step1 - 4 - removing line-item details', 'PayPal designed their own mathematics rules. Dumbing it down for them.' . "\n" . print_r($options, true));
+				  //echo '2nd submission REJECTED. {'.$response['L_ERRORCODE0'].'}<pre>'.print_r($options, true) . urldecode(print_r($response, true));
+				  foreach ($options as $key=>$value) {
+					  if (substr($key, 0, 2) == 'L_') {
+						  unset($options[$key]);
+					  }
+				  }
+				  $amt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_AMT']);
+				  $taxamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_TAXAMT']);
+				  $shipamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_SHIPPINGAMT']);
+				  $itemamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_ITEMAMT']);
+				  $calculatedAmount = $itemamt + $taxamt + $shipamt;
+				  if ($amt != $calculatedAmount) $amt = $calculatedAmount;
+				  $options['PAYMENTREQUEST_0_AMT'] = $amt;
+				  $response = $doPayPal->SetExpressCheckout($return_url, $cancel_url, $options);
+				  //echo '<br>3rd submission. {'.$response['L_ERRORCODE0'].'}<pre>'.print_r($options, true);
+			  }
+		  }
 	  }
-	  $amt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_AMT']);
-	  $taxamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_TAXAMT']);
-	  $shipamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_SHIPPINGAMT']);
-	  $itemamt = preg_replace('/[^0-9.%]/', '', $options['PAYMENTREQUEST_0_ITEMAMT']);
-	  $calculatedAmount = $itemamt + $taxamt + $shipamt;
-	  if ($amt != $calculatedAmount) $amt = $calculatedAmount;
-	  $options['PAYMENTREQUEST_0_AMT'] = $amt;
-	  $response = $doPayPal->SetExpressCheckout($return_url, $cancel_url, $options);
-//echo '<br>3rd submission. {'.$response['L_ERRORCODE0'].'}<pre>'.print_r($options, true);
-	}
-   }
-  }
 
-	/**
-	 * Determine result of request for token -- if error occurred, the errorHandler will redirect accordingly
-	 */
-	$error = $this->_errorHandler($response, 'SetExpressCheckout');
+	  /**
+	   * Determine result of request for token -- if error occurred, the errorHandler will redirect accordingly
+	   */
+	  $error = $this->_errorHandler($response, 'SetExpressCheckout');
 
-	// Success, so read the EC token
-	$_SESSION['paypal_ec_token'] = preg_replace('/[^0-9.A-Z\-]/', '', urldecode($response['TOKEN']));
+	  // Success, so read the EC token
+	  $_SESSION['paypal_ec_token'] = preg_replace('/[^0-9.A-Z\-]/', '', urldecode($response['TOKEN']));
 
-	// prepare to redirect to PayPal so the customer can log in and make their selections
-	$paypal_url = $this->getPayPalLoginServer();
+	  // prepare to redirect to PayPal so the customer can log in and make their selections
+	  $paypal_url = $this->getPayPalLoginServer();
 
-	// incontext checkout URL override:
-	if ($this->use_incontext_checkout) {
-	  $paypal_url = str_replace('cgi-bin/webscr', 'checkoutnow/', $paypal_url);
-	}
+	  // incontext checkout URL override:
+	  if ($this->use_incontext_checkout) {
+		  $paypal_url = str_replace('cgi-bin/webscr', 'checkoutnow/', $paypal_url);
+	  }
 
-	// Set the name of the displayed "continue" button on the PayPal site.
-	// 'commit' = "Pay Now"  ||  'continue' = "Review Payment"
-	$orderReview = true;
-	if ($_SESSION['paypal_ec_markflow'] == 1) $orderReview = false;
-	$userActionKey = "&useraction=" . ((int)$orderReview == false ? 'commit' : 'continue');
+	  // Set the name of the displayed "continue" button on the PayPal site.
+	  // 'commit' = "Pay Now"  ||  'continue' = "Review Payment"
+	  $orderReview = true;
+	  if ($_SESSION['paypal_ec_markflow'] == 1) $orderReview = false;
+	  $userActionKey = "&useraction=" . ((int)$orderReview == false ? 'commit' : 'continue');
 
-	$this->ec_redirect_url = $paypal_url . "?cmd=_express-checkout&token=" . $_SESSION['paypal_ec_token'] . $userActionKey;
-	// This is where we actually redirect the customer's browser to PayPal. Upon return from PayPal, they go to ec_step2
-	header("HTTP/1.1 302 Object Moved");
-	zen_redirect($this->ec_redirect_url);
+	  $this->ec_redirect_url = $paypal_url . "?cmd=_express-checkout&token=" . $_SESSION['paypal_ec_token'] . $userActionKey;
+	  // This is where we actually redirect the customer's browser to PayPal. Upon return from PayPal, they go to ec_step2
+	  header("HTTP/1.1 302 Object Moved");
+	  zen_redirect($this->ec_redirect_url);
 
-	// this should never be reached:
-	return $error;
+	  // this should never be reached:
+	  return $error;
   }
   /**
 	 * This method is for step 2 of the express checkout option.  This
