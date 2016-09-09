@@ -1172,9 +1172,12 @@ class paypalwpp extends base
 	}
 
 	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-09
 	 * Calculate the amount based on acceptable currencies
 	 */
-	function calc_order_amount($amount, $paypalCurrency, $applyFormatting = false) {
+	public function calc_order_amount($amount, $paypalCurrency, $applyFormatting = false) 
+	{
 		global $currencies;
 		$amount = ($amount * $currencies->get_value($paypalCurrency));
 		if (in_array($paypalCurrency, array('JPY', 'HUF', 'TWD')) || (int)$currencies->get_decimal_places($paypalCurrency) == 0) {
@@ -1183,6 +1186,7 @@ class paypalwpp extends base
 		}
 		return ($applyFormatting ? number_format($amount, $currencies->get_decimal_places($paypalCurrency)) : $amount);
 	}
+
 	/**
 	 * Set the state field depending on what PayPal requires for that country.
 	 * The shipping address state or province is required if the address is in one of the following countries: Argentina, Brazil, Canada, China, Indonesia, India, Japan, Mexico, Thailand, USA
@@ -1223,6 +1227,8 @@ class paypalwpp extends base
 
 
 	/**
+	 * @modified chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-09
 	 * Prepare subtotal and line-item detail content to send to PayPal
 	 */
 	public function getLineItemDetails($restrictedCurrency)
@@ -1234,6 +1240,7 @@ class paypalwpp extends base
 			$this->zcLog('getLineItemDetails 1', 'Not using default currency. Thus, no line-item details can be submitted.');
 			return array();
 		}
+
 		if ($currencies->currencies[$_SESSION['currency']]['value'] != 1 || $currencies->currencies[$order->info['currency']]['value'] != 1) {
 			$this->zcLog('getLineItemDetails 2', 'currency val not equal to 1.0000 - cannot proceed without coping with currency conversions. Aborting line-item details.');
 			return array();
@@ -1463,10 +1470,10 @@ class paypalwpp extends base
 			$optionsLI = array();
 			$optionsLI["L_PAYMENTREQUEST_0_NAME0"] = MODULES_PAYMENT_PAYPALWPP_AGGREGATE_CART_CONTENTS;
 			$optionsLI["L_PAYMENTREQUEST_0_AMT0"]  = $sumOfLineItems = $subTotalLI = $optionsST['PAYMENTREQUEST_0_ITEMAMT'];
-  /*if ($optionsST['AMT'] < $optionsST['TAXAMT']) */ $optionsST['PAYMENTREQUEST_0_TAXAMT'] = 0;
-  /*if ($optionsST['AMT'] < $optionsST['SHIPPINGAMT']) */ $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = 0;
-  $discountProblemsFlag = TRUE;
-  $this->zcLog('getLineItemDetails 6', 'Discounts have caused the subtotal to calculate incorrectly. Line-item-details cannot be submitted.' . "\nBefore:" . print_r($pre, TRUE) . "\nAfter:" . print_r(array_merge($optionsST, $optionsLI), true));
+			$optionsST['PAYMENTREQUEST_0_TAXAMT'] = 0;
+			$optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = 0;
+			$discountProblemsFlag = TRUE;
+			$this->zcLog('getLineItemDetails 6', 'Discounts have caused the subtotal to calculate incorrectly. Line-item-details cannot be submitted.' . "\nBefore:" . print_r($pre, TRUE) . "\nAfter:" . print_r(array_merge($optionsST, $optionsLI), true));
 		}
 
 		// if AMT or ITEMAMT values are 0 (ie: certain OT modules disabled) or we've started express checkout without going through normal checkout flow, we have to get subtotals manually
