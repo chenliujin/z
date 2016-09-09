@@ -56,7 +56,12 @@ class order_total extends base {
 		}
 	}
 
-	function process() {
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-10
+	 */
+	public function process() 
+	{
 		global $order;
 		$order_total_array = array();
 		if (is_array($this->modules)) {
@@ -80,7 +85,12 @@ class order_total extends base {
 		return $order_total_array;
 	}
 
-	function output($return_html=false) {
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-10
+	 */
+	public function output($return_html=false) 
+	{
 		global $template, $current_page_base;
 		$output_string = '';
 		if (is_array($this->modules)) {
