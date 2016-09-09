@@ -1201,299 +1201,301 @@ if (false) { // disabled until clarification is received about coupons in PayPal
 	  $info['state'] = '';
 	}
   }
+
+
   /**
    * Prepare subtotal and line-item detail content to send to PayPal
    */
   function getLineItemDetails($restrictedCurrency) {
-	global $order, $currencies, $order_totals, $order_total_modules;
+	  global $order, $currencies, $order_totals, $order_total_modules;
 
-	// if not default currency, do not send subtotals or line-item details
-	if (DEFAULT_CURRENCY != $order->info['currency'] || $restrictedCurrency != DEFAULT_CURRENCY) {
-	  $this->zcLog('getLineItemDetails 1', 'Not using default currency. Thus, no line-item details can be submitted.');
-	  return array();
-	}
-	if ($currencies->currencies[$_SESSION['currency']]['value'] != 1 || $currencies->currencies[$order->info['currency']]['value'] != 1) {
-	  $this->zcLog('getLineItemDetails 2', 'currency val not equal to 1.0000 - cannot proceed without coping with currency conversions. Aborting line-item details.');
-	  return array();
-	}
-
-	$optionsST = array();
-	$optionsLI = array();
-	$optionsNB = array();
-	$numberOfLineItemsProcessed = 0;
-	$creditsApplied = 0;
-	$surcharges = 0;
-	$sumOfLineItems = 0;
-	$sumOfLineTax = 0;
-	$optionsST['PAYMENTREQUEST_0_AMT'] = 0;
-	$optionsST['PAYMENTREQUEST_0_ITEMAMT'] = 0;
-	$optionsST['PAYMENTREQUEST_0_TAXAMT'] = 0;
-	$optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = 0;
-	$optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] = 0;
-	$optionsST['PAYMENTREQUEST_0_HANDLINGAMT'] = 0;
-	$optionsST['PAYMENTREQUEST_0_INSURANCEAMT'] = 0;
-	$flagSubtotalsUnknownYet = true;
-	$subTotalLI = 0;
-	$subTotalTax = 0;
-	$subTotalShipping = 0;
-	$subtotalPRE = array('no data');
-	$discountProblemsFlag = FALSE;
-	$flag_treat_as_partial = FALSE;
-
-	if (sizeof($order_totals)) {
-	  // prepare subtotals
-	  for ($i=0, $n=sizeof($order_totals); $i<$n; $i++) {
-		if ($order_totals[$i]['code'] == '') continue;
-		if (in_array($order_totals[$i]['code'], array('ot_total','ot_subtotal','ot_tax','ot_shipping')) || strstr($order_totals[$i]['code'], 'insurance')) {
-		  if ($order_totals[$i]['code'] == 'ot_shipping') $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = round($order_totals[$i]['value'],2);
-		  if ($order_totals[$i]['code'] == 'ot_total')    $optionsST['PAYMENTREQUEST_0_AMT']         = round($order_totals[$i]['value'],2);
-		  if ($order_totals[$i]['code'] == 'ot_tax')      $optionsST['PAYMENTREQUEST_0_TAXAMT']     += round($order_totals[$i]['value'],2);
-		  if ($order_totals[$i]['code'] == 'ot_subtotal') $optionsST['PAYMENTREQUEST_0_ITEMAMT']     = round($order_totals[$i]['value'],2);
-		  if (strstr($order_totals[$i]['code'], 'insurance')) $optionsST['PAYMENTREQUEST_0_INSURANCEAMT'] += round($order_totals[$i]['value'],2);
-		  //$optionsST['SHIPDISCAMT'] = '';  // Not applicable
-		} else {
-		  // handle other order totals:
-		  global ${$order_totals[$i]['code']};
-		  if ((substr($order_totals[$i]['text'], 0, 1) == '-') || (isset(${$order_totals[$i]['code']}->credit_class) && ${$order_totals[$i]['code']}->credit_class == true)) {
-			// handle credits
-			$creditsApplied += round($order_totals[$i]['value'], 2);
-		  } else {
-			// treat all other OT's as if they're related to handling fees or other extra charges to be added/included
-			$surcharges += $order_totals[$i]['value'];
-		  }
-		}
+	  // if not default currency, do not send subtotals or line-item details
+	  if (DEFAULT_CURRENCY != $order->info['currency'] || $restrictedCurrency != DEFAULT_CURRENCY) {
+		  $this->zcLog('getLineItemDetails 1', 'Not using default currency. Thus, no line-item details can be submitted.');
+		  return array();
+	  }
+	  if ($currencies->currencies[$_SESSION['currency']]['value'] != 1 || $currencies->currencies[$order->info['currency']]['value'] != 1) {
+		  $this->zcLog('getLineItemDetails 2', 'currency val not equal to 1.0000 - cannot proceed without coping with currency conversions. Aborting line-item details.');
+		  return array();
 	  }
 
-	  $this->ot_merge = array();
-	  $this->notify('NOTIFY_PAYMENT_PAYPALEC_SUBTOTALS_TAX', $order, $order_totals);
-	  if (sizeof($this->ot_merge)) $optionsST = array_merge($optionsST, $this->ot_merge);
-
-	  if ($creditsApplied > 0) $optionsST['PAYMENTREQUEST_0_ITEMAMT'] -= $creditsApplied;
-	  if ($surcharges > 0) $optionsST['PAYMENTREQUEST_0_ITEMAMT'] += $surcharges;
-
-	  // Handle tax-included scenario
-	  if (DISPLAY_PRICE_WITH_TAX == 'true') $optionsST['PAYMENTREQUEST_0_TAXAMT'] = 0;
-
-	  $subtotalPRE = $optionsST;
-	  // Move shipping tax amount from Tax subtotal into Shipping subtotal for submission to PayPal, since PayPal applies tax to each line-item individually
-	  $module = substr($_SESSION['shipping']['id'], 0, strpos($_SESSION['shipping']['id'], '_'));
-	  if (zen_not_null($order->info['shipping_method']) && DISPLAY_PRICE_WITH_TAX != 'true') {
-		if ($GLOBALS[$module]->tax_class > 0) {
-		  $shipping_tax_basis = (!isset($GLOBALS[$module]->tax_basis)) ? STORE_SHIPPING_TAX_BASIS : $GLOBALS[$module]->tax_basis;
-		  $shippingOnBilling = zen_get_tax_rate($GLOBALS[$module]->tax_class, $order->billing['country']['id'], $order->billing['zone_id']);
-		  $shippingOnDelivery = zen_get_tax_rate($GLOBALS[$module]->tax_class, $order->delivery['country']['id'], $order->delivery['zone_id']);
-		  if ($shipping_tax_basis == 'Billing') {
-			$shipping_tax = $shippingOnBilling;
-		  } elseif ($shipping_tax_basis == 'Shipping') {
-			$shipping_tax = $shippingOnDelivery;
-		  } else {
-			if (STORE_ZONE == $order->billing['zone_id']) {
-			  $shipping_tax = $shippingOnBilling;
-			} elseif (STORE_ZONE == $order->delivery['zone_id']) {
-			  $shipping_tax = $shippingOnDelivery;
-			} else {
-			  $shipping_tax = 0;
-			}
-		  }
-		  $taxAdjustmentForShipping = zen_round(zen_calculate_tax($order->info['shipping_cost'], $shipping_tax), $currencies->currencies[$_SESSION['currency']]['decimal_places']);
-		  $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] += $taxAdjustmentForShipping;
-		  $optionsST['PAYMENTREQUEST_0_TAXAMT'] -= $taxAdjustmentForShipping;
-		}
-	  }
-	  $flagSubtotalsUnknownYet = (($optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] + $optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] + $optionsST['PAYMENTREQUEST_0_AMT'] + $optionsST['PAYMENTREQUEST_0_TAXAMT'] + $optionsST['PAYMENTREQUEST_0_ITEMAMT'] + $optionsST['PAYMENTREQUEST_0_INSURANCEAMT']) == 0);
-	} else {
-	  // if we get here, we don't have any order-total information yet because the customer has clicked Express before starting normal checkout flow
-	  // thus, we must make a note to manually calculate subtotals, rather than relying on the more robust order-total infrastructure
-	  $flagSubtotalsUnknownYet = TRUE;
-	}
-
-	$decimals = $currencies->get_decimal_places($_SESSION['currency']);
-
-	// loop thru all products to prepare details of quantity and price.
-	for ($i=0, $n=sizeof($order->products), $k=-1; $i<$n; $i++) {
-	  // PayPal is inconsistent in how it handles zero-value line-items, so skip this entry if price is zero
-	  if ($order->products[$i]['final_price'] == 0) {
-		continue;
-	  } else {
-		$k++;
-	  }
-
-	  $optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"] = $order->products[$i]['model'];
-	  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]   = $order->products[$i]['name'] . ' [' . (int)$order->products[$i]['id'] . ']';
-	  // Append *** if out-of-stock.
-	  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]  .= ((zen_get_products_stock($order->products[$i]['id']) - $order->products[$i]['qty']) < 0 ? STOCK_MARK_PRODUCT_OUT_OF_STOCK : '');
-	  // if there are attributes, loop thru them and add to description
-	  if (isset($order->products[$i]['attributes']) && sizeof($order->products[$i]['attributes']) > 0 ) {
-		for ($j=0, $n2=sizeof($order->products[$i]['attributes']); $j<$n2; $j++) {
-		  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"] .= "\n " . $order->products[$i]['attributes'][$j]['option'] .
-										': ' . $order->products[$i]['attributes'][$j]['value'];
-		} // end loop
-	  } // endif attribute-info
-
-	  // PayPal can't handle fractional-quantity values, so convert it to qty 1 here
-	  if (is_float($order->products[$i]['qty']) && ($order->products[$i]['qty'] != (int)$order->products[$i]['qty'] || $flag_treat_as_partial)) {
-		$optionsLI["L_PAYMENTREQUEST_0_NAME$k"] = '('.$order->products[$i]['qty'].' x ) ' . $optionsLI["L_PAYMENTREQUEST_0_NAME$k"];
-		// zen_add_tax already handles whether DISPLAY_PRICES_WITH_TAX is set
-		$optionsLI["L_PAYMENTREQUEST_0_AMT$k"] = zen_round(zen_round(zen_add_tax($order->products[$i]['final_price'], $order->products[$i]['tax']), $decimals) * $order->products[$i]['qty'], $decimals);
-		$optionsLI["L_PAYMENTREQUEST_0_QTY$k"] = 1;
-		// no line-item tax component
-	  } else {
-		$optionsLI["L_PAYMENTREQUEST_0_QTY$k"] = $order->products[$i]['qty'];
-		$optionsLI["L_PAYMENTREQUEST_0_AMT$k"] = zen_round(zen_add_tax($order->products[$i]['final_price'], $order->products[$i]['tax']), $decimals);
-	  }
-
-	  $subTotalLI += ($optionsLI["L_PAYMENTREQUEST_0_QTY$k"] * $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]);
-//      $subTotalTax += ($optionsLI["L_PAYMENTREQUEST_0_QTY$k"] * $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]);
-
-	  // add line-item for one-time charges on this product
-	  if ($order->products[$i]['onetime_charges'] != 0 ) {
-		$k++;
-		$optionsLI["L_PAYMENTREQUEST_0_NAME$k"]   = MODULES_PAYMENT_PAYPALWPP_LINEITEM_TEXT_ONETIME_CHARGES_PREFIX . substr(htmlentities($order->products[$i]['name'], ENT_QUOTES, 'UTF-8'), 0, 120);
-		$optionsLI["L_PAYMENTREQUEST_0_AMT$k"]    = zen_round(zen_add_tax($order->products[$i]['onetime_charges'], $order->products[$i]['tax']), $decimals);
-		$optionsLI["L_PAYMENTREQUEST_0_QTY$k"]    = 1;
-//        $optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"] = zen_round(zen_calculate_tax($order->products[$i]['onetime_charges'], $order->products[$i]['tax']), $decimals);
-		$subTotalLI += $optionsLI["L_PAYMENTREQUEST_0_AMT$k"];
-//        $subTotalTax += $optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"];
-	  }
-	  $numberOfLineItemsProcessed = $k;
-
-	  $this->notify('NOTIFY_PAYPALWPP_GETLINEITEMDETAILS', $numberOfLineItemsProcessed, $optionsLI);
-
-	}  // end for loopthru all products
-
-	// add line items for any surcharges added by order-total modules
-	if ($surcharges > 0) {
-	  $numberOfLineItemsProcessed++;
-	  $k = $numberOfLineItemsProcessed;
-	  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"] = MODULES_PAYMENT_PAYPALWPP_LINEITEM_TEXT_SURCHARGES_LONG;
-	  $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]  = $surcharges;
-	  $optionsLI["L_PAYMENTREQUEST_0_QTY$k"]  = 1;
-	  $subTotalLI += $surcharges;
-	}
-
-	// add line items for discounts such as gift certificates and coupons
-	if ($creditsApplied > 0) {
-	  $numberOfLineItemsProcessed++;
-	  $k = $numberOfLineItemsProcessed;
-	  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]   = MODULES_PAYMENT_PAYPALWPP_LINEITEM_TEXT_DISCOUNTS_LONG;
-	  $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]    = (-1 * $creditsApplied);
-	  $optionsLI["L_PAYMENTREQUEST_0_QTY$k"]    = 1;
-	  $subTotalLI -= $creditsApplied;
-	}
-
-	// Reformat properly
-	// Replace & and = and % with * if found.
-	// reformat properly according to API specs
-	// Remove HTML markup from name if found
-	for ($k=0, $n=$numberOfLineItemsProcessed+1; $k<$n; $k++) {
-	  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"] = str_replace(array('&','=','%'), '*', $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]);
-	  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"] = zen_clean_html($optionsLI["L_PAYMENTREQUEST_0_NAME$k"], 'strong');
-	  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]   = substr($optionsLI["L_PAYMENTREQUEST_0_NAME$k"], 0, 127);
-	  $optionsLI["L_PAYMENTREQUEST_0_AMT$k"] = round($optionsLI["L_PAYMENTREQUEST_0_AMT$k"], 2);
-
-	  if (isset($optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"])) {
-		if ($optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"] == '') {
-		  unset($optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"]);
-		} else {
-		  $optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"] = str_replace(array('&','=','%'), '*', $optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"]);
-		  $optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"] = substr($optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"], 0, 127);
-		}
-	  }
-	}
-
-	// Sanity Check of line-item subtotals
-	for ($j=0; $j<$k; $j++) {
-	  $itemAMT = $optionsLI["L_PAYMENTREQUEST_0_AMT$j"];
-	  $itemQTY = $optionsLI["L_PAYMENTREQUEST_0_QTY$j"];
-	  $itemTAX = (isset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$j"]) ? $optionsLI["L_PAYMENTREQUEST_0_TAXAMT$j"] : 0);
-	  $sumOfLineItems += ($itemQTY * $itemAMT);
-	  $sumOfLineTax += ($itemQTY * $itemTAX);
-	}
-	$sumOfLineItems = round($sumOfLineItems, 2);
-	$sumOfLineTax = round($sumOfLineTax, 2);
-
-	if ($sumOfLineItems == 0) {
+	  $optionsST = array();
+	  $optionsLI = array();
+	  $optionsNB = array();
+	  $numberOfLineItemsProcessed = 0;
+	  $creditsApplied = 0;
+	  $surcharges = 0;
+	  $sumOfLineItems = 0;
 	  $sumOfLineTax = 0;
-	  $optionsLI = array();
-	  $discountProblemsFlag = TRUE;
-	  if ($optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] == $optionsST['PAYMENTREQUEST_0_AMT']) {
-		$optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = 0;
+	  $optionsST['PAYMENTREQUEST_0_AMT'] = 0;
+	  $optionsST['PAYMENTREQUEST_0_ITEMAMT'] = 0;
+	  $optionsST['PAYMENTREQUEST_0_TAXAMT'] = 0;
+	  $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = 0;
+	  $optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] = 0;
+	  $optionsST['PAYMENTREQUEST_0_HANDLINGAMT'] = 0;
+	  $optionsST['PAYMENTREQUEST_0_INSURANCEAMT'] = 0;
+	  $flagSubtotalsUnknownYet = true;
+	  $subTotalLI = 0;
+	  $subTotalTax = 0;
+	  $subTotalShipping = 0;
+	  $subtotalPRE = array('no data');
+	  $discountProblemsFlag = FALSE;
+	  $flag_treat_as_partial = FALSE;
+
+	  if (sizeof($order_totals)) {
+		  // prepare subtotals
+		  for ($i=0, $n=sizeof($order_totals); $i<$n; $i++) {
+			  if ($order_totals[$i]['code'] == '') continue;
+			  if (in_array($order_totals[$i]['code'], array('ot_total','ot_subtotal','ot_tax','ot_shipping')) || strstr($order_totals[$i]['code'], 'insurance')) {
+				  if ($order_totals[$i]['code'] == 'ot_shipping') $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = round($order_totals[$i]['value'],2);
+				  if ($order_totals[$i]['code'] == 'ot_total')    $optionsST['PAYMENTREQUEST_0_AMT']         = round($order_totals[$i]['value'],2);
+				  if ($order_totals[$i]['code'] == 'ot_tax')      $optionsST['PAYMENTREQUEST_0_TAXAMT']     += round($order_totals[$i]['value'],2);
+				  if ($order_totals[$i]['code'] == 'ot_subtotal') $optionsST['PAYMENTREQUEST_0_ITEMAMT']     = round($order_totals[$i]['value'],2);
+				  if (strstr($order_totals[$i]['code'], 'insurance')) $optionsST['PAYMENTREQUEST_0_INSURANCEAMT'] += round($order_totals[$i]['value'],2);
+				  //$optionsST['SHIPDISCAMT'] = '';  // Not applicable
+			  } else {
+				  // handle other order totals:
+				  global ${$order_totals[$i]['code']};
+				  if ((substr($order_totals[$i]['text'], 0, 1) == '-') || (isset(${$order_totals[$i]['code']}->credit_class) && ${$order_totals[$i]['code']}->credit_class == true)) {
+					  // handle credits
+					  $creditsApplied += round($order_totals[$i]['value'], 2);
+				  } else {
+					  // treat all other OT's as if they're related to handling fees or other extra charges to be added/included
+					  $surcharges += $order_totals[$i]['value'];
+				  }
+			  }
+		  }
+
+		  $this->ot_merge = array();
+		  $this->notify('NOTIFY_PAYMENT_PAYPALEC_SUBTOTALS_TAX', $order, $order_totals);
+		  if (sizeof($this->ot_merge)) $optionsST = array_merge($optionsST, $this->ot_merge);
+
+		  if ($creditsApplied > 0) $optionsST['PAYMENTREQUEST_0_ITEMAMT'] -= $creditsApplied;
+		  if ($surcharges > 0) $optionsST['PAYMENTREQUEST_0_ITEMAMT'] += $surcharges;
+
+		  // Handle tax-included scenario
+		  if (DISPLAY_PRICE_WITH_TAX == 'true') $optionsST['PAYMENTREQUEST_0_TAXAMT'] = 0;
+
+		  $subtotalPRE = $optionsST;
+		  // Move shipping tax amount from Tax subtotal into Shipping subtotal for submission to PayPal, since PayPal applies tax to each line-item individually
+		  $module = substr($_SESSION['shipping']['id'], 0, strpos($_SESSION['shipping']['id'], '_'));
+		  if (zen_not_null($order->info['shipping_method']) && DISPLAY_PRICE_WITH_TAX != 'true') {
+			  if ($GLOBALS[$module]->tax_class > 0) {
+				  $shipping_tax_basis = (!isset($GLOBALS[$module]->tax_basis)) ? STORE_SHIPPING_TAX_BASIS : $GLOBALS[$module]->tax_basis;
+				  $shippingOnBilling = zen_get_tax_rate($GLOBALS[$module]->tax_class, $order->billing['country']['id'], $order->billing['zone_id']);
+				  $shippingOnDelivery = zen_get_tax_rate($GLOBALS[$module]->tax_class, $order->delivery['country']['id'], $order->delivery['zone_id']);
+				  if ($shipping_tax_basis == 'Billing') {
+					  $shipping_tax = $shippingOnBilling;
+				  } elseif ($shipping_tax_basis == 'Shipping') {
+					  $shipping_tax = $shippingOnDelivery;
+				  } else {
+					  if (STORE_ZONE == $order->billing['zone_id']) {
+						  $shipping_tax = $shippingOnBilling;
+					  } elseif (STORE_ZONE == $order->delivery['zone_id']) {
+						  $shipping_tax = $shippingOnDelivery;
+					  } else {
+						  $shipping_tax = 0;
+					  }
+				  }
+				  $taxAdjustmentForShipping = zen_round(zen_calculate_tax($order->info['shipping_cost'], $shipping_tax), $currencies->currencies[$_SESSION['currency']]['decimal_places']);
+				  $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] += $taxAdjustmentForShipping;
+				  $optionsST['PAYMENTREQUEST_0_TAXAMT'] -= $taxAdjustmentForShipping;
+			  }
+		  }
+		  $flagSubtotalsUnknownYet = (($optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] + $optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] + $optionsST['PAYMENTREQUEST_0_AMT'] + $optionsST['PAYMENTREQUEST_0_TAXAMT'] + $optionsST['PAYMENTREQUEST_0_ITEMAMT'] + $optionsST['PAYMENTREQUEST_0_INSURANCEAMT']) == 0);
+	  } else {
+		  // if we get here, we don't have any order-total information yet because the customer has clicked Express before starting normal checkout flow
+		  // thus, we must make a note to manually calculate subtotals, rather than relying on the more robust order-total infrastructure
+		  $flagSubtotalsUnknownYet = TRUE;
 	  }
-	}
 
-	// disable line-item tax details, leaving only TAXAMT subtotal as tax indicator
-	for ($k=0, $n=$numberOfLineItemsProcessed+1; $k<$n; $k++) {
-	  if (isset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"])) unset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"]);
-	}
-	// if ITEMAMT >0 and subTotalLI > 0 and they're not equal ... OR subTotalLI minus sumOfLineItems isn't 0
-	// check subtotals
-	if ((strval($optionsST['PAYMENTREQUEST_0_ITEMAMT']) > 0 && strval($subTotalLI) > 0 && strval($subTotalLI) != strval($optionsST['PAYMENTREQUEST_0_ITEMAMT'])) || strval($subTotalLI) - strval($sumOfLineItems) != 0) {
-	  $this->zcLog('getLineItemDetails 5', 'Line-item subtotals do not add up properly. Line-item-details skipped.' . "\n" . strval($sumOfLineItems) . ' ' . strval($subTotalLI) . ' ' . print_r(array_merge($optionsST, $optionsLI), true));
-	  $optionsLI = array();
-	  $optionsLI["L_PAYMENTREQUEST_0_NAME0"] = MODULES_PAYMENT_PAYPALWPP_AGGREGATE_CART_CONTENTS;
-	  $optionsLI["L_PAYMENTREQUEST_0_AMT0"]  = $sumOfLineItems = $subTotalLI = $optionsST['PAYMENTREQUEST_0_ITEMAMT'];
-	}
+	  $decimals = $currencies->get_decimal_places($_SESSION['currency']);
 
-	// check whether discounts are causing a problem
-	if (strval($optionsST['PAYMENTREQUEST_0_ITEMAMT']) <= 0) {
-	  $pre = array ( 'ST' => $optionsST, 'LI' => $optionsLI );
-	  $optionsST['PAYMENTREQUEST_0_ITEMAMT'] = $optionsST['PAYMENTREQUEST_0_AMT'];
-	  $optionsLI = array();
-	  $optionsLI["L_PAYMENTREQUEST_0_NAME0"] = MODULES_PAYMENT_PAYPALWPP_AGGREGATE_CART_CONTENTS;
-	  $optionsLI["L_PAYMENTREQUEST_0_AMT0"]  = $sumOfLineItems = $subTotalLI = $optionsST['PAYMENTREQUEST_0_ITEMAMT'];
+	  // loop thru all products to prepare details of quantity and price.
+	  for ($i=0, $n=sizeof($order->products), $k=-1; $i<$n; $i++) {
+		  // PayPal is inconsistent in how it handles zero-value line-items, so skip this entry if price is zero
+		  if ($order->products[$i]['final_price'] == 0) {
+			  continue;
+		  } else {
+			  $k++;
+		  }
+
+		  $optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"] = $order->products[$i]['model'];
+		  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]   = $order->products[$i]['name'] . ' [' . (int)$order->products[$i]['id'] . ']';
+		  // Append *** if out-of-stock.
+		  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]  .= ((zen_get_products_stock($order->products[$i]['id']) - $order->products[$i]['qty']) < 0 ? STOCK_MARK_PRODUCT_OUT_OF_STOCK : '');
+		  // if there are attributes, loop thru them and add to description
+		  if (isset($order->products[$i]['attributes']) && sizeof($order->products[$i]['attributes']) > 0 ) {
+			  for ($j=0, $n2=sizeof($order->products[$i]['attributes']); $j<$n2; $j++) {
+				  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"] .= "\n " . $order->products[$i]['attributes'][$j]['option'] .
+					  ': ' . $order->products[$i]['attributes'][$j]['value'];
+			  } // end loop
+		  } // endif attribute-info
+
+		  // PayPal can't handle fractional-quantity values, so convert it to qty 1 here
+		  if (is_float($order->products[$i]['qty']) && ($order->products[$i]['qty'] != (int)$order->products[$i]['qty'] || $flag_treat_as_partial)) {
+			  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"] = '('.$order->products[$i]['qty'].' x ) ' . $optionsLI["L_PAYMENTREQUEST_0_NAME$k"];
+			  // zen_add_tax already handles whether DISPLAY_PRICES_WITH_TAX is set
+			  $optionsLI["L_PAYMENTREQUEST_0_AMT$k"] = zen_round(zen_round(zen_add_tax($order->products[$i]['final_price'], $order->products[$i]['tax']), $decimals) * $order->products[$i]['qty'], $decimals);
+			  $optionsLI["L_PAYMENTREQUEST_0_QTY$k"] = 1;
+			  // no line-item tax component
+		  } else {
+			  $optionsLI["L_PAYMENTREQUEST_0_QTY$k"] = $order->products[$i]['qty'];
+			  $optionsLI["L_PAYMENTREQUEST_0_AMT$k"] = zen_round(zen_add_tax($order->products[$i]['final_price'], $order->products[$i]['tax']), $decimals);
+		  }
+
+		  $subTotalLI += ($optionsLI["L_PAYMENTREQUEST_0_QTY$k"] * $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]);
+		  //      $subTotalTax += ($optionsLI["L_PAYMENTREQUEST_0_QTY$k"] * $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]);
+
+		  // add line-item for one-time charges on this product
+		  if ($order->products[$i]['onetime_charges'] != 0 ) {
+			  $k++;
+			  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]   = MODULES_PAYMENT_PAYPALWPP_LINEITEM_TEXT_ONETIME_CHARGES_PREFIX . substr(htmlentities($order->products[$i]['name'], ENT_QUOTES, 'UTF-8'), 0, 120);
+			  $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]    = zen_round(zen_add_tax($order->products[$i]['onetime_charges'], $order->products[$i]['tax']), $decimals);
+			  $optionsLI["L_PAYMENTREQUEST_0_QTY$k"]    = 1;
+			  //        $optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"] = zen_round(zen_calculate_tax($order->products[$i]['onetime_charges'], $order->products[$i]['tax']), $decimals);
+			  $subTotalLI += $optionsLI["L_PAYMENTREQUEST_0_AMT$k"];
+			  //        $subTotalTax += $optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"];
+		  }
+		  $numberOfLineItemsProcessed = $k;
+
+		  $this->notify('NOTIFY_PAYPALWPP_GETLINEITEMDETAILS', $numberOfLineItemsProcessed, $optionsLI);
+
+	  }  // end for loopthru all products
+
+	  // add line items for any surcharges added by order-total modules
+	  if ($surcharges > 0) {
+		  $numberOfLineItemsProcessed++;
+		  $k = $numberOfLineItemsProcessed;
+		  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"] = MODULES_PAYMENT_PAYPALWPP_LINEITEM_TEXT_SURCHARGES_LONG;
+		  $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]  = $surcharges;
+		  $optionsLI["L_PAYMENTREQUEST_0_QTY$k"]  = 1;
+		  $subTotalLI += $surcharges;
+	  }
+
+	  // add line items for discounts such as gift certificates and coupons
+	  if ($creditsApplied > 0) {
+		  $numberOfLineItemsProcessed++;
+		  $k = $numberOfLineItemsProcessed;
+		  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]   = MODULES_PAYMENT_PAYPALWPP_LINEITEM_TEXT_DISCOUNTS_LONG;
+		  $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]    = (-1 * $creditsApplied);
+		  $optionsLI["L_PAYMENTREQUEST_0_QTY$k"]    = 1;
+		  $subTotalLI -= $creditsApplied;
+	  }
+
+	  // Reformat properly
+	  // Replace & and = and % with * if found.
+	  // reformat properly according to API specs
+	  // Remove HTML markup from name if found
+	  for ($k=0, $n=$numberOfLineItemsProcessed+1; $k<$n; $k++) {
+		  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"] = str_replace(array('&','=','%'), '*', $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]);
+		  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"] = zen_clean_html($optionsLI["L_PAYMENTREQUEST_0_NAME$k"], 'strong');
+		  $optionsLI["L_PAYMENTREQUEST_0_NAME$k"]   = substr($optionsLI["L_PAYMENTREQUEST_0_NAME$k"], 0, 127);
+		  $optionsLI["L_PAYMENTREQUEST_0_AMT$k"] = round($optionsLI["L_PAYMENTREQUEST_0_AMT$k"], 2);
+
+		  if (isset($optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"])) {
+			  if ($optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"] == '') {
+				  unset($optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"]);
+			  } else {
+				  $optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"] = str_replace(array('&','=','%'), '*', $optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"]);
+				  $optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"] = substr($optionsLI["L_PAYMENTREQUEST_0_NUMBER$k"], 0, 127);
+			  }
+		  }
+	  }
+
+	  // Sanity Check of line-item subtotals
+	  for ($j=0; $j<$k; $j++) {
+		  $itemAMT = $optionsLI["L_PAYMENTREQUEST_0_AMT$j"];
+		  $itemQTY = $optionsLI["L_PAYMENTREQUEST_0_QTY$j"];
+		  $itemTAX = (isset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$j"]) ? $optionsLI["L_PAYMENTREQUEST_0_TAXAMT$j"] : 0);
+		  $sumOfLineItems += ($itemQTY * $itemAMT);
+		  $sumOfLineTax += ($itemQTY * $itemTAX);
+	  }
+	  $sumOfLineItems = round($sumOfLineItems, 2);
+	  $sumOfLineTax = round($sumOfLineTax, 2);
+
+	  if ($sumOfLineItems == 0) {
+		  $sumOfLineTax = 0;
+		  $optionsLI = array();
+		  $discountProblemsFlag = TRUE;
+		  if ($optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] == $optionsST['PAYMENTREQUEST_0_AMT']) {
+			  $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = 0;
+		  }
+	  }
+
+	  // disable line-item tax details, leaving only TAXAMT subtotal as tax indicator
+	  for ($k=0, $n=$numberOfLineItemsProcessed+1; $k<$n; $k++) {
+		  if (isset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"])) unset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"]);
+	  }
+	  // if ITEMAMT >0 and subTotalLI > 0 and they're not equal ... OR subTotalLI minus sumOfLineItems isn't 0
+	  // check subtotals
+	  if ((strval($optionsST['PAYMENTREQUEST_0_ITEMAMT']) > 0 && strval($subTotalLI) > 0 && strval($subTotalLI) != strval($optionsST['PAYMENTREQUEST_0_ITEMAMT'])) || strval($subTotalLI) - strval($sumOfLineItems) != 0) {
+		  $this->zcLog('getLineItemDetails 5', 'Line-item subtotals do not add up properly. Line-item-details skipped.' . "\n" . strval($sumOfLineItems) . ' ' . strval($subTotalLI) . ' ' . print_r(array_merge($optionsST, $optionsLI), true));
+		  $optionsLI = array();
+		  $optionsLI["L_PAYMENTREQUEST_0_NAME0"] = MODULES_PAYMENT_PAYPALWPP_AGGREGATE_CART_CONTENTS;
+		  $optionsLI["L_PAYMENTREQUEST_0_AMT0"]  = $sumOfLineItems = $subTotalLI = $optionsST['PAYMENTREQUEST_0_ITEMAMT'];
+	  }
+
+	  // check whether discounts are causing a problem
+	  if (strval($optionsST['PAYMENTREQUEST_0_ITEMAMT']) <= 0) {
+		  $pre = array ( 'ST' => $optionsST, 'LI' => $optionsLI );
+		  $optionsST['PAYMENTREQUEST_0_ITEMAMT'] = $optionsST['PAYMENTREQUEST_0_AMT'];
+		  $optionsLI = array();
+		  $optionsLI["L_PAYMENTREQUEST_0_NAME0"] = MODULES_PAYMENT_PAYPALWPP_AGGREGATE_CART_CONTENTS;
+		  $optionsLI["L_PAYMENTREQUEST_0_AMT0"]  = $sumOfLineItems = $subTotalLI = $optionsST['PAYMENTREQUEST_0_ITEMAMT'];
 	  /*if ($optionsST['AMT'] < $optionsST['TAXAMT']) */ $optionsST['PAYMENTREQUEST_0_TAXAMT'] = 0;
 	  /*if ($optionsST['AMT'] < $optionsST['SHIPPINGAMT']) */ $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = 0;
 	  $discountProblemsFlag = TRUE;
 	  $this->zcLog('getLineItemDetails 6', 'Discounts have caused the subtotal to calculate incorrectly. Line-item-details cannot be submitted.' . "\nBefore:" . print_r($pre, TRUE) . "\nAfter:" . print_r(array_merge($optionsST, $optionsLI), true));
-	}
-
-	// if AMT or ITEMAMT values are 0 (ie: certain OT modules disabled) or we've started express checkout without going through normal checkout flow, we have to get subtotals manually
-	if ((!isset($optionsST['PAYMENTREQUEST_0_AMT']) || $optionsST['PAYMENTREQUEST_0_AMT'] == 0 || $flagSubtotalsUnknownYet == TRUE || $optionsST['PAYMENTREQUEST_0_ITEMAMT'] == 0) && $discountProblemsFlag != TRUE) {
-	  $optionsST['PAYMENTREQUEST_0_ITEMAMT'] = $sumOfLineItems;
-	  $optionsST['PAYMENTREQUEST_0_TAXAMT'] = $sumOfLineTax;
-	  if ($subTotalShipping > 0) $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = $subTotalShipping;
-	  $optionsST['PAYMENTREQUEST_0_AMT'] = $sumOfLineItems + $optionsST['PAYMENTREQUEST_0_TAXAMT'] + $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'];
-	}
-	$this->zcLog('getLineItemDetails 7 - subtotal comparisons', 'BEFORE line-item calcs: ' . print_r($subtotalPRE, true) . ($flagSubtotalsUnknownYet == TRUE ? 'Subtotals Unknown Yet - ' : '') . 'AFTER doing line-item calcs: ' . print_r(array_merge($optionsST, $optionsLI, $optionsNB), true));
-
-	// if subtotals are not adding up correctly, then skip sending any line-item or subtotal details to PayPal
-	$stAll = round(strval($optionsST['PAYMENTREQUEST_0_ITEMAMT'] + $optionsST['PAYMENTREQUEST_0_TAXAMT'] + $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] + $optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] + $optionsST['PAYMENTREQUEST_0_HANDLINGAMT'] + $optionsST['PAYMENTREQUEST_0_INSURANCEAMT']), 2);
-	$stDiff = strval($optionsST['PAYMENTREQUEST_0_AMT'] - $stAll);
-	$stDiffRounded = (strval($stAll - round($optionsST['PAYMENTREQUEST_0_AMT'], 2)) + 0);
-
-	// unset any subtotal values that are zero
-	if (isset($optionsST['PAYMENTREQUEST_0_ITEMAMT']) && $optionsST['PAYMENTREQUEST_0_ITEMAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_ITEMAMT']);
-	if (isset($optionsST['PAYMENTREQUEST_0_TAXAMT']) && $optionsST['PAYMENTREQUEST_0_TAXAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_TAXAMT']);
-	if (isset($optionsST['PAYMENTREQUEST_0_SHIPPINGAMT']) && $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_SHIPPINGAMT']);
-	if (isset($optionsST['PAYMENTREQUEST_0_SHIPDISCAMT']) && $optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_SHIPDISCAMT']);
-	if (isset($optionsST['PAYMENTREQUEST_0_HANDLINGAMT']) && $optionsST['PAYMENTREQUEST_0_HANDLINGAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_HANDLINGAMT']);
-	if (isset($optionsST['PAYMENTREQUEST_0_INSURANCEAMT']) && $optionsST['PAYMENTREQUEST_0_INSURANCEAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_INSURANCEAMT']);
-
-	// tidy up all values so that they comply with proper format (number_format(xxxx,2) for PayPal US use )
-	if (!defined('PAYPALWPP_SKIP_LINE_ITEM_DETAIL_FORMATTING') || PAYPALWPP_SKIP_LINE_ITEM_DETAIL_FORMATTING != 'true' || in_array($order->info['currency'], array('JPY', 'NOK', 'HUF', 'TWD'))) {
-	  if (is_array($optionsST)) foreach ($optionsST as $key=>$value) {
-		$optionsST[$key] = number_format($value, ((int)$currencies->get_decimal_places($restrictedCurrency) == 0 ? 0 : 2));
 	  }
-	  if (is_array($optionsLI)) foreach ($optionsLI as $key=>$value) {
-		if (substr($key, -6) == 'TAXAMT' && ($optionsLI[$key] == '' || $optionsLI[$key] == 0)) {
-		  unset($optionsLI[$key]);
-		} else {
-		  if (strstr($key, 'AMT')) $optionsLI[$key] = number_format($value, ((int)$currencies->get_decimal_places($restrictedCurrency) == 0 ? 0 : 2));
-		}
+
+	  // if AMT or ITEMAMT values are 0 (ie: certain OT modules disabled) or we've started express checkout without going through normal checkout flow, we have to get subtotals manually
+	  if ((!isset($optionsST['PAYMENTREQUEST_0_AMT']) || $optionsST['PAYMENTREQUEST_0_AMT'] == 0 || $flagSubtotalsUnknownYet == TRUE || $optionsST['PAYMENTREQUEST_0_ITEMAMT'] == 0) && $discountProblemsFlag != TRUE) {
+		  $optionsST['PAYMENTREQUEST_0_ITEMAMT'] = $sumOfLineItems;
+		  $optionsST['PAYMENTREQUEST_0_TAXAMT'] = $sumOfLineTax;
+		  if ($subTotalShipping > 0) $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = $subTotalShipping;
+		  $optionsST['PAYMENTREQUEST_0_AMT'] = $sumOfLineItems + $optionsST['PAYMENTREQUEST_0_TAXAMT'] + $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'];
 	  }
-	}
+	  $this->zcLog('getLineItemDetails 7 - subtotal comparisons', 'BEFORE line-item calcs: ' . print_r($subtotalPRE, true) . ($flagSubtotalsUnknownYet == TRUE ? 'Subtotals Unknown Yet - ' : '') . 'AFTER doing line-item calcs: ' . print_r(array_merge($optionsST, $optionsLI, $optionsNB), true));
 
-	$this->zcLog('getLineItemDetails 8', 'checking subtotals... ' . "\n" . print_r(array_merge(array('calculated total'=>number_format($stAll, ((int)$currencies->get_decimal_places($restrictedCurrency) == 0 ? 0 : 2))), $optionsST), true) . "\n-------------------\ndifference: " . ($stDiff + 0) . '  (abs+rounded: ' . ($stDiffRounded + 0) . ')');
+	  // if subtotals are not adding up correctly, then skip sending any line-item or subtotal details to PayPal
+	  $stAll = round(strval($optionsST['PAYMENTREQUEST_0_ITEMAMT'] + $optionsST['PAYMENTREQUEST_0_TAXAMT'] + $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] + $optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] + $optionsST['PAYMENTREQUEST_0_HANDLINGAMT'] + $optionsST['PAYMENTREQUEST_0_INSURANCEAMT']), 2);
+	  $stDiff = strval($optionsST['PAYMENTREQUEST_0_AMT'] - $stAll);
+	  $stDiffRounded = (strval($stAll - round($optionsST['PAYMENTREQUEST_0_AMT'], 2)) + 0);
 
-	if ( $stDiffRounded != 0) {
-	  $this->zcLog('getLineItemDetails 9', 'Subtotals Bad. Skipping line-item/subtotal details');
-	  return array();
-	}
+	  // unset any subtotal values that are zero
+	  if (isset($optionsST['PAYMENTREQUEST_0_ITEMAMT']) && $optionsST['PAYMENTREQUEST_0_ITEMAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_ITEMAMT']);
+	  if (isset($optionsST['PAYMENTREQUEST_0_TAXAMT']) && $optionsST['PAYMENTREQUEST_0_TAXAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_TAXAMT']);
+	  if (isset($optionsST['PAYMENTREQUEST_0_SHIPPINGAMT']) && $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_SHIPPINGAMT']);
+	  if (isset($optionsST['PAYMENTREQUEST_0_SHIPDISCAMT']) && $optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_SHIPDISCAMT']);
+	  if (isset($optionsST['PAYMENTREQUEST_0_HANDLINGAMT']) && $optionsST['PAYMENTREQUEST_0_HANDLINGAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_HANDLINGAMT']);
+	  if (isset($optionsST['PAYMENTREQUEST_0_INSURANCEAMT']) && $optionsST['PAYMENTREQUEST_0_INSURANCEAMT'] == 0) unset($optionsST['PAYMENTREQUEST_0_INSURANCEAMT']);
 
-	$this->zcLog('getLineItemDetails 10', 'subtotals balance - okay');
+	  // tidy up all values so that they comply with proper format (number_format(xxxx,2) for PayPal US use )
+	  if (!defined('PAYPALWPP_SKIP_LINE_ITEM_DETAIL_FORMATTING') || PAYPALWPP_SKIP_LINE_ITEM_DETAIL_FORMATTING != 'true' || in_array($order->info['currency'], array('JPY', 'NOK', 'HUF', 'TWD'))) {
+		  if (is_array($optionsST)) foreach ($optionsST as $key=>$value) {
+			  $optionsST[$key] = number_format($value, ((int)$currencies->get_decimal_places($restrictedCurrency) == 0 ? 0 : 2));
+		  }
+		  if (is_array($optionsLI)) foreach ($optionsLI as $key=>$value) {
+			  if (substr($key, -6) == 'TAXAMT' && ($optionsLI[$key] == '' || $optionsLI[$key] == 0)) {
+				  unset($optionsLI[$key]);
+			  } else {
+				  if (strstr($key, 'AMT')) $optionsLI[$key] = number_format($value, ((int)$currencies->get_decimal_places($restrictedCurrency) == 0 ? 0 : 2));
+			  }
+		  }
+	  }
 
-	// Send Subtotal and LineItem results back to be submitted to PayPal
-	return array_merge($optionsST, $optionsLI, $optionsNB);
+	  $this->zcLog('getLineItemDetails 8', 'checking subtotals... ' . "\n" . print_r(array_merge(array('calculated total'=>number_format($stAll, ((int)$currencies->get_decimal_places($restrictedCurrency) == 0 ? 0 : 2))), $optionsST), true) . "\n-------------------\ndifference: " . ($stDiff + 0) . '  (abs+rounded: ' . ($stDiffRounded + 0) . ')');
+
+	  if ( $stDiffRounded != 0) {
+		  $this->zcLog('getLineItemDetails 9', 'Subtotals Bad. Skipping line-item/subtotal details');
+		  return array();
+	  }
+
+	  $this->zcLog('getLineItemDetails 10', 'subtotals balance - okay');
+
+	  // Send Subtotal and LineItem results back to be submitted to PayPal
+	  return array_merge($optionsST, $optionsLI, $optionsNB);
   }
 
 
