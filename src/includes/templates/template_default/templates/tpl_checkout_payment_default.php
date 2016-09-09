@@ -46,9 +46,7 @@
 <?php
   if (MODULE_ORDER_TOTAL_INSTALLED) {
     $order_totals = $order_total_modules->process();
-?>
-<?php $order_total_modules->output(); ?>
-<?php
+	$order_total_modules->output(); 
   }
 ?>
 </fieldset>

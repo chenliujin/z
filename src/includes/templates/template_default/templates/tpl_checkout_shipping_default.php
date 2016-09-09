@@ -71,7 +71,7 @@ tr td {
 			</td>
 			<td><label for="ship-<?php echo $quote['id'] . '-' . str_replace(' ', '-', $quote['methods'][0]['id']); ?>" class="checkboxLabel" ><img src="<?php echo $quote['icon']; ?>" width="100" /></label></td>
 			<td><label for="ship-<?php echo $quote['id'] . '-' . str_replace(' ', '-', $quote['methods'][0]['id']); ?>" class="checkboxLabel" ><?php echo $quote['module']; ?></label></td>
-			<td><div class="important forward"><?php echo $currencies->format(zen_add_tax($quote['methods'][0]['cost'], 0)); ?></div></td>
+			<td><div class="important forward price"><?php echo $currencies->format(zen_add_tax($quote['methods'][0]['cost'], 0)); ?></div></td>
 		</tr>
 		<?php
 	}
