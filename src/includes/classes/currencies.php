@@ -40,23 +40,33 @@ class currencies extends base {
 		}
 	}
 
-	// class methods
-	function format($number, $calculate_currency_value = true, $currency_type = '', $currency_value = '') {
-
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-09
+	 */
+	public function format($number, $calculate_currency_value = true, $currency_type = '', $currency_value = '')
+	{
 		if (empty($currency_type)) $currency_type = (isset($_SESSION['currency']) ? $_SESSION['currency'] : DEFAULT_CURRENCY);
 
 		if ($calculate_currency_value == true) {
 			$rate = (zen_not_null($currency_value)) ? $currency_value : $this->currencies[$currency_type]['value'];
-			$format_string = $this->currencies[$currency_type]['symbol_left'] . number_format(zen_round($number * $rate, $this->currencies[$currency_type]['decimal_places']), $this->currencies[$currency_type]['decimal_places'], $this->currencies[$currency_type]['decimal_point'], $this->currencies[$currency_type]['thousands_point']) . $this->currencies[$currency_type]['symbol_right'];
+			$format_string = $this->currencies[$currency_type]['symbol_left'] 
+				. number_format(
+					zen_round($number * $rate, $this->currencies[$currency_type]['decimal_places']), 
+					$this->currencies[$currency_type]['decimal_places'], 
+					$this->currencies[$currency_type]['decimal_point'], 
+					$this->currencies[$currency_type]['thousands_point']) 
+				. $this->currencies[$currency_type]['symbol_right'];
 
 			// Special Case: if the selected currency is in the european euro-conversion and the default currency is euro,
 			// then the currency will displayed in both the national currency and euro currency
 			if ( (DEFAULT_CURRENCY == 'EUR') && ($currency_type == 'DEM' || $currency_type == 'BEF' || $currency_type == 'LUF' || $currency_type == 'ESP' || $currency_type == 'FRF' || $currency_type == 'IEP' || $currency_type == 'ITL' || $currency_type == 'NLG' || $currency_type == 'ATS' || $currency_type == 'PTE' || $currency_type == 'FIM' || $currency_type == 'GRD') ) {
 				$format_string .= ' <small>[' . $this->format($number, true, 'EUR') . ']</small>';
 			}
-
 		} else {
-			$format_string = $this->currencies[$currency_type]['symbol_left'] . number_format(zen_round($number, $this->currencies[$currency_type]['decimal_places']), $this->currencies[$currency_type]['decimal_places'], $this->currencies[$currency_type]['decimal_point'], $this->currencies[$currency_type]['thousands_point']) . $this->currencies[$currency_type]['symbol_right'];
+			$format_string = $this->currencies[$currency_type]['symbol_left'] 
+				. number_format(zen_round($number, $this->currencies[$currency_type]['decimal_places']), $this->currencies[$currency_type]['decimal_places'], $this->currencies[$currency_type]['decimal_point'], $this->currencies[$currency_type]['thousands_point']) 
+				. $this->currencies[$currency_type]['symbol_right'];
 		}
 
 		if (IS_ADMIN_FLAG === false && (DOWN_FOR_MAINTENANCE=='true' and DOWN_FOR_MAINTENANCE_PRICES_OFF=='true') and (!strstr(EXCLUDE_ADMIN_IP_FOR_MAINTENANCE, $_SERVER['REMOTE_ADDR']))) {
@@ -66,8 +76,12 @@ class currencies extends base {
 		return $format_string;
 	}
 
-	function rateAdjusted($number, $calculate_currency_value = true, $currency_type = '', $currency_value = '') {
-
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-09
+	 */
+	public function rateAdjusted($number, $calculate_currency_value = true, $currency_type = '', $currency_value = '') 
+	{ 
 		if (empty($currency_type)) $currency_type = (isset($_SESSION['currency']) ? $_SESSION['currency'] : DEFAULT_CURRENCY);
 
 		if ($calculate_currency_value == true) {
@@ -76,6 +90,7 @@ class currencies extends base {
 		} else {
 			$result = zen_round($number, $this->currencies[$currency_type]['decimal_places']);
 		}
+
 		return $result;
 	}
 
