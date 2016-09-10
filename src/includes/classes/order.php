@@ -371,33 +371,6 @@ class order extends base {
 			'ip_address' => $_SESSION['customers_ip_address'] . ' - ' . $_SERVER['REMOTE_ADDR']
 		);
 
-		//print_r($GLOBALS[$class]);
-		//echo $class;
-		//print_r($GLOBALS);
-		//echo $_SESSION['payment'];
-	/*
-	// this is set above to the module filename it should be set to the module title like Checks/Money Order rather than moneyorder
-	if (isset(${$_SESSION['payment']}) && is_object(${$_SESSION['payment']})) {
-	$this->info['payment_method'] = ${$_SESSION['payment']}->title;
-	}
-	 */
-
-/*
-// bof: move below calculations
-	if ($this->info['total'] == 0) {
-	  if (DEFAULT_ZERO_BALANCE_ORDERS_STATUS_ID == 0) {
-		$this->info['order_status'] = DEFAULT_ORDERS_STATUS_ID;
-	  } else {
-		$this->info['order_status'] = DEFAULT_ZERO_BALANCE_ORDERS_STATUS_ID;
-	  }
-	}
-	if (isset($GLOBALS[$class]) && is_object($GLOBALS[$class])) {
-	  if ( isset($GLOBALS[$class]->order_status) && is_numeric($GLOBALS[$class]->order_status) && ($GLOBALS[$class]->order_status > 0) ) {
-		$this->info['order_status'] = $GLOBALS[$class]->order_status;
-	  }
-	}
-// eof: move below calculations
- */
 		$this->customer = array('firstname' => $customer_address->fields['customers_firstname'],
 			'lastname' => $customer_address->fields['customers_lastname'],
 			'company' => $customer_address->fields['entry_company'],
