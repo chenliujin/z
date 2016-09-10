@@ -11,13 +11,18 @@
 class ot_total {
 	var $title, $output;
 
-	function __construct() {
-		$this->code = 'ot_total';
-		$this->title = MODULE_ORDER_TOTAL_TOTAL_TITLE;
-		$this->description = MODULE_ORDER_TOTAL_TOTAL_DESCRIPTION;
-		$this->sort_order = MODULE_ORDER_TOTAL_TOTAL_SORT_ORDER;
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-10
+	 */
+	public function __construct() 
+	{
+		$this->code 		= 'ot_total';
+		$this->title 		= MODULE_ORDER_TOTAL_TOTAL_TITLE;
+		$this->description 	= MODULE_ORDER_TOTAL_TOTAL_DESCRIPTION;
+		$this->sort_order 	= MODULE_ORDER_TOTAL_TOTAL_SORT_ORDER;
 
-		$this->output = array();
+		$this->output = [];
 	}
 
 	/**

@@ -666,13 +666,14 @@ class order extends base {
 		$this->notify('NOTIFY_ORDER_DURING_CREATE_ADDED_ORDER_HEADER', array_merge(array('orders_id' => $insert_id, 'shipping_weight' => $_SESSION['cart']->weight), $sql_data_array), $insert_id);
 
 		for ($i=0, $n=sizeof($zf_ot_modules); $i<$n; $i++) {
-			$sql_data_array = array('orders_id' => $insert_id,
-				'title' => $zf_ot_modules[$i]['title'],
-				'text' => $zf_ot_modules[$i]['text'],
-				'value' => (is_numeric($zf_ot_modules[$i]['value'])) ? $zf_ot_modules[$i]['value'] : '0',
-				'class' => $zf_ot_modules[$i]['code'],
-				'sort_order' => $zf_ot_modules[$i]['sort_order']);
-
+			$sql_data_array = [ 
+				'orders_id'		=> $insert_id,
+				'title'			=> $zf_ot_modules[$i]['title'],
+				'text'			=> $zf_ot_modules[$i]['text'],
+				'value'			=> (is_numeric($zf_ot_modules[$i]['value'])) ? $zf_ot_modules[$i]['value'] : '0',
+				'class'			=> $zf_ot_modules[$i]['code'],
+				'sort_order'	=> $zf_ot_modules[$i]['sort_order']
+				];
 			zen_db_perform(TABLE_ORDERS_TOTAL, $sql_data_array);
 			$ot_insert_id = $db->insert_ID();
 			$this->notify('NOTIFY_ORDER_DURING_CREATE_ADDED_ORDERTOTAL_LINE_ITEM', $sql_data_array, $ot_insert_id);
