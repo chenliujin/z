@@ -577,16 +577,6 @@ class order extends base {
 			$this->info['total'] = $this->info['subtotal'] + $this->info['tax'] + $this->info['shipping_cost'];
 		}
 
-/*
-// moved to function create
-	if ($this->info['total'] == 0) {
-	  if (DEFAULT_ZERO_BALANCE_ORDERS_STATUS_ID == 0) {
-		$this->info['order_status'] = DEFAULT_ORDERS_STATUS_ID;
-	  } else {
-		$this->info['order_status'] = DEFAULT_ZERO_BALANCE_ORDERS_STATUS_ID;
-	  }
-	}
- */
 		if (isset($GLOBALS[$class]) && is_object($GLOBALS[$class])) {
 			if ( isset($GLOBALS[$class]->order_status) && is_numeric($GLOBALS[$class]->order_status) && ($GLOBALS[$class]->order_status > 0) ) {
 				$this->info['order_status'] = $GLOBALS[$class]->order_status;
