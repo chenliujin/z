@@ -1262,13 +1262,13 @@ class paypalwpp extends base
 		$flag_treat_as_partial = FALSE;
 
 		$optionsST = [
-			'PAYMENTREQUEST_0_AMT'			=> 0,
-			'PAYMENTREQUEST_0_ITEMAMT'		=> 0,
-			'PAYMENTREQUEST_0_TAXAMT'		=> 0,
-			'PAYMENTREQUEST_0_SHIPPINGAMT'	=> 0,
-			'PAYMENTREQUEST_0_SHIPDISCAMT'	=> 0,
-			'PAYMENTREQUEST_0_HANDLINGAMT'	=> 0,
-			'PAYMENTREQUEST_0_INSURANCEAMT'	=> 0,
+			'PAYMENTREQUEST_0_AMT'			=> 0, //支付金额
+			'PAYMENTREQUEST_0_ITEMAMT'		=> 0, //产品金额
+			'PAYMENTREQUEST_0_TAXAMT'		=> 0, //税
+			'PAYMENTREQUEST_0_SHIPPINGAMT'	=> 0, //运费
+			'PAYMENTREQUEST_0_SHIPDISCAMT'	=> 0, //运费折扣
+			'PAYMENTREQUEST_0_HANDLINGAMT'	=> 0, //手续费
+			'PAYMENTREQUEST_0_INSURANCEAMT'	=> 0, //保险
 			];
 
 
@@ -1362,7 +1362,8 @@ class paypalwpp extends base
 				}
 			}
 
-			$flagSubtotalsUnknownYet = (($optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] 
+			$flagSubtotalsUnknownYet = ((
+				  $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] 
 				+ $optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] 
 				+ $optionsST['PAYMENTREQUEST_0_AMT'] 
 				+ $optionsST['PAYMENTREQUEST_0_TAXAMT'] 
@@ -1574,7 +1575,7 @@ class paypalwpp extends base
 		// if subtotals are not adding up correctly, then skip sending any line-item or subtotal details to PayPal
 		$stAll = round(
 			strval(
-				$optionsST['PAYMENTREQUEST_0_ITEMAMT'] 
+				  $optionsST['PAYMENTREQUEST_0_ITEMAMT'] 
 				+ $optionsST['PAYMENTREQUEST_0_TAXAMT'] 
 				+ $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] 
 				+ $optionsST['PAYMENTREQUEST_0_SHIPDISCAMT'] 
@@ -1626,7 +1627,7 @@ class paypalwpp extends base
 		if ( $stDiffRounded != 0 ) {
 			$this->zcLog('getLineItemDetails 9', 'Subtotals Bad. Skipping line-item/subtotal details');
 
-			throw new \Exception('Subtotal Bad');
+			//throw new \Exception('Subtotal Bad');
 
 			return array();
 		}
