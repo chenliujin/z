@@ -1307,6 +1307,7 @@ class paypalwpp extends base
 				} else {
 					// handle other order totals:
 					global ${$order_totals[$i]['code']};
+
 					if (
 						(substr($order_totals[$i]['text'], 0, 1) == '-') 
 						|| (isset(${$order_totals[$i]['code']}->credit_class) && ${$order_totals[$i]['code']}->credit_class == true)) 
@@ -1316,7 +1317,7 @@ class paypalwpp extends base
 					} else {
 						// treat all other OT's as if they're related to handling fees or other extra charges to be added/included
 						// 附加费
-						$surcharges += $order_totals[$i]['value'];
+						$surcharges += $value;
 					}
 				}
 			}
