@@ -50,20 +50,104 @@
 
 <table id="cartContentsDisplay">
 	 <tr class="tableHeading">
-		<th scope="col" id="scQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
-		<th scope="col" id="scUpdateQuantity">&nbsp;</th>
 		<th scope="col" id="scProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
 		<th scope="col" id="scUnitHeading"><?php echo TABLE_HEADING_PRICE; ?></th>
-		<th scope="col" id="scTotalHeading"><?php echo TABLE_HEADING_TOTAL; ?></th>
+		<th scope="col" id="scTotalHeading">
+			<!--
+			<?php echo TABLE_HEADING_TOTAL; ?>
+  			-->
+		</th>
 		<th scope="col" id="scRemoveHeading">&nbsp;</th>
+		<th scope="col" id="scQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
+		<th scope="col" id="scUpdateQuantity">&nbsp;</th>
 	 </tr>
 <?php
   foreach ($productArray as $product) {
 ?>
      <tr class="<?php echo $product['rowClass']; ?>">
 
-<?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-      //
+	   <td class="cartProductDisplay">
+			<a href="<?php echo $product['linkProductsName']; ?>">
+				<span class="cartImage back"><?php echo $product['productsImage']; ?></span>
+				<span class="text-bold size-medium"><?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?></span>
+			</a>
+			<br class="clearBoth" />
+<?php
+	  echo $product['attributeHiddenField'];
+	  if (isset($product['attributes']) && is_array($product['attributes'])) {
+		  echo '<div class="cartAttribsList">';
+		  echo '<ul>';
+		  reset($product['attributes']);
+		  foreach ($product['attributes'] as $option => $value) {
+?> 
+			<li><?php echo $value['products_options_name'] . TEXT_OPTION_DIVIDER . nl2br($value['products_options_values_name']); ?></li>
+<?php
+		  }
+		  echo '</ul>';
+		  echo '</div>';
+	  }
+?>
+       </td>
+
+<?php 
+	  if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
+
+	   <td class="cartQuantity">
+<?php
+		  if ($product['flagShowFixedQuantity']) {
+			  echo $product['showFixedQuantityAmount'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
+		  } else {
+			  echo $product['quantityField'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
+		  }
+?>
+	   </td>
+	   <td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td>
+
+<?php  
+	  } else {
+
+	  }  ?>
+
+
+		<td class="price size-medium text-bold  cartUnitDisplay">
+			<?php 
+			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
+				echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; 
+			} 
+
+			echo $product['productsPriceEach']; 
+			?>
+		</td>
+		<td class="price size-medium text-bold cartTotalDisplay">
+<!--
+			<?php 
+			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
+				echo '<b class="hide">' . TABLE_HEADING_TOTAL . '&#58;&nbsp;&nbsp;</b>'; 
+			} 
+				
+			echo $product['productsPrice']; 
+			?>
+-->
+		</td>
+
+		<td class="cartRemoveItemDisplay">
+<?php
+			if ($product['buttonDelete']) {
+				?>
+					<a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, 'action=remove_product&product_id=' . $product['id']); ?>">
+						<?php echo zen_image($template->get_template_dir(ICON_IMAGE_TRASH, DIR_WS_TEMPLATE, $current_page_base,'images/icons'). '/' . ICON_IMAGE_TRASH, ICON_TRASH_ALT); ?>
+					</a>
+<?php
+			}
+			
+			if ($product['checkBoxDelete'] ) {
+				echo zen_draw_checkbox_field('cart_delete[]', $product['id']);
+			}
+?>
+		</td>
+
+<?php 
+	  if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
       } else { ?>
 
 		<td class="cartQuantity">
@@ -86,83 +170,10 @@
 
 
 
-	   <td class="cartProductDisplay">
-			<a href="<?php echo $product['linkProductsName']; ?>">
-				<span class="cartImage back"><?php echo $product['productsImage']; ?></span>
-				<span class="text-bold size-medium"><?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?></span>
-			</a>
-<br class="clearBoth" />
-<?php
-  echo $product['attributeHiddenField'];
-  if (isset($product['attributes']) && is_array($product['attributes'])) {
-  echo '<div class="cartAttribsList">';
-  echo '<ul>';
-    reset($product['attributes']);
-    foreach ($product['attributes'] as $option => $value) {
-?>
 
-<li><?php echo $value['products_options_name'] . TEXT_OPTION_DIVIDER . nl2br($value['products_options_values_name']); ?></li>
-
-<?php
-    }
-  echo '</ul>';
-  echo '</div>';
-  }
-?>
-       </td>
-
-<?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
-
-       <td class="cartQuantity">
-<?php
-  if ($product['flagShowFixedQuantity']) {
-    echo $product['showFixedQuantityAmount'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
-  } else {
-    echo $product['quantityField'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
-  }
-?>
-       </td>
-       <td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td>
-
-<?php  } else {
-
-  }  ?>
-
-
-		<td class="price size-medium text-bold  cartUnitDisplay">
-			<?php 
-			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
-				echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; 
-			} 
-
-			echo $product['productsPriceEach']; 
-			?>
-		</td>
-		<td class="price size-medium text-bold cartTotalDisplay">
-			<?php 
-			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
-				echo '<b class="hide">' . TABLE_HEADING_TOTAL . '&#58;&nbsp;&nbsp;</b>'; 
-			} 
-				
-			echo $product['productsPrice']; 
-			?>
-		</td>
-
-       <td class="cartRemoveItemDisplay">
-<?php
-  if ($product['buttonDelete']) {
-?>
-         <a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, 'action=remove_product&product_id=' . $product['id']); ?>"><?php echo zen_image($template->get_template_dir(ICON_IMAGE_TRASH, DIR_WS_TEMPLATE, $current_page_base,'images/icons'). '/' . ICON_IMAGE_TRASH, ICON_TRASH_ALT); ?></a>
-<?php
-  }
-  if ($product['checkBoxDelete'] ) {
-    echo zen_draw_checkbox_field('cart_delete[]', $product['id']);
-  }
-?>
-      </td>
      </tr>
 <?php
-  } // end foreach ($productArray as $product)
+	} // end foreach ($productArray as $product)
 ?>
        <!-- Finished loop through all products /-->
 </table>
