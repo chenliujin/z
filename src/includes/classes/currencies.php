@@ -65,7 +65,12 @@ class currencies extends base {
 			}
 		} else {
 			$format_string = $this->currencies[$currency_type]['symbol_left'] 
-				. number_format(zen_round($number, $this->currencies[$currency_type]['decimal_places']), $this->currencies[$currency_type]['decimal_places'], $this->currencies[$currency_type]['decimal_point'], $this->currencies[$currency_type]['thousands_point']) 
+				. number_format(
+					zen_round( $number, $this->currencies[$currency_type]['decimal_places']), 
+					$this->currencies[$currency_type]['decimal_places'], 
+					$this->currencies[$currency_type]['decimal_point'], 
+					$this->currencies[$currency_type]['thousands_point']
+					) 
 				. $this->currencies[$currency_type]['symbol_right'];
 		}
 
@@ -79,6 +84,7 @@ class currencies extends base {
 	/**
 	 * @author chenliujin <liujin.chen@qq.com>
 	 * @since 2016-09-09
+	 * @description 币种转换
 	 */
 	public function rateAdjusted($number, $calculate_currency_value = true, $currency_type = '', $currency_value = '') 
 	{ 
