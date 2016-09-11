@@ -49,15 +49,14 @@
 <?php  } //endif flagAnyOutOfStock ?>
 
 <table id="cartContentsDisplay">
-     <tr class="tableHeading">
-        <th scope="col" id="scQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
-        <th scope="col" id="scUpdateQuantity">&nbsp;</th>
-        <th scope="col" id="scProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
-        <th scope="col" id="scUnitHeading"><?php echo TABLE_HEADING_PRICE; ?></th>
-        <th scope="col" id="scTotalHeading"><?php echo TABLE_HEADING_TOTAL; ?></th>
-        <th scope="col" id="scRemoveHeading">&nbsp;</th>
-     </tr>
-         <!-- Loop through all products /-->
+	 <tr class="tableHeading">
+		<th scope="col" id="scQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
+		<th scope="col" id="scUpdateQuantity">&nbsp;</th>
+		<th scope="col" id="scProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
+		<th scope="col" id="scUnitHeading"><?php echo TABLE_HEADING_PRICE; ?></th>
+		<th scope="col" id="scTotalHeading"><?php echo TABLE_HEADING_TOTAL; ?></th>
+		<th scope="col" id="scRemoveHeading">&nbsp;</th>
+	 </tr>
 <?php
   foreach ($productArray as $product) {
 ?>
@@ -67,17 +66,20 @@
       //
       } else { ?>
 
-       <td class="cartQuantity">
-<?php
-  if ($product['flagShowFixedQuantity']) {
-    echo $product['showFixedQuantityAmount'];
-  } else {
-    echo $product['quantityField'];
-  }
-?><br />
-        <span class="alert bold"><?php echo $product['flagStockCheck'];?></span><br />
-        <br /><?php echo $product['showMinUnits']; ?>
-       </td>
+		<td class="cartQuantity">
+			<?php
+			if ($product['flagShowFixedQuantity']) {
+				echo $product['showFixedQuantityAmount'];
+			} else {
+				echo $product['quantityField'];
+			} 
+			?>
+			<br />
+			<span class="alert bold"><?php echo $product['flagStockCheck'];?></span>
+			<br />
+			<br />
+			<?php echo $product['showMinUnits']; ?>
+		</td>
 
        <td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td>
 <?php } ?>
@@ -127,8 +129,25 @@
   }  ?>
 
 
-       <td class="price size-medium text-bold  cartUnitDisplay"><?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; } ?><?php echo $product['productsPriceEach']; ?></td>
-       <td class="price size-medium text-bold cartTotalDisplay"><?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {echo '<b class="hide">' . TABLE_HEADING_TOTAL . '&#58;&nbsp;&nbsp;</b>'; } ?><?php echo $product['productsPrice']; ?></td>
+		<td class="price size-medium text-bold  cartUnitDisplay">
+			<?php 
+			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
+				echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; 
+			} 
+
+			echo $product['productsPriceEach']; 
+			?>
+		</td>
+		<td class="price size-medium text-bold cartTotalDisplay">
+			<?php 
+			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
+				echo '<b class="hide">' . TABLE_HEADING_TOTAL . '&#58;&nbsp;&nbsp;</b>'; 
+			} 
+				
+			echo $product['productsPrice']; 
+			?>
+		</td>
+
        <td class="cartRemoveItemDisplay">
 <?php
   if ($product['buttonDelete']) {
