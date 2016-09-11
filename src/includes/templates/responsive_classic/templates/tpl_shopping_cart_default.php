@@ -25,7 +25,7 @@
   }
 ?>
 
-<h1 id="cartDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
+<h2><?php echo HEADING_TITLE; ?></h2>
 
 <?php if ($messageStack->size('shopping_cart') > 0) echo $messageStack->output('shopping_cart'); ?>
 
