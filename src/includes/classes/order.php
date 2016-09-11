@@ -504,9 +504,6 @@ class order extends base {
 			$this->notify('NOTIFY_ORDER_CART_EXTERNAL_TAX_HANDLING', array(), $index, $taxCountryId, $taxZoneId);
 
 			if ($this->use_external_tax_handler_only == FALSE) {
-				/*********************************************
-				 * Calculate taxes for this product
-				 *********************************************/
 				$shown_price = (zen_add_tax($this->products[$index]['final_price'] * $this->products[$index]['qty'], $this->products[$index]['tax']))
 					+ zen_add_tax($this->products[$index]['onetime_charges'], $this->products[$index]['tax']);
 				$this->info['subtotal'] += $shown_price;
@@ -520,26 +517,22 @@ class order extends base {
 					$tax_add = $shown_price - ($shown_price / (($products_tax < 10) ? "1.0" . str_replace('.', '', $products_tax) : "1." . str_replace('.', '', $products_tax)));
 				} else {
 					// calculate the amount of tax for this product (assuming tax is NOT included in the price)
-					//        $tax_add = zen_round(($products_tax / 100) * $shown_price, $currencies->currencies[$this->info['currency']]['decimal_places']);
 					$tax_add = ($products_tax/100) * $shown_price;
 				}
+
 				$this->info['tax'] += $tax_add;
-				foreach ($taxRates as $taxDescription=>$taxRate)
-				{
-					$taxAdd = zen_calculate_tax($this->products[$index]['final_price']*$this->products[$index]['qty'], $taxRate)
-						+  zen_calculate_tax($this->products[$index]['onetime_charges'], $taxRate);
-					if (isset($this->info['tax_groups'][$taxDescription]))
-					{
+				foreach ($taxRates as $taxDescription=>$taxRate) {
+					$taxAdd = zen_calculate_tax( $this->products[$index]['final_price'] * $this->products[$index]['qty'], $taxRate) 
+						+ zen_calculate_tax( $this->products[$index]['onetime_charges'], $taxRate);
+
+					if (isset($this->info['tax_groups'][$taxDescription])) {
 						$this->info['tax_groups'][$taxDescription] += $taxAdd;
-					} else
-					{
+					} else {
 						$this->info['tax_groups'][$taxDescription] = $taxAdd;
 					}
 				}
-				/*********************************************
-				 * END: Calculate taxes for this product
-				 *********************************************/
 			}
+
 			$index++;
 		}
 
@@ -547,7 +540,7 @@ class order extends base {
 		if (DISPLAY_PRICE_WITH_TAX == 'true') {
 			$this->info['total'] = $this->info['subtotal'] + $this->info['shipping_cost'];
 		} else {
-			$this->info['total'] = $this->info['subtotal'] + $this->info['tax'] + $this->info['shipping_cost'];
+			$this->info['total'] = $this->info['subtotal'] + $this->info['shipping_cost'] + $this->info['tax'];
 		}
 
 		if (isset($GLOBALS[$class]) && is_object($GLOBALS[$class])) {
