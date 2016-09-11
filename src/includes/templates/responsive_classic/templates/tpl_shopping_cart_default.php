@@ -14,23 +14,26 @@
 ?>
 <div class="centerColumn" id="shoppingCartDefault">
 <?php
-  if ($flagHasCartContents) {
+if ($flagHasCartContents) {
 ?>
 
 <?php
-  if ($_SESSION['cart']->count_contents() > 0) {
+	if ($_SESSION['cart']->count_contents() > 0) {
 ?>
 <div class="forward"><?php echo TEXT_VISITORS_CART; ?></div>
 <?php
-  }
+	}
 ?>
 
 <h2><?php echo HEADING_TITLE; ?></h2>
 
-<?php if ($messageStack->size('shopping_cart') > 0) echo $messageStack->output('shopping_cart'); ?>
+<?php 
+	if ($messageStack->size('shopping_cart') > 0) {
+		echo $messageStack->output('shopping_cart');
+	}
 
-<?php echo zen_draw_form('cart_quantity', zen_href_link(FILENAME_SHOPPING_CART, 'action=update_product', $request_type), 'post', 'id="shoppingCartForm"'); ?>
-<div id="cartInstructionsDisplay" class="content"><?php echo TEXT_INFORMATION; ?></div>
+	echo zen_draw_form('cart_quantity', zen_href_link(FILENAME_SHOPPING_CART, 'action=update_product', $request_type), 'post', 'id="shoppingCartForm"'); 
+?>
 
 <?php if (!empty($totalsDisplay)) { ?>
   <div class="cartTotalsDisplay important"><?php echo $totalsDisplay; ?></div>

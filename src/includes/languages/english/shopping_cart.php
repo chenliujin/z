@@ -1,6 +1,4 @@
 <?php
-define('TEXT_INFORMATION', 'You may proceed with your purchase by clicking the Checkout button below. Shipping and Taxes and Discounts will be handled on subsequent pages.');
-
 define('NAVBAR_TITLE', 'Shopping Cart');
 define('HEADING_TITLE', 'Shopping Cart');
 define('HEADING_TITLE_EMPTY', 'Your Shopping Cart');
