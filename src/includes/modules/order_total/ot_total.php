@@ -33,9 +33,13 @@ class ot_total {
 	{
 		global $order, $currencies;
 
+		$subtotal 		= $currencies->rateAdjusted($order->info['subtotal'], 		true, $order->info['currency'], $order->info['currency_value']);
+		$shipping_cost 	= $currencies->rateAdjusted($order->info['shipping_cost'], 	true, $order->info['currency'], $order->info['currency_value']);
+		$total			= $subtotal + $shipping_cost;
+
 		$this->output[] = [ 
 			'title' => $this->title . ':',
-			'text' 	=> $currencies->format($order->info['total'], true, $order->info['currency'], $order->info['currency_value']),
+			'text' 	=> $currencies->format($total, FALSE, $order->info['currency'], $order->info['currency_value']),
 			'value' => $order->info['total']
 			];
 	}
