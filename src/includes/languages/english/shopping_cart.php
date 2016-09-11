@@ -15,7 +15,7 @@ define('HEADING_TITLE_EMPTY', 'Your Shopping Cart');
 define('TABLE_HEADING_REMOVE', 'Remove');
 define('TABLE_HEADING_QUANTITY', 'Quantity');
 define('TABLE_HEADING_MODEL', 'Model');
-define('TABLE_HEADING_PRICE','Unit');
+define('TABLE_HEADING_PRICE','Price');
 define('TEXT_CART_EMPTY', 'Your Shopping Cart is empty.');
 define('SUB_TITLE_SUB_TOTAL', 'Subtotal:');
 define('SUB_TITLE_TOTAL', 'Total:');
