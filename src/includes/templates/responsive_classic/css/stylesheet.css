@@ -484,6 +484,13 @@ table{border:none;padding:0;margin:0; border-spacing:0;border-collapse:collapse;
 .tableBorder1 td {}
 
 
+h2 {
+	font-family: Arial,sans-serif;
+	font-size: 21px;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
 a, a:active, a:link, a:visited {
 	text-decoration: none;
 	color: #0066c0;
