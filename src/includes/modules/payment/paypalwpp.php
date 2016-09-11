@@ -1271,11 +1271,7 @@ class paypalwpp extends base
 			'PAYMENTREQUEST_0_INSURANCEAMT'	=> 0, //保险
 			];
 
-
-
-
 		if (sizeof($order_totals)) {
-			//error_log(__FILE__ . "\n" .  var_export($order_totals, TRUE));
 			// prepare subtotals
 			for ($i=0, $n=sizeof($order_totals); $i<$n; $i++) {
 				if ($order_totals[$i]['code'] == '') continue;
@@ -1286,20 +1282,23 @@ class paypalwpp extends base
 
 				if ( in_array( $order_totals[$i]['code'], ['ot_total','ot_subtotal','ot_tax','ot_shipping'] ) || strstr($order_totals[$i]['code'], 'insurance')) {
 					switch ( $order_totals[$i]['code'] ) {
-						case 'ot_shipping':
-							$optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] = $value; 
+						case 'ot_subtotal':
+							$optionsST['PAYMENTREQUEST_0_ITEMAMT'] 	 	 = $value; 
+							$optionsST['PAYMENTREQUEST_0_AMT']			+= $value;
 							break;
 
-						case 'ot_total':
-							$optionsST['PAYMENTREQUEST_0_AMT'] = $value; 
+						case 'ot_shipping':
+							$optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] 	 = $value; 
+							$optionsST['PAYMENTREQUEST_0_AMT']			+= $value;
 							break;
 
 						case 'ot_tax':
-							$optionsST['PAYMENTREQUEST_0_TAXAMT'] += $value; 
+							$optionsST['PAYMENTREQUEST_0_TAXAMT'] 		+= $value; 
+							$optionsST['PAYMENTREQUEST_0_AMT']			+= $value;
 							break;
 
-						case 'ot_subtotal':
-							$optionsST['PAYMENTREQUEST_0_ITEMAMT'] = $value; 
+						case 'ot_total':
+							//$optionsST['PAYMENTREQUEST_0_AMT'] = $optionsST['PAYMENTREQUEST_0_ITEMAMT'] + $optionsST['PAYMENTREQUEST_0_SHIPPINGAMT'] + $optionsST['PAYMENTREQUEST_0_TAXAMT'];
 							break;
 					}
 
@@ -1627,14 +1626,10 @@ class paypalwpp extends base
 			. ')');
 
 		if ( $stDiffRounded != 0 ) {
-			$this->zcLog('getLineItemDetails 9', 'Subtotals Bad. Skipping line-item/subtotal details');
-
-			//throw new \Exception('Subtotal Bad');
-
-			return array();
+			throw new \Exception (
+				__FILE__ . ':' . __LINE__ .  'Subtotal Bad'
+			);
 		}
-
-		$this->zcLog('getLineItemDetails 10', 'subtotals balance - okay');
 
 		// Send Subtotal and LineItem results back to be submitted to PayPal
 		return array_merge($optionsST, $optionsLI, $optionsNB);
