@@ -1272,7 +1272,10 @@ class paypalwpp extends base
 			];
 
 
+
+
 		if (sizeof($order_totals)) {
+			//error_log(__FILE__ . "\n" .  var_export($order_totals, TRUE));
 			// prepare subtotals
 			for ($i=0, $n=sizeof($order_totals); $i<$n; $i++) {
 				if ($order_totals[$i]['code'] == '') continue;
@@ -1423,7 +1426,7 @@ class paypalwpp extends base
 					$restrictedCurrency); 
 			}
 
-			$subTotalLI += ($optionsLI["L_PAYMENTREQUEST_0_QTY$k"] * $optionsLI["L_PAYMENTREQUEST_0_AMT$k"]);
+			$subTotalLI += $optionsLI["L_PAYMENTREQUEST_0_QTY$k"] * $optionsLI["L_PAYMENTREQUEST_0_AMT$k"];
 
 			// add line-item for one-time charges on this product
 			if ($order->products[$i]['onetime_charges'] != 0 ) {
@@ -1506,8 +1509,8 @@ class paypalwpp extends base
 			if (isset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"])) unset($optionsLI["L_PAYMENTREQUEST_0_TAXAMT$k"]);
 		}
 
-		// if ITEMAMT >0 and subTotalLI > 0 and they're not equal ... OR subTotalLI minus sumOfLineItems isn't 0
-		// check subtotals
+		// if ITEMAMT >0 and subTotalLI > 0 and they're not equal ... 
+		// OR subTotalLI minus sumOfLineItems isn't 0
 		if ( 
 			(
 			strval($optionsST['PAYMENTREQUEST_0_ITEMAMT']) > 0 
@@ -1516,16 +1519,14 @@ class paypalwpp extends base
 			) 
 			|| strval($subTotalLI) - strval($sumOfLineItems) != 0) 
 		{ 
-			$this->zcLog('getLineItemDetails 5', 'Line-item subtotals do not add up properly. Line-item-details skipped.' 
-				. "\n" 
-				. strval($sumOfLineItems) 
-				. ' ' 
-				. strval($subTotalLI) 
-				. ' ' 
-				. print_r(array_merge($optionsST, $optionsLI), true));
-			$optionsLI = array();
-			$optionsLI["L_PAYMENTREQUEST_0_NAME0"] = MODULES_PAYMENT_PAYPALWPP_AGGREGATE_CART_CONTENTS;
-			$optionsLI["L_PAYMENTREQUEST_0_AMT0"]  = $sumOfLineItems = $subTotalLI = $optionsST['PAYMENTREQUEST_0_ITEMAMT'];
+			throw new \Exception(
+				__FILE__ . ':' . __LINE__ . "\n" 
+				. 'Line-item subtotals do not add up properly.' . "\n"
+				. strval($sumOfLineItems) . "\n"
+				. strval($subTotalLI) . "\n"
+				. strval($optionsST['PAYMENTREQUEST_0_ITEMAMT'])
+				. print_r(array_merge($optionsST, $optionsLI), true)
+			);
 		}
 
 
