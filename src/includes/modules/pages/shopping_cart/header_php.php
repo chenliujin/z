@@ -143,7 +143,15 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 
 	$linkProductsImage = zen_href_link(zen_get_info_page($products[$i]['id']), 'products_id=' . $products[$i]['id']);
 	$linkProductsName = zen_href_link(zen_get_info_page($products[$i]['id']), 'products_id=' . $products[$i]['id']);
-	$productsImage = (IMAGE_SHOPPING_CART_STATUS == 1 ? zen_image(DIR_WS_IMAGES . $products[$i]['image'], $products[$i]['name'], IMAGE_SHOPPING_CART_WIDTH, IMAGE_SHOPPING_CART_HEIGHT) : '');
+
+	$productsImage = IMAGE_SHOPPING_CART_STATUS == 1 ? 
+		zen_image(
+			DIR_WS_IMAGES . $products[$i]['image'], 
+			$products[$i]['name'], 
+			IMAGE_SHOPPING_CART_WIDTH, 
+			IMAGE_SHOPPING_CART_HEIGHT
+		) : '';
+
 	$show_products_quantity_max = zen_get_products_quantity_order_max($products[$i]['id']);
 	$showFixedQuantity = (($show_products_quantity_max == 1 or zen_get_products_qty_box_status($products[$i]['id']) == 0) ? true : false);
 	//  $showFixedQuantityAmount = $products[$i]['quantity'] . zen_draw_hidden_field('products_id[]', $products[$i]['id']) . zen_draw_hidden_field('cart_quantity[]', 1);
