@@ -153,21 +153,14 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		), 
 		$currencies->get_decimal_places($_SESSION['currency'])
 	);
-	$ppt = $ppe * $products[$i]['quantity'];
 
 	$productsPriceEach = $currencies->format($ppe) 
 		. ($products[$i]['onetime_charges'] != 0 
 		? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) 
 		: '');
 
-	$productsPriceTotal = $currencies->format($ppt) 
-		. ($products[$i]['onetime_charges'] != 0 
-		? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) 
-		: '');
 	$buttonUpdate = ((SHOW_SHOPPING_CART_UPDATE == 1 or SHOW_SHOPPING_CART_UPDATE == 3) ? zen_image_submit(ICON_IMAGE_UPDATE, ICON_UPDATE_ALT) : '') . zen_draw_hidden_field('products_id[]', $products[$i]['id']);
 	//  $productsPriceEach = $currencies->display_price($products[$i]['final_price'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) . ($products[$i]['onetime_charges'] != 0 ? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) : '');
-	//  $productsPriceTotal = $currencies->display_price($products[$i]['final_price'], zen_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . ($products[$i]['onetime_charges'] != 0 ? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) : '');
-	//  $productsPriceTotal = $currencies->display_price($products[$i]['final_price'], zen_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . ($products[$i]['onetime_charges'] != 0 ? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) : '');
 	//  echo  $currencies->rateAdjusted($tmp);
 	$productArray[$i] = [
 		'attributeHiddenField'		=> $attributeHiddenField,
@@ -182,7 +175,6 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		'showMinUnits'				=> $showMinUnits,
 		'quantityField'				=> $quantityField,
 		'buttonUpdate'				=> $buttonUpdate,
-		'productsPrice'				=> $productsPriceTotal,
 		'productsPriceEach'			=> $productsPriceEach,
 		'rowClass'					=> $rowClass,
 		'id'						=> $products[$i]['id'],

@@ -53,11 +53,6 @@ if ($flagHasCartContents) {
 	 <tr class="tableHeading">
 		<th scope="col" id="scProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
 		<th scope="col" id="scUnitHeading"><?php echo TABLE_HEADING_PRICE; ?></th>
-		<th scope="col" id="scTotalHeading">
-			<!--
-			<?php echo TABLE_HEADING_TOTAL; ?>
-  			-->
-		</th>
 		<th scope="col" id="scQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
 		<th scope="col" id="scUpdateQuantity">&nbsp;</th>
 	 </tr>
@@ -93,7 +88,7 @@ if ($flagHasCartContents) {
 					echo '</div>';
 				}
 				?>
-				<div>
+				<div style="margin-top: 2em">
 					<a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, 'action=remove_product&product_id=' . $product['id']); ?>">
 						Delete
 					</a>
@@ -126,17 +121,6 @@ if ($flagHasCartContents) {
 
 			echo $product['productsPriceEach']; 
 			?>
-		</td>
-		<td class="price size-medium text-bold cartTotalDisplay">
-<!--
-			<?php 
-			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
-				echo '<b class="hide">' . TABLE_HEADING_TOTAL . '&#58;&nbsp;&nbsp;</b>'; 
-			} 
-				
-			echo $product['productsPrice']; 
-			?>
--->
 		</td>
 
 <?php 
