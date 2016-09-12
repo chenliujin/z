@@ -63,8 +63,7 @@ if ($flagHasCartContents) {
 		<th scope="col" id="scUpdateQuantity">&nbsp;</th>
 	 </tr>
 <?php
-  foreach ($productArray as $product) {
-?>
+  foreach ($productArray as $product) { ?>
      <tr class="<?php echo $product['rowClass']; ?>">
 
 	   <td class="cartProductDisplay">
@@ -75,7 +74,7 @@ if ($flagHasCartContents) {
 				</span>
 			</a>
 			<br class="clearBoth" />
-<?php
+			<?php
 			echo $product['attributeHiddenField'];
 			if (isset($product['attributes']) && is_array($product['attributes'])) {
 				echo '<div class="cartAttribsList">';
@@ -87,27 +86,22 @@ if ($flagHasCartContents) {
 				echo '</ul>';
 				echo '</div>';
 			}
-?>
+			?>
 	   </td>
+			<?php 
+			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
 
-<?php 
-	  if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
-
-	   <td class="cartQuantity">
-<?php
-		  if ($product['flagShowFixedQuantity']) {
-			  echo $product['showFixedQuantityAmount'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
-		  } else {
-			  echo $product['quantityField'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
-		  }
-?>
+				<td class="cartQuantity"> <?php
+				if ($product['flagShowFixedQuantity']) {
+					echo $product['showFixedQuantityAmount'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
+				} else {
+					echo $product['quantityField'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
+				} ?>
 	   </td>
-	   <td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td>
+	   <td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td> <?php  
+			} else {
 
-<?php  
-	  } else {
-
-	  }  ?>
+			}  ?>
 
 
 		<td class="price size-medium text-bold  cartUnitDisplay">
