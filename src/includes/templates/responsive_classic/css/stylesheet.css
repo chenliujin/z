@@ -1,16 +1,10 @@
-/**
- * Main CSS Stylesheet
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: picaflor-azul Thu Mar 17 12:13:18 2016 -0500 New in v1.5.5 $
- */
+body {
+	margin:0;
+	font-family: Arial,sans-serif;
+	font-size:72.5%;
+	line-height:140%;
+}
 
-/*bof basic elements*/
-body {margin:0;font-family:verdana, arial, helvetica, sans-serif;font-size:72.5%;line-height:140%;}
-/*general link styles*/
 a img {border:none;}
 a:link, #navEZPagesTOC ul li a {text-decoration:underline;}
 a:visited {text-decoration:underline;}
@@ -209,7 +203,6 @@ ul.list-links li:hover, ol.list-links li:hover{}
 
 /*bof shopping cart*/
 .tableHeading TH {padding:10px 0;}
-.tableHeading{}
 #cartSubTotal {text-align:right;line-height:2.2em;padding:10px 0 20px 0;font-size:130%;}
 .tableRow, .tableHeading, #cartSubTotal {height:2.2em;}
 .cartProductDisplay, .cartUnitDisplay, .cartTotalDisplay, .cartRemoveItemDisplay, .cartQuantityUpdate, .cartQuantity, .cartTotalsDisplay {
@@ -524,4 +517,8 @@ a:hover {
 
 .text-bold {
 	font-weight: 700!important;
+}
+
+.list-item-border {
+	border-bottom: 1px solid #DDD;
 }
