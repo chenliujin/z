@@ -506,6 +506,10 @@ a, a:active, a:link, a:visited {
 	color: #555!important;
 }
 
+.size-base {
+	font-size: 13px!important;
+	line-height: 19px!important;
+}
 .size-medium {
 	font-size: 17px!important;
 	line-height: 1.255!important;
