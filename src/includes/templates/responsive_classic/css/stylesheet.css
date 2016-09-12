@@ -498,6 +498,11 @@ a, a:active, a:link, a:visited {
 	text-decoration: none;
 	color: #0066c0;
 }
+a:hover {
+	color: #c45500;
+	cursor: pointer;
+	text-decoration: underline;
+}
 
 .price {
 	color: #b12704!important;
