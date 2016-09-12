@@ -33,12 +33,6 @@ if ($flagHasCartContents) {
 	}
 
 	echo zen_draw_form('cart_quantity', zen_href_link(FILENAME_SHOPPING_CART, 'action=update_product', $request_type), 'post', 'id="shoppingCartForm"'); 
-?>
-
-<?php 
-	if (!empty($totalsDisplay)) { ?>
-		<div class="cartTotalsDisplay important"><?php echo $totalsDisplay; ?></div> <?php 
-	} 
 
 	if ($flagAnyOutOfStock) { 
 		if (STOCK_ALLOW_CHECKOUT == 'true') {  ?> 
@@ -50,10 +44,10 @@ if ($flagHasCartContents) {
 ?>
 
 <table id="cartContentsDisplay">
-	 <tr class="tableHeading">
-		<th scope="col" id="scProductsHeading" style="width: 60%"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
-		<th scope="col" id="scUnitHeading" style="width: 15%"><?php echo TABLE_HEADING_PRICE; ?></th>
-		<th scope="col" id="scQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
+	 <tr class="tableHeading list-item-border">
+		<td scope="col" id="scProductsHeading" style="width: 60%"></td>
+		<td scope="col" id="scUnitHeading" ><?php echo TABLE_HEADING_PRICE; ?></td>
+		<td scope="col" id="scQuantityHeading" style="width:150px"><?php echo TABLE_HEADING_QUANTITY; ?></td>
 	 </tr>
 <?php
   foreach ($productArray as $product) { ?>
@@ -87,7 +81,7 @@ if ($flagHasCartContents) {
 					echo '</div>';
 				}
 				?>
-				<div style="margin-top: 2em">
+				<div style="margin-top: 1em">
 					<a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, 'action=remove_product&product_id=' . $product['id']); ?>">
 						Delete
 					</a>
@@ -129,9 +123,16 @@ if ($flagHasCartContents) {
 </table>
 
 <div id="cartSubTotal" class="size-medium text-bold">
-	<?php echo SUB_TITLE_SUB_TOTAL; ?>
+	<?php 
+	if (!empty($totalsDisplay)) { ?>
+		<span class="cartTotalsDisplay important"><?php echo $totalsDisplay; ?></span> <?php 
+	} 
+
+	echo SUB_TITLE_SUB_TOTAL; 
+	?>
 	<span class="price size-medium text-bold"><?php echo $cartShowTotal; ?></span>
 </div>
+
 <br class="clearBoth" />
 
 <!--bof shopping cart buttons-->

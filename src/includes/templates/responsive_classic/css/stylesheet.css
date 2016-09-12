@@ -23,7 +23,7 @@ ADDRESS {font-style:normal;}
 HR {height: 1px;margin-top:0.5em;border:none;}
 #logo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .centerBoxContentsAlsoPurch, .attribImg {float:left;}
 .centeredContent, TH, #cartEmptyText, #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, #siteinfoLegal, #siteinfoCredits, #siteinfoStatus, #siteinfoIP, .center,
-.cartQuantity, .cartTotalsDisplay, #cartBoxGVBalance, .leftBoxHeading, .centerBoxHeading,.rightBoxHeading, .productListing-data, .accountQuantityDisplay, .ratingRow, LABEL#textAreaReviews, #productMainImage, #reviewsInfoDefaultProductImage, #productReviewsDefaultProductImage, #reviewWriteMainImage, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, .gvBal, .attribImg {text-align:center;}
+.cartTotalsDisplay, #cartBoxGVBalance, .leftBoxHeading, .centerBoxHeading,.rightBoxHeading, .productListing-data, .accountQuantityDisplay, .ratingRow, LABEL#textAreaReviews, #productMainImage, #reviewsInfoDefaultProductImage, #productReviewsDefaultProductImage, #reviewWriteMainImage, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, .gvBal, .attribImg {text-align:center;}
 #navCategoryIcon, .buttonRow, #indexProductListCatDescription {margin:0.5em;}
 /*floats and clears*/
 .back {float:left;}
@@ -207,10 +207,10 @@ ul.list-links li:hover, ol.list-links li:hover{}
 #cartSubTotal {text-align:right;line-height:2.2em;padding:10px 0 20px 0;font-size:130%;}
 .tableRow, .tableHeading, #cartSubTotal {height:2.2em;}
 .cartProductDisplay, .cartUnitDisplay, .cartTotalDisplay,
-.cartQuantity, .cartTotalsDisplay {
+.cartTotalsDisplay {
 	padding: 0.5em 0em;
 }
-.cartUnitDisplay, .cartTotalDisplay {text-align:right;padding-right:0.2em;}
+.cartTotalDisplay {text-align:right;padding-right:0.2em;}
 .cartTotalDisplay{font-size:130%;}
 #scUpdateQuantity {width:2em;}
 .cartQuantity {width:4.7em;}
@@ -496,6 +496,25 @@ a:hover {
 	color: #c45500;
 	cursor: pointer;
 	text-decoration: underline;
+}
+
+input {
+	transition: all 100ms linear;
+}
+input[type=text] {
+	padding: 3px 7px;
+	height: 31px;
+	border: 1px solid #a6a6a6;
+	border-top-color: #949494;
+	border-radius: 3px;
+	box-shadow: 0 1px 0 rgba(255,255,255,.5),0 1px 0 rgba(0,0,0,.07) inset;
+	outline: 0;
+	background-color: #fff;
+}
+input[type=text]:focus {
+	border-color:#e77600;
+	box-shadow: 0 0 3px 2px rgba(228,121,17,.5);
+	background-color: #fff;
 }
 
 .price {
