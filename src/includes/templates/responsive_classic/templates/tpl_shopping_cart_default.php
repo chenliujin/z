@@ -97,21 +97,6 @@ if ($flagHasCartContents) {
 		</div>
 	</div>
 	   </td>
-			<?php 
-			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
-
-				<td class="cartQuantity"> <?php
-				if ($product['flagShowFixedQuantity']) {
-					echo $product['showFixedQuantityAmount'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
-				} else {
-					echo $product['quantityField'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
-				} ?>
-	   </td>
-	   <td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td> <?php  
-			} else {
-
-			}  ?>
-
 
 		<td class="price size-medium text-bold  cartUnitDisplay">
 			<?php 
@@ -123,18 +108,14 @@ if ($flagHasCartContents) {
 			?>
 		</td>
 
-<?php 
-			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-			} else { 
-?>
-
-		<td class="cartQuantity"> <?php
-				if ($product['flagShowFixedQuantity']) {
-					echo $product['showFixedQuantityAmount'];
-				} else {
-					echo $product['quantityField'];
-				} 
-?>
+		<td class="cartQuantity"> 
+			<?php
+			if ($product['flagShowFixedQuantity']) {
+				echo $product['showFixedQuantityAmount'];
+			} else {
+				echo $product['quantityField'];
+			} 
+			?>
 			<br />
 			<span class="alert bold"><?php echo $product['flagStockCheck'];?></span>
 			<br />
@@ -142,10 +123,7 @@ if ($flagHasCartContents) {
 			<?php echo $product['showMinUnits']; ?>
 		</td>
 
-			<td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td> <?php 
-			} ?>
-
-
+		<td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td> 
 
 
 	 </tr>
