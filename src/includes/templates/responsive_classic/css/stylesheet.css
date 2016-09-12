@@ -502,6 +502,9 @@ a, a:active, a:link, a:visited {
 .price {
 	color: #b12704!important;
 }
+.price-del {
+	color: #555!important;
+}
 
 .size-medium {
 	font-size: 17px!important;
