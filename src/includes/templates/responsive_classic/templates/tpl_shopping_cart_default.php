@@ -35,21 +35,19 @@ if ($flagHasCartContents) {
 	echo zen_draw_form('cart_quantity', zen_href_link(FILENAME_SHOPPING_CART, 'action=update_product', $request_type), 'post', 'id="shoppingCartForm"'); 
 ?>
 
-<?php if (!empty($totalsDisplay)) { ?>
-  <div class="cartTotalsDisplay important"><?php echo $totalsDisplay; ?></div>
-<?php } ?>
+<?php 
+	if (!empty($totalsDisplay)) { ?>
+		<div class="cartTotalsDisplay important"><?php echo $totalsDisplay; ?></div> <?php 
+	} 
 
-<?php  if ($flagAnyOutOfStock) { ?>
-
-<?php    if (STOCK_ALLOW_CHECKOUT == 'true') {  ?>
-
-<div class="messageStackError"><?php echo OUT_OF_STOCK_CAN_CHECKOUT; ?></div>
-
-<?php    } else { ?>
-<div class="messageStackError"><?php echo OUT_OF_STOCK_CANT_CHECKOUT; ?></div>
-
-<?php    } //endif STOCK_ALLOW_CHECKOUT ?>
-<?php  } //endif flagAnyOutOfStock ?>
+	if ($flagAnyOutOfStock) { 
+		if (STOCK_ALLOW_CHECKOUT == 'true') {  ?> 
+			<div class="messageStackError"><?php echo OUT_OF_STOCK_CAN_CHECKOUT; ?></div> <?php    
+		} else { ?>
+			<div class="messageStackError"><?php echo OUT_OF_STOCK_CANT_CHECKOUT; ?></div> <?php    
+		} 
+	} 
+?>
 
 <table id="cartContentsDisplay">
 	 <tr class="tableHeading">
@@ -72,25 +70,25 @@ if ($flagHasCartContents) {
 	   <td class="cartProductDisplay">
 			<a href="<?php echo $product['linkProductsName']; ?>">
 				<span class="cartImage back"><?php echo $product['productsImage']; ?></span>
-				<span class="text-bold size-medium"><?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?></span>
+				<span class="text-bold size-medium">
+					<?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?>
+				</span>
 			</a>
 			<br class="clearBoth" />
 <?php
-	  echo $product['attributeHiddenField'];
-	  if (isset($product['attributes']) && is_array($product['attributes'])) {
-		  echo '<div class="cartAttribsList">';
-		  echo '<ul>';
-		  reset($product['attributes']);
-		  foreach ($product['attributes'] as $option => $value) {
-?> 
-			<li><?php echo $value['products_options_name'] . TEXT_OPTION_DIVIDER . nl2br($value['products_options_values_name']); ?></li>
-<?php
-		  }
-		  echo '</ul>';
-		  echo '</div>';
-	  }
+			echo $product['attributeHiddenField'];
+			if (isset($product['attributes']) && is_array($product['attributes'])) {
+				echo '<div class="cartAttribsList">';
+				echo '<ul>';
+				reset($product['attributes']);
+				foreach ($product['attributes'] as $option => $value) { ?> 
+					<li><?php echo $value['products_options_name'] . TEXT_OPTION_DIVIDER . nl2br($value['products_options_values_name']); ?></li> <?php
+				}
+				echo '</ul>';
+				echo '</div>';
+			}
 ?>
-       </td>
+	   </td>
 
 <?php 
 	  if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
