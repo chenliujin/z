@@ -58,35 +58,49 @@ if ($flagHasCartContents) {
 			<?php echo TABLE_HEADING_TOTAL; ?>
   			-->
 		</th>
-		<th scope="col" id="scRemoveHeading">&nbsp;</th>
 		<th scope="col" id="scQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
 		<th scope="col" id="scUpdateQuantity">&nbsp;</th>
 	 </tr>
 <?php
   foreach ($productArray as $product) { ?>
-     <tr class="<?php echo $product['rowClass']; ?>">
+     <tr class="<?php echo $product['rowClass']; ?> list-item-border">
 
 	   <td class="cartProductDisplay">
-			<a href="<?php echo $product['linkProductsName']; ?>">
-				<span class="cartImage back"><?php echo $product['productsImage']; ?></span>
-				<span class="text-bold size-medium">
-					<?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?>
-				</span>
-			</a>
-			<br class="clearBoth" />
-			<?php
-			echo $product['attributeHiddenField'];
-			if (isset($product['attributes']) && is_array($product['attributes'])) {
-				echo '<div class="cartAttribsList">';
-				echo '<ul>';
-				reset($product['attributes']);
-				foreach ($product['attributes'] as $option => $value) { ?> 
-					<li><?php echo $value['products_options_name'] . TEXT_OPTION_DIVIDER . nl2br($value['products_options_values_name']); ?></li> <?php
+	<div style="margin: 14px 0">
+		<div style="padding-left: 115px">
+			<div style="width:115px; margin-left:-115px;float:left">
+				<a href="#">
+					<img alt="" src="/images/II/1_100.jpg" width="100" />
+				</a>
+			</div>
+			<div style="float:left">
+				<a href="<?php echo $product['linkProductsName']; ?>">
+					<span class="text-bold size-medium">
+						<?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?>
+					</span>
+				</a>
+				<!--<br class="clearBoth" />-->
+				<?php
+				echo $product['attributeHiddenField'];
+				if (isset($product['attributes']) && is_array($product['attributes'])) {
+					echo '<div class="cartAttribsList">';
+					echo '<ul>';
+					reset($product['attributes']);
+					foreach ($product['attributes'] as $option => $value) { ?> 
+						<li><?php echo $value['products_options_name'] . TEXT_OPTION_DIVIDER . nl2br($value['products_options_values_name']); ?></li> <?php
+					}
+					echo '</ul>';
+					echo '</div>';
 				}
-				echo '</ul>';
-				echo '</div>';
-			}
-			?>
+				?>
+				<div>
+					<a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, 'action=remove_product&product_id=' . $product['id']); ?>">
+						Delete
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	   </td>
 			<?php 
 			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
@@ -125,34 +139,18 @@ if ($flagHasCartContents) {
 -->
 		</td>
 
-		<td class="cartRemoveItemDisplay">
-<?php
-			if ($product['buttonDelete']) {
-				?>
-					<a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, 'action=remove_product&product_id=' . $product['id']); ?>">
-						<?php echo zen_image($template->get_template_dir(ICON_IMAGE_TRASH, DIR_WS_TEMPLATE, $current_page_base,'images/icons'). '/' . ICON_IMAGE_TRASH, ICON_TRASH_ALT); ?>
-					</a>
-<?php
-			}
-			
-			if ($product['checkBoxDelete'] ) {
-				echo zen_draw_checkbox_field('cart_delete[]', $product['id']);
-			}
-?>
-		</td>
-
 <?php 
-	  if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-      } else { ?>
+			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
+			} else { 
+?>
 
-		<td class="cartQuantity">
-			<?php
-			if ($product['flagShowFixedQuantity']) {
-				echo $product['showFixedQuantityAmount'];
-			} else {
-				echo $product['quantityField'];
-			} 
-			?>
+		<td class="cartQuantity"> <?php
+				if ($product['flagShowFixedQuantity']) {
+					echo $product['showFixedQuantityAmount'];
+				} else {
+					echo $product['quantityField'];
+				} 
+?>
 			<br />
 			<span class="alert bold"><?php echo $product['flagStockCheck'];?></span>
 			<br />
@@ -160,17 +158,16 @@ if ($flagHasCartContents) {
 			<?php echo $product['showMinUnits']; ?>
 		</td>
 
-       <td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td>
-<?php } ?>
+			<td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td> <?php 
+			} ?>
 
 
 
 
-     </tr>
+	 </tr>
 <?php
-	} // end foreach ($productArray as $product)
+	}
 ?>
-       <!-- Finished loop through all products /-->
 </table>
 
 <div id="cartSubTotal" class="size-medium text-bold">

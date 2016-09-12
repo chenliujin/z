@@ -73,21 +73,7 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 	} else {
 		$rowClass="rowOdd";
 	}
-	switch (true) {
-	case (SHOW_SHOPPING_CART_DELETE == 1):
-		$buttonDelete = true;
-		$checkBoxDelete = false;
-		break;
-	case (SHOW_SHOPPING_CART_DELETE == 2):
-		$buttonDelete = false;
-		$checkBoxDelete = true;
-		break;
-	default:
-		$buttonDelete = true;
-		$checkBoxDelete = true;
-		break;
-		$cur_row++;
-	} // end switch
+
 	$attributeHiddenField = "";
 	$attrArray = false;
 	$productsName = $products[$i]['name'];
@@ -148,8 +134,8 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		zen_image(
 			DIR_WS_IMAGES . $products[$i]['image'], 
 			$products[$i]['name'], 
-			IMAGE_SHOPPING_CART_WIDTH, 
-			IMAGE_SHOPPING_CART_HEIGHT
+			100, //IMAGE_SHOPPING_CART_WIDTH, 
+			100  //IMAGE_SHOPPING_CART_HEIGHT
 		) : '';
 
 	$show_products_quantity_max = zen_get_products_quantity_order_max($products[$i]['id']);
@@ -199,12 +185,10 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		'productsPrice'				=> $productsPriceTotal,
 		'productsPriceEach'			=> $productsPriceEach,
 		'rowClass'					=> $rowClass,
-		'buttonDelete'				=> $buttonDelete,
-		'checkBoxDelete'			=> $checkBoxDelete,
 		'id'						=> $products[$i]['id'],
 		'attributes'				=> $attrArray
 		];
-} // end FOR loop
+} 
 
 
 // This should be last line of the script:
