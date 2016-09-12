@@ -51,10 +51,9 @@ if ($flagHasCartContents) {
 
 <table id="cartContentsDisplay">
 	 <tr class="tableHeading">
-		<th scope="col" id="scProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
-		<th scope="col" id="scUnitHeading"><?php echo TABLE_HEADING_PRICE; ?></th>
+		<th scope="col" id="scProductsHeading" style="width: 60%"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
+		<th scope="col" id="scUnitHeading" style="width: 15%"><?php echo TABLE_HEADING_PRICE; ?></th>
 		<th scope="col" id="scQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
-		<th scope="col" id="scUpdateQuantity">&nbsp;</th>
 	 </tr>
 <?php
   foreach ($productArray as $product) { ?>
@@ -121,11 +120,8 @@ if ($flagHasCartContents) {
 			<br />
 			<br />
 			<?php echo $product['showMinUnits']; ?>
+			<?php echo $product['buttonUpdate']; ?>
 		</td>
-
-		<td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td> 
-
-
 	 </tr>
 <?php
 	}
