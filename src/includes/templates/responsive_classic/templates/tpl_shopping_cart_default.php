@@ -25,7 +25,7 @@ if ($flagHasCartContents) {
 	}
 ?>
 
-<h2><?php echo HEADING_TITLE; ?></h2>
+<h2 style="margin-bottom:0"><?php echo HEADING_TITLE; ?></h2>
 
 <?php 
 	if ($messageStack->size('shopping_cart') > 0) {
@@ -92,6 +92,7 @@ if ($flagHasCartContents) {
 	   </td>
 
 		<td class="price size-medium text-bold  cartUnitDisplay">
+			<div style="margin: 14px 0">
 			<?php 
 			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
 				echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; 
@@ -99,9 +100,11 @@ if ($flagHasCartContents) {
 
 			echo $product['productsPriceEach']; 
 			?>
+			</div>
 		</td>
 
 		<td class="cartQuantity"> 
+			<div style="margin: 14px 0">
 			<?php
 			if ($product['flagShowFixedQuantity']) {
 				echo $product['showFixedQuantityAmount'];
@@ -115,6 +118,7 @@ if ($flagHasCartContents) {
 			<br />
 			<?php echo $product['showMinUnits']; ?>
 			<?php echo $product['buttonUpdate']; ?>
+			</div>
 		</td>
 	 </tr>
 <?php
