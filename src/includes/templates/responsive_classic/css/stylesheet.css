@@ -225,9 +225,12 @@ ul.list-links li:hover, ol.list-links li:hover{}
 .cartBoxTotal {text-align:right;font-weight:bold;}
 .cartRemoveItemDisplay {width:3.5em;}
 .cartAttribsList {margin-left:1em;}
-.normalprice, .productSpecialPriceSale {text-decoration:line-through;}
-.productSpecialPrice, .productSalePrice, .productSpecialPriceSale, .productPriceDiscount {}
-#ezPageBoxList ul {list-style-type:none;}
+.normalprice, .productSpecialPriceSale {
+	text-decoration:line-through;
+}
+#ezPageBoxList ul {
+	list-style-type:none;
+}
 #ezPageBoxList li, .cartBoxTotal {margin:0;padding: 0.2em 0;}
 #cartBoxEmpty, #cartBoxVoucherBalance {font-weight:bold;}
 .totalBox {text-align:right;padding:0.2em;}
@@ -358,7 +361,6 @@ span.list-addtext{display:block;text-align:center;}
 #productDetailsList li{list-style-type:none;}
 #productDetailsList{padding:0;margin-left:30px;}
 #productPrices{font-size:1.5em;text-align:center;margin:10px 0 10px 0;font-weight:normal;}
-.productSpecialPrice{font-size:120%;}
 #mediaManagerHeading{font-weight:normal;}
 #freeShippingIcon{margin:10px 0 10px 30px;}
 #productQuantityDiscounts table{margin:0 auto 20px auto;border:none !important;border-spacing:0 !important;border-collapse:separate !important;}
