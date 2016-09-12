@@ -250,9 +250,9 @@ function zen_get_products_display_price($products_id) {
 			}
 		} else {
 			if ($product_check->fields['product_is_free'] == '1') {
-				$show_special_price = '&nbsp;' . '<span class="productSpecialPrice">' . '<s>' . $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</s>' . '</span>';
+				$show_special_price = '&nbsp;' . '<span class="price size-medium">' . '<s>' . $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</s>' . '</span>';
 			} else {
-				$show_special_price = '&nbsp;' . '<span class="productSpecialPrice">' . $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</span>';
+				$show_special_price = '&nbsp;' . '<span class="price size-medium">' . $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</span>';
 			}
 			$show_sale_price = '';
 		}
