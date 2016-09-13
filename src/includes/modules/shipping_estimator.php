@@ -48,23 +48,6 @@ if ($_SESSION['cart']->count_contents() > 0) {
 	// deprecated; to be removed
 	if (file_exists(DIR_WS_CLASSES . 'http_client.php')) require_once(DIR_WS_CLASSES . 'http_client.php'); // shipping in basket
 
-/*
-// moved below and altered to include Tare
-  // totals info
-  $totalsDisplay = '';
-  switch (true) {
-	case (SHOW_TOTALS_IN_CART == '1'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() . TEXT_TOTAL_WEIGHT . $_SESSION['cart']->show_weight() . TEXT_PRODUCT_WEIGHT_UNIT . TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
-	break;
-	case (SHOW_TOTALS_IN_CART == '2'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() . ($_SESSION['cart']->show_weight() > 0 ? TEXT_TOTAL_WEIGHT . $_SESSION['cart']->show_weight() . TEXT_PRODUCT_WEIGHT_UNIT : '') . TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
-	break;
-	case (SHOW_TOTALS_IN_CART == '3'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() . TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
-	break;
-  }
- */
-
 	//if($cart->get_content_type() !== 'virtual') {
 	if ($_SESSION['customer_id']) {
 		// user is logged in
