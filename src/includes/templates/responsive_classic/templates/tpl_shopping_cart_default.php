@@ -14,20 +14,13 @@
 ?>
 <div class="centerColumn" id="shoppingCartDefault">
 <?php
-if ($flagHasCartContents) {
-?>
+if ($flagHasCartContents) { 
+	if ($_SESSION['cart']->count_contents() > 0) { ?>
+		<div class="forward"><?php echo TEXT_VISITORS_CART; ?></div> <?php
+	} ?>
 
-<?php
-	if ($_SESSION['cart']->count_contents() > 0) {
-?>
-<div class="forward"><?php echo TEXT_VISITORS_CART; ?></div>
-<?php
-	}
-?>
+	<h2 style="margin-bottom:0"><?php echo HEADING_TITLE; ?></h2> <?php 
 
-<h2 style="margin-bottom:0"><?php echo HEADING_TITLE; ?></h2>
-
-<?php 
 	if ($messageStack->size('shopping_cart') > 0) {
 		echo $messageStack->output('shopping_cart');
 	}
@@ -128,105 +121,66 @@ if ($flagHasCartContents) {
 
 <div id="cartSubTotal" class="size-medium text-bold">
 	<?php 
-	if (!empty($totalsDisplay)) { ?>
-		<span class="cartTotalsDisplay important"><?php echo $totalsDisplay; ?></span> <?php 
-	} 
-
-	echo SUB_TITLE_SUB_TOTAL; 
+	$item_count  = $_SESSION['cart']->count_contents();
+	$item_count .= $item_count > 1 ? ' items' : ' item';
+	echo SUB_TITLE_SUB_TOTAL . ' (' . $item_count . '):'; 
 	?>
 	<span class="price size-medium text-bold"><?php echo $cartShowTotal; ?></span>
 </div>
 
 <br class="clearBoth" />
 
-<!--bof shopping cart buttons-->
-<div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?></div>
-<div class="buttonRow back"><?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_CONTINUE_SHOPPING, BUTTON_CONTINUE_SHOPPING_ALT) . '</a>'; ?></div>
-<!--eof shopping cart buttons-->
+<div class="buttonRow forward">
+	<?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?>
+</div>
+
 </form>
 
 <br class="clearBoth" />
-<?php
-    if (SHOW_SHIPPING_ESTIMATOR_BUTTON == '1') {
-?>
 
-<div class="buttonRow back"><?php echo '<a href="javascript:popupWindow(\'' . zen_href_link(FILENAME_POPUP_SHIPPING_ESTIMATOR) . '\')">' .
- zen_image_button(BUTTON_IMAGE_SHIPPING_ESTIMATOR, BUTTON_SHIPPING_ESTIMATOR_ALT) . '</a>'; ?></div>
 <?php
+	if (SHOW_SHIPPING_ESTIMATOR_BUTTON == '1') { ?> 
+		<div class="buttonRow back"> <?php 
+		echo '<a href="javascript:popupWindow(\'' 
+		. zen_href_link(FILENAME_POPUP_SHIPPING_ESTIMATOR) . '\')">' 
+		. zen_image_button(BUTTON_IMAGE_SHIPPING_ESTIMATOR, BUTTON_SHIPPING_ESTIMATOR_ALT) 
+		. '</a>'; ?>
+		</div> <?php
     }
-?>
 
-<!-- ** BEGIN PAYPAL EXPRESS CHECKOUT ** -->
-<?php  // the tpl_ec_button template only displays EC option if cart contents >0 and value >0
-if (defined('MODULE_PAYMENT_PAYPALWPP_STATUS') && MODULE_PAYMENT_PAYPALWPP_STATUS == 'True') {
-  include(DIR_FS_CATALOG . DIR_WS_MODULES . 'payment/paypal/tpl_ec_button.php');
+	// the tpl_ec_button template only displays EC option if cart contents >0 and value >0
+	if (defined('MODULE_PAYMENT_PAYPALWPP_STATUS') && MODULE_PAYMENT_PAYPALWPP_STATUS == 'True') {
+		include(DIR_FS_CATALOG . DIR_WS_MODULES . 'payment/paypal/tpl_ec_button.php');
+	}
+
+	if (SHOW_SHIPPING_ESTIMATOR_BUTTON == '2') {
+		require(DIR_WS_MODULES . zen_get_module_directory('shipping_estimator.php')); 
+	}
+} else { ?> 
+	<h2 id="cartEmptyText"><?php echo TEXT_CART_EMPTY; ?></h2> <?php 
+	
+	$show_display_shopping_cart_empty = $db->Execute(SQL_SHOW_SHOPPING_CART_EMPTY); 
+	  
+	while (!$show_display_shopping_cart_empty->EOF) {
+		if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_FEATURED_PRODUCTS') { 
+			require($template->get_template_dir('tpl_modules_featured_products.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_featured_products.php'); 
+		
+		} 
+		
+		if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_SPECIALS_PRODUCTS') { 
+			require($template->get_template_dir('tpl_modules_specials_default.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_specials_default.php'); 
+		} 
+
+		if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_NEW_PRODUCTS') { 
+			require($template->get_template_dir('tpl_modules_whats_new.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_whats_new.php'); 
+		} 
+		
+		if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_UPCOMING') { 
+			include(DIR_WS_MODULES . zen_get_module_directory(FILENAME_UPCOMING_PRODUCTS)); 
+		} 
+		
+		$show_display_shopping_cart_empty->MoveNext(); 
+	} 
 }
-?>
-<!-- ** END PAYPAL EXPRESS CHECKOUT ** -->
-
-<?php
-      if (SHOW_SHIPPING_ESTIMATOR_BUTTON == '2') {
-/**
- * load the shipping estimator code if needed
- */
-?>
-      <?php require(DIR_WS_MODULES . zen_get_module_directory('shipping_estimator.php')); ?>
-
-<?php
-      }
-?>
-<?php
-  } else {
-?>
-
-<h2 id="cartEmptyText"><?php echo TEXT_CART_EMPTY; ?></h2>
-
-<?php
-$show_display_shopping_cart_empty = $db->Execute(SQL_SHOW_SHOPPING_CART_EMPTY);
-
-while (!$show_display_shopping_cart_empty->EOF) {
-?>
-
-<?php
-  if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_FEATURED_PRODUCTS') { ?>
-<?php
-/**
- * display the Featured Products Center Box
- */
-?>
-<?php require($template->get_template_dir('tpl_modules_featured_products.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_featured_products.php'); ?>
-<?php } ?>
-
-<?php
-  if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_SPECIALS_PRODUCTS') { ?>
-<?php
-/**
- * display the Special Products Center Box
- */
-?>
-<?php require($template->get_template_dir('tpl_modules_specials_default.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_specials_default.php'); ?>
-<?php } ?>
-
-<?php
-  if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_NEW_PRODUCTS') { ?>
-<?php
-/**
- * display the New Products Center Box
- */
-?>
-<?php require($template->get_template_dir('tpl_modules_whats_new.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_whats_new.php'); ?>
-<?php } ?>
-
-<?php
-  if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_UPCOMING') {
-    include(DIR_WS_MODULES . zen_get_module_directory(FILENAME_UPCOMING_PRODUCTS));
-  }
-?>
-<?php
-  $show_display_shopping_cart_empty->MoveNext();
-} // !EOF
-?>
-<?php
-  }
 ?>
 </div>

@@ -40,26 +40,6 @@ $shipping_weight = $_SESSION['cart']->show_weight();
   $shipping_modules = new shipping;
   $quotes = $shipping_modules->quote();
  */
-$totalsDisplay = '';
-switch (true) {
-case (SHOW_TOTALS_IN_CART == '1'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() 
-		. TEXT_TOTAL_WEIGHT . $shipping_weight . TEXT_PRODUCT_WEIGHT_UNIT 
-		. TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
-	break;
-case (SHOW_TOTALS_IN_CART == '2'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() 
-		. ($shipping_weight > 0 ? TEXT_TOTAL_WEIGHT . $shipping_weight . TEXT_PRODUCT_WEIGHT_UNIT : '') 
-		. TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
-	break;
-case (SHOW_TOTALS_IN_CART == '3'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() 
-		. TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
-	break;
-}
-
-// testing/debugging
-//  require(DIR_WS_MODULES . 'debug_blocks/shopping_cart_contents.php');
 
 $flagHasCartContents = ($_SESSION['cart']->count_contents() > 0);
 $cartShowTotal = $currencies->format($_SESSION['cart']->show_total());
