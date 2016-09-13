@@ -14,11 +14,7 @@
 ?>
 <div class="centerColumn" id="shoppingCartDefault">
 <?php
-if ($flagHasCartContents) { 
-	if ($_SESSION['cart']->count_contents() > 0) { ?>
-		<div class="forward"><?php echo TEXT_VISITORS_CART; ?></div> <?php
-	} ?>
-
+if ($flagHasCartContents) { ?>
 	<h2 style="margin-bottom:0"><?php echo HEADING_TITLE; ?></h2> <?php 
 
 	if ($messageStack->size('shopping_cart') > 0) {
