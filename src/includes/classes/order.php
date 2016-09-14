@@ -348,17 +348,13 @@ class order extends base {
 
 		}
 
-		$this->info = array('order_status' => DEFAULT_ORDERS_STATUS_ID,
+		$this->info = array(
+			'order_status' => DEFAULT_ORDERS_STATUS_ID,
 			'currency' => $_SESSION['currency'],
 			'currency_value' => $currencies->currencies[$_SESSION['currency']]['value'],
 			'payment_method' => $GLOBALS[$class]->title,
 			'payment_module_code' => $GLOBALS[$class]->code,
 			'coupon_code' => $coupon_code->fields['coupon_code'],
-			//                          'cc_type' => (isset($GLOBALS['cc_type']) ? $GLOBALS['cc_type'] : ''),
-			//                          'cc_owner' => (isset($GLOBALS['cc_owner']) ? $GLOBALS['cc_owner'] : ''),
-			//                          'cc_number' => (isset($GLOBALS['cc_number']) ? $GLOBALS['cc_number'] : ''),
-			//                          'cc_expires' => (isset($GLOBALS['cc_expires']) ? $GLOBALS['cc_expires'] : ''),
-			//                          'cc_cvv' => (isset($GLOBALS['cc_cvv']) ? $GLOBALS['cc_cvv'] : ''),
 			'shipping_method' => (isset($_SESSION['shipping']['title'])) ? $_SESSION['shipping']['title'] : '',
 			'shipping_module_code' => (isset($_SESSION['shipping']['id']) && strpos($_SESSION['shipping']['id'], '_') > 0 ? $_SESSION['shipping']['id'] : $_SESSION['shipping']),
 			'shipping_cost' => isset($_SESSION['shipping']['cost']) ? $_SESSION['shipping']['cost'] : 0,
