@@ -39,12 +39,12 @@ table {
 	padding: 0 20px;
 }
 tr td {
-	padding: 20px 0;
+	padding: 10px 0;
 	border-bottom: 1px solid #e8e8e8;
 }
 </style>
 	<table>
-		<tr>
+		<tr class="list-item-border">
 			<th></th>
 			<th></th>
 			<th></th>
@@ -59,19 +59,18 @@ tr td {
 
 
 		?>
-		<tr>
-		<td><?php
-		echo zen_draw_radio_field(
-			'shipping', 
-			$quote['id'] . '_' . $quote['methods'][0]['id'], 
-			$checked, 
-			'id="ship-'.$quote['id'] . '-' . str_replace(' ', '-', $quote['methods'][0]['id']) .'"'
-		); 
-?>
+		<tr class="list-item-border">
+			<td> <?php
+				echo zen_draw_radio_field(
+					'shipping', 
+					$quote['id'] . '_' . $quote['methods'][0]['id'], 
+					$checked, 
+					'id="ship-'.$quote['id'] . '-' . str_replace(' ', '-', $quote['methods'][0]['id']) .'"'
+				); ?>
 			</td>
 			<td>
 				<label for="ship-<?php echo $quote['id'] . '-' . str_replace(' ', '-', $quote['methods'][0]['id']); ?>" class="checkboxLabel" >
-					<img src="<?php echo $quote['icon']; ?>" width="50" />
+					<img src="<?php echo $quote['icon']; ?>" width="75" />
 				</label>
 			</td>
 			<td>
@@ -80,16 +79,15 @@ tr td {
 				</label>
 			</td>
 			<td>
-				<div class="important forward price">
-					<?php echo $currencies->format(zen_add_tax($quote['methods'][0]['cost'], 0)); ?>
+				<div class="important forward price size-medium">
+					<?php echo $currencies->format($quote['methods'][0]['cost']); ?>
 				</div>
 			</td>
 		</tr>
 		<?php
 	}
 	?>
-	</table>
-<?php
+	</table> <?php
 } else { ?>
 	<h2 id="checkoutShippingHeadingMethod"><?php echo TITLE_NO_SHIPPING_AVAILABLE; ?></h2>
 	<div id="checkoutShippingContentChoose" class="important"><?php echo TEXT_NO_SHIPPING_AVAILABLE; ?></div><?php
@@ -97,7 +95,7 @@ tr td {
 ?>
 
 
-<fieldset class="shipping" id="comments">
+<fieldset class="shipping" id="comments" style="margin-top:40px">
 	<legend><?php echo TABLE_HEADING_COMMENTS; ?></legend>
 	<?php echo zen_draw_textarea_field('comments', '45', '3'); ?>
 </fieldset>

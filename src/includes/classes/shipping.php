@@ -14,6 +14,8 @@ if (!defined('IS_ADMIN_FLAG')) {
 
 include_once('z/model/transportation.php');
 include_once('z/model/transportation_zone.php');
+include_once('z/model/transportation_description.php');
+
 /**
  * shipping class
  * Class used for interfacing with shipping modules
@@ -76,7 +78,7 @@ class shipping extends base
 				if (isset($quotes['methods'][$i]['cost'])){
 					$rates[] = array(
 						'id' 		=> $quotes['id'] . '_' . $quotes['methods'][$i]['id'],
-						'title' 	=> $quotes['module'] . ' (' . $quotes['methods'][$i]['title'] . ')',
+						'title' 	=> $quotes['module'],
 						'cost' 		=> $quotes['methods'][$i]['cost'],
 						'module' 	=> $quotes['id']
 					);
