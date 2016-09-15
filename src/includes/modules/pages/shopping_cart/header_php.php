@@ -43,13 +43,18 @@ $shipping_weight = $_SESSION['cart']->show_weight();
 $totalsDisplay = '';
 switch (true) {
 case (SHOW_TOTALS_IN_CART == '1'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() . TEXT_TOTAL_WEIGHT . $shipping_weight . TEXT_PRODUCT_WEIGHT_UNIT . TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
+	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() 
+		. TEXT_TOTAL_WEIGHT . $shipping_weight . TEXT_PRODUCT_WEIGHT_UNIT 
+		. TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
 	break;
 case (SHOW_TOTALS_IN_CART == '2'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() . ($shipping_weight > 0 ? TEXT_TOTAL_WEIGHT . $shipping_weight . TEXT_PRODUCT_WEIGHT_UNIT : '') . TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
+	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() 
+		. ($shipping_weight > 0 ? TEXT_TOTAL_WEIGHT . $shipping_weight . TEXT_PRODUCT_WEIGHT_UNIT : '') 
+		. TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
 	break;
 case (SHOW_TOTALS_IN_CART == '3'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() . TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
+	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() 
+		. TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
 	break;
 }
 
@@ -68,21 +73,7 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 	} else {
 		$rowClass="rowOdd";
 	}
-	switch (true) {
-	case (SHOW_SHOPPING_CART_DELETE == 1):
-		$buttonDelete = true;
-		$checkBoxDelete = false;
-		break;
-	case (SHOW_SHOPPING_CART_DELETE == 2):
-		$buttonDelete = false;
-		$checkBoxDelete = true;
-		break;
-	default:
-		$buttonDelete = true;
-		$checkBoxDelete = true;
-		break;
-		$cur_row++;
-	} // end switch
+
 	$attributeHiddenField = "";
 	$attrArray = false;
 	$productsName = $products[$i]['name'];
@@ -138,7 +129,15 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 
 	$linkProductsImage = zen_href_link(zen_get_info_page($products[$i]['id']), 'products_id=' . $products[$i]['id']);
 	$linkProductsName = zen_href_link(zen_get_info_page($products[$i]['id']), 'products_id=' . $products[$i]['id']);
-	$productsImage = (IMAGE_SHOPPING_CART_STATUS == 1 ? zen_image(DIR_WS_IMAGES . $products[$i]['image'], $products[$i]['name'], IMAGE_SHOPPING_CART_WIDTH, IMAGE_SHOPPING_CART_HEIGHT) : '');
+
+	$productsImage = IMAGE_SHOPPING_CART_STATUS == 1 ? 
+		zen_image(
+			DIR_WS_IMAGES . $products[$i]['image'], 
+			$products[$i]['name'], 
+			100, //IMAGE_SHOPPING_CART_WIDTH, 
+			100  //IMAGE_SHOPPING_CART_HEIGHT
+		) : '';
+
 	$show_products_quantity_max = zen_get_products_quantity_order_max($products[$i]['id']);
 	$showFixedQuantity = (($show_products_quantity_max == 1 or zen_get_products_qty_box_status($products[$i]['id']) == 0) ? true : false);
 	//  $showFixedQuantityAmount = $products[$i]['quantity'] . zen_draw_hidden_field('products_id[]', $products[$i]['id']) . zen_draw_hidden_field('cart_quantity[]', 1);
@@ -154,21 +153,14 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		), 
 		$currencies->get_decimal_places($_SESSION['currency'])
 	);
-	$ppt = $ppe * $products[$i]['quantity'];
 
 	$productsPriceEach = $currencies->format($ppe) 
 		. ($products[$i]['onetime_charges'] != 0 
 		? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) 
 		: '');
 
-	$productsPriceTotal = $currencies->format($ppt) 
-		. ($products[$i]['onetime_charges'] != 0 
-		? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) 
-		: '');
-	$buttonUpdate = ((SHOW_SHOPPING_CART_UPDATE == 1 or SHOW_SHOPPING_CART_UPDATE == 3) ? zen_image_submit(ICON_IMAGE_UPDATE, ICON_UPDATE_ALT) : '') . zen_draw_hidden_field('products_id[]', $products[$i]['id']);
+	$buttonUpdate = zen_draw_hidden_field('products_id[]', $products[$i]['id']);
 	//  $productsPriceEach = $currencies->display_price($products[$i]['final_price'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) . ($products[$i]['onetime_charges'] != 0 ? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) : '');
-	//  $productsPriceTotal = $currencies->display_price($products[$i]['final_price'], zen_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . ($products[$i]['onetime_charges'] != 0 ? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) : '');
-	//  $productsPriceTotal = $currencies->display_price($products[$i]['final_price'], zen_get_tax_rate($products[$i]['tax_class_id']), $products[$i]['quantity']) . ($products[$i]['onetime_charges'] != 0 ? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) : '');
 	//  echo  $currencies->rateAdjusted($tmp);
 	$productArray[$i] = [
 		'attributeHiddenField'		=> $attributeHiddenField,
@@ -183,15 +175,12 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		'showMinUnits'				=> $showMinUnits,
 		'quantityField'				=> $quantityField,
 		'buttonUpdate'				=> $buttonUpdate,
-		'productsPrice'				=> $productsPriceTotal,
 		'productsPriceEach'			=> $productsPriceEach,
 		'rowClass'					=> $rowClass,
-		'buttonDelete'				=> $buttonDelete,
-		'checkBoxDelete'			=> $checkBoxDelete,
 		'id'						=> $products[$i]['id'],
 		'attributes'				=> $attrArray
 		];
-} // end FOR loop
+} 
 
 
 // This should be last line of the script:

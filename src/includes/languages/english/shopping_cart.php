@@ -1,21 +1,11 @@
 <?php
-/**
- * @package languageDefines
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Fri Sep 11 15:56:13 2015 -0400 Modified in v1.5.5 $
- */
-
-define('TEXT_INFORMATION', 'You may proceed with your purchase by clicking the Checkout button below. Shipping and Taxes and Discounts will be handled on subsequent pages.');
-
-define('NAVBAR_TITLE', 'The Shopping Cart');
-define('HEADING_TITLE', 'Your Shopping Cart Contents');
+define('NAVBAR_TITLE', 'Shopping Cart');
+define('HEADING_TITLE', 'Shopping Cart');
 define('HEADING_TITLE_EMPTY', 'Your Shopping Cart');
 define('TABLE_HEADING_REMOVE', 'Remove');
 define('TABLE_HEADING_QUANTITY', 'Quantity');
 define('TABLE_HEADING_MODEL', 'Model');
-define('TABLE_HEADING_PRICE','Unit');
+define('TABLE_HEADING_PRICE','Price');
 define('TEXT_CART_EMPTY', 'Your Shopping Cart is empty.');
 define('SUB_TITLE_SUB_TOTAL', 'Subtotal:');
 define('SUB_TITLE_TOTAL', 'Total:');

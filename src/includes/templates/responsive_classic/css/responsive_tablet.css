@@ -79,9 +79,6 @@ div#productListing tr.productListing-odd {clear:both;}
 #navEZPagesTOC ul li{font-size:130%;line-height:150%;}
 #navEZPagesTOC ul li a{text-decoration:none;}
 
-/*bof shopping cart*/
-td.cartQuantityUpdate{width:15%;}
-
 /*bof basic*/
 input[type=password], input[type=number], input[type=tel], input[type=text], input[type=email]{width:85%;margin-left:20px;}
 input[type=date]{width:60%;}
@@ -169,9 +166,8 @@ div#shoppingCartDefault tr td:nth-child(6) {display:block;width:20%;padding-righ
 div#shoppingCartDefault tr th {display:none;}
 #shoppingCartDefault .rowEven{background:#eee;}
 .rowEven, .roeOdd{overflow:hidden;}
-td.cartQuantity br, td.cartQuantityUpdate br{display:none;}
+td.cartQuantity br {display:none;}
 td.cartQuantity{padding:20px 10px 0 20px;}
-td.cartQuantityUpdate{padding:25px 0 0 0;}
 td.cartPorductDisplay{padding-top:20px;}
 td.cartProductDisplay br{display:none;}
 .cartAttribsList{margin-left:5em;}
@@ -181,7 +177,6 @@ span.cssButton.normal_button.button.button_continue_shopping, .button_continue_s
 .cartTotalsDisplay{padding:10px 0;background:#333;color:#fff;margin-top:20px;}
 td.cartProductDisplay{padding-top:20px;}
 .cartProdTitle{margin-top:5px;}
-td.cartQuantityUpdate{width:15%;}
 
 /*bof account page*/
 div#accountDefault table, div#accountDefault thead, div#accountDefault tbody, div#accountDefault th, div#accountDefault td, div#accountDefault tr {display: block;clear:both;height:auto;text-align:left;width:99%;}

@@ -1,19 +1,29 @@
 /*bof font colors*/
 body, .messageStackSuccess, .messageStackCaution, #tagline, #productQuantityDiscounts table, .categoryListBoxContents a, h2.greeting a {color:#000000;}
-a:link, #navEZPagesTOC ul li a, a:hover, #navEZPagesTOC ul li a:hover, #navMain ul li a:hover, #navSupp ul li a:hover, .sideBoxContent a:visited, fieldset fieldset legend, #navBreadCrumb a:visited, #siteinfoLegal a, h3.rightBoxHeading a:hover, h3.leftBoxHeading a:hover, .cartTotalDisplay, .cartOldItem, .specialsListBoxContents, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, .list-price, .itemTitle a, h2.greeting, #icon, h1, .header .fa-bars {color:#05a5cb;}
+
+fieldset fieldset legend, 
+.cartTotalDisplay, .cartOldItem, .specialsListBoxContents, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, 
+h2.greeting, #icon, .header .fa-bars {
+	color:#05a5cb;
+}
+
 .cat-count, .itemTitle a:hover, h2.greeting a:hover {color:#666;}
 a:active {color:#0000ff;}
-h2, h3, .cartAttribsList, #cart-box {color:#444;}
+h3, .cartAttribsList, #cart-box {color:#444;}
 .blue{color:#05a5cb !important;}
 .blue:hover{color:#036f89 !important;}
 .alert {color: #8b0000;}
-legend, .specialsListBoxContents a, .centerBoxContentsAlsoPurch a, .centerBoxContentsFeatured a, .centerBoxContentsSpecials a, .centerBoxContentsNew a, .productPriceDiscount{color:#333;}
+legend, .specialsListBoxContents a, .centerBoxContentsAlsoPurch a, .centerBoxContentsFeatured a, .centerBoxContentsSpecials a, .centerBoxContentsNew a {
+	color:#333;
+}
 .messageStackWarning, 
 .messageStackError, #navMainWrapper, #navMain ul li a, #navCatTabsWrapper, #navCatTabs li a, #navCatTabs li a:hover, #navCatTabs li:hover, #navEZPagesTop, 
 #navEZPagesTop li a, .pagination li a, #navSuppWrapper, #navSupp li a, #siteinfoIP, #siteinfoLegal, #bannerSix, #siteinfoLegal a:hover, h2.centerBoxHeading, 
 h3.rightBoxHeading, h3.leftBoxHeading, h3.rightBoxHeading a, h3.leftBoxHeading a, .seDisplayedAddressLabel, #shippingEstimatorContent h2, #shippingEstimatorContent th, #checkoutConfirmDefault .cartTableHeading, #filter-wrapper, .navSplitPagesLinks a, .current, .productListing-rowheading a, .productListing-rowheading a, .prod-list-wrap, #productQuantityDiscounts table tr:first-child td, #reviewsWriteHeading, #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, #checkoutShipAddressDefaultAddress, #accountLinksWrapper h2, h2#addressBookDefaultPrimary, #myAccountPaymentInfo h3, #myAccountShipInfo h3, #myAccountPaymentInfo h4, #myAccountShipInfo h4, input.submit_button, input.submit_button:hover, input.cssButtonHover, span.normal_button{color: #ffffff;}
 .cartNewItem {color:#33cc33;}
-.productSpecialPrice, .productSalePrice, .productSpecialPriceSale, .productPriceDiscount {color:#ff0000;}
+.productSalePrice, .productSpecialPriceSale {
+	color:#ff0000;
+}
 .categoryListBoxContents a:hover, .categoryListBoxContents:hover a{color:#05a5bc;}
 .list-more{color:#fff !important;}
 
@@ -42,9 +52,8 @@ span.cssButton.normal_button.button.button_logoff, span.cssButton.normal_button.
 #filter-wrapper, span.normal_button:hover, span.cssButton.normal_button.button.button_goto_prod_details{background:#000;}
 #docGeneralDisplay #pinfo-right, #popupShippingEstimator, #popupSearchHelp, #popupAdditionalImage, #popupImage, #popupCVVHelp, #popupCouponHelp, #popupAtrribsQuantityPricesHelp, #infoShoppingCart{background:none;}
 
-/*bof border colors*/
 HR {border-bottom:1px solid #9a9a9a;}
-input, TEXTAREA{border:3px solid #ccc;}
+
 #navMain ul li {border-right:1px solid #fff;}
 #navCatTabs li {border-left: 1px solid #05919f;}
 #navCatTabs ul li:last-child{border-right:1px solid #05919f;}
@@ -56,7 +65,6 @@ input, TEXTAREA{border:3px solid #ccc;}
 ol.list-links li{border-bottom:1px solid #ddd;}
 #shoppingcartContent hr{border-bottom:3px solid #666;}
 .tableHeading TH {border-bottom:1px solid #ccc;}
-#cartSubTotal {border-top: 3px solid #ddd;}
 #productQuantityDiscounts td{border-right:1px solid #eee;}
 #seQuoteResults td, .listBoxContentTable td, .tableBorder1 td {border: 1px solid #000;}
 

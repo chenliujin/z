@@ -14,59 +14,97 @@
 ?>
 <div class="centerColumn" id="shoppingCartDefault">
 <?php
-  if ($flagHasCartContents) {
+if ($flagHasCartContents) {
 ?>
 
 <?php
-  if ($_SESSION['cart']->count_contents() > 0) {
+	if ($_SESSION['cart']->count_contents() > 0) {
 ?>
 <div class="forward"><?php echo TEXT_VISITORS_CART; ?></div>
 <?php
-  }
+	}
 ?>
 
-<h1 id="cartDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
+<h2 style="margin-bottom:0"><?php echo HEADING_TITLE; ?></h2>
 
-<?php if ($messageStack->size('shopping_cart') > 0) echo $messageStack->output('shopping_cart'); ?>
+<?php 
+	if ($messageStack->size('shopping_cart') > 0) {
+		echo $messageStack->output('shopping_cart');
+	}
 
-<?php echo zen_draw_form('cart_quantity', zen_href_link(FILENAME_SHOPPING_CART, 'action=update_product', $request_type), 'post', 'id="shoppingCartForm"'); ?>
-<div id="cartInstructionsDisplay" class="content"><?php echo TEXT_INFORMATION; ?></div>
+	echo zen_draw_form('cart_quantity', zen_href_link(FILENAME_SHOPPING_CART, 'action=update_product', $request_type), 'post', 'id="shoppingCartForm"'); 
 
-<?php if (!empty($totalsDisplay)) { ?>
-  <div class="cartTotalsDisplay important"><?php echo $totalsDisplay; ?></div>
-<?php } ?>
-
-<?php  if ($flagAnyOutOfStock) { ?>
-
-<?php    if (STOCK_ALLOW_CHECKOUT == 'true') {  ?>
-
-<div class="messageStackError"><?php echo OUT_OF_STOCK_CAN_CHECKOUT; ?></div>
-
-<?php    } else { ?>
-<div class="messageStackError"><?php echo OUT_OF_STOCK_CANT_CHECKOUT; ?></div>
-
-<?php    } //endif STOCK_ALLOW_CHECKOUT ?>
-<?php  } //endif flagAnyOutOfStock ?>
+	if ($flagAnyOutOfStock) { 
+		if (STOCK_ALLOW_CHECKOUT == 'true') {  ?> 
+			<div class="messageStackError"><?php echo OUT_OF_STOCK_CAN_CHECKOUT; ?></div> <?php    
+		} else { ?>
+			<div class="messageStackError"><?php echo OUT_OF_STOCK_CANT_CHECKOUT; ?></div> <?php    
+		} 
+	} 
+?>
 
 <table id="cartContentsDisplay">
-	 <tr class="tableHeading">
-		<th scope="col" id="scQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
-		<th scope="col" id="scUpdateQuantity">&nbsp;</th>
-		<th scope="col" id="scProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
-		<th scope="col" id="scUnitHeading"><?php echo TABLE_HEADING_PRICE; ?></th>
-		<th scope="col" id="scTotalHeading"><?php echo TABLE_HEADING_TOTAL; ?></th>
-		<th scope="col" id="scRemoveHeading">&nbsp;</th>
+	 <tr class="tableHeading list-item-border">
+		<td scope="col" id="scProductsHeading" style="width: 60%"></td>
+		<td scope="col" id="scUnitHeading" ><?php echo TABLE_HEADING_PRICE; ?></td>
+		<td scope="col" id="scQuantityHeading" style="width:150px"><?php echo TABLE_HEADING_QUANTITY; ?></td>
 	 </tr>
 <?php
-  foreach ($productArray as $product) {
-?>
-     <tr class="<?php echo $product['rowClass']; ?>">
+  foreach ($productArray as $product) { ?>
+     <tr class="<?php echo $product['rowClass']; ?> list-item-border">
 
-<?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-      //
-      } else { ?>
+	   <td class="cartProductDisplay">
+	<div style="margin: 14px 0">
+		<div style="padding-left: 115px">
+			<div style="width:115px; margin-left:-115px;float:left">
+				<a href="#">
+					<img alt="" src="/images/II/1_100.jpg" width="100" />
+				</a>
+			</div>
+			<div style="float:left">
+				<a href="<?php echo $product['linkProductsName']; ?>">
+					<span class="text-bold size-medium">
+						<?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?>
+					</span>
+				</a>
+				<!--<br class="clearBoth" />-->
+				<?php
+				echo $product['attributeHiddenField'];
+				if (isset($product['attributes']) && is_array($product['attributes'])) {
+					echo '<div class="cartAttribsList">';
+					echo '<ul>';
+					reset($product['attributes']);
+					foreach ($product['attributes'] as $option => $value) { ?> 
+						<li><?php echo $value['products_options_name'] . TEXT_OPTION_DIVIDER . nl2br($value['products_options_values_name']); ?></li> <?php
+					}
+					echo '</ul>';
+					echo '</div>';
+				}
+				?>
+				<div style="margin-top: 1em">
+					<a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, 'action=remove_product&product_id=' . $product['id']); ?>">
+						Delete
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	   </td>
 
-		<td class="cartQuantity">
+		<td class="price size-medium text-bold  cartUnitDisplay">
+			<div style="margin: 14px 0">
+			<?php 
+			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
+				echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; 
+			} 
+
+			echo $product['productsPriceEach']; 
+			?>
+			</div>
+		</td>
+
+		<td class="cartQuantity"> 
+			<div style="margin: 14px 0">
 			<?php
 			if ($product['flagShowFixedQuantity']) {
 				echo $product['showFixedQuantityAmount'];
@@ -79,114 +117,31 @@
 			<br />
 			<br />
 			<?php echo $product['showMinUnits']; ?>
+			<?php echo $product['buttonUpdate']; ?>
+			</div>
 		</td>
-
-       <td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td>
-<?php } ?>
-
-
-
-	   <td class="cartProductDisplay">
-			<a href="<?php echo $product['linkProductsName']; ?>">
-				<span class="cartImage back"><?php echo $product['productsImage']; ?></span>
-				<span class="text-bold size-medium"><?php echo $product['productsName'] . '<span class="alert bold">' . $product['flagStockCheck'] . '</span>'; ?></span>
-			</a>
-<br class="clearBoth" />
+	 </tr>
 <?php
-  echo $product['attributeHiddenField'];
-  if (isset($product['attributes']) && is_array($product['attributes'])) {
-  echo '<div class="cartAttribsList">';
-  echo '<ul>';
-    reset($product['attributes']);
-    foreach ($product['attributes'] as $option => $value) {
+	}
 ?>
-
-<li><?php echo $value['products_options_name'] . TEXT_OPTION_DIVIDER . nl2br($value['products_options_values_name']); ?></li>
-
-<?php
-    }
-  echo '</ul>';
-  echo '</div>';
-  }
-?>
-       </td>
-
-<?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
-
-       <td class="cartQuantity">
-<?php
-  if ($product['flagShowFixedQuantity']) {
-    echo $product['showFixedQuantityAmount'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
-  } else {
-    echo $product['quantityField'] . '<br /><span class="alert bold">' . $product['flagStockCheck'] . '</span><br /><br />' . $product['showMinUnits'];
-  }
-?>
-       </td>
-       <td class="cartQuantityUpdate"><?php echo $product['buttonUpdate']; ?></td>
-
-<?php  } else {
-
-  }  ?>
-
-
-		<td class="price size-medium text-bold  cartUnitDisplay">
-			<?php 
-			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
-				echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; 
-			} 
-
-			echo $product['productsPriceEach']; 
-			?>
-		</td>
-		<td class="price size-medium text-bold cartTotalDisplay">
-			<?php 
-			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
-				echo '<b class="hide">' . TABLE_HEADING_TOTAL . '&#58;&nbsp;&nbsp;</b>'; 
-			} 
-				
-			echo $product['productsPrice']; 
-			?>
-		</td>
-
-       <td class="cartRemoveItemDisplay">
-<?php
-  if ($product['buttonDelete']) {
-?>
-         <a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, 'action=remove_product&product_id=' . $product['id']); ?>"><?php echo zen_image($template->get_template_dir(ICON_IMAGE_TRASH, DIR_WS_TEMPLATE, $current_page_base,'images/icons'). '/' . ICON_IMAGE_TRASH, ICON_TRASH_ALT); ?></a>
-<?php
-  }
-  if ($product['checkBoxDelete'] ) {
-    echo zen_draw_checkbox_field('cart_delete[]', $product['id']);
-  }
-?>
-      </td>
-     </tr>
-<?php
-  } // end foreach ($productArray as $product)
-?>
-       <!-- Finished loop through all products /-->
 </table>
 
 <div id="cartSubTotal" class="size-medium text-bold">
-	<?php echo SUB_TITLE_SUB_TOTAL; ?>
+	<?php 
+	if (!empty($totalsDisplay)) { ?>
+		<span class="cartTotalsDisplay important"><?php echo $totalsDisplay; ?></span> <?php 
+	} 
+
+	echo SUB_TITLE_SUB_TOTAL; 
+	?>
 	<span class="price size-medium text-bold"><?php echo $cartShowTotal; ?></span>
 </div>
+
 <br class="clearBoth" />
 
 <!--bof shopping cart buttons-->
 <div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHECKOUT, BUTTON_CHECKOUT_ALT) . '</a>'; ?></div>
 <div class="buttonRow back"><?php echo zen_back_link() . zen_image_button(BUTTON_IMAGE_CONTINUE_SHOPPING, BUTTON_CONTINUE_SHOPPING_ALT) . '</a>'; ?></div>
-<?php
-// show update cart button
-  if (SHOW_SHOPPING_CART_UPDATE == 2 or SHOW_SHOPPING_CART_UPDATE == 3) {
-?>
-<div class="buttonRow back"><?php echo zen_image_submit(ICON_IMAGE_UPDATE, ICON_UPDATE_ALT); ?></div>
-<?php
-  } else { // don't show update button below cart
-?>
-<?php
-  } // show update button
-?>
 <!--eof shopping cart buttons-->
 </form>
 

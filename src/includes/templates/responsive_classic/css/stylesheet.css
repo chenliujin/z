@@ -1,16 +1,10 @@
-/**
- * Main CSS Stylesheet
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: picaflor-azul Thu Mar 17 12:13:18 2016 -0500 New in v1.5.5 $
- */
+body {
+	margin:0;
+	font-family: Arial,sans-serif;
+	font-size:72.5%;
+	line-height:140%;
+}
 
-/*bof basic elements*/
-body {margin:0;font-family:verdana, arial, helvetica, sans-serif;font-size:72.5%;line-height:140%;}
-/*general link styles*/
 a img {border:none;}
 a:link, #navEZPagesTOC ul li a {text-decoration:underline;}
 a:visited {text-decoration:underline;}
@@ -28,7 +22,8 @@ P, ADDRESS {padding:0.5em;}
 ADDRESS {font-style:normal;}
 HR {height: 1px;margin-top:0.5em;border:none;}
 #logo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .centerBoxContentsAlsoPurch, .attribImg {float:left;}
-.centeredContent, TH, #cartEmptyText, #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, #siteinfoLegal, #siteinfoCredits, #siteinfoStatus, #siteinfoIP, .center, .cartRemoveItemDisplay, .cartQuantityUpdate, .cartQuantity, .cartTotalsDisplay, #cartBoxGVBalance, .leftBoxHeading, .centerBoxHeading,.rightBoxHeading, .productListing-data, .accountQuantityDisplay, .ratingRow, LABEL#textAreaReviews, #productMainImage, #reviewsInfoDefaultProductImage, #productReviewsDefaultProductImage, #reviewWriteMainImage, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, .gvBal, .attribImg {text-align:center;}
+.centeredContent, TH, #cartEmptyText, #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, #siteinfoLegal, #siteinfoCredits, #siteinfoStatus, #siteinfoIP, .center,
+.cartTotalsDisplay, #cartBoxGVBalance, .leftBoxHeading, .centerBoxHeading,.rightBoxHeading, .productListing-data, .accountQuantityDisplay, .ratingRow, LABEL#textAreaReviews, #productMainImage, #reviewsInfoDefaultProductImage, #productReviewsDefaultProductImage, #reviewWriteMainImage, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, .gvBal, .attribImg {text-align:center;}
 #navCategoryIcon, .buttonRow, #indexProductListCatDescription {margin:0.5em;}
 /*floats and clears*/
 .back {float:left;}
@@ -56,7 +51,7 @@ HR {height: 1px;margin-top:0.5em;border:none;}
 
 /*bof form elements*/
 CODE {font-family:arial, verdana, helvetica, sans-serif;font-size:1em;}
-FORM, SELECT, INPUT {display:inline;font-size:1em;margin:0 0.1em 0 0;}
+SELECT, INPUT {display:inline;font-size:1em;margin:0 0.1em 0 0;}
 input{height:35px;padding-left:5px;margin-bottom:10px;}
 select{border:none;padding-left:5px;width:51%;}
 TEXTAREA {margin:auto;display:block;width:66%;}
@@ -206,26 +201,30 @@ ul.list-links li:hover, ol.list-links li:hover{}
 #shoppingcartContent hr{display:none;}
 .cartBoxTotal{padding:10px !important;}
 .sideBoxContent .productPriceDiscount{font-size:130%;margin-top:3px;}
-.sideBoxContent .productSpecialPrice{font-size:120%;}
 
 /*bof shopping cart*/
 .tableHeading TH {padding:10px 0;}
-.tableHeading{}
 #cartSubTotal {text-align:right;line-height:2.2em;padding:10px 0 20px 0;font-size:130%;}
 .tableRow, .tableHeading, #cartSubTotal {height:2.2em;}
-.cartProductDisplay, .cartUnitDisplay, .cartTotalDisplay, .cartRemoveItemDisplay, .cartQuantityUpdate, .cartQuantity, #cartInstructionsDisplay, .cartTotalsDisplay {padding: 0.5em 0em;}
-.cartUnitDisplay, .cartTotalDisplay {text-align:right;padding-right:0.2em;}
+.cartProductDisplay, 
+.cartTotalDisplay,
+.cartTotalsDisplay {
+	padding: 0.5em 0em;
+}
+.cartTotalDisplay {text-align:right;padding-right:0.2em;}
 .cartTotalDisplay{font-size:130%;}
 #scUpdateQuantity {width:2em;}
 .cartQuantity {width:4.7em;}
 .cartNewItem {position:relative;}
 .cartOldItem {position:relative;}
 .cartBoxTotal {text-align:right;font-weight:bold;}
-.cartRemoveItemDisplay {width:3.5em;}
 .cartAttribsList {margin-left:1em;}
-.normalprice, .productSpecialPriceSale {text-decoration:line-through;}
-.productSpecialPrice, .productSalePrice, .productSpecialPriceSale, .productPriceDiscount {}
-#ezPageBoxList ul {list-style-type:none;}
+.normalprice, .productSpecialPriceSale {
+	text-decoration:line-through;
+}
+#ezPageBoxList ul {
+	list-style-type:none;
+}
 #ezPageBoxList li, .cartBoxTotal {margin:0;padding: 0.2em 0;}
 #cartBoxEmpty, #cartBoxVoucherBalance {font-weight:bold;}
 .totalBox {text-align:right;padding:0.2em;}
@@ -356,7 +355,6 @@ span.list-addtext{display:block;text-align:center;}
 #productDetailsList li{list-style-type:none;}
 #productDetailsList{padding:0;margin-left:30px;}
 #productPrices{font-size:1.5em;text-align:center;margin:10px 0 10px 0;font-weight:normal;}
-.productSpecialPrice{font-size:120%;}
 #mediaManagerHeading{font-weight:normal;}
 #freeShippingIcon{margin:10px 0 10px 30px;}
 #productQuantityDiscounts table{margin:0 auto 20px auto;border:none !important;border-spacing:0 !important;border-collapse:separate !important;}
@@ -484,15 +482,53 @@ table{border:none;padding:0;margin:0; border-spacing:0;border-collapse:collapse;
 .tableBorder1 td {}
 
 
+h2 {
+	font-family: Arial,sans-serif;
+	font-size: 21px;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
 a, a:active, a:link, a:visited {
 	text-decoration: none;
 	color: #0066c0;
+}
+a:hover {
+	color: #c45500;
+	cursor: pointer;
+	text-decoration: underline;
+}
+
+input {
+	transition: all 100ms linear;
+}
+input[type=text] {
+	padding: 3px 7px;
+	height: 31px;
+	border: 1px solid #a6a6a6;
+	border-top-color: #949494;
+	border-radius: 3px;
+	box-shadow: 0 1px 0 rgba(255,255,255,.5),0 1px 0 rgba(0,0,0,.07) inset;
+	outline: 0;
+	background-color: #fff;
+}
+input[type=text]:focus {
+	border-color:#e77600;
+	box-shadow: 0 0 3px 2px rgba(228,121,17,.5);
+	background-color: #fff;
 }
 
 .price {
 	color: #b12704!important;
 }
+.price-del {
+	color: #555!important;
+}
 
+.size-base {
+	font-size: 13px!important;
+	line-height: 19px!important;
+}
 .size-medium {
 	font-size: 17px!important;
 	line-height: 1.255!important;
@@ -502,4 +538,8 @@ a, a:active, a:link, a:visited {
 
 .text-bold {
 	font-weight: 700!important;
+}
+
+.list-item-border {
+	border-bottom: 1px solid #DDD;
 }
