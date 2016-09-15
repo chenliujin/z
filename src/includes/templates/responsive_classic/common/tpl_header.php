@@ -155,7 +155,8 @@ echo '<div class="header Fixed"><a href="#menu" title="Menu"><i class="fa fa-bar
     <li class="last"><a class="blue" href="<?php echo zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'); ?>"><?php echo HEADER_TITLE_CHECKOUT; ?></a></li>
 <?php }?>
   </ul>
-<div id="navMainSearch" class="forward"><?php require(DIR_WS_MODULES . 'sideboxes/search_header.php'); ?></div>
+
+	<div id="navMainSearch" class="forward"><?php require(DIR_WS_MODULES . 'sideboxes/search_header.php'); ?></div>
 </div>
 </div>
 <!--eof navigation display-->
