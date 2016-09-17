@@ -17,7 +17,8 @@ legend, .specialsListBoxContents a, .centerBoxContentsAlsoPurch a, .centerBoxCon
 	color:#333;
 }
 .messageStackWarning, 
-.messageStackError, #navMainWrapper, #navMain ul li a, #navCatTabsWrapper, #navCatTabs li a, #navCatTabs li a:hover, #navCatTabs li:hover, #navEZPagesTop, 
+.messageStackError, 
+#navCatTabsWrapper, #navCatTabs li a, #navCatTabs li a:hover, #navCatTabs li:hover, #navEZPagesTop, 
 #navEZPagesTop li a, .pagination li a, #navSuppWrapper, #navSupp li a, #siteinfoIP, #siteinfoLegal, #bannerSix, #siteinfoLegal a:hover, h2.centerBoxHeading, 
 h3.rightBoxHeading, h3.leftBoxHeading, h3.rightBoxHeading a, h3.leftBoxHeading a, .seDisplayedAddressLabel, #shippingEstimatorContent h2, #shippingEstimatorContent th, #checkoutConfirmDefault .cartTableHeading, #filter-wrapper, .navSplitPagesLinks a, .current, .productListing-rowheading a, .productListing-rowheading a, .prod-list-wrap, #productQuantityDiscounts table tr:first-child td, #reviewsWriteHeading, #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, #checkoutShipAddressDefaultAddress, #accountLinksWrapper h2, h2#addressBookDefaultPrimary, #myAccountPaymentInfo h3, #myAccountShipInfo h3, #myAccountPaymentInfo h4, #myAccountShipInfo h4, input.submit_button, input.submit_button:hover, input.cssButtonHover, span.normal_button{color: #ffffff;}
 .cartNewItem {color:#33cc33;}
@@ -38,7 +39,7 @@ fieldset, #shippingEstimatorContent tr:nth-child(odd), #order-comments, ul.list-
 #navEZPagesTOCWrapper, .cartBoxTotal, .productListing-even:hover, .productListing-odd:hover, #productQuantityDiscounts tr:nth-child(even) {background:#ddd;}
 #orderTotals{background:#ccc;}
 legend, #cart-box{background:#bbb;}
-#navMainWrapper, #navSuppWrapper, #shippingEstimatorContent h2, #checkoutConfirmDefault .cartTableHeading, .navSplitPagesLinks a, .productListing-rowheading a:hover, .list-more, #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, #checkoutShipAddressDefaultAddress, #accountLinksWrapper h2, h2#addressBookDefaultPrimary, #reviewsWriteHeading, #myAccountPaymentInfo h3, #myAccountShipInfo h3, span.cssButton.normal_button.button.button_more_reviews, .button_more_reviews:hover, span.cssButton.normal_button.button.button_read_reviews, .button_read_reviews:hover {background:#333;}
+#navSuppWrapper, #shippingEstimatorContent h2, #checkoutConfirmDefault .cartTableHeading, .navSplitPagesLinks a, .productListing-rowheading a:hover, .list-more, #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, #checkoutShipAddressDefaultAddress, #accountLinksWrapper h2, h2#addressBookDefaultPrimary, #reviewsWriteHeading, #myAccountPaymentInfo h3, #myAccountShipInfo h3, span.cssButton.normal_button.button.button_more_reviews, .button_more_reviews:hover, span.cssButton.normal_button.button.button_read_reviews, .button_read_reviews:hover {background:#333;}
 #navSupp li a:hover, .rightBoxHeading, .leftBoxHeading, .centerBoxHeading {background:#444;}
 span.cssButton.normal_button.button.button_logoff, span.cssButton.normal_button.button.small_edit, #navEZPagesTop, .seDisplayedAddressLabel, .prod-list-wrap, #myAccountPaymentInfo h4, #myAccountShipInfo h4 {background:#666;}
 #siteinfoIP, #siteinfoLegal, #bannerSix{background:#666665;}
