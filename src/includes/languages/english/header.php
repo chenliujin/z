@@ -11,7 +11,6 @@ define('HEADER_TITLE_LOGIN', 'Log In');
 
 // added defines for header alt and text
 define('HEADER_ALT_TEXT', 'Powered by Zen Cart :: The Art of E-Commerce');
-define('HEADER_SALES_TEXT', 'TagLine Here');
 define('HEADER_LOGO_WIDTH', '192px');
 define('HEADER_LOGO_HEIGHT', '64px');
 define('HEADER_LOGO_IMAGE', 'logo.gif');
