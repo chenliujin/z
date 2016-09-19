@@ -90,7 +90,7 @@ select#country, select#stateZone, #state {margin-left:0;}
 
 /*bof wrappers - page or section containers*/
 #mainWrapper {text-align:left;width:100%;vertical-align:top;}
-#headerWrapper, #contentMainWrapper, #logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage,
+#contentMainWrapper, #logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage,
 #popupImage {margin:0;padding:0;}
 #contentMainWrapper{padding-bottom:30px;}
 #navColumnOneWrapper, #navColumnTwoWrapper, #mainWrapper{margin:auto;}
@@ -102,8 +102,12 @@ select#country, select#stateZone, #state {margin-left:0;}
 #loginDefault .floatingBox{min-height:240px;}
 .shippingEstimatorWrapper {padding:0.5em;}
 
-/*bof header*/
-#headerWrapper{}
+#headerWrapper {
+	margin:0;
+	padding:0;
+	border-bottom: 1px solid #e9e9e9;
+}
+
 /*top left navigation*/
 #navMainWrapper {margin:0;padding:10px 0;font-size:120%;height:1%;width:100% !important;}
 #navMain{width:75%;margin:0 auto;}
@@ -549,3 +553,55 @@ input[type=text]:focus {
 .list-item-border {
 	border-bottom: 1px solid #DDD;
 }
+
+.nav-tool {
+	padding: 6px 0 0 32px;
+	float: right;
+	padding-right: 5em;
+}
+
+.nav-a {
+	padding: 0 0 0 10px;
+	float: left;
+	height: 44px;
+	line-height: 44px;
+	text-decoration: none;
+}
+
+.nav-account, .nav-cart {
+	font-size: 14px;
+	line-height: 15px;
+	font-weight: 700;
+}
+
+.nav-account {
+	padding-top: 9px;
+}
+
+.nav-account .sign-in {
+	font-size: 12px;
+	font-weight: 400;
+	height: 14px;
+	line-height: 14px;
+}
+
+.nav-cart {
+	padding-left: 35px;
+	position: relative;
+	padding-top: 23px;
+}
+.nav-cart-count {
+	/*
+	color: #f08804;
+	*/
+}
+.nav-cart u {
+	width: 29px;
+	height: 21px;
+	background: url("/images/global.png") no-repeat 0 0;
+	display: block;
+	position: absolute;
+	top: 19px;
+	left: 0;
+}
+
