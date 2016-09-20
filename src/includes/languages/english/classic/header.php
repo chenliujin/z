@@ -6,8 +6,8 @@ define('HEADER_TITLE_CART_CONTENTS', 'Shopping Cart');
 define('HEADER_TITLE_CHECKOUT', 'Checkout');
 define('HEADER_TITLE_TOP', 'Top');
 define('HEADER_TITLE_CATALOG', 'Home');
-define('HEADER_TITLE_LOGOFF', 'Log Out');
-define('HEADER_TITLE_LOGIN', 'Log In');
+define('HEADER_TITLE_LOGOFF', 'Sign Out');
+define('HEADER_TITLE_LOGIN', 'Sign In');
 
 // added defines for header alt and text
 define('HEADER_ALT_TEXT', 'Powered by Zen Cart :: The Art of E-Commerce [home link]');
