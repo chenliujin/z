@@ -5,15 +5,19 @@ if (!defined('IS_ADMIN_FLAG')) {
 
 class category_tree extends base {
 
-	function zen_category_tree($product_type = "all") {
+	function zen_category_tree($product_type = "all") 
+	{
 		global $db, $cPath, $cPath_array;
+
 		if ($product_type != 'all') {
 			$sql = "select type_master_type from " . TABLE_PRODUCT_TYPES . "
 				where type_master_type = " . $product_type . "";
 			$master_type_result = $db->Execute($sql);
 			$master_type = $master_type_result->fields['type_master_type'];
 		}
+
 		$this->tree = array();
+
 		if ($product_type == 'all') {
 			$categories_query = "select c.categories_id, cd.categories_name, c.parent_id, c.categories_image
 				from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd
@@ -33,6 +37,7 @@ class category_tree extends base {
 				and c.categories_status= 1
 				order by sort_order, cd.categories_name";
 		}
+
 		$categories = $db->Execute($categories_query, '', true, 150);
 		while (!$categories->EOF)  {
 			$this->tree[$categories->fields['categories_id']] = array('name' => $categories->fields['categories_name'],
@@ -53,6 +58,7 @@ class category_tree extends base {
 			}
 			$categories->MoveNext();
 		}
+
 		if (zen_not_null($cPath)) {
 			$new_path = '';
 			reset($cPath_array);
@@ -68,16 +74,6 @@ class category_tree extends base {
 						and c.categories_status= 1
 						order by sort_order, cd.categories_name";
 				} else {
-		  /*
-		  $categories_query = "select ptc.category_id as categories, cd.categories_name, c.parent_id, c.categories_image
-		  from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd, " . TABLE_PRODUCT_TYPES_TO_CATEGORY . " ptc
-		  where c.parent_id = '" . (int)$value . "'
-		  and ptc.category_id = cd.categories_id
-		  and ptc.product_type_id = '" . $master_type . "'
-		  and cd.language_id='" . (int)$_SESSION['languages_id'] . "'
-		  and c.categories_status= '1'
-		  order by sort_order, cd.categories_name";
-		   */
 					$categories_query = "select ptc.category_id as categories_id, cd.categories_name, c.parent_id, c.categories_image
 						from " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd, " . TABLE_PRODUCT_TYPES_TO_CATEGORY . " ptc
 						where c.parent_id = " . (int)$value . "
@@ -87,7 +83,6 @@ class category_tree extends base {
 						and cd.language_id=" . (int)$_SESSION['languages_id'] ."
 						and c.categories_status= 1
 						order by sort_order, cd.categories_name";
-
 				}
 
 				$rows = $db->Execute($categories_query);
@@ -122,7 +117,9 @@ class category_tree extends base {
 				}
 			}
 		}
+
 		$row = 0;
+
 		return $this->zen_show_category($first_element, $row);
 	}
 
@@ -136,7 +133,6 @@ class category_tree extends base {
 				$this->categories_string .= CATEGORIES_SUBCATEGORIES_INDENT;
 			}
 		}
-
 
 		if ($this->tree[$counter]['parent'] == 0) {
 			$cPath_new = 'cPath=' . $counter;
@@ -154,7 +150,6 @@ class category_tree extends base {
 			$this->box_categories_array[$ii]['current'] = false;
 		}
 
-		// display category name
 		$this->box_categories_array[$ii]['name'] = $this->categories_string . $this->tree[$counter]['name'];
 
 		// make category image available in case needed
@@ -179,6 +174,7 @@ class category_tree extends base {
 			$ii++;
 			$this->zen_show_category($this->tree[$counter]['next_id'], $ii);
 		}
+
 		return $this->box_categories_array;
 	}
 }
