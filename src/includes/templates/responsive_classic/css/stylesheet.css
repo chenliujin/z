@@ -554,10 +554,32 @@ input[type=text]:focus {
 	border-bottom: 1px solid #DDD;
 }
 
+.nav-left {
+	float: left;
+}
 .nav-tool {
+	position: relative;
 	padding: 6px 0 0 32px;
 	float: right;
 	padding-right: 5em;
+	opacity: 1.0;
+	z-index: 2;
+}
+
+a.selected {
+	opacity: 1.0;
+	z-index: 999;
+}
+
+.nav-menu {
+	position: relative;
+	opacity: 1;
+	z-index: 99;
+}
+
+.nav-tool a:hover {
+	opacity: 1.0;
+	z-index: 999;
 }
 
 .nav-a {
@@ -605,3 +627,43 @@ input[type=text]:focus {
 	left: 0;
 }
 
+#nav-overlay {
+	background: #000;
+	opacity: 0.6;
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	display: none;
+	z-index: 1;
+}
+
+.nav-flyout {
+	padding: 14px;
+	border: 1px solid #bbb;
+	border-radius: 3px;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,.13);
+	background: #fff;
+	position: absolute;
+	z-index: 2;
+	display: none;
+}
+
+.nav-item {
+	margin: 0;
+	padding: 0 0 7px 0;
+	line-height: 16px;
+	display: block;
+	clear: both;
+}
+
+.nav-text {
+	font-size: 13px;
+	font-weight: 400;
+	color: #444;
+}
+
+.nav-link:hover .nav-text {
+	color: #e47911;
+	text-decoration: underline;
+}

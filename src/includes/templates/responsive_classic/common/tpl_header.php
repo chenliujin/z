@@ -95,20 +95,7 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 
 <div id="navMain">
   <ul class="back">
-    <li><?php echo '<a href="' . HTTP_SERVER . DIR_WS_CATALOG . '">'; ?><?php echo HEADER_TITLE_CATALOG; ?></a></li> <?php 
-
-	if ($_SESSION['customer_id']) { ?>
-		<li><a href="<?php echo zen_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>"><?php echo HEADER_TITLE_LOGOFF; ?></a></li> <?php 
-    } else {
-		if (STORE_STATUS == '0') { 
-			if ($_SESSION['cart']->count_contents() != 0) { ?>
-				<li><a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>"><?php echo HEADER_TITLE_LOGIN; ?></a></li> <?php 
-			} else { ?>
-				<li class="last"><a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>"><?php echo HEADER_TITLE_LOGIN; ?></a></li> <?php 
-			} 
-		}
-	} 
-	?>
+    <li><?php echo '<a href="' . HTTP_SERVER . DIR_WS_CATALOG . '">'; ?><?php echo HEADER_TITLE_CATALOG; ?></a></li> 
   </ul>
 	
 	<div style="clear:both"></div>
@@ -120,9 +107,41 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 </div>
 <?php  } ?>
 
-<div class="nav-tool">
 
-	<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-a">
+<div>
+<div id="nav-overlay"></div>
+
+<div id="nav-flyout-list">
+	<div id="nav-flyout-categories" class="nav-flyout">
+		xxx
+	</div>
+	<div id="nav-flyout-account" class="nav-flyout">
+		<?php if (!$_SESSION['customer_id']) {?>
+		<a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>" class="nav-link nav-item">
+			<span class="nav-text"><?php echo HEADER_TITLE_LOGIN; ?></span>
+		</a>
+		<?php } ?>
+		<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-link nav-item">
+			<span class="nav-text"><?php echo HEADER_TITLE_MY_ACCOUNT; ?></span>
+		</a>
+		<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-link <?php if ($_SESSION['customer_id']) echo 'nav-item';?> ">
+			<span class="nav-text">My Orders</span>
+		</a>
+		<?php if ($_SESSION['customer_id']) { ?>
+		<a href="<?php echo zen_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="nav-link">
+			<span class="nav-text"><?php echo HEADER_TITLE_LOGOFF; ?></span>
+		</a>
+		<?php } ?>
+	</div>
+</div>
+
+<div class="nav-left">
+	<a href="#" class="nav-a">
+		Categories
+	</a>
+</div>
+<div class="nav-tool">
+	<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-a nav-menu">
 		<div class="nav-account">
 			<span class="sign-in">
 			<?php
@@ -136,6 +155,7 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 			<span><?php echo HEADER_TITLE_MY_ACCOUNT; ?></span>
 		</div>
 	</a>
+
 	<a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, '', 'NONSSL'); ?>" class="nav-a">
 		<div class="nav-cart">
 			<u></u>
@@ -145,6 +165,57 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 		</div>
 	</a>
 </div>
+
+</div>
+
+<script>
+	$(function(){
+		var $menu 		= $('.nav-menu');
+		var $overlay 	= $('#nav-overlay');
+
+		$menu.bind(
+			'mouseenter',
+			function() {
+				var $this = $(this);
+
+				$overlay.width(document.body.scrollWidth);
+				$overlay.height(document.body.scrollHeight);
+				$overlay.stop(false, false).fadeTo(200, 0.6);
+
+				$('#nav-flyout-account').css('display', 'block');
+				$('#nav-flyout-account').css('top', $this.offset().top + 42);
+				$('#nav-flyout-account').css('left', $this.offset().left + 10);
+			}
+		).bind(
+			'mouseleave',
+			function(){
+				var $this = $(this);
+				$overlay.stop(true, true).fadeOut(200);
+
+				$('.nav-flyout').hide();
+			}
+		);
+
+		$('.nav-flyout').bind(
+			'mouseover',
+			function() {
+				var $this = $(this);
+				$this.show();
+				$overlay.stop(false, false).fadeTo(200, 0.6);
+
+			}
+		).bind(
+			'mouseleave',
+			function() {
+				var $this = $(this);
+				$this.hide();
+
+				$overlay.stop(true, true).fadeOut(200);
+			}
+		);
+
+	});
+</script>
 
 <div id="logoWrapper" class="group onerow-fluid">
 <div id="logo">
