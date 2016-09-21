@@ -40,12 +40,14 @@ class category_tree extends base {
 
 		$categories = $db->Execute($categories_query, '', true, 150);
 		while (!$categories->EOF)  {
-			$this->tree[$categories->fields['categories_id']] = array('name' => $categories->fields['categories_name'],
+			$this->tree[$categories->fields['categories_id']] = array(
+				'name' => $categories->fields['categories_name'],
 				'parent' => $categories->fields['parent_id'],
 				'level' => 0,
 				'path' => $categories->fields['categories_id'],
 				'image' => $categories->fields['categories_image'],
-				'next_id' => false);
+				'next_id' => false
+				);
 
 			if (isset($parent_id)) {
 				$this->tree[$parent_id]['next_id'] = $categories->fields['categories_id'];
@@ -56,6 +58,7 @@ class category_tree extends base {
 			if (!isset($first_element)) {
 				$first_element = $categories->fields['categories_id'];
 			}
+
 			$categories->MoveNext();
 		}
 
@@ -90,12 +93,14 @@ class category_tree extends base {
 				if ($rows->RecordCount()>0) {
 					$new_path .= $value;
 					while (!$rows->EOF) {
-						$this->tree[$rows->fields['categories_id']] = array('name' => $rows->fields['categories_name'],
+						$this->tree[$rows->fields['categories_id']] = array(
+							'name' => $rows->fields['categories_name'],
 							'parent' => $rows->fields['parent_id'],
 							'level' => $key+1,
 							'path' => $new_path . '_' . $rows->fields['categories_id'],
 							'image' => $categories->fields['categories_image'],
-							'next_id' => false);
+							'next_id' => false
+						);
 
 						if (isset($parent_id)) {
 							$this->tree[$parent_id]['next_id'] = $rows->fields['categories_id'];
