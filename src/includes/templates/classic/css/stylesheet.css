@@ -597,21 +597,6 @@ h3.leftBoxHeading a:hover, h3.rightBoxHeading a:hover {
 	text-align: right;
 	}
 
-/* categories box parent and child categories */
-A.category-top, A.category-top:visited {
-	color: #008000;
-	text-decoration: none;
-	}
-A.category-links, A.category-links:visited {
-	color: #004080;
-	text-decoration: none;
-	}
-A.category-subs, A.category-products, A.category-subs:visited, A.category-products:visited {
-	color: #FF0000;
-	text-decoration: none;
-	}
-/* end categories box links */
-
 /*misc*/
 .back {
 	float: left;
