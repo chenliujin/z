@@ -610,9 +610,6 @@ A.category-subs, A.category-products, A.category-subs:visited, A.category-produc
 	color: #FF0000;
 	text-decoration: none;
 	}
-SPAN.category-subs-parent {
-	font-weight: bold;
-	}
 /* end categories box links */
 
 /*misc*/
