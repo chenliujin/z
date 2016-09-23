@@ -613,9 +613,6 @@ A.category-subs, A.category-products, A.category-subs:visited, A.category-produc
 SPAN.category-subs-parent {
 	font-weight: bold;
 	}
-SPAN.category-subs-selected {
-	font-weight: bold;
-	}
 /* end categories box links */
 
 /*misc*/
