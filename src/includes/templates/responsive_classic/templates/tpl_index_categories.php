@@ -2,14 +2,6 @@
 <?php if ($show_welcome == true) { ?>
 <h1 id="indexCategoriesHeading"><?php echo HEADING_TITLE; ?></h1>
 
-<?php 
-
-echo '>>>>';
-
-if (SHOW_CUSTOMER_GREETING == 1) { ?>
-<h2 class="greeting"><?php echo zen_customer_greeting(); ?></h2>
-<?php } ?>
-
 <?php if (DEFINE_MAIN_PAGE_STATUS >= 1 and DEFINE_MAIN_PAGE_STATUS <= 2) { ?>
 <div id="indexCategoriesMainContent" class="content"><?php
 /**
