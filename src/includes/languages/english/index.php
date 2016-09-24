@@ -8,8 +8,6 @@ if (STORE_STATUS == '0') {
 	define('TEXT_GREETING_GUEST', 'Welcome, please enjoy our online showcase.');
 }
 
-define('TEXT_GREETING_PERSONAL', 'Hello <span class="greetUser">%s</span>! Would you like to see our <a href="%s">newest additions</a>?');
-
 define('TEXT_INFORMATION', 'Define your main Index page copy here.');
 
 if ( ($category_depth == 'products') || (zen_check_url_get_terms()) ) {
