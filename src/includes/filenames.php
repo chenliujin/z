@@ -47,7 +47,6 @@ define('FILENAME_CURRENCIES', 'currencies');
 define('FILENAME_CUSTOMERS', 'customers');
 define('FILENAME_DEFAULT', 'index');
 define('FILENAME_DEFINE_PAGES_EDITOR', 'define_pages_editor');
-define('FILENAME_DEFINE_MAIN_PAGE', 'define_main_page');
 define('FILENAME_DEFINE_CHECKOUT_SUCCESS', 'define_checkout_success');
 define('FILENAME_DEFINE_CONDITIONS', 'define_conditions');
 define('FILENAME_DEFINE_CONTACT_US', 'define_contact_us');
