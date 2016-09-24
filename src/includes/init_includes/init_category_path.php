@@ -2,6 +2,7 @@
 if (!defined('IS_ADMIN_FLAG')) {
 	die('Illegal Access');
 }
+
 $show_welcome = false;
 if (isset($_GET['cPath'])) {
 	$cPath = $_GET['cPath'];
