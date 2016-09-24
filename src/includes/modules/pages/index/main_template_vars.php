@@ -115,8 +115,6 @@ if ($category_depth == 'nested')
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	$tpl_page_body = 'tpl_index_categories.php';
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	//  } elseif ($category_depth == 'products' || isset($_GET['manufacturers_id']) || isset($_GET['music_genre_id'])) {
 } elseif ($category_depth == 'products' || zen_check_url_get_terms()) {
 	if (SHOW_PRODUCT_INFO_ALL_PRODUCTS == '1') {
 		// set a category filter
