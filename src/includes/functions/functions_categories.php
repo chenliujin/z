@@ -443,23 +443,6 @@
     return $select_string;
   }
 
-////
-// look up categories product_type
-  function zen_get_product_types_to_category($lookup) {
-    global $db;
-
-    $lookup = str_replace('cPath=','',$lookup);
-
-    $sql = "select product_type_id from " . TABLE_PRODUCT_TYPES_TO_CATEGORY . " where category_id='" . (int)$lookup . "'";
-    $look_up = $db->Execute($sql);
-
-    if ($look_up->RecordCount() > 0) {
-      return $look_up->fields['product_type_id'];
-    } else {
-      return false;
-    }
-  }
-
 //// look up parent categories name
   function zen_get_categories_parent_name($categories_id) {
     global $db;
