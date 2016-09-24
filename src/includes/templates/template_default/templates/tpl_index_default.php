@@ -1,9 +1,5 @@
 <div class="centerColumn" id="indexDefault">
 
-<?php if (SHOW_CUSTOMER_GREETING == 1) { ?>
-<h2 class="greeting"><?php echo zen_customer_greeting(); ?></h2>
-<?php } ?>
-
 <!-- deprecated - to use uncomment this section
 <?php if (TEXT_MAIN) { ?>
 <div id="" class="content"><?php echo TEXT_MAIN; ?></div>
