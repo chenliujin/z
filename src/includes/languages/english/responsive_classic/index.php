@@ -1,13 +1,6 @@
 <?php
 define('TEXT_MAIN','This is the main define statement for the page for english when no template defined file exists. It is located in: <strong>/includes/languages/english/index.php</strong>');
 
-// Showcase vs Store
-if (STORE_STATUS == '0') {
-	define('TEXT_GREETING_GUEST', 'Welcome <span class="greetUser">Guest!</span> Would you like to <a href="%s">log yourself in</a>?');
-} else {
-	define('TEXT_GREETING_GUEST', 'Welcome, please enjoy our online showcase.');
-}
-
 define('TEXT_INFORMATION', 'Define your main Index page copy here.');
 
 if ( ($category_depth == 'products') || (zen_check_url_get_terms()) ) {
