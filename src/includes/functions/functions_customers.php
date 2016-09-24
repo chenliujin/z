@@ -122,12 +122,6 @@
     return zen_address_format($format_id, $address->fields, $html, $boln, $eoln);
   }
 
-////
-// Return a customer greeting
-  function zen_customer_greeting() {
-	  return NULL;
-  }
-
   function zen_count_customer_orders($id = '', $check_session = true) {
     global $db;
 
