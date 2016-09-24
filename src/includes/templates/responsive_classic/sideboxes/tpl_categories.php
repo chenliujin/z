@@ -4,22 +4,21 @@ $content = "";
 $content .= '<div id="' . str_replace('_', '-', $box_id . 'Content') . '" class="sideBoxContent"><ul class="list-links">' . "\n";
 for ($i=0;$i<sizeof($box_categories_array);$i++) {
 	switch(true) {
-		// to make a specific category stand out define a new class in the stylesheet example: A.category-holiday
-		// uncomment the select below and set the cPath=3 to the cPath= your_categories_id
-		// many variations of this can be done
-		//      case ($box_categories_array[$i]['path'] == 'cPath=3'):
-		//        $new_style = 'category-holiday';
-		//        break;
-	case ($box_categories_array[$i]['top'] == 'true'):
-		$new_style = 'category-top';
-		break;
-	case ($box_categories_array[$i]['has_sub_cat']):
-		$new_style = 'category-subs';
-		break;
-	default:
-		$new_style = 'category-products';
+		case ($box_categories_array[$i]['top'] == 'true'):
+			$new_style = 'category-top';
+			break;
+		case ($box_categories_array[$i]['has_sub_cat']):
+			$new_style = 'category-subs';
+			break;
+		default:
+			$new_style = 'category-products';
 	}
-	if (zen_get_product_types_to_category($box_categories_array[$i]['path']) == 3 or ($box_categories_array[$i]['top'] != 'true' and SHOW_CATEGORIES_SUBCATEGORIES_ALWAYS != 1)) {
+
+	if (
+		zen_get_product_types_to_category($box_categories_array[$i]['path']) == 3 
+		or 
+		($box_categories_array[$i]['top'] != 'true' and SHOW_CATEGORIES_SUBCATEGORIES_ALWAYS != 1)
+	) {
 		// skip if this is for the document box (==3)
 	} else {
 		$content .= '<li><a class="' . $new_style . '" href="' . zen_href_link(FILENAME_DEFAULT, $box_categories_array[$i]['path']) . '">';
@@ -49,7 +48,12 @@ for ($i=0;$i<sizeof($box_categories_array);$i++) {
 	}
 }
 
-if (SHOW_CATEGORIES_BOX_SPECIALS == 'true' or SHOW_CATEGORIES_BOX_PRODUCTS_NEW == 'true' or SHOW_CATEGORIES_BOX_FEATURED_PRODUCTS == 'true' or SHOW_CATEGORIES_BOX_PRODUCTS_ALL == 'true') {
+if (
+	SHOW_CATEGORIES_BOX_SPECIALS == 'true' 
+	or SHOW_CATEGORIES_BOX_PRODUCTS_NEW == 'true' 
+	or SHOW_CATEGORIES_BOX_FEATURED_PRODUCTS == 'true' 
+	or SHOW_CATEGORIES_BOX_PRODUCTS_ALL == 'true'
+) {
 	// display a separator between categories and links
 	if (SHOW_CATEGORIES_SEPARATOR_LINK == '1') {
 		$content .= '' . "\n";
