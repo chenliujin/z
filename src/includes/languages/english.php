@@ -72,10 +72,10 @@ define('BOX_HEADING_MANUFACTURERS', 'Manufacturers');
 
 // whats_new box text in sideboxes/whats_new.php
 define('BOX_HEADING_WHATS_NEW', 'New Products');
-define('CATEGORIES_BOX_HEADING_WHATS_NEW', 'New Products ...');
+define('CATEGORIES_BOX_HEADING_WHATS_NEW', 'New Products');
 
 define('BOX_HEADING_FEATURED_PRODUCTS', 'Featured');
-define('CATEGORIES_BOX_HEADING_FEATURED_PRODUCTS', 'Featured Products ...');
+define('CATEGORIES_BOX_HEADING_FEATURED_PRODUCTS', 'Featured Products');
 define('TEXT_NO_FEATURED_PRODUCTS', 'More featured products will be added soon. Please check back later.');
 
 define('TEXT_NO_ALL_PRODUCTS', 'More products will be added soon. Please check back later.');
@@ -87,7 +87,7 @@ define('BOX_SEARCH_ADVANCED_SEARCH', 'Advanced Search');
 
 // specials box text in sideboxes/specials.php
 define('BOX_HEADING_SPECIALS', 'Specials');
-define('CATEGORIES_BOX_HEADING_SPECIALS','Specials ...');
+define('CATEGORIES_BOX_HEADING_SPECIALS','Specials');
 
 // reviews box text in sideboxes/reviews.php
 define('BOX_HEADING_REVIEWS', 'Reviews');
