@@ -604,23 +604,29 @@ a.selected {
 }
 
 #nav-categories a {
-	margin: 18px 28px 10px 16px;
+	color: #fff;
+	margin: 28px 28px 0 16px;
 	padding: 5px 19px 5px 10px;
-	border: 1px solid #fff;
+	border: 1px solid #232f3e;
 	border-radius: 3px 3px 0 0;
 	font-size: 14px;
 	font-weight: 700;
 	line-height: 15px;
 	text-decoration: none;
 	float: left;
-	background: #fff;
+	background: #232f3e;
+}
+
+#headerWrapper {
+	background: #232f3e;
 }
 
 #nav-categories a:hover {
-	color: #0066c0;
-	border: 1px solid #ddd;
+	/*color: #0066c0;*/
+	color: #fff;
+	border: 1px solid #232f3e;
 	border-radius: 3px 3px 0 0;
-	background: #fff;
+	background: #232f3e;
 }
 
 .nav-account, .nav-cart {

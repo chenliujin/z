@@ -9,9 +9,9 @@ if ($check_categories->RecordCount() > 0) {
 	$box_categories_array = $main_category_tree->zen_category_tree();
 }
 
-require($template->get_template_dir('tpl_categories.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes'). '/tpl_categories.php');
+//require($template->get_template_dir('tpl_categories.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes'). '/tpl_categories.php');
 
 $title = BOX_HEADING_CATEGORIES;
 $title_link = false;
 
-require($template->get_template_dir($column_box_default, DIR_WS_TEMPLATE, $current_page_base,'common') . '/' . $column_box_default);
+//require($template->get_template_dir($column_box_default, DIR_WS_TEMPLATE, $current_page_base,'common') . '/' . $column_box_default);
