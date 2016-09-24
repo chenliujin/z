@@ -125,14 +125,7 @@
 ////
 // Return a customer greeting
   function zen_customer_greeting() {
-
-    if (isset($_SESSION['customer_id']) && $_SESSION['customer_first_name']) {
-      $greeting_string = sprintf(TEXT_GREETING_PERSONAL, zen_output_string_protected($_SESSION['customer_first_name']), zen_href_link(FILENAME_PRODUCTS_NEW));
-    } else {
-      $greeting_string = sprintf(TEXT_GREETING_GUEST, zen_href_link(FILENAME_LOGIN, '', 'SSL'), zen_href_link(FILENAME_CREATE_ACCOUNT, '', 'SSL'));
-    }
-
-    return $greeting_string;
+	  return NULL;
   }
 
   function zen_count_customer_orders($id = '', $check_session = true) {
