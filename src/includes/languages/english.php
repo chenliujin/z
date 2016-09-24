@@ -79,7 +79,7 @@ define('CATEGORIES_BOX_HEADING_FEATURED_PRODUCTS', 'Featured Products ...');
 define('TEXT_NO_FEATURED_PRODUCTS', 'More featured products will be added soon. Please check back later.');
 
 define('TEXT_NO_ALL_PRODUCTS', 'More products will be added soon. Please check back later.');
-define('CATEGORIES_BOX_HEADING_PRODUCTS_ALL', 'All Products ...');
+define('CATEGORIES_BOX_HEADING_PRODUCTS_ALL', 'All Products');
 
 // quick_find box text in sideboxes/quick_find.php
 define('BOX_HEADING_SEARCH', 'Search');
