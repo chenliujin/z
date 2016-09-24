@@ -7,7 +7,7 @@ h2.greeting, #icon, .header .fa-bars {
 	color:#05a5cb;
 }
 
-.cat-count, .itemTitle a:hover, h2.greeting a:hover {color:#666;}
+.itemTitle a:hover, h2.greeting a:hover {color:#666;}
 a:active {color:#0000ff;}
 h3, .cartAttribsList, #cart-box {color:#444;}
 .blue{color:#05a5cb !important;}
