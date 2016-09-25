@@ -572,7 +572,16 @@ a.selected {
 	z-index: 99;
 }
 
+.nav-tool a {
+	color: #fff;
+	background: #232f3e;
+	text-decoration: none;
+}
+
 .nav-tool a:hover {
+	color: #fff;
+	background: #232f3e;
+	text-decoration: none;
 	opacity: 1.0;
 	z-index: 999;
 }
@@ -596,18 +605,49 @@ a.selected {
 
 }
 
-#nav-categories {
-	width: 192px;
-	height: 55px;
-	position: relative;
+
+.nav-content {
+	/*margin: 23px 28px 5px 16px;*/
+}
+
+.nav-content a {
+	height: 26px;
+}
+
+/************************************************
+ * nav-categories
+ ************************************************/
+#nav-categories .nav-content {
 	float: left;
 }
 
-#nav-categories a {
+/************************************************
+ * nav-cart
+ ************************************************/
+#nav-cart {
+	position: relative;
+	float: right;
+}
+
+#nav-cart a {
+	margin-left: 21px!important;
+}
+
+#nav-cart u {
+	width: 29px;
+	height: 21px;
+	background: url("/images/global.png") no-repeat 0 0;
+	display: block;
+	position: absolute;
+	left: 0;
+}
+
+
+
+#nav-categories a, #nav-cart a {
 	color: #fff;
-	margin: 28px 28px 0 16px;
-	padding: 5px 19px 5px 10px;
-	border: 1px solid #232f3e;
+	/*padding: 5px 19px 5px 10px;*/
+	/*border: 1px solid #232f3e;*/
 	border-radius: 3px 3px 0 0;
 	font-size: 14px;
 	font-weight: 700;
@@ -621,15 +661,15 @@ a.selected {
 	background: #232f3e;
 }
 
-#nav-categories a:hover {
+#nav-categories a:hover, #nav-cart a:hover {
 	/*color: #0066c0;*/
 	color: #fff;
-	border: 1px solid #232f3e;
+	/*border: 1px solid #232f3e;*/
 	border-radius: 3px 3px 0 0;
 	background: #232f3e;
 }
 
-.nav-account, .nav-cart {
+.nav-account {
 	font-size: 14px;
 	line-height: 15px;
 	font-weight: 700;
@@ -646,16 +686,6 @@ a.selected {
 	line-height: 14px;
 }
 
-.nav-cart {
-	padding-left: 35px;
-	position: relative;
-	padding-top: 23px;
-}
-
-.nav-cart {
-	position: relative;
-	padding-top: 23px;
-}
 .nav-cate {
 }
 .nav-cart-count {
@@ -663,16 +693,6 @@ a.selected {
 	color: #f08804;
 	*/
 }
-.nav-cart u {
-	width: 29px;
-	height: 21px;
-	background: url("/images/global.png") no-repeat 0 0;
-	display: block;
-	position: absolute;
-	top: 19px;
-	left: 0;
-}
-
 #nav-overlay {
 	background: #000;
 	opacity: 0.6;
@@ -756,3 +776,31 @@ a.selected {
 	width: 247px;
 	float: left;
 }
+
+/************************************************
+ * #nav
+ ************************************************/
+#nav {
+	padding: 5px 2em;
+	background: #232f3e;
+	clear: both;
+}
+
+#nav:after {
+	height: 0;
+	display: block;
+	clear: both;
+	content: "";
+	visibility:hidden;
+}
+
+/************************************************
+ * #nav-categories
+ ************************************************/
+#nav-categories {
+	/*width: 192px;*/
+	/*height: 55px;*/
+	position: relative;
+	float: left;
+}
+

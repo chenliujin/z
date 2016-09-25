@@ -72,4 +72,6 @@ ol.list-links li{border-bottom:1px solid #ddd;}
 /*bof placeholders*/
 ::-moz-placeholder, :-moz-placeholder, ::-webkit-input-placeholder, :-ms-input-placeholder, :placeholder-shown {color: #D01;}
 
-
+#headerWrapper {
+	background: #232f3e;
+}
