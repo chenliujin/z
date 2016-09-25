@@ -552,14 +552,15 @@ input[type=text]:focus {
 	border-bottom: 1px solid #DDD;
 }
 
+/*
 .nav-tool {
 	position: relative;
-	padding: 6px 0 0 32px;
 	float: right;
 	padding-right: 5em;
 	opacity: 1.0;
 	z-index: 2;
 }
+*/
 
 a.selected {
 	opacity: 1.0;
@@ -572,6 +573,7 @@ a.selected {
 	z-index: 99;
 }
 
+/*
 .nav-tool a {
 	color: #fff;
 	background: #232f3e;
@@ -585,6 +587,7 @@ a.selected {
 	opacity: 1.0;
 	z-index: 999;
 }
+*/
 
 .nav-a {
 	padding: 0 0 0 10px;
@@ -594,63 +597,8 @@ a.selected {
 	text-decoration: none;
 }
 
-.nav-center {
-	height: 55px;
-}
-
-.nav-center a {
-	margin: 18px 0 10px 0;
-	padding: 5px 0 5px 15px;
-	float: left;
-
-}
-
-
-.nav-content {
-	/*margin: 23px 28px 5px 16px;*/
-}
-
-.nav-content a {
-	height: 26px;
-}
-
-/************************************************
- * nav-categories
- ************************************************/
-#nav-categories .nav-content {
-	float: left;
-}
-
-/************************************************
- * nav-cart
- ************************************************/
-#nav-cart {
-	position: relative;
-	float: right;
-}
-
-#nav-cart a {
-	margin-left: 21px!important;
-}
-
-#nav-cart u {
-	width: 29px;
-	height: 21px;
-	background: url("/images/global.png") no-repeat 0 0;
-	display: block;
-	position: absolute;
-	left: 0;
-}
-
-
-
 #nav-categories a, #nav-cart a {
-	color: #fff;
-	/*padding: 5px 19px 5px 10px;*/
-	/*border: 1px solid #232f3e;*/
 	border-radius: 3px 3px 0 0;
-	font-size: 14px;
-	font-weight: 700;
 	line-height: 15px;
 	text-decoration: none;
 	float: left;
@@ -661,7 +609,7 @@ a.selected {
 	background: #232f3e;
 }
 
-#nav-categories a:hover, #nav-cart a:hover {
+#nav-categories a:hover {
 	/*color: #0066c0;*/
 	color: #fff;
 	/*border: 1px solid #232f3e;*/
@@ -669,6 +617,7 @@ a.selected {
 	background: #232f3e;
 }
 
+/*
 .nav-account {
 	font-size: 14px;
 	line-height: 15px;
@@ -685,13 +634,9 @@ a.selected {
 	height: 14px;
 	line-height: 14px;
 }
+*/
 
 .nav-cate {
-}
-.nav-cart-count {
-	/*
-	color: #f08804;
-	*/
 }
 #nav-overlay {
 	background: #000;
@@ -717,8 +662,8 @@ a.selected {
 	padding: 14px 0 8px 0;
 }
 
-.nav-flyout-categories .nav-flyout-content .nav-item {
-	margin: 0 0 0 14px;
+.nav-flyout-content .nav-item {
+	margin: 0 14px 0 14px;
 }
 
 .nav-item {
@@ -782,10 +727,9 @@ a.selected {
  ************************************************/
 #nav {
 	padding: 5px 2em;
-	background: #232f3e;
+	/*background: #232f3e;*/
 	clear: both;
 }
-
 #nav:after {
 	height: 0;
 	display: block;
@@ -793,6 +737,27 @@ a.selected {
 	content: "";
 	visibility:hidden;
 }
+#nav a {
+	color: #fff;
+}
+#nav .a1 {
+	border: 1px solid #232f3e;
+	border-radius: 3px 3px 3px 0;
+	font-size: 14px;
+	font-weight: 700;
+	background: #232f3e;
+}
+#nav .a1:hover {
+	border: 1px solid;
+	border-color: #232f3e;
+	border-radius: 3px 3px 3px 0;
+	background: #232f3e;
+}
+#nav .nav-content {
+	padding: 10px 10px 5px 10px;
+	/*margin: 23px 28px 5px 16px;*/
+}
+
 
 /************************************************
  * #nav-categories
@@ -802,5 +767,83 @@ a.selected {
 	/*height: 55px;*/
 	position: relative;
 	float: left;
+}
+#nav-categories .nav-content {
+	float: left;
+}
+
+/************************************************
+ * nav-cart
+ ************************************************/
+#nav-cart {
+	position: relative;
+	float: right;
+}
+#nav-cart .nav-content {
+	margin-left: 39px;
+	padding-left: 5px;
+	float: right;
+}
+#nav-cart a {
+	font-size: 14px;
+	font-weight: 700;
+	border: 1px solid #232f3e;
+	border-radius: 3px;
+}
+#nav-cart a:hover {
+	border: 1px solid #4f5965;
+	border-radius: 3px;
+}
+#nav-cart u {
+	width: 29px;
+	height: 21px;
+	background: url("/images/global.png") no-repeat 0 0;
+	display: block;
+	position: absolute;
+	top: 6px;
+	left: 10px;
+}
+#nav-cart .nav-cart-count {
+	color: #f08804;
+}
+/************************************************
+ * #nav-account
+ ************************************************/
+#nav-account {
+	float: right;
+}
+#nav-account a {
+	float: right;
+}
+#nav-account .nav-content {
+	float: right;
+}
+
+/************************************************
+ * nav-menus
+ ************************************************/
+#nav-menus {
+}
+#nav-menus a {
+	float: left;
+	padding-left: 10px;
+}
+#nav-menus a:hover {
+	text-decoration: underline!important;
+}
+#nav-menus .nav-content {
+	float: left;
+}
+
+/************************************************
+ * #navMainSearch 
+ ************************************************/
+#navMainSearch input[type=text] {
+	border: none;
+	border-radius: 0;
+	box-shadow: none;
+}
+#navMainSearch input[type=text]:focus {
+	border: none;
 }
 
