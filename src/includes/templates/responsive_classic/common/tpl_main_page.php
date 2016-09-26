@@ -71,14 +71,20 @@ require($template->get_template_dir('tpl_header.php',DIR_WS_TEMPLATE, $current_p
 
 <div id="contentMainWrapper">
 <?php
-if (COLUMN_LEFT_STATUS == 0 || (CUSTOMERS_APPROVAL == '1' and $_SESSION['customer_id'] == '') || (CUSTOMERS_APPROVAL_AUTHORIZATION == 1 && CUSTOMERS_AUTHORIZATION_COLUMN_LEFT_OFF == 'true' and ($_SESSION['customers_authorization'] != 0 or $_SESSION['customer_id'] == ''))) {
+if (
+	COLUMN_LEFT_STATUS == 0 
+	|| (CUSTOMERS_APPROVAL == '1' and $_SESSION['customer_id'] == '') 
+	|| (CUSTOMERS_APPROVAL_AUTHORIZATION == 1 && CUSTOMERS_AUTHORIZATION_COLUMN_LEFT_OFF == 'true' and ($_SESSION['customers_authorization'] != 0 or $_SESSION['customer_id'] == ''))
+) {
 	// global disable of column_left
 	$flag_disable_left = true;
 }
 if (!isset($flag_disable_left) || !$flag_disable_left) {
 ?>
   <div class="<?php echo $box_width_left_new; ?>">
-	<?php require(DIR_WS_MODULES . zen_get_module_directory('column_left.php')); ?>
+	<?php 
+	require(DIR_WS_MODULES . zen_get_module_directory('column_left.php')); 
+	?>
   </div>
 <?php
 }

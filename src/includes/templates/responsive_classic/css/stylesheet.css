@@ -746,6 +746,7 @@ a.selected {
 }
 #nav a {
 	color: #fff;
+	text-decoration: none;
 }
 #nav .a1 {
 	border: 1px solid #232f3e;
