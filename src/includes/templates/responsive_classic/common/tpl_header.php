@@ -95,11 +95,12 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 <?php  } else { ?>
 
 <div id="navMain">
-  <ul class="back">
-    <li><?php echo '<a href="' . HTTP_SERVER . DIR_WS_CATALOG . '">'; ?><?php echo HEADER_TITLE_CATALOG; ?></a></li> 
-  </ul>
+	<div id="logo">
+		<a href="<?php echo HTTP_SERVER . DIR_WS_CATALOG; ?>">
+			<span class="nav-text">zzrig</span>
+		</a>
+	</div>
 	
-	<div style="clear:both"></div>
 
 	<div id="navMainSearch">
 		<?php require(DIR_WS_MODULES . 'sideboxes/search_header.php'); ?>
@@ -109,8 +110,8 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 <?php  } ?>
 
 
-<div style="background:#232f3e">
-<div id="nav-overlay"></div>
+<div id="nav" class="nav">
+	<div id="nav-overlay"></div>
 
 <div id="nav-flyout-list">
 	<div id="nav-flyout-categories" class="nav-flyout-categories nav-flyout">
@@ -127,31 +128,35 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 			<?php foreach ($data as $category) { ?>
 			<div class="nav-subcate">
 				<?php 
-				foreach ($category->children as $categories_id) {
-					$subcate2 = \z\categories::get_category($categories_id);
-					?>
-					<div class="nav-column">
-						<a href="<?php echo zen_href_link( FILENAME_DEFAULT, $subcate2->path ); ?>" class="nav-item">
-							<span class="nav-title">
-								<span class="nav-text">
-								<?php echo $subcate2->categories_name; ?>
-								</span>
-							</span>
-						</a>
-					<?php
-					foreach ($subcate2->children as $categories_id) {
-						$subcate3 = \z\categories::get_category($categories_id);
+				if (!empty($category->children)) {
+					foreach ($category->children as $categories_id) {
+						$subcate2 = \z\categories::get_category($categories_id);
 						?>
-						<a href="<?php echo zen_href_link( FILENAME_DEFAULT, $subcate3->path ); ?>" class="nav-item">
-							<span class="nav-text">
-								<?php echo $subcate3->categories_name; ?>
-							</span>
-						</a>
+						<div class="nav-column">
+							<a href="<?php echo zen_href_link( FILENAME_DEFAULT, $subcate2->path ); ?>" class="nav-item">
+								<span class="nav-title">
+									<span class="nav-text">
+									<?php echo $subcate2->categories_name; ?>
+									</span>
+								</span>
+							</a>
+						<?php
+						if (!empty($subcate2->children)) {
+							foreach ($subcate2->children as $categories_id) {
+								$subcate3 = \z\categories::get_category($categories_id);
+								?>
+								<a href="<?php echo zen_href_link( FILENAME_DEFAULT, $subcate3->path ); ?>" class="nav-item">
+									<span class="nav-text">
+										<?php echo $subcate3->categories_name; ?>
+									</span>
+								</a>
+								<?php
+							}
+						}
+						?>
+						</div>
 						<?php
 					}
-					?>
-					</div>
-					<?php
 				}
 				?>
 			</div>
@@ -159,6 +164,7 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 		</div>
 	</div>
 	<div id="nav-flyout-account" class="nav-flyout">
+		<div class="nav-flyout-content">
 		<?php if (!$_SESSION['customer_id']) {?>
 		<a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>" class="nav-link nav-item">
 			<span class="nav-text"><?php echo HEADER_TITLE_LOGIN; ?></span>
@@ -167,55 +173,65 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 		<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-link nav-item">
 			<span class="nav-text"><?php echo HEADER_TITLE_MY_ACCOUNT; ?></span>
 		</a>
-		<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-link <?php if ($_SESSION['customer_id']) echo 'nav-item';?> ">
+		<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-link nav-item">
 			<span class="nav-text">My Orders</span>
 		</a>
 		<?php if ($_SESSION['customer_id']) { ?>
-		<a href="<?php echo zen_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="nav-link">
+		<a href="<?php echo zen_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="nav-link nav-item">
 			<span class="nav-text"><?php echo HEADER_TITLE_LOGOFF; ?></span>
 		</a>
 		<?php } ?>
+		</div>
 	</div>
 </div>
 
 <div id="nav-categories">
-	<a href="#" class="nav-menu">
-		Departments	
+	<a href="#" class="a1 nav-menu">
+		<span class="nav-content">Departments</span>
 	</a>
 </div>
-<div class="nav-tool">
-	<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-a nav-menu">
-		<div class="nav-account">
-			<span class="sign-in">
-			<?php
-				if (empty($_SESSION['customer_id'])) {
-					echo 'Sign in';
-				} else {
-					echo 'Hello, ' . \z\customers::get_customer_nickname();
-				}
-			?>
-			</span><br />
-			<span><?php echo HEADER_TITLE_MY_ACCOUNT; ?></span>
-		</div>
-	</a>
-
-	<a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, '', 'NONSSL'); ?>" class="nav-a">
-		<div class="nav-cart">
+<div id="nav-cart">
+	<a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, '', 'NONSSL'); ?>">
+		<span class="nav-content">
 			<u></u>
-			<span>
 			<?php echo HEADER_TITLE_CART_CONTENTS; ?>&nbsp;(<span class="nav-cart-count"><?php echo $_SESSION['cart']->count_contents(); ?></span>)
-			</span>
-		</div>
+		</span>
 	</a>
 </div>
-<div class="nav-center">
+
+<div id="nav-account">
+	<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="a1 nav-menu">
+		<span class="nav-content">
+		<!--
+		<span class="sign-in">
+			<?php
+			if (empty($_SESSION['customer_id'])) {
+				echo 'Sign in';
+			} else {
+				echo 'Hello, ' . \z\customers::get_customer_nickname();
+			}
+			?>
+		</span><br />
+		-->
+		<span><?php echo HEADER_TITLE_MY_ACCOUNT; ?></span>
+		</span>
+	</a>
+</div>
+<div id="nav-menus">
+	<a href="#">
+		<span class="nav-content">
+			Browsing History
+		</span>
+	</a>
 	<?php
 	if (SHOW_CATEGORIES_BOX_SPECIALS == 'true') {
 		$show_this = $db->Execute("select s.products_id from " . TABLE_SPECIALS . " s where s.status= 1 limit 1");
 		if ($show_this->RecordCount() > 0) {
 			?>
 			<a href="<?php echo zen_href_link(FILENAME_SPECIALS); ?>">
-				<?php echo CATEGORIES_BOX_HEADING_SPECIALS; ?>
+				<span class="nav-content">
+					<?php echo CATEGORIES_BOX_HEADING_SPECIALS; ?>
+				</span>
 			</a>
 			<?php
 		}
@@ -230,7 +246,9 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 		if ($show_this->RecordCount() > 0) {
 			?>
 			<a href="<?php echo zen_href_link(FILENAME_PRODUCTS_NEW); ?>">
-				<?php echo CATEGORIES_BOX_HEADING_WHATS_NEW; ?>
+				<span class="nav-content">
+					<?php echo CATEGORIES_BOX_HEADING_WHATS_NEW; ?>
+				</span>
 			</a>
 			<?php
 		}
@@ -241,7 +259,9 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 		if ($show_this->RecordCount() > 0) {
 			?>
 			<a href="<?php echo zen_href_link(FILENAME_FEATURED_PRODUCTS); ?>">
-				<?php echo CATEGORIES_BOX_HEADING_FEATURED_PRODUCTS; ?>
+				<span class="nav-content">
+					<?php echo CATEGORIES_BOX_HEADING_FEATURED_PRODUCTS; ?>
+				</span>
 			</a>
 			<?php
 		}
@@ -249,7 +269,9 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 	?>
 
 	<a href="<?php echo zen_href_link(FILENAME_PRODUCTS_ALL); ?>">
-		<?php echo CATEGORIES_BOX_HEADING_PRODUCTS_ALL; ?>
+		<span class="nav-content">
+			<?php echo CATEGORIES_BOX_HEADING_PRODUCTS_ALL; ?>
+		</span>
 	</a>
 </div>
 
@@ -269,13 +291,14 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 				$overlay.height(document.body.scrollHeight);
 				$overlay.stop(false, false).fadeTo(200, 0.6);
 
-				//$('#nav-flyout-account').css('display', 'block');
-				//$('#nav-flyout-account').css('top', $this.offset().top + 42);
-				//$('#nav-flyout-account').css('left', $this.offset().left + 10);
+				$('#nav-flyout-account').css('display', 'block');
+				$('#nav-flyout-account').css('top', $this.offset().top + $this.height());
+				$('#nav-flyout-account').css('left', $this.offset().left);
+				
 
-				$('#nav-flyout-categories').css('display', 'block');
-				$('#nav-flyout-categories').css('top', $this.offset().top+27);
-				$('#nav-flyout-categories').css('left', $this.offset().left);
+				//$('#nav-flyout-categories').css('display', 'block');
+				//$('#nav-flyout-categories').css('top', $this.offset().top + $this.height());
+				//$('#nav-flyout-categories').css('left', $this.offset().left);
 
 			}
 		).bind(
