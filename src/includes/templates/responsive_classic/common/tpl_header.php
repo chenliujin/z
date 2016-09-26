@@ -291,15 +291,11 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 				$overlay.height(document.body.scrollHeight);
 				$overlay.stop(false, false).fadeTo(200, 0.6);
 
-				$('#nav-flyout-account').css('display', 'block');
-				$('#nav-flyout-account').css('top', $this.offset().top + $this.height());
-				$('#nav-flyout-account').css('left', $this.offset().left);
-				
+				var $id = $this.parent().attr('id').replace('nav', 'nav-flyout');
 
-				//$('#nav-flyout-categories').css('display', 'block');
-				//$('#nav-flyout-categories').css('top', $this.offset().top + $this.height());
-				//$('#nav-flyout-categories').css('left', $this.offset().left);
-
+				$('#' + $id).css('display', 'block');
+				$('#' + $id).css('top', $this.offset().top + $this.height());
+				$('#' + $id).css('left', $this.offset().left);
 			}
 		).bind(
 			'mouseleave',
