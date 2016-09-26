@@ -1,14 +1,4 @@
 <?php
-/**
- * functions_customers
- *
- * @package functions
- * @copyright Copyright 2003-2012 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version GIT: $Id: Author: DrByte  Tue Aug 14 12:41:22 2012 -0400 Modified in v1.5.1 $
- */
-
 ////
 // Returns the address_format_id for the given country
 // TABLES: countries;
@@ -130,19 +120,6 @@
 
     $format_id = zen_get_address_format_id($address->fields['country_id']);
     return zen_address_format($format_id, $address->fields, $html, $boln, $eoln);
-  }
-
-////
-// Return a customer greeting
-  function zen_customer_greeting() {
-
-    if (isset($_SESSION['customer_id']) && $_SESSION['customer_first_name']) {
-      $greeting_string = sprintf(TEXT_GREETING_PERSONAL, zen_output_string_protected($_SESSION['customer_first_name']), zen_href_link(FILENAME_PRODUCTS_NEW));
-    } else {
-      $greeting_string = sprintf(TEXT_GREETING_GUEST, zen_href_link(FILENAME_LOGIN, '', 'SSL'), zen_href_link(FILENAME_CREATE_ACCOUNT, '', 'SSL'));
-    }
-
-    return $greeting_string;
   }
 
   function zen_count_customer_orders($id = '', $check_session = true) {

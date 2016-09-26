@@ -110,11 +110,11 @@ class order_total extends base {
 							'              </tr>';
 					}
 				} else {
-					// use a template file for output instead of hard-coded HTML
 					require($template->get_template_dir('tpl_modules_order_totals.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_order_totals.php');
 				}
 			}
 		}
+
 		return $output_string;
 	}
 	//

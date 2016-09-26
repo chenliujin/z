@@ -1,25 +1,6 @@
-<?php
-/**
- * Page Template
- *
- * Loaded by main_page=index<br />
- * Displays category/sub-category listing<br />
- * Uses tpl_index_category_row.php to render individual items
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: picaflor-azul Sat Mar 5 12:24:13 2016 -0500 New in v1.5.5 $
- */
-?>
 <div class="centerColumn" id="indexCategories">
 <?php if ($show_welcome == true) { ?>
 <h1 id="indexCategoriesHeading"><?php echo HEADING_TITLE; ?></h1>
-
-<?php if (SHOW_CUSTOMER_GREETING == 1) { ?>
-<h2 class="greeting"><?php echo zen_customer_greeting(); ?></h2>
-<?php } ?>
 
 <?php if (DEFINE_MAIN_PAGE_STATUS >= 1 and DEFINE_MAIN_PAGE_STATUS <= 2) { ?>
 <div id="indexCategoriesMainContent" class="content"><?php

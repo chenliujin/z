@@ -1,15 +1,4 @@
 <?php
-/**
- * shopping_cart header_php.php
- *
- * @package page
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Fri Dec 4 16:31:15 2015 -0500 Modified in v1.5.5 $
- */
-
-// This should be first line of the script:
 $zco_notifier->notify('NOTIFY_HEADER_START_SHOPPING_CART');
 
 require(DIR_WS_MODULES . zen_get_module_directory('require_languages.php'));
@@ -29,6 +18,7 @@ if (isset($_SESSION['valid_to_checkout']) && $_SESSION['valid_to_checkout'] == f
 
 // build shipping with Tare included
 $shipping_weight = $_SESSION['cart']->show_weight();
+
 /*
   $shipping_weight = 0;
   require(DIR_WS_CLASSES . 'order.php');
@@ -40,26 +30,6 @@ $shipping_weight = $_SESSION['cart']->show_weight();
   $shipping_modules = new shipping;
   $quotes = $shipping_modules->quote();
  */
-$totalsDisplay = '';
-switch (true) {
-case (SHOW_TOTALS_IN_CART == '1'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() 
-		. TEXT_TOTAL_WEIGHT . $shipping_weight . TEXT_PRODUCT_WEIGHT_UNIT 
-		. TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
-	break;
-case (SHOW_TOTALS_IN_CART == '2'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() 
-		. ($shipping_weight > 0 ? TEXT_TOTAL_WEIGHT . $shipping_weight . TEXT_PRODUCT_WEIGHT_UNIT : '') 
-		. TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
-	break;
-case (SHOW_TOTALS_IN_CART == '3'):
-	$totalsDisplay = TEXT_TOTAL_ITEMS . $_SESSION['cart']->count_contents() 
-		. TEXT_TOTAL_AMOUNT . $currencies->format($_SESSION['cart']->show_total());
-	break;
-}
-
-// testing/debugging
-//  require(DIR_WS_MODULES . 'debug_blocks/shopping_cart_contents.php');
 
 $flagHasCartContents = ($_SESSION['cart']->count_contents() > 0);
 $cartShowTotal = $currencies->format($_SESSION['cart']->show_total());
@@ -77,7 +47,7 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 	$attributeHiddenField = "";
 	$attrArray = false;
 	$productsName = $products[$i]['name'];
-	// Push all attributes information in an array
+
 	if (isset($products[$i]['attributes']) && is_array($products[$i]['attributes'])) {
 		if (PRODUCTS_OPTIONS_SORT_ORDER=='0') {
 			$options_order_by= ' ORDER BY LPAD(popt.products_options_sort_order,11,"0")';
@@ -115,7 +85,7 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 			$attrArray[$option]['options_values_price'] = $attributes_values->fields['options_values_price'];
 			$attrArray[$option]['price_prefix'] = $attributes_values->fields['price_prefix'];
 		}
-	} //end foreach [attributes]
+	}
 
 	// Stock Check
 	if (STOCK_CHECK == 'true') {
@@ -127,8 +97,8 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		}
 	}
 
-	$linkProductsImage = zen_href_link(zen_get_info_page($products[$i]['id']), 'products_id=' . $products[$i]['id']);
-	$linkProductsName = zen_href_link(zen_get_info_page($products[$i]['id']), 'products_id=' . $products[$i]['id']);
+	$linkProductsImage 	= zen_href_link(zen_get_info_page($products[$i]['id']), 'products_id=' . $products[$i]['id']);
+	$linkProductsName 	= zen_href_link(zen_get_info_page($products[$i]['id']), 'products_id=' . $products[$i]['id']);
 
 	$productsImage = IMAGE_SHOPPING_CART_STATUS == 1 ? 
 		zen_image(
@@ -140,8 +110,6 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 
 	$show_products_quantity_max = zen_get_products_quantity_order_max($products[$i]['id']);
 	$showFixedQuantity = (($show_products_quantity_max == 1 or zen_get_products_qty_box_status($products[$i]['id']) == 0) ? true : false);
-	//  $showFixedQuantityAmount = $products[$i]['quantity'] . zen_draw_hidden_field('products_id[]', $products[$i]['id']) . zen_draw_hidden_field('cart_quantity[]', 1);
-	//  $showFixedQuantityAmount = $products[$i]['quantity'] . zen_draw_hidden_field('cart_quantity[]', 1);
 	$showFixedQuantityAmount = $products[$i]['quantity'] . zen_draw_hidden_field('cart_quantity[]', $products[$i]['quantity']);
 	$showMinUnits = zen_get_products_quantity_min_units_display($products[$i]['id']);
 	$quantityField = zen_draw_input_field('cart_quantity[]', $products[$i]['quantity'], 'size="4" class="cart_input_'.$products[$i]['id'].'"');
@@ -160,8 +128,7 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		: '');
 
 	$buttonUpdate = zen_draw_hidden_field('products_id[]', $products[$i]['id']);
-	//  $productsPriceEach = $currencies->display_price($products[$i]['final_price'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) . ($products[$i]['onetime_charges'] != 0 ? '<br />' . $currencies->display_price($products[$i]['onetime_charges'], zen_get_tax_rate($products[$i]['tax_class_id']), 1) : '');
-	//  echo  $currencies->rateAdjusted($tmp);
+
 	$productArray[$i] = [
 		'attributeHiddenField'		=> $attributeHiddenField,
 		'flagStockCheck'			=> $flagStockCheck,
@@ -182,7 +149,5 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		];
 } 
 
-
 // This should be last line of the script:
 $zco_notifier->notify('NOTIFY_HEADER_END_SHOPPING_CART');
-?>

@@ -157,7 +157,7 @@ if ( isset($_POST['action']) && ($_POST['action'] == 'process') ) {
 			if ( (isset($quote[0]['methods'][0]['title'])) && (isset($quote[0]['methods'][0]['cost'])) ) {
 				$_SESSION['shipping'] = array(
 					'id'	=> $_POST['shipping'],
-					'title'	=> $quote[0]['module'] . ' (' . $quote[0]['methods'][0]['title'] . ')',
+					'title'	=> $quote[0]['module'], 
 					'cost'	=> $quote[0]['methods'][0]['cost']
 				);
 

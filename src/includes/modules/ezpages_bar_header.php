@@ -1,13 +1,4 @@
 <?php
-/**
- * ezpages_bar_header - used to display links to EZ-Pages content horizontally as a header element
- *
- * @package templateSystem
- * @copyright Copyright 2003-2007 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: ezpages_bar_header.php 6021 2007-03-17 16:34:19Z ajeh $
- */
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
 }
@@ -18,7 +9,14 @@ if (EZPAGES_STATUS_HEADER == '1' or (EZPAGES_STATUS_HEADER == '2' and (strstr(EX
   if (isset($var_linksList)) {
     unset($var_linksList);
   }
-  $page_query = $db->Execute("select * from " . TABLE_EZPAGES . " where status_header = 1 and header_sort_order > 0 order by header_sort_order, pages_title");
+
+  $page_query = $db->Execute("
+	  select * 
+	  from " . TABLE_EZPAGES . " 
+	  where status_header = 1 and header_sort_order > 0 
+	  order by header_sort_order, pages_title
+	  ");
+
   if ($page_query->RecordCount()>0) {
     $rows = 0;
     while (!$page_query->EOF) {
@@ -58,7 +56,7 @@ if (EZPAGES_STATUS_HEADER == '1' or (EZPAGES_STATUS_HEADER == '2' and (strstr(EX
 
     $var_linksList = $page_query_list_header;
   }
-} // display
+} 
 
 $zco_notifier->notify('NOTIFY_END_EZPAGES_HEADERBAR');
 ?>

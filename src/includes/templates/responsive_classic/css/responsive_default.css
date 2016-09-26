@@ -388,7 +388,6 @@ h1{text-align:center;}
 /* Changing the % (100%) to a px (980px) will keep #headerWrapper & #navSuppWrapper from expanding past (980px) */
 div#headerWrapper,div#navSuppWrapper {width:100%;margin:auto;}
 #navMain ul{width:60%;}
-#navMainSearch{width:35%;text-align:right;margin-right:10px;}
 #navMainSearch input[type=text]{width:45% !important;}
 #navCatTabs ul li{display:inline-block;}
 #navCatTabs ul li:last-child, #navCatTabs ul li{border:none;padding:5px;}
