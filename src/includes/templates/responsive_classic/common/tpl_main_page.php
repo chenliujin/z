@@ -78,15 +78,8 @@ if (COLUMN_LEFT_STATUS == 0 || (CUSTOMERS_APPROVAL == '1' and $_SESSION['custome
 if (!isset($flag_disable_left) || !$flag_disable_left) {
 ?>
   <div class="<?php echo $box_width_left_new; ?>">
-<?php
-	/**
-	 * prepares and displays left column sideboxes
-	 *
-	 */
-	require(DIR_WS_MODULES . zen_get_module_directory('column_left.php'));
-?>
+	<?php require(DIR_WS_MODULES . zen_get_module_directory('column_left.php')); ?>
   </div>
-
 <?php
 }
 ?>
