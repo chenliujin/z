@@ -125,7 +125,10 @@ select#country, select#stateZone, #state {margin-left:0;}
 
 #navMainSearch input[type=text]{vertical-align:top;display:inline-block;
 	/*border:0;*/
-	width:65% !important;height:32px;margin:0;font-size:0.9em;-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;}
+	width:65% !important;
+	height:35px;
+	margin:0;font-size:0.9em;-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
 
 #navMainSearch input[type=submit]{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;display:inline-block;margin:0;height:32px;}
 
@@ -859,8 +862,9 @@ a.selected {
  * #navMainSearch 
  ************************************************/
 #navMainSearch input[type=text] {
+	padding: 6px 1em;
 	border: none;
-	border-radius: 0;
+	border-radius: 4px 0 0 4px;
 	box-shadow: none;
 }
 #navMainSearch input[type=text]:focus {
@@ -871,15 +875,16 @@ a.selected {
 	margin: 0;
 	padding: 0;
 	width: 45px;
+	height: 35px!important;
 	border: none;
 	border-radius: 0 4px 4px 0;
 	box-shadow: none;
 	cursor: pointer;
-	background: #febd69;
-	background-color: #f3a847;
+	position: relative;
+	background: url("/images/global.png") no-repeat -29px 6px #f3a847;
 	outline: 0;
 }
 .search-submit:hover, .search-submit:active {
-	background-color: #f3a847;
+	background: url("/images/global.png") no-repeat -29px 6px #f3a847;
 }
 
