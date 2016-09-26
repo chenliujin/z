@@ -1,17 +1,10 @@
 <?php
-$search_header_status = $db->Execute("
-select layout_box_name 
-from " . TABLE_LAYOUT_BOXES . " 
-where (layout_box_status=1 or layout_box_status_single=1) and layout_template ='" . $template_dir . "' and layout_box_name='search_header.php'");
+$content = "";
+$content .= zen_draw_form('quick_find_header', zen_href_link(FILENAME_ADVANCED_SEARCH_RESULT, '', $request_type, false), 'get');
+$content .= zen_draw_hidden_field('main_page',FILENAME_ADVANCED_SEARCH_RESULT);
+$content .= zen_draw_hidden_field('search_in_description', '1') . zen_hide_session_id();
+$content .= zen_draw_input_field('keyword', '', 'size="6" maxlength="30" style="width: 100px"');
+$content .= zen_image_submit(BUTTON_IMAGE_SEARCH, HEADER_SEARCH_BUTTON);
+$content .= "</form>";
 
-if ($search_header_status->RecordCount() != 0) {
-	$show_search_header= true;
-}
-
-if ($show_search_header == true) {
-	require($template->get_template_dir('tpl_search_header.php',DIR_WS_TEMPLATE, $current_page_base,'sideboxes'). '/tpl_search_header.php');
-
-	$title = '<label>' . BOX_HEADING_SEARCH . '</label>';
-	$title_link = false;
-	require($template->get_template_dir('tpl_box_header.php',DIR_WS_TEMPLATE, $current_page_base,'common'). '/tpl_box_header.php');
-}
+echo $content;
