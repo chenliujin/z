@@ -5,7 +5,7 @@ define('HEADER_TITLE_MY_ACCOUNT', 'My Account');
 define('HEADER_TITLE_CART_CONTENTS', 'Cart');
 define('HEADER_TITLE_CHECKOUT', 'Checkout');
 define('HEADER_TITLE_TOP', 'Top');
-define('HEADER_TITLE_CATALOG', 'zzrig');
+define('HEADER_TITLE_CATALOG', 'Home');
 define('HEADER_TITLE_LOGOFF', 'Sign Out');
 define('HEADER_TITLE_LOGIN', 'Sign In');
 
