@@ -16,5 +16,5 @@ define('HEADER_LOGO_HEIGHT', '64px');
 define('HEADER_LOGO_IMAGE', 'logo.gif');
 
 // header Search Button/Box Search Button
-define('HEADER_SEARCH_BUTTON','Search');
+define('HEADER_SEARCH_BUTTON','Go');
 define('SEARCH_DEFAULT_TEXT', 'search here');
