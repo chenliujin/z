@@ -867,3 +867,19 @@ a.selected {
 	border: none;
 }
 
+.search-submit {
+	margin: 0;
+	padding: 0;
+	width: 45px;
+	border: none;
+	border-radius: 0 4px 4px 0;
+	box-shadow: none;
+	cursor: pointer;
+	background: #febd69;
+	background-color: #f3a847;
+	outline: 0;
+}
+.search-submit:hover, .search-submit:active {
+	background-color: #f3a847;
+}
+
