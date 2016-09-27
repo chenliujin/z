@@ -871,6 +871,6 @@ a.selected {
  * #contentMainWrapper;
  ************************************************/
 #contentMainWrapper {
-	padding: 14px 18px 18px;
+	padding: 14px 18px 50px 18px;
 	background: #fff;
 }
