@@ -91,9 +91,8 @@ select#country, select#stateZone, #state {margin-left:0;}
 
 /*bof wrappers - page or section containers*/
 #mainWrapper {text-align:left;width:100%;vertical-align:top;}
-#contentMainWrapper, #logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage,
+#logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage,
 #popupImage {margin:0;padding:0;}
-#contentMainWrapper{padding-bottom:30px;}
 #navColumnOneWrapper, #navColumnTwoWrapper, #mainWrapper{margin:auto;}
 #mainWrapper{}
 #sendSpendWrapper {padding:20px 0;width:100%;}
@@ -866,4 +865,12 @@ a.selected {
 }
 #siteinfoLegal a, #siteinfoLegal a:hover {
 	color: #fff;
+}
+
+/************************************************
+ * #contentMainWrapper;
+ ************************************************/
+#contentMainWrapper {
+	padding: 14px 18px 18px;
+	background: #fff;
 }
