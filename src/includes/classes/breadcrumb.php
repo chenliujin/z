@@ -31,7 +31,12 @@ class breadcrumb extends base {
 		$this->_trail[] = array('title' => $title, 'link' => $link);
 	}
 
-	function trail($separator = '&nbsp;&nbsp;') {
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-09-27
+	 */
+	public function trail($separator = '&nbsp;&gt;&nbsp;') 
+	{
 		$trail_string = '';
 
 		for ($i=0, $n=sizeof($this->_trail); $i<$n; $i++) {
