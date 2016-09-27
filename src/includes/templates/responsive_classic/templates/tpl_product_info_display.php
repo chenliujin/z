@@ -77,25 +77,27 @@ li.item img {
 			<h1 id="productName" class="productGeneral"><?php echo $products_name; ?></h1>
 			<hr>
 <div id="pinfo-right" class="group grids" style="width: 100%">
-<!--bof Product Price block -->
-<!--bof Product details list  -->
-<?php if ( (($flag_show_product_info_model == 1 and $products_model != '') or ($flag_show_product_info_weight == 1 and $products_weight !=0) or ($flag_show_product_info_quantity == 1) or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))) ) { ?>
+<?php 
+if ( 
+	(
+		($flag_show_product_info_model == 1 and $products_model != '') 
+		or ($flag_show_product_info_weight == 1 and $products_weight !=0) 
+		or ($flag_show_product_info_quantity == 1) 
+		or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))
+	) 
+) { ?>
 <ul id="productDetailsList">
   <?php echo (($flag_show_product_info_model == 1 and $products_model !='') ? '<li>' . TEXT_PRODUCT_MODEL . $products_model . '</li>' : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_weight == 1 and $products_weight !=0) ? '<li>' . TEXT_PRODUCT_WEIGHT .  $products_weight . TEXT_PRODUCT_WEIGHT_UNIT . '</li>'  : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_quantity == 1) ? '<li>' . $products_quantity . TEXT_PRODUCT_QUANTITY . '</li>'  : '') . "\n"; ?>
   <?php echo (($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name)) ? '<li>' . TEXT_PRODUCT_MANUFACTURER . $manufacturers_name . '</li>' : '') . "\n"; ?>
-</ul>
-<?php
+</ul> <?php
 }
-?>
-<!--eof Product details list -->
 
-<!--bof free ship icon  -->
-<?php if(zen_get_product_is_always_free_shipping($products_id_current) && $flag_show_product_info_free_shipping) { ?>
-<div id="freeShippingIcon"><?php echo TEXT_PRODUCT_FREE_SHIPPING_ICON; ?></div>
-<?php } ?>
-<!--eof free ship icon  -->
+if(zen_get_product_is_always_free_shipping($products_id_current) && $flag_show_product_info_free_shipping) { ?>
+	<div id="freeShippingIcon"><?php echo TEXT_PRODUCT_FREE_SHIPPING_ICON; ?></div> <?php 
+} 
+?>
 </div>
 
 <div id="cart-box" class="grids" style="width: 100%; padding: 1em 0">
@@ -108,63 +110,50 @@ if ($show_onetime_charges_description == 'true') {
 	$one_time = '';
 }
 echo $one_time . ((zen_has_product_attributes_values((int)$_GET['products_id']) and $flag_show_product_info_starting_at == 1) ? TEXT_BASE_PRICE : '') . zen_get_products_display_price((int)$_GET['products_id']);
-?></h2>
-<!--eof Product Price block -->
-
-<!--bof Attributes Module -->
-<?php
-if ($pr_attr->fields['total'] > 0) {
 ?>
+</h2>
+
 <?php
-	/**
-	 * display the product atributes
-	 */
-	require($template->get_template_dir('/tpl_modules_attributes.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_attributes.php'); ?>
-<?php
+if ($pr_attr->fields['total'] > 0) { 
+	require($template->get_template_dir('/tpl_modules_attributes.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_attributes.php'); 
 }
-?>
-<!--eof Attributes Module -->
 
-<!--bof Quantity Discounts table -->
-<?php
-if ($products_discount_type != 0) { ?>
-<?php
-	/**
-	 * display the products quantity discount
-	 */
-	require($template->get_template_dir('/tpl_modules_products_quantity_discounts.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_products_quantity_discounts.php'); ?>
-<?php
+if ($products_discount_type != 0) { 
+	require($template->get_template_dir('/tpl_modules_products_quantity_discounts.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_products_quantity_discounts.php'); 
 }
-?>
-<!--eof Quantity Discounts table -->
 
-<!--bof Add to Cart Box -->
-<?php
 if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == '') {
 	// do nothing
 } else {
-?>
-<?php
 	$display_qty = (($flag_show_product_info_in_cart_qty == 1 and $_SESSION['cart']->in_cart($_GET['products_id'])) ? '<p>' . PRODUCTS_ORDER_QTY_TEXT_IN_CART . $_SESSION['cart']->get_quantity($_GET['products_id']) . '</p>' : '');
 	if ($products_qty_box_status == 0 or $products_quantity_order_max== 1) {
 		// hide the quantity box and default to 1
-		$the_button = '<input type="hidden" name="cart_quantity" value="1" />' . zen_draw_hidden_field('products_id', (int)$_GET['products_id']) . zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT);
+		$the_button = '<input type="hidden" name="cart_quantity" value="1" />' 
+			. zen_draw_hidden_field('products_id', (int)$_GET['products_id']) 
+			. zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT);
 	} else {
-		// show the quantity box
-		$the_button = '<div class="max-qty">' . zen_get_products_quantity_min_units_display((int)$_GET['products_id']) . '</div><span class="qty-text">' . PRODUCTS_ORDER_QTY_TEXT . '</span><input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($_GET['products_id'])) . '" maxlength="6" size="4" />' . zen_draw_hidden_field('products_id', (int)$_GET['products_id']) . zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT);
+		$the_button = '<div class="max-qty">' 
+			. zen_get_products_quantity_min_units_display((int)$_GET['products_id']) 
+			. '</div><span class="qty-text">' . PRODUCTS_ORDER_QTY_TEXT 
+			. '</span><input type="text" name="cart_quantity" value="' 
+			. (zen_get_buy_now_qty($_GET['products_id'])) 
+			. '" maxlength="6" size="4" />' 
+			. zen_draw_hidden_field('products_id', (int)$_GET['products_id']) 
+			. zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT);
 	}
+
 	$display_button = zen_get_buy_now_button($_GET['products_id'], $the_button);
+
+	if ($display_qty != '' or $display_button != '') { ?>
+		<div id="cartAdd">
+			<?php
+			echo $display_qty;
+			echo $display_button;
+			?>
+		</div> <?php   
+	} 
+} 
 ?>
-<?php if ($display_qty != '' or $display_button != '') { ?>
-	<div id="cartAdd">
-<?php
-	echo $display_qty;
-	echo $display_button;
-?>
-		  </div>
-<?php   } // display qty and button ?>
-<?php } // CUSTOMERS_APPROVAL == 3 ?>
-<!--eof Add to Cart Box-->
 </div>
 </div>
 
@@ -184,25 +173,16 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 	})
 		</script>
 
-<!--bof Product description -->
-<?php if ($products_description != '') { ?>
-<div id="productDescription" class="productGeneral biggerText"><?php echo stripslashes($products_description); ?></div>
-<?php } ?>
-<!--eof Product description -->
+<?php 
+if ($products_description != '') { ?>
+	<div id="productDescription" class="productGeneral biggerText"><?php echo stripslashes($products_description); ?></div> <?php 
+} 
 
-<!--bof Prev/Next bottom position -->
-<?php if (PRODUCT_INFO_PREVIOUS_NEXT == 2 or PRODUCT_INFO_PREVIOUS_NEXT == 3) { ?>
-<?php
-	/**
-	 * display the product previous/next helper
-	 */
-	require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_products_next_previous.php'); ?>
-<?php } ?>
-<!--eof Prev/Next bottom position -->
+if (PRODUCT_INFO_PREVIOUS_NEXT == 2 or PRODUCT_INFO_PREVIOUS_NEXT == 3) { 
+	require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_products_next_previous.php'); 
+} 
 
-<!--bof Reviews button and count-->
-<?php
-	if ($flag_show_product_info_reviews == 1) {
+if ($flag_show_product_info_reviews == 1) {
 		// if more than 0 reviews, then show reviews button; otherwise, show the "write review" button
 		if ($reviews->fields['count'] > 0 ) { ?>
 <div id="productReviewLink" class="buttonRow back"><?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS, zen_get_all_get_params()) . '">' . zen_image_button(BUTTON_IMAGE_REVIEWS, BUTTON_REVIEWS_ALT) . '</a>'; ?></div>
@@ -214,45 +194,25 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 <?php
 }
 	}
-?>
-<!--eof Reviews button and count -->
 
-
-<!--bof Product date added/available-->
-<?php
 	if ($products_date_available > date('Y-m-d H:i:s')) {
-		if ($flag_show_product_info_date_available == 1) {
-?>
-  <p id="productDateAvailable" class="productGeneral centeredContent"><?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?></p>
-<?php
+		if ($flag_show_product_info_date_available == 1) { ?>
+  			<p id="productDateAvailable" class="productGeneral centeredContent"><?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?></p> <?php
 		}
 	} else {
-		if ($flag_show_product_info_date_added == 1) {
-?>
-	  <p id="productDateAdded" class="productGeneral centeredContent"><?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?></p>
-<?php
-		} // $flag_show_product_info_date_added
+		if ($flag_show_product_info_date_added == 1) { ?>
+	  		<p id="productDateAdded" class="productGeneral centeredContent"><?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?></p> <?php
+		} 
 	}
-?>
-<!--eof Product date added/available -->
 
-<!--bof Product URL -->
-<?php
 	if (zen_not_null($products_url)) {
-		if ($flag_show_product_info_url == 1) {
-?>
-	<p id="productInfoLink" class="productGeneral centeredContent"><?php echo sprintf(TEXT_MORE_INFORMATION, zen_href_link(FILENAME_REDIRECT, 'action=product&products_id=' . zen_output_string_protected($_GET['products_id']), 'NONSSL', true, false)); ?></p>
-<?php
-		} // $flag_show_product_info_url
+		if ($flag_show_product_info_url == 1) { ?>
+			<p id="productInfoLink" class="productGeneral centeredContent"><?php echo sprintf(TEXT_MORE_INFORMATION, zen_href_link(FILENAME_REDIRECT, 'action=product&products_id=' . zen_output_string_protected($_GET['products_id']), 'NONSSL', true, false)); ?></p> <?php
+		} 
 	}
+	
+	require($template->get_template_dir('tpl_modules_also_purchased_products.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_also_purchased_products.php');
 ?>
-<!--eof Product URL -->
 
-<!--bof also purchased products module-->
-<?php require($template->get_template_dir('tpl_modules_also_purchased_products.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_also_purchased_products.php');?>
-<!--eof also purchased products module-->
-
-<!--bof Form close-->
 </form>
-<!--bof Form close-->
 </div>
