@@ -31,7 +31,11 @@ h3.rightBoxHeading, h3.leftBoxHeading, h3.rightBoxHeading a, h3.leftBoxHeading a
 .list-more{color:#fff !important;}
 
 /*bof background colors*/
-body, #mainWrapper, #headerWrapper, #contentMainWrapper, #logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage, #contentMainWrapper, #headerWrapper, .sideBoxContent, .rightBoxContent, .rowOdd, #productQuantityDiscounts table, #accountLinksWrapper {background:#fff;}
+body, #mainWrapper, 
+#contentMainWrapper, #logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage, #contentMainWrapper, 
+.sideBoxContent, .rightBoxContent, .rowOdd, #productQuantityDiscounts table, #accountLinksWrapper {
+	background:#fff;
+}
 input:focus, select:focus, textarea:focus, #mainWrapper, .specialsListBoxContents:hover, .centerBoxContentsSpecials:hover, .centerBoxContentsAlsoPurch:hover, .centerBoxContentsFeatured:hover, .centerBoxContentsNew:hover, .categoryListBoxContents:hover, .sideBoxContentItem:hover, .productListing-odd, #pinfo-right, #sendSpendWrapper {background:#f4f4f4;}
 .messageStackCaution {background-color:#ffff66;}
 fieldset, #shippingEstimatorContent tr:nth-child(odd), #order-comments, ul.list-links li:hover, ol.list-links li:hover, #no-products, .listing-wrapper:nth-child(odd), #reviews-write-wrapper, #gvFaqDefaultContent, #checkoutPayAddressDefault .instructions, #checkoutShipAddressDefault .instructions, #addressBookDefault .instructions, #myAccountNotify, #myAccountGen, .reviews-wrapper, #accountHistInfo table td, #prevOrders td, #myAccountPaymentInfo, #myAccountShipInfo, #accountDefault #sendSpendWrapper {
@@ -75,8 +79,3 @@ ol.list-links li{border-bottom:1px solid #ddd;}
 
 /*bof placeholders*/
 ::-moz-placeholder, :-moz-placeholder, ::-webkit-input-placeholder, :-ms-input-placeholder, :placeholder-shown {color: #D01;}
-
-#headerWrapper {
-	background: #232f3e;
-	/*background: #01204f;*/
-}
