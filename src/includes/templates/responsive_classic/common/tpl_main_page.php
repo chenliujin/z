@@ -91,12 +91,11 @@ if (!isset($flag_disable_left) || !$flag_disable_left) {
 ?>
 
   <div class="<?php echo 'col' . $center_column_width; ?>">
-
-<!-- bof  breadcrumb -->
 <?php if (DEFINE_BREADCRUMB_STATUS == '1' || (DEFINE_BREADCRUMB_STATUS == '2' && !$this_is_home_page) ) { ?>
-	<div id="navBreadCrumb"><?php echo $breadcrumb->trail(BREAD_CRUMBS_SEPARATOR); ?></div>
+	<div id="navBreadCrumb">
+		<?php echo $breadcrumb->trail(BREAD_CRUMBS_SEPARATOR); ?>
+	</div>
 <?php } ?>
-<!-- eof breadcrumb -->
 
 <?php
 if (SHOW_BANNERS_GROUP_SET3 != '' && $banner = zen_banner_exists('dynamic', SHOW_BANNERS_GROUP_SET3)) {
