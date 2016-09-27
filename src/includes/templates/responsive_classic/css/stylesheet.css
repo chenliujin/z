@@ -579,22 +579,6 @@ a.selected {
 	z-index: 99;
 }
 
-/*
-.nav-tool a {
-	color: #fff;
-	background: #232f3e;
-	text-decoration: none;
-}
-
-.nav-tool a:hover {
-	color: #fff;
-	background: #232f3e;
-	text-decoration: none;
-	opacity: 1.0;
-	z-index: 999;
-}
-*/
-
 .nav-a {
 	padding: 0 0 0 10px;
 	float: left;
@@ -613,6 +597,7 @@ a.selected {
 
 #headerWrapper {
 	background: #232f3e;
+	/*background: #37475a;*/
 }
 
 #nav-categories a:hover {
@@ -622,25 +607,6 @@ a.selected {
 	border-radius: 3px 3px 0 0;
 	background: #232f3e;
 }
-
-/*
-.nav-account {
-	font-size: 14px;
-	line-height: 15px;
-	font-weight: 700;
-}
-
-.nav-account {
-	padding-top: 9px;
-}
-
-.nav-account .sign-in {
-	font-size: 12px;
-	font-weight: 400;
-	height: 14px;
-	line-height: 14px;
-}
-*/
 
 .nav-cate {
 }
@@ -893,9 +859,10 @@ a.selected {
 }
 #siteinfoLegal {
 	color: #fff;
-	padding: 1em 0 30px 0;
-	background: #131a22;
+	padding: 40px 0 60px 0;
 	text-align: center;
+	background: #131a22;
+	/*background: #242729;*/
 }
 #siteinfoLegal a, #siteinfoLegal a:hover {
 	color: #fff;
