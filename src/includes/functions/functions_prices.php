@@ -1,15 +1,4 @@
 <?php
-/**
- * functions_prices
- *
- * @package functions
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Fri Jan 22 10:56:26 2016 +0000 Modified in v1.5.5 $
- */
-
-////
 //get specials price or sale price
 function zen_get_products_special_price($product_id, $specials_price_only=false) {
 	global $db;
@@ -388,7 +377,10 @@ function zen_get_products_quantity_order_max($product_id) {
 function zen_get_products_qty_box_status($product_id) {
 	global $db;
 
-	$the_products_qty_box_status = $db->Execute("select products_id, products_qty_box_status  from " . TABLE_PRODUCTS . " where products_id = '" . (int)$product_id . "'");
+	$the_products_qty_box_status = $db->Execute("
+		select products_id, products_qty_box_status  
+		from " . TABLE_PRODUCTS . " 
+		where products_id = '" . (int)$product_id . "'");
 	return $the_products_qty_box_status->fields['products_qty_box_status'];
 }
 
