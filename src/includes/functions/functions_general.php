@@ -1150,7 +1150,12 @@ function zen_get_buy_now_button($product_id, $link, $additional_link = false) {
 		break;
 	}
 
-	$button_check = $db->Execute("select product_is_call, products_quantity from " . TABLE_PRODUCTS . " where products_id = '" . (int)$product_id . "'");
+	$button_check = $db->Execute("
+		select product_is_call, products_quantity 
+		from " . TABLE_PRODUCTS . " 
+		where products_id = '" . (int)$product_id . 
+		"'");
+
 	switch (true) {
 		// cannot be added to the cart
 	case (zen_get_products_allow_add_to_cart($product_id) == 'N'):
