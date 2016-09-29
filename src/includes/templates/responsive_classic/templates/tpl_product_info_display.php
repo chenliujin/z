@@ -185,11 +185,15 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 			$('#zoomimg').attr('jqimg', $(o).find('img').attr('data-big'));
 		});
 	})
-		</script>
+	</script>
 
 <?php 
 if ($products_description != '') { ?>
-	<div id="productDescription" class="productGeneral biggerText"><?php echo stripslashes($products_description); ?></div> <?php 
+	<hr />
+	<h2>Product Description</h2>
+	<div id="productDescription" class="productGeneral biggerText">
+		<?php echo stripslashes($products_description); ?>
+	</div><?php 
 } 
 
 if (PRODUCT_INFO_PREVIOUS_NEXT == 2 or PRODUCT_INFO_PREVIOUS_NEXT == 3) { 
@@ -199,28 +203,40 @@ if (PRODUCT_INFO_PREVIOUS_NEXT == 2 or PRODUCT_INFO_PREVIOUS_NEXT == 3) {
 if ($flag_show_product_info_reviews == 1) { 
 	// if more than 0 reviews, then show reviews button; otherwise, show the "write review" button
 	if ($reviews->fields['count'] > 0 ) { ?>
-		<div id="productReviewLink" class="buttonRow back"><?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS, zen_get_all_get_params()) . '">' . zen_image_button(BUTTON_IMAGE_REVIEWS, BUTTON_REVIEWS_ALT) . '</a>'; ?></div>
+		<div id="productReviewLink" class="buttonRow back">
+			<?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS, zen_get_all_get_params()) . '">' . zen_image_button(BUTTON_IMAGE_REVIEWS, BUTTON_REVIEWS_ALT) . '</a>'; ?>
+		</div>
 		<br class="clearBoth" />
-		<p class="reviewCount"><?php echo ($flag_show_product_info_reviews_count == 1 ? TEXT_CURRENT_REVIEWS . ' ' . $reviews->fields['count'] : ''); ?></p> <?php 
+		<p class="reviewCount">
+			<?php echo ($flag_show_product_info_reviews_count == 1 ? TEXT_CURRENT_REVIEWS . ' ' . $reviews->fields['count'] : ''); ?>
+		</p> <?php 
 	} else { ?> 
-		<div id="productReviewLink" class="buttonRow back"><?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, zen_get_all_get_params(array())) . '">' . zen_image_button(BUTTON_IMAGE_WRITE_REVIEW, BUTTON_WRITE_REVIEW_ALT) . '</a>'; ?></div>
+		<div id="productReviewLink" class="buttonRow back">
+			<?php echo '<a href="' . zen_href_link(FILENAME_PRODUCT_REVIEWS_WRITE, zen_get_all_get_params(array())) . '">' . zen_image_button(BUTTON_IMAGE_WRITE_REVIEW, BUTTON_WRITE_REVIEW_ALT) . '</a>'; ?>
+		</div>
 		<br class="clearBoth" /> <?php 
 	}
 }
 
 if ($products_date_available > date('Y-m-d H:i:s')) {
 	if ($flag_show_product_info_date_available == 1) { ?>
-		<p id="productDateAvailable" class="productGeneral centeredContent"><?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?></p> <?php
+		<p id="productDateAvailable" class="productGeneral centeredContent">
+			<?php echo sprintf(TEXT_DATE_AVAILABLE, zen_date_long($products_date_available)); ?>
+		</p> <?php
 	}
 } else {
 	if ($flag_show_product_info_date_added == 1) { ?>
-		<p id="productDateAdded" class="productGeneral centeredContent"><?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?></p> <?php
+		<p id="productDateAdded" class="productGeneral centeredContent">
+			<?php echo sprintf(TEXT_DATE_ADDED, zen_date_long($products_date_added)); ?>
+		</p> <?php
 	} 
 }
 
 if (zen_not_null($products_url)) {
 	if ($flag_show_product_info_url == 1) { ?>
-		<p id="productInfoLink" class="productGeneral centeredContent"><?php echo sprintf(TEXT_MORE_INFORMATION, zen_href_link(FILENAME_REDIRECT, 'action=product&products_id=' . zen_output_string_protected($_GET['products_id']), 'NONSSL', true, false)); ?></p> <?php
+		<p id="productInfoLink" class="productGeneral centeredContent">
+		<?php echo sprintf(TEXT_MORE_INFORMATION, zen_href_link(FILENAME_REDIRECT, 'action=product&products_id=' . zen_output_string_protected($_GET['products_id']), 'NONSSL', true, false)); ?>
+		</p> <?php
 	} 
 }
 
