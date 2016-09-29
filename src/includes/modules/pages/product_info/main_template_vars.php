@@ -148,7 +148,6 @@ for ($i = 0, $n = sizeof($directory_array); $i < $n; $i++) {
 }
 
 // build show flags from product type layout settings
-$flag_show_product_info_starting_at = zen_get_show_product_switch($_GET['products_id'], 'starting_at');
 $flag_show_product_info_model = zen_get_show_product_switch($_GET['products_id'], 'model');
 $flag_show_product_info_weight = zen_get_show_product_switch($_GET['products_id'], 'weight');
 $flag_show_product_info_quantity = zen_get_show_product_switch($_GET['products_id'], 'quantity');

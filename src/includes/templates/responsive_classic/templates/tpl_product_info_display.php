@@ -1,13 +1,18 @@
 <?php
-include_once('z/model/products.php');
-?>
-<div class="centerColumn" id="productGeneral">
+include_once('z/model/products.php'); ?>
+<div class="centerColumn" id="productGeneral"> <?php 
+	echo zen_draw_form(
+		'cart_quantity', 
+		zen_href_link(
+			zen_get_info_page($_GET['products_id']), 
+			zen_get_all_get_params(array('action')) . 'action=add_product', 
+			$request_type
+		), 
+		'post', 
+		'enctype="multipart/form-data"'
+		) . "\n"; 
 
-<!--bof Form start-->
-<?php echo zen_draw_form('cart_quantity', zen_href_link(zen_get_info_page($_GET['products_id']), zen_get_all_get_params(array('action')) . 'action=add_product', $request_type), 'post', 'enctype="multipart/form-data"') . "\n"; ?>
-<!--eof Form start-->
-
-<?php if ($messageStack->size('product_info') > 0) echo $messageStack->output('product_info'); ?>
+	if ($messageStack->size('product_info') > 0) echo $messageStack->output('product_info'); ?>
 
 <style>
 
@@ -97,28 +102,29 @@ li.item img {
 					<td><input type="submit" value="Add to Cart" class="add-to-cart" /></td>
 				</tr>
 			</table>
-<div id="pinfo-right" class="group grids" style="width: 100%">
-<?php 
-if ( 
-	(
-		($flag_show_product_info_model == 1 and $products_model != '') 
-		or ($flag_show_product_info_weight == 1 and $products_weight !=0) 
-		or ($flag_show_product_info_quantity == 1) 
-		or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))
-	) 
-) { ?>
-<ul id="productDetailsList">
-  <?php echo (($flag_show_product_info_model == 1 and $products_model !='') ? '<li>' . TEXT_PRODUCT_MODEL . $products_model . '</li>' : '') . "\n"; ?>
-  <?php echo (($flag_show_product_info_weight == 1 and $products_weight !=0) ? '<li>' . TEXT_PRODUCT_WEIGHT .  $products_weight . TEXT_PRODUCT_WEIGHT_UNIT . '</li>'  : '') . "\n"; ?>
-  <?php echo (($flag_show_product_info_quantity == 1) ? '<li>' . $products_quantity . TEXT_PRODUCT_QUANTITY . '</li>'  : '') . "\n"; ?>
-  <?php echo (($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name)) ? '<li>' . TEXT_PRODUCT_MANUFACTURER . $manufacturers_name . '</li>' : '') . "\n"; ?>
-</ul> <?php
-}
 
-if(zen_get_product_is_always_free_shipping($products_id_current) && $flag_show_product_info_free_shipping) { ?>
-	<div id="freeShippingIcon"><?php echo TEXT_PRODUCT_FREE_SHIPPING_ICON; ?></div> <?php 
-} 
-?>
+<div id="pinfo-right" class="group grids" style="width: 100%">
+	<?php 
+	if ( 
+		(
+			($flag_show_product_info_model == 1 and $products_model != '') 
+			or ($flag_show_product_info_weight == 1 and $products_weight !=0) 
+			or ($flag_show_product_info_quantity == 1) 
+			or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))
+		) 
+	) { ?>
+	<ul id="productDetailsList">
+	  <?php echo (($flag_show_product_info_model == 1 and $products_model !='') ? '<li>' . TEXT_PRODUCT_MODEL . $products_model . '</li>' : '') . "\n"; ?>
+	  <?php echo (($flag_show_product_info_weight == 1 and $products_weight !=0) ? '<li>' . TEXT_PRODUCT_WEIGHT .  $products_weight . TEXT_PRODUCT_WEIGHT_UNIT . '</li>'  : '') . "\n"; ?>
+	  <?php echo (($flag_show_product_info_quantity == 1) ? '<li>' . $products_quantity . TEXT_PRODUCT_QUANTITY . '</li>'  : '') . "\n"; ?>
+	  <?php echo (($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name)) ? '<li>' . TEXT_PRODUCT_MANUFACTURER . $manufacturers_name . '</li>' : '') . "\n"; ?>
+	</ul> <?php
+	}
+	
+	if(zen_get_product_is_always_free_shipping($products_id_current) && $flag_show_product_info_free_shipping) { ?>
+		<div id="freeShippingIcon"><?php echo TEXT_PRODUCT_FREE_SHIPPING_ICON; ?></div> <?php 
+	} 
+	?>
 </div>
 
 <div id="cart-box" class="grids" style="width: 100%; padding: 1em 0">
@@ -130,9 +136,7 @@ if ($show_onetime_charges_description == 'true') {
 } else {
 	$one_time = '';
 }
-echo $one_time 
-	. ((zen_has_product_attributes_values((int)$_GET['products_id']) and $flag_show_product_info_starting_at == 1) ? TEXT_BASE_PRICE : '') 
-	. zen_get_products_display_price((int)$_GET['products_id']);
+echo $one_time . zen_get_products_display_price((int)$_GET['products_id']);
 ?>
 </h2>
 
