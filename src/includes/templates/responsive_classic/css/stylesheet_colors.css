@@ -61,8 +61,6 @@ span.cssButton.normal_button.button.button_logoff, span.cssButton.normal_button.
 #filter-wrapper, span.normal_button:hover, span.cssButton.normal_button.button.button_goto_prod_details{background:#000;}
 #docGeneralDisplay #pinfo-right, #popupShippingEstimator, #popupSearchHelp, #popupAdditionalImage, #popupImage, #popupCVVHelp, #popupCouponHelp, #popupAtrribsQuantityPricesHelp, #infoShoppingCart{background:none;}
 
-HR {border-bottom:1px solid #9a9a9a;}
-
 #navMain ul li {border-right:1px solid #fff;}
 #navCatTabs li {border-left: 1px solid #05919f;}
 #navCatTabs ul li:last-child{border-right:1px solid #05919f;}

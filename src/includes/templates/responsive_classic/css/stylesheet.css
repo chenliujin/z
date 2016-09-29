@@ -20,7 +20,6 @@ h1, h2, h3, h4, h5, h6 {margin:20px 0;}
 .biggerText {font-size:1.2em;line-height:160%;}
 P, ADDRESS {padding:0.5em;}
 ADDRESS {font-style:normal;}
-HR {height: 1px;margin-top:0.5em;border:none;}
 #logo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .centerBoxContentsAlsoPurch, .attribImg {float:left;}
 .centeredContent, TH, #cartEmptyText, #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, 
 #siteinfoCredits, #siteinfoStatus, #siteinfoIP, .center,
@@ -549,6 +548,12 @@ input[type=text]:focus {
 	text-rendering: optimizeLegibility;
 }
 
+/************************************************
+ * text
+ ************************************************/
+.text-right {
+	text-align: right!important;
+}
 .text-bold {
 	font-weight: 700!important;
 }
@@ -556,16 +561,6 @@ input[type=text]:focus {
 .list-item-border {
 	border-bottom: 1px solid #DDD;
 }
-
-/*
-.nav-tool {
-	position: relative;
-	float: right;
-	padding-right: 5em;
-	opacity: 1.0;
-	z-index: 2;
-}
-*/
 
 a.selected {
 	opacity: 1.0;
@@ -692,6 +687,15 @@ a.selected {
 	width: 247px;
 	float: left;
 }
+/************************************************
+ * Default Tag 
+ ************************************************/
+hr {
+	margin: 0 0 14px 0;
+	height: 1px;
+	border: none;
+	border-top: 1px solid #e7e7e7;
+}	
 
 /************************************************
  * #nav
@@ -873,4 +877,11 @@ a.selected {
 #contentMainWrapper {
 	padding: 14px 18px 50px 18px;
 	background: #fff;
+}
+
+/************************************************
+ * Table
+ ************************************************/
+table.line-item td {
+	padding:0 10px 10px 0;
 }
