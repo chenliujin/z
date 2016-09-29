@@ -94,7 +94,7 @@ li.item img {
 				</tr>
 				<tr>
 					<td></td>
-					<td><input type="submit" value="Add to Cart" /></td>
+					<td><input type="submit" value="Add to Cart" class="add-to-cart" /></td>
 				</tr>
 			</table>
 <div id="pinfo-right" class="group grids" style="width: 100%">

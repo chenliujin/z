@@ -567,6 +567,19 @@ input[type=text]:focus {
 	text-rendering: optimizeLegibility;
 }
 
+/************************************************
+ * Button 
+ ************************************************/
+input.add-to-cart, input.add-to-cart:hover {
+	margin:0;
+	padding: 5px 20px;
+	border: none;
+	border-radius: 4px;
+	box-shadow: none;
+	cursor: pointer;
+	outline: 0;
+	background: #f3a847;
+}	
 
 
 
