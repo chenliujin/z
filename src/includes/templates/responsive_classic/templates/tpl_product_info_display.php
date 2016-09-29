@@ -128,18 +128,6 @@ li.item img {
 </div>
 
 <div id="cart-box" class="grids" style="width: 100%; padding: 1em 0">
-<h2 id="productPrices" class="productGeneral">
-<?php
-// base price
-if ($show_onetime_charges_description == 'true') {
-	$one_time = '<span >' . TEXT_ONETIME_CHARGE_SYMBOL . TEXT_ONETIME_CHARGE_DESCRIPTION . '</span><br />';
-} else {
-	$one_time = '';
-}
-echo $one_time . zen_get_products_display_price((int)$_GET['products_id']);
-?>
-</h2>
-
 <?php
 if ($pr_attr->fields['total'] > 0) { 
 	require($template->get_template_dir('/tpl_modules_attributes.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_attributes.php'); 
