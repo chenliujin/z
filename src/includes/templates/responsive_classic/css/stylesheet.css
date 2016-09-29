@@ -530,13 +530,32 @@ input[type=text]:focus {
 	background-color: #fff;
 }
 
+/************************************************
+ * Price 
+ ************************************************/
 .price {
 	color: #b12704!important;
 }
 .price-del {
 	color: #555!important;
+	text-decoration: line-through;
 }
 
+/************************************************
+ * Text 
+ ************************************************/
+.text-right {
+	text-align: right!important;
+}
+.text-bold {
+	font-weight: 700!important;
+}
+.text-strike {
+	text-decoration: line-through!important;
+}
+.nowrap {
+	white-space: nowrap;
+}
 .size-base {
 	font-size: 13px!important;
 	line-height: 19px!important;
@@ -548,15 +567,14 @@ input[type=text]:focus {
 	text-rendering: optimizeLegibility;
 }
 
-/************************************************
- * text
- ************************************************/
-.text-right {
-	text-align: right!important;
-}
-.text-bold {
-	font-weight: 700!important;
-}
+
+
+
+
+
+
+
+
 
 .list-item-border {
 	border-bottom: 1px solid #DDD;
@@ -883,5 +901,5 @@ hr {
  * Table
  ************************************************/
 table.line-item td {
-	padding:0 10px 10px 0;
+	padding:0 10px 5px 0;
 }

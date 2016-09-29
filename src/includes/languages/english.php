@@ -372,7 +372,7 @@ define('TEXT_SHIPPING_WEIGHT','lbs');
 define('TEXT_SHIPPING_BOXES', 'Boxes');
 
 // Discount Savings
-define('PRODUCT_PRICE_DISCOUNT_PREFIX','Save:&nbsp;');
+define('PRODUCT_PRICE_DISCOUNT_PREFIX', 'You Save:');
 define('PRODUCT_PRICE_DISCOUNT_PERCENTAGE','% off');
 define('PRODUCT_PRICE_DISCOUNT_AMOUNT','&nbsp;off');
 define('PRODUCT_PRICE_SALE','Sale:');
