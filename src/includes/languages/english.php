@@ -373,8 +373,8 @@ define('TEXT_SHIPPING_BOXES', 'Boxes');
 
 // Discount Savings
 define('PRODUCT_PRICE_DISCOUNT_PREFIX', 'You Save:');
-define('PRODUCT_PRICE_DISCOUNT_PERCENTAGE','% off');
-define('PRODUCT_PRICE_DISCOUNT_AMOUNT','&nbsp;off');
+define('PRODUCT_PRICE_DISCOUNT_PERCENTAGE','%');
+define('PRODUCT_PRICE_DISCOUNT_AMOUNT','');
 define('PRODUCT_PRICE_SALE','Sale:');
 
 //universal symbols

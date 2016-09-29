@@ -1,3 +1,6 @@
+<?php
+include_once('z/model/products.php');
+?>
 <div class="centerColumn" id="productGeneral">
 
 <!--bof Form start-->
@@ -76,6 +79,24 @@ li.item img {
 		<div style="margin-left: 500px;">
 			<h1 id="productName" class="productGeneral"><?php echo $products_name; ?></h1>
 			<hr>
+			<table class="line-item">
+				<?php
+				$price_list = \z\products::ShowPriceList( (int) $_GET['products_id'] );
+				?>
+				<tr>
+					<td class="size-base text-right">Qty:</td>
+					<td style="width: 105%;">
+						<select style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; width: auto">
+							<option value="1">1</option>
+							<option value="2">2</option>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Add to Cart" /></td>
+				</tr>
+			</table>
 <div id="pinfo-right" class="group grids" style="width: 100%">
 <?php 
 if ( 
@@ -109,7 +130,9 @@ if ($show_onetime_charges_description == 'true') {
 } else {
 	$one_time = '';
 }
-echo $one_time . ((zen_has_product_attributes_values((int)$_GET['products_id']) and $flag_show_product_info_starting_at == 1) ? TEXT_BASE_PRICE : '') . zen_get_products_display_price((int)$_GET['products_id']);
+echo $one_time 
+	. ((zen_has_product_attributes_values((int)$_GET['products_id']) and $flag_show_product_info_starting_at == 1) ? TEXT_BASE_PRICE : '') 
+	. zen_get_products_display_price((int)$_GET['products_id']);
 ?>
 </h2>
 
@@ -126,6 +149,7 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 	// do nothing
 } else {
 	$display_qty = (($flag_show_product_info_in_cart_qty == 1 and $_SESSION['cart']->in_cart($_GET['products_id'])) ? '<p>' . PRODUCTS_ORDER_QTY_TEXT_IN_CART . $_SESSION['cart']->get_quantity($_GET['products_id']) . '</p>' : '');
+
 	if ($products_qty_box_status == 0 or $products_quantity_order_max== 1) {
 		// hide the quantity box and default to 1
 		$the_button = '<input type="hidden" name="cart_quantity" value="1" />' 
@@ -135,9 +159,7 @@ if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == 
 		$the_button = '<div class="max-qty">' 
 			. zen_get_products_quantity_min_units_display((int)$_GET['products_id']) 
 			. '</div><span class="qty-text">' . PRODUCTS_ORDER_QTY_TEXT 
-			. '</span><input type="text" name="cart_quantity" value="' 
-			. (zen_get_buy_now_qty($_GET['products_id'])) 
-			. '" maxlength="6" size="4" />' 
+			. '</span><input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($_GET['products_id'])) . '" maxlength="6" size="4" />' 
 			. zen_draw_hidden_field('products_id', (int)$_GET['products_id']) 
 			. zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT);
 	}
