@@ -375,9 +375,7 @@ define('TEXT_SHIPPING_BOXES', 'Boxes');
 define('PRODUCT_PRICE_DISCOUNT_PREFIX','Save:&nbsp;');
 define('PRODUCT_PRICE_DISCOUNT_PERCENTAGE','% off');
 define('PRODUCT_PRICE_DISCOUNT_AMOUNT','&nbsp;off');
-
-// Sale Maker Sale Price
-define('PRODUCT_PRICE_SALE','Sale:&nbsp;');
+define('PRODUCT_PRICE_SALE','Sale:');
 
 //universal symbols
 define('TEXT_NUMBER_SYMBOL', '# ');
