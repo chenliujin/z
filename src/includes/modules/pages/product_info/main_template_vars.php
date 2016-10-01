@@ -155,7 +155,6 @@ $flag_show_product_info_model = zen_get_show_product_switch($_GET['products_id']
 $flag_show_product_info_weight = zen_get_show_product_switch($_GET['products_id'], 'weight');
 $flag_show_product_info_quantity = zen_get_show_product_switch($_GET['products_id'], 'quantity');
 $flag_show_product_info_manufacturer = zen_get_show_product_switch($_GET['products_id'], 'manufacturer');
-$flag_show_product_info_in_cart_qty = zen_get_show_product_switch($_GET['products_id'], 'in_cart_qty');
 $flag_show_product_info_reviews = zen_get_show_product_switch($_GET['products_id'], 'reviews');
 $flag_show_product_info_reviews_count = zen_get_show_product_switch($_GET['products_id'], 'reviews_count');
 $flag_show_product_info_date_available = zen_get_show_product_switch($_GET['products_id'], 'date_available');
