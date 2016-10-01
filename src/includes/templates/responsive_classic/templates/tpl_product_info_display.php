@@ -1,6 +1,7 @@
 <?php
 include_once('z/model/products.php'); ?>
-<div class="centerColumn" id="productGeneral"> <?php 
+<div class="centerColumn" id="productGeneral"> 
+	<?php 
 	echo zen_draw_form(
 		'cart_quantity', 
 		zen_href_link(
@@ -11,6 +12,9 @@ include_once('z/model/products.php'); ?>
 		'post', 
 		'enctype="multipart/form-data"'
 		) . "\n"; 
+	?>
+	<input type="hidden" name="products_id" value="<?php echo (int)$_GET['products_id']; ?>" />
+	<?php
 
 	if ($messageStack->size('product_info') > 0) echo $messageStack->output('product_info'); ?>
 
@@ -86,24 +90,38 @@ li.item img {
 			<hr>
 			<table class="line-item">
 				<?php
-				$price_list = \z\products::ShowPriceList( (int) $_GET['products_id'] );
+				\z\products::ShowPriceList( (int) $_GET['products_id'] );
 				?>
 				<tr>
 					<td class="size-base text-right">Qty:</td>
 					<td style="width: 105%;">
-						<select style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; width: auto">
-							<option value="1">1</option>
-							<option value="2">2</option>
+						<select name="cart_quantity" style="padding: 5px; border: 1px solid #ddd; border-radius: 4px; width: auto">
+							<?php 
+							if ($products_qty_box_status == 0 or $products_quantity_order_max== 1) {
+								echo '<option value="1">1</option>';
+							} else {
+								$qty_start = zen_get_buy_now_qty($_GET['products_id']);
+
+								// ToDo 对比产品的剩余数量
+								// ToDo 参考 function zen_get_buy_now_button，显示 Sold Out 状态
+								$qty_end	= 20;
+
+								for ($qty = $qty_start; $qty <= $qty_end; $qty++) {
+									echo '<option value="' . $qty . '">' . $qty . '</option>';
+								}
+							}
+							?>
 						</select>
 					</td>
 				</tr>
+				
 				<tr>
 					<td></td>
 					<td><input type="submit" value="Add to Cart" class="add-to-cart" /></td>
 				</tr>
 			</table>
 
-<div id="pinfo-right" class="group grids" style="width: 100%">
+<div style="width: 100%">
 	<?php 
 	if ( 
 		(
@@ -127,7 +145,7 @@ li.item img {
 	?>
 </div>
 
-<div id="cart-box" class="grids" style="width: 100%; padding: 1em 0">
+<div style="width: 100%; padding: 1em 0">
 <?php
 if ($pr_attr->fields['total'] > 0) { 
 	require($template->get_template_dir('/tpl_modules_attributes.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_attributes.php'); 
@@ -136,36 +154,9 @@ if ($pr_attr->fields['total'] > 0) {
 if ($products_discount_type != 0) { 
 	require($template->get_template_dir('/tpl_modules_products_quantity_discounts.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_products_quantity_discounts.php'); 
 }
-
-if (CUSTOMERS_APPROVAL == 3 and TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM == '') {
-	// do nothing
-} else {
-	if ($products_qty_box_status == 0 or $products_quantity_order_max== 1) {
-		// hide the quantity box and default to 1
-		$the_button = '<input type="hidden" name="cart_quantity" value="1" />' 
-			. zen_draw_hidden_field('products_id', (int)$_GET['products_id']) 
-			. zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT);
-	} else {
-		$the_button = '<div class="max-qty">' 
-			. zen_get_products_quantity_min_units_display((int)$_GET['products_id']) 
-			. '</div><span class="qty-text">' . PRODUCTS_ORDER_QTY_TEXT 
-			. '</span><input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($_GET['products_id'])) . '" maxlength="6" size="4" />' 
-			. zen_draw_hidden_field('products_id', (int)$_GET['products_id']) 
-			. zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT);
-	}
-
-	$display_button = zen_get_buy_now_button($_GET['products_id'], $the_button);
-
-	if ($display_button != '') { ?>
-		<div id="cartAdd">
-			<?php
-			echo $display_button;
-			?>
-		</div> <?php   
-	} 
-} 
 ?>
 </div>
+
 </div>
 
 
