@@ -111,7 +111,8 @@ li.item img {
 								}
 							}
 							?>
-						</select>
+							</select>  
+							<span style="color:#999">&nbsp;(<?php echo $products_quantity . TEXT_PRODUCT_QUANTITY; ?>)</span>
 					</td>
 				</tr>
 				
@@ -127,15 +128,15 @@ li.item img {
 		(
 			($flag_show_product_info_model == 1 and $products_model != '') 
 			or ($flag_show_product_info_weight == 1 and $products_weight !=0) 
-			or ($flag_show_product_info_quantity == 1) 
 			or ($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name))
 		) 
 	) { ?>
 	<ul id="productDetailsList">
-	  <?php echo (($flag_show_product_info_model == 1 and $products_model !='') ? '<li>' . TEXT_PRODUCT_MODEL . $products_model . '</li>' : '') . "\n"; ?>
-	  <?php echo (($flag_show_product_info_weight == 1 and $products_weight !=0) ? '<li>' . TEXT_PRODUCT_WEIGHT .  $products_weight . TEXT_PRODUCT_WEIGHT_UNIT . '</li>'  : '') . "\n"; ?>
-	  <?php echo (($flag_show_product_info_quantity == 1) ? '<li>' . $products_quantity . TEXT_PRODUCT_QUANTITY . '</li>'  : '') . "\n"; ?>
-	  <?php echo (($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name)) ? '<li>' . TEXT_PRODUCT_MANUFACTURER . $manufacturers_name . '</li>' : '') . "\n"; ?>
+	  <?php 
+		// TODO 修改型号，重量的位置
+		//echo (($flag_show_product_info_model == 1 and $products_model !='') ? '<li>' . TEXT_PRODUCT_MODEL . $products_model . '</li>' : '') . "\n"; ?>
+	  <?php //echo (($flag_show_product_info_weight == 1 and $products_weight !=0) ? '<li>' . TEXT_PRODUCT_WEIGHT .  $products_weight . TEXT_PRODUCT_WEIGHT_UNIT . '</li>'  : '') . "\n"; ?>
+	  <?php //echo (($flag_show_product_info_manufacturer == 1 and !empty($manufacturers_name)) ? '<li>' . TEXT_PRODUCT_MANUFACTURER . $manufacturers_name . '</li>' : '') . "\n"; ?>
 	</ul> <?php
 	}
 	
@@ -177,8 +178,11 @@ if ($products_discount_type != 0) {
 
 <?php 
 if ($products_description != '') { ?>
-	<hr />
-	<h2>Product Description</h2>
+	<div>
+		<div class="title-border">
+			<h2 style="margin:0">Product Description</h2>
+		</div>
+	</div>
 	<div id="productDescription" class="productGeneral biggerText">
 		<?php echo stripslashes($products_description); ?>
 	</div><?php 

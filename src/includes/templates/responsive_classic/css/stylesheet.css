@@ -916,3 +916,14 @@ hr {
 table.line-item td {
 	padding:0 10px 5px 0;
 }
+
+
+
+
+
+.title-border {
+	margin-top: 12px;
+	padding: 10px 0;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #e7e7e7;
+}
