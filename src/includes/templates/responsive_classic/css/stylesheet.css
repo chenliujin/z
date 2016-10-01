@@ -571,12 +571,14 @@ input[type=text]:focus {
 input.add-to-cart, input.add-to-cart:hover {
 	margin:0;
 	padding: 5px 20px;
+	height: 27px;
 	border: none;
-	border-radius: 4px;
+	border-radius: 2px;
 	box-shadow: none;
 	cursor: pointer;
 	outline: 0;
-	background: #f3a847;
+	/*background: #f3a847;*/
+	background: linear-gradient(to bottom,#f7dfa5,#f0c14b);
 }	
 
 
