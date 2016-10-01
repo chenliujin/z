@@ -1289,7 +1289,8 @@ function zen_get_products_discount_price_qty($product_id, $check_qty, $check_amo
 		from " . TABLE_PRODUCTS . " 
 		where products_id='" . (int)$product_id . "'");
 	$products_discounts_query = $db->Execute("
-		select * from " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . " 
+		select * 
+		from " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . " 
 		where products_id='" . (int)$product_id . "' and discount_qty <='" . (float)$check_qty . "' 
 		order by discount_qty desc");
 

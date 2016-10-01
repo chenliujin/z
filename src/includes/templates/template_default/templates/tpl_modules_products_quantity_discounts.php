@@ -43,22 +43,29 @@ if ($zc_hidden_discounts_on) { ?>
 			$disc_cnt++;
 			if ($discount_col_cnt == $disc_cnt && !($key == sizeof($quantityDiscount))) {
 			$disc_cnt=0; ?>
-			</tr>
-				<tr> <?php
+	</tr>
+	<tr> 
+			<?php
+			}
 		}
-	}
 
-	if ($disc_cnt < $columnCount) { ?>
-		<td class="alignCenter" colspan="<?php echo ($columnCount+1 - $disc_cnt)+1; ?>"> &nbsp; </td> <?php 
-	} ?>
-	</tr> <?php
-		if (zen_has_product_attributes($products_id_current)) { ?>
+		if ($disc_cnt < $columnCount) { ?>
+		<td class="alignCenter" colspan="<?php echo ($columnCount+1 - $disc_cnt)+1; ?>"> &nbsp; </td> 
+		<?php 
+		} ?>
+	</tr> 
+
+	<?php 
+	if (zen_has_product_attributes($products_id_current)) { ?>
 	<tr>
 	  <td colspan="<?php echo $columnCount+1; ?>" class="alignCenter">
 		<?php echo TEXT_FOOTER_DISCOUNT_QUANTITIES; ?>
 	  </td>
-	</tr> <?php 
-} ?>
-  </table> <?php 
+	</tr> 
+	<?php 
+	} 
+	?>
+</table> 
+<?php 
 } // hide discounts ?>
 </div>
