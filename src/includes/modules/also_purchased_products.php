@@ -36,7 +36,7 @@ if (isset($_GET['products_id']) && SHOW_PRODUCT_INFO_COLUMNS_ALSO_PURCHASED_PROD
 		}
 	}
 	if ($also_purchased_products->RecordCount() > 0 && $also_purchased_products->RecordCount() >= MIN_DISPLAY_ALSO_PURCHASED) {
-		$title = '<h2 class="centerBoxHeading">' . TEXT_ALSO_PURCHASED_PRODUCTS . '</h2>';
+		$title = '<h2 class="title-border">' . TEXT_ALSO_PURCHASED_PRODUCTS . '</h2>';
 		$zc_show_also_purchased = true;
 	}
 }
