@@ -192,6 +192,7 @@ if (PRODUCT_INFO_PREVIOUS_NEXT == 2 or PRODUCT_INFO_PREVIOUS_NEXT == 3) {
 	require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_products_next_previous.php'); 
 } 
 
+/*
 if ($flag_show_product_info_reviews == 1) { 
 	// if more than 0 reviews, then show reviews button; otherwise, show the "write review" button
 	if ($reviews->fields['count'] > 0 ) { ?>
@@ -209,6 +210,7 @@ if ($flag_show_product_info_reviews == 1) {
 		<br class="clearBoth" /> <?php 
 	}
 }
+ */
 
 if (zen_not_null($products_url)) {
 	if ($flag_show_product_info_url == 1) { ?>
