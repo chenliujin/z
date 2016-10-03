@@ -22,7 +22,8 @@ P, ADDRESS {padding:0.5em;}
 ADDRESS {font-style:normal;}
 HR {height: 1px;margin-top:0.5em;border:none;}
 #logo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .centerBoxContentsAlsoPurch, .attribImg {float:left;}
-.centeredContent, TH, #cartEmptyText, #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, #siteinfoLegal, #siteinfoCredits, #siteinfoStatus, #siteinfoIP, .center,
+.centeredContent, TH, #cartEmptyText, #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, 
+#siteinfoCredits, #siteinfoStatus, #siteinfoIP, .center,
 .cartTotalsDisplay, #cartBoxGVBalance, .leftBoxHeading, .centerBoxHeading,.rightBoxHeading, .productListing-data, .accountQuantityDisplay, .ratingRow, LABEL#textAreaReviews, #productMainImage, #reviewsInfoDefaultProductImage, #productReviewsDefaultProductImage, #reviewWriteMainImage, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, .gvBal, .attribImg {text-align:center;}
 #navCategoryIcon, .buttonRow, #indexProductListCatDescription {margin:0.5em;}
 /*floats and clears*/
@@ -37,7 +38,7 @@ HR {height: 1px;margin-top:0.5em;border:none;}
 .important {font-weight:bold;}
 .gvBal {float:right;}
 .centerColumn, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix {padding:0.8em;}
-.smallText, #siteinfoLegal, #siteinfoCredits, #siteinfoStatus, #siteinfoIP {font-size:0.9em;}
+.smallText, #siteinfoCredits, #siteinfoStatus, #siteinfoIP {font-size:0.9em;}
 .information {padding: 10px 3px; line-height: 150%;}
 .group:after {content: "";display:table;clear:both;}
 /*blue text color change to your color*/
@@ -90,9 +91,8 @@ select#country, select#stateZone, #state {margin-left:0;}
 
 /*bof wrappers - page or section containers*/
 #mainWrapper {text-align:left;width:100%;vertical-align:top;}
-#contentMainWrapper, #logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage,
+#logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage,
 #popupImage {margin:0;padding:0;}
-#contentMainWrapper{padding-bottom:30px;}
 #navColumnOneWrapper, #navColumnTwoWrapper, #mainWrapper{margin:auto;}
 #mainWrapper{}
 #sendSpendWrapper {padding:20px 0;width:100%;}
@@ -179,9 +179,7 @@ select#country, select#stateZone, #state {margin-left:0;}
 #navSupp li a {text-decoration: none;padding: 1.2em 1.0em;display: block;}
 #navSupp li a:hover {}
 /*footer copyright*/
-#siteinfoIP, #siteinfoLegal, #bannerSix{font-weight:normal;padding:1.0em 0;margin:0;}
-#siteinfoLegal a{}
-#siteinfoLegal a:hover{}
+#siteinfoIP, #bannerSix{font-weight:normal;padding:1.0em 0;margin:0;}
 
 /*bof ezpages*/
 #navEZPagesTOCWrapper {float:right;padding:0 20px 20px 20px;margin:0 0 20px 20px;}
@@ -580,22 +578,6 @@ a.selected {
 	z-index: 99;
 }
 
-/*
-.nav-tool a {
-	color: #fff;
-	background: #232f3e;
-	text-decoration: none;
-}
-
-.nav-tool a:hover {
-	color: #fff;
-	background: #232f3e;
-	text-decoration: none;
-	opacity: 1.0;
-	z-index: 999;
-}
-*/
-
 .nav-a {
 	padding: 0 0 0 10px;
 	float: left;
@@ -614,6 +596,7 @@ a.selected {
 
 #headerWrapper {
 	background: #232f3e;
+	/*background: #37475a;*/
 }
 
 #nav-categories a:hover {
@@ -623,25 +606,6 @@ a.selected {
 	border-radius: 3px 3px 0 0;
 	background: #232f3e;
 }
-
-/*
-.nav-account {
-	font-size: 14px;
-	line-height: 15px;
-	font-weight: 700;
-}
-
-.nav-account {
-	padding-top: 9px;
-}
-
-.nav-account .sign-in {
-	font-size: 12px;
-	font-weight: 400;
-	height: 14px;
-	line-height: 14px;
-}
-*/
 
 .nav-cate {
 }
@@ -871,7 +835,6 @@ a.selected {
 #navMainSearch input[type=text]:focus {
 	border: none;
 }
-
 .search-submit {
 	margin: 0;
 	padding: 0;
@@ -889,3 +852,25 @@ a.selected {
 	background: url("/images/global.png") no-repeat -29px 6px #f3a847;
 }
 
+
+#navSuppWrapper {
+	background: #232f3e;
+}
+#siteinfoLegal {
+	color: #fff;
+	padding: 40px 0 60px 0;
+	text-align: center;
+	background: #131a22;
+	/*background: #242729;*/
+}
+#siteinfoLegal a, #siteinfoLegal a:hover {
+	color: #fff;
+}
+
+/************************************************
+ * #contentMainWrapper;
+ ************************************************/
+#contentMainWrapper {
+	padding: 14px 18px 50px 18px;
+	background: #fff;
+}

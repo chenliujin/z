@@ -186,7 +186,8 @@ HR {
 	border: 1px solid #9a9a9a;
 	}
 
-#headerWrapper, #contentMainWrapper, #logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage, #popupImage {
+#headerWrapper, 
+#logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage, #popupImage {
 	margin: 0em;
 	padding: 0em;
 	}
