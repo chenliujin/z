@@ -202,18 +202,20 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 <div id="nav-account">
 	<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="a1 nav-menu">
 		<span class="nav-content">
-		<!--
-		<span class="sign-in">
-			<?php
-			if (empty($_SESSION['customer_id'])) {
-				echo 'Sign in';
-			} else {
-				echo 'Hello, ' . \z\customers::get_customer_nickname();
-			}
-			?>
-		</span><br />
-		-->
-		<span><?php echo HEADER_TITLE_MY_ACCOUNT; ?></span>
+			<!--
+			<span class="sign-in">
+				<?php
+				if (empty($_SESSION['customer_id'])) {
+					echo 'Sign in';
+				} else {
+					echo 'Hello, ' . \z\customers::get_customer_nickname();
+				}
+				?>
+			</span><br />
+			-->
+			<span>
+				<?php echo HEADER_TITLE_MY_ACCOUNT; ?>
+			</span>
 		</span>
 	</a>
 </div>

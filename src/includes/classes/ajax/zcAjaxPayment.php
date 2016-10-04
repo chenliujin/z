@@ -186,7 +186,7 @@ class zcAjaxPayment extends base
     $breadcrumb->add (NAVBAR_TITLE_1, zen_href_link (FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
     $breadcrumb->add (NAVBAR_TITLE_2);
 
-    $breadCrumbHtml = $breadcrumb->trail (BREAD_CRUMBS_SEPARATOR);
+    $breadCrumbHtml = $breadcrumb->trail ();
     $body_code = DIR_FS_CATALOG.$template->get_template_dir ('tpl_ajax_checkout_confirmation_default.php', DIR_WS_TEMPLATE, $current_page_base, 'templates').'/tpl_ajax_checkout_confirmation_default.php';
     ob_start ();
     require_once ($body_code);

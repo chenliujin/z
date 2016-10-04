@@ -1,19 +1,11 @@
 <?php
-/**
- * functions_prices
- *
- * @package functions
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Fri Jan 22 10:56:26 2016 +0000 Modified in v1.5.5 $
- */
-
-////
 //get specials price or sale price
 function zen_get_products_special_price($product_id, $specials_price_only=false) {
 	global $db;
-	$product = $db->Execute("select products_price, products_model, products_priced_by_attribute from " . TABLE_PRODUCTS . " where products_id = '" . (int)$product_id . "'");
+	$product = $db->Execute("
+		select products_price, products_model, products_priced_by_attribute 
+		from " . TABLE_PRODUCTS . " 
+		where products_id = '" . (int)$product_id . "'");
 
 	if ($product->RecordCount() > 0) {
 		//  	  $product_price = $product->fields['products_price'];
@@ -22,9 +14,11 @@ function zen_get_products_special_price($product_id, $specials_price_only=false)
 		return false;
 	}
 
-	$specials = $db->Execute("select specials_new_products_price from " . TABLE_SPECIALS . " where products_id = '" . (int)$product_id . "' and status='1'");
+	$specials = $db->Execute("
+		select specials_new_products_price 
+		from " . TABLE_SPECIALS . " 
+		where products_id = '" . (int)$product_id . "' and status='1'");
 	if ($specials->RecordCount() > 0) {
-		//      if ($product->fields['products_priced_by_attribute'] == 1) {
 		$special_price = $specials->fields['specials_new_products_price'];
 	} else {
 		$special_price = false;
@@ -55,7 +49,15 @@ function zen_get_products_special_price($product_id, $specials_price_only=false)
 		$product_to_categories = $db->Execute("select master_categories_id from " . TABLE_PRODUCTS . " where products_id = '" . $product_id . "'");
 		$category = $product_to_categories->fields['master_categories_id'];
 
-		$sale = $db->Execute("select sale_specials_condition, sale_deduction_value, sale_deduction_type from " . TABLE_SALEMAKER_SALES . " where sale_categories_all like '%," . $category . ",%' and sale_status = '1' and (sale_date_start <= now() or sale_date_start = '0001-01-01') and (sale_date_end >= now() or sale_date_end = '0001-01-01') and (sale_pricerange_from <= '" . $product_price . "' or sale_pricerange_from = '0') and (sale_pricerange_to >= '" . $product_price . "' or sale_pricerange_to = '0')");
+		$sale = $db->Execute("
+			select sale_specials_condition, sale_deduction_value, sale_deduction_type 
+			from " . TABLE_SALEMAKER_SALES . " 
+			where sale_categories_all like '%," . $category . ",%' 
+				and sale_status = '1' 
+				and (sale_date_start <= now() or sale_date_start = '0001-01-01') 
+				and (sale_date_end >= now() or sale_date_end = '0001-01-01') 
+				and (sale_pricerange_from <= '" . $product_price . "' or sale_pricerange_from = '0') 
+				and (sale_pricerange_to >= '" . $product_price . "' or sale_pricerange_to = '0')");
 		if ($sale->RecordCount() < 1) {
 			return $special_price;
 		}
@@ -116,7 +118,9 @@ function zen_get_products_special_price($product_id, $specials_price_only=false)
 function zen_get_products_base_price($products_id) {
 	global $db;
 	$product_check = $db->Execute("
-		select products_price, products_priced_by_attribute 
+		select 
+			products_price, 
+			products_priced_by_attribute 
 		from " . TABLE_PRODUCTS . " 
 		where products_id = '" . (int)$products_id . "'");
 
@@ -125,13 +129,23 @@ function zen_get_products_base_price($products_id) {
 
 	// do not select display only attributes and attributes_price_base_included is true
 	$product_att_query = $db->Execute("
-		select options_id, price_prefix, options_values_price, attributes_display_only, attributes_price_base_included, round(concat(price_prefix, options_values_price), 5) as value 
+		select 
+			options_id, 
+			price_prefix, 
+			options_values_price, 
+			attributes_display_only, 
+			attributes_price_base_included, 
+			round(concat(price_prefix, options_values_price), 5) as value 
 		from " . TABLE_PRODUCTS_ATTRIBUTES . " 
-		where products_id = '" . (int)$products_id . "' and attributes_display_only != '1' and attributes_price_base_included='1'". " 
+		where 
+			products_id = '" . (int)$products_id . "' 
+			and attributes_display_only != '1' 
+			and attributes_price_base_included='1'". " 
 		order by options_id, value");
 
 	$the_options_id= 'x';
 	$the_base_price= 0;
+
 	// add attributes price to price
 	if ($product_check->fields['products_priced_by_attribute'] == '1' and $product_att_query->RecordCount() >= 1) {
 		while (!$product_att_query->EOF) {
@@ -202,7 +216,13 @@ function zen_get_products_display_price($products_id) {
 
 	// $new_fields = ', product_is_free, product_is_call, product_is_showroom_only';
 	$product_check = $db->Execute("
-		select products_tax_class_id, products_price, products_priced_by_attribute, product_is_free, product_is_call, products_type 
+		select 
+			products_tax_class_id, 
+			products_price, 
+			products_priced_by_attribute, 
+			product_is_free, 
+			product_is_call, 
+			products_type 
 		from " . TABLE_PRODUCTS . " 
 		where products_id = '" . (int)$products_id . "'" . " limit 1");
 
@@ -251,18 +271,35 @@ function zen_get_products_display_price($products_id) {
 		$show_normal_price = '<span class="normalprice price-del">' 
 			. $currencies->display_price($display_normal_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
 			. ' </span>';
+
 		if ($display_sale_price && $display_sale_price != $display_special_price) {
-			$show_special_price = '&nbsp;' . '<span class="productSpecialPriceSale">' . $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</span>';
+			$show_special_price = '&nbsp;' 
+				. '<span class="productSpecialPriceSale">' 
+				. $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
+				. '</span>';
+
 			if ($product_check->fields['product_is_free'] == '1') {
-				$show_sale_price = '<br />' . '<span class="productSalePrice">' . PRODUCT_PRICE_SALE . '<s>' . $currencies->display_price($display_sale_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</s>' . '</span>';
+				$show_sale_price = '<br />' 
+					. '<span class="productSalePrice">' . PRODUCT_PRICE_SALE . '<s>' 
+					. $currencies->display_price($display_sale_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
+					. '</s>' . '</span>';
 			} else {
-				$show_sale_price = '<br />' . '<span class="productSalePrice">' . PRODUCT_PRICE_SALE . $currencies->display_price($display_sale_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</span>';
+				$show_sale_price = '<br />' 
+					. '<span class="productSalePrice">' . PRODUCT_PRICE_SALE 
+					. $currencies->display_price($display_sale_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
+					. '</span>';
 			}
 		} else {
 			if ($product_check->fields['product_is_free'] == '1') {
-				$show_special_price = '&nbsp;' . '<span class="price size-medium">' . '<s>' . $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</s>' . '</span>';
+				$show_special_price = '&nbsp;' 
+					. '<span class="price size-medium">' . '<s>' 
+					. $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
+					. '</s>' . '</span>';
 			} else {
-				$show_special_price = '&nbsp;' . '<span class="price size-medium">' . $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</span>';
+				$show_special_price = '&nbsp;' 
+					. '<span class="price size-medium">' 
+					. $currencies->display_price($display_special_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
+					. '</span>';
 			}
 			$show_sale_price = '';
 		}
@@ -272,20 +309,27 @@ function zen_get_products_display_price($products_id) {
 				. $currencies->display_price($display_normal_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
 				. ' </span>';
 			$show_special_price = '';
-			$show_sale_price = '<br />' . '<span class="productSalePrice">' . PRODUCT_PRICE_SALE . $currencies->display_price($display_sale_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</span>';
+			$show_sale_price = '<br />' 
+				. '<span class="productSalePrice">' 
+				. PRODUCT_PRICE_SALE 
+				. $currencies->display_price($display_sale_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
+				. '</span>';
 		} else {
 			if ($product_check->fields['product_is_free'] == '1') {
-				$show_normal_price = '<span class="productFreePrice"><s>' . $currencies->display_price($display_normal_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</s></span>';
+				$show_normal_price = '<span class="productFreePrice"><s>' 
+					. $currencies->display_price($display_normal_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
+					. '</s></span>';
 			} else {
-				$show_normal_price = '<span class="productBasePrice price size-medium">' . $currencies->display_price($display_normal_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) . '</span>';
+				$show_normal_price = '<span class="productBasePrice price size-medium">' 
+					. $currencies->display_price($display_normal_price, zen_get_tax_rate($product_check->fields['products_tax_class_id'])) 
+					. '</span>';
 			}
 			$show_special_price = '';
 			$show_sale_price = '';
 		}
 	}
 
-	if ($display_normal_price == 0) {
-		// don't show the $0.00
+	if ($display_normal_price == 0) { // don't show the $0.00
 		$final_display_price = $show_special_price . $show_sale_price . $show_sale_discount;
 	} else {
 		$final_display_price = $show_normal_price . $show_special_price . $show_sale_price . $show_sale_discount;
@@ -388,7 +432,10 @@ function zen_get_products_quantity_order_max($product_id) {
 function zen_get_products_qty_box_status($product_id) {
 	global $db;
 
-	$the_products_qty_box_status = $db->Execute("select products_id, products_qty_box_status  from " . TABLE_PRODUCTS . " where products_id = '" . (int)$product_id . "'");
+	$the_products_qty_box_status = $db->Execute("
+		select products_id, products_qty_box_status  
+		from " . TABLE_PRODUCTS . " 
+		where products_id = '" . (int)$product_id . "'");
 	return $the_products_qty_box_status->fields['products_qty_box_status'];
 }
 
@@ -1237,8 +1284,15 @@ function zen_get_products_discount_price_qty($product_id, $check_qty, $check_amo
 		$check_qty = $new_qty;
 	}
 	$product_id = (int)$product_id;
-	$products_query = $db->Execute("select products_discount_type, products_discount_type_from, products_priced_by_attribute from " . TABLE_PRODUCTS . " where products_id='" . (int)$product_id . "'");
-	$products_discounts_query = $db->Execute("select * from " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . " where products_id='" . (int)$product_id . "' and discount_qty <='" . (float)$check_qty . "' order by discount_qty desc");
+	$products_query = $db->Execute("
+		select products_discount_type, products_discount_type_from, products_priced_by_attribute 
+		from " . TABLE_PRODUCTS . " 
+		where products_id='" . (int)$product_id . "'");
+	$products_discounts_query = $db->Execute("
+		select * 
+		from " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . " 
+		where products_id='" . (int)$product_id . "' and discount_qty <='" . (float)$check_qty . "' 
+		order by discount_qty desc");
 
 	$display_price = zen_get_products_base_price($product_id);
 	$display_specials_price = zen_get_products_special_price($product_id, false);

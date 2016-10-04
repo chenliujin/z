@@ -20,11 +20,11 @@ h1, h2, h3, h4, h5, h6 {margin:20px 0;}
 .biggerText {font-size:1.2em;line-height:160%;}
 P, ADDRESS {padding:0.5em;}
 ADDRESS {font-style:normal;}
-HR {height: 1px;margin-top:0.5em;border:none;}
 #logo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .centerBoxContentsAlsoPurch, .attribImg {float:left;}
 .centeredContent, TH, #cartEmptyText, #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, 
 #siteinfoCredits, #siteinfoStatus, #siteinfoIP, .center,
-.cartTotalsDisplay, #cartBoxGVBalance, .leftBoxHeading, .centerBoxHeading,.rightBoxHeading, .productListing-data, .accountQuantityDisplay, .ratingRow, LABEL#textAreaReviews, #productMainImage, #reviewsInfoDefaultProductImage, #productReviewsDefaultProductImage, #reviewWriteMainImage, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, .gvBal, .attribImg {text-align:center;}
+.cartTotalsDisplay, #cartBoxGVBalance, .leftBoxHeading, .centerBoxHeading,.rightBoxHeading, .productListing-data, .accountQuantityDisplay, .ratingRow, LABEL#textAreaReviews, #productMainImage, #reviewsInfoDefaultProductImage, #productReviewsDefaultProductImage, #reviewWriteMainImage, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, 
+.centerBoxContentsFeatured, .centerBoxContentsNew, .gvBal, .attribImg {text-align:center;}
 #navCategoryIcon, .buttonRow, #indexProductListCatDescription {margin:0.5em;}
 /*floats and clears*/
 .back {float:left;}
@@ -54,7 +54,6 @@ HR {height: 1px;margin-top:0.5em;border:none;}
 CODE {font-family:arial, verdana, helvetica, sans-serif;font-size:1em;}
 SELECT, INPUT {display:inline;font-size:1em;margin:0 0.1em 0 0;}
 input{height:35px;padding-left:5px;margin-bottom:10px;}
-select{border:none;padding-left:5px;width:51%;}
 TEXTAREA {margin:auto;display:block;width:66%;}
 input:focus, select:focus, textarea:focus {}
 legend{padding:0;display:table;text-align:center;width:100%;padding:10px 0;font-size:1.3em;}
@@ -387,7 +386,6 @@ span.list-addtext{display:block;text-align:center;}
 h4.optionName{margin:1% 30px 0 30px;padding:0;}
 .attribImg {width:20%;margin:0.3em 0;}
 .attributesComments {font-weight:normal;}
-.wrapperAttribsOptions select{width:100%;}
 .wrapperAttribsOptions{margin:10px 0;}
 #productDescription {padding:0.5em;clear:both;margin:20px 0;line-height:150%;}
 .max-qty{margin-bottom:10px;}
@@ -531,13 +529,32 @@ input[type=text]:focus {
 	background-color: #fff;
 }
 
+/************************************************
+ * Price 
+ ************************************************/
 .price {
 	color: #b12704!important;
 }
 .price-del {
 	color: #555!important;
+	text-decoration: line-through;
 }
 
+/************************************************
+ * Text 
+ ************************************************/
+.text-right {
+	text-align: right!important;
+}
+.text-bold {
+	font-weight: 700!important;
+}
+.text-strike {
+	text-decoration: line-through!important;
+}
+.nowrap {
+	white-space: nowrap;
+}
 .size-base {
 	font-size: 13px!important;
 	line-height: 19px!important;
@@ -549,23 +566,33 @@ input[type=text]:focus {
 	text-rendering: optimizeLegibility;
 }
 
-.text-bold {
-	font-weight: 700!important;
-}
+/************************************************
+ * Button 
+ ************************************************/
+input.add-to-cart, input.add-to-cart:hover {
+	margin:0;
+	padding: 5px 20px;
+	height: 27px;
+	border: none;
+	border-radius: 2px;
+	box-shadow: none;
+	cursor: pointer;
+	outline: 0;
+	/*background: #f3a847;*/
+	background: linear-gradient(to bottom,#f7dfa5,#f0c14b);
+}	
+
+
+
+
+
+
+
+
 
 .list-item-border {
 	border-bottom: 1px solid #DDD;
 }
-
-/*
-.nav-tool {
-	position: relative;
-	float: right;
-	padding-right: 5em;
-	opacity: 1.0;
-	z-index: 2;
-}
-*/
 
 a.selected {
 	opacity: 1.0;
@@ -692,6 +719,15 @@ a.selected {
 	width: 247px;
 	float: left;
 }
+/************************************************
+ * Default Tag 
+ ************************************************/
+hr {
+	margin: 0 0 14px 0;
+	height: 1px;
+	border: none;
+	border-top: 1px solid #e7e7e7;
+}	
 
 /************************************************
  * #nav
@@ -873,4 +909,35 @@ a.selected {
 #contentMainWrapper {
 	padding: 14px 18px 50px 18px;
 	background: #fff;
+}
+
+/************************************************
+ * Table
+ ************************************************/
+table.line-item td {
+	padding:0 10px 5px 0;
+}
+table.specifications {
+	width: auto;
+}
+table.specifications th {
+	padding: 3px 10px;
+	text-align: right;
+	border: 1px solid #ddd;
+}
+table.specifications td {
+	padding: 3px 10px;
+	border: 1px solid #ddd;
+}
+
+
+
+
+
+.title-border {
+	color: #C60!important;
+	margin-top: 12px;
+	padding: 10px 0;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #e7e7e7;
 }

@@ -36,7 +36,8 @@ body, #mainWrapper,
 .sideBoxContent, .rightBoxContent, .rowOdd, #productQuantityDiscounts table, #accountLinksWrapper {
 	background:#fff;
 }
-input:focus, select:focus, textarea:focus, #mainWrapper, .specialsListBoxContents:hover, .centerBoxContentsSpecials:hover, .centerBoxContentsAlsoPurch:hover, .centerBoxContentsFeatured:hover, .centerBoxContentsNew:hover, .categoryListBoxContents:hover, .sideBoxContentItem:hover, .productListing-odd, #pinfo-right, #sendSpendWrapper {background:#f4f4f4;}
+input:focus, select:focus, textarea:focus, #mainWrapper, .specialsListBoxContents:hover, .centerBoxContentsSpecials:hover, 
+.centerBoxContentsFeatured:hover, .centerBoxContentsNew:hover, .categoryListBoxContents:hover, .sideBoxContentItem:hover, .productListing-odd, #pinfo-right, #sendSpendWrapper {background:#f4f4f4;}
 .messageStackCaution {background-color:#ffff66;}
 fieldset, #shippingEstimatorContent tr:nth-child(odd), #order-comments, ul.list-links li:hover, ol.list-links li:hover, #no-products, .listing-wrapper:nth-child(odd), #reviews-write-wrapper, #gvFaqDefaultContent, #checkoutPayAddressDefault .instructions, #checkoutShipAddressDefault .instructions, #addressBookDefault .instructions, #myAccountNotify, #myAccountGen, .reviews-wrapper, #accountHistInfo table td, #prevOrders td, #myAccountPaymentInfo, #myAccountShipInfo, #accountDefault #sendSpendWrapper {
 	background:#eee;
@@ -60,8 +61,6 @@ span.cssButton.normal_button.button.button_logoff, span.cssButton.normal_button.
 #navCatTabs li a:hover, input.submit_button:hover, input.cssButtonHover {background:#028fba;}
 #filter-wrapper, span.normal_button:hover, span.cssButton.normal_button.button.button_goto_prod_details{background:#000;}
 #docGeneralDisplay #pinfo-right, #popupShippingEstimator, #popupSearchHelp, #popupAdditionalImage, #popupImage, #popupCVVHelp, #popupCouponHelp, #popupAtrribsQuantityPricesHelp, #infoShoppingCart{background:none;}
-
-HR {border-bottom:1px solid #9a9a9a;}
 
 #navMain ul li {border-right:1px solid #fff;}
 #navCatTabs li {border-left: 1px solid #05919f;}
