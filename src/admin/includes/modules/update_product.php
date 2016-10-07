@@ -1,11 +1,4 @@
 <?php
-/**
- * @package admin
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: ajeh  Wed Jul 9 21:58:03 2014 -0400 Modified in v1.5.5 $
- */
   if (!defined('IS_ADMIN_FLAG')) {
     die('Illegal Access');
   }
@@ -52,6 +45,7 @@
 
     // when set to none remove from database
     // is out dated for browsers use radio only
+	/*
       $sql_data_array['products_image'] = zen_db_prepare_input($_POST['products_image']);
       $new_image= 'true';
 
@@ -59,6 +53,7 @@
       $sql_data_array['products_image'] = '';
       $new_image= 'false';
     }
+	 */
 
     if ($action == 'insert_product') {
       $insert_sql_data = array( 'products_date_added' => 'now()',
