@@ -136,6 +136,7 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		'linkProductsImage'			=> $linkProductsImage,
 		'linkProductsName'			=> $linkProductsName,
 		'productsImage'				=> $productsImage,
+		'image'						=> json_decode($products[$i]['image'], TRUE),
 		'productsName'				=> $productsName,
 		'showFixedQuantity'			=> $showFixedQuantity,
 		'showFixedQuantityAmount'	=> $showFixedQuantityAmount,
