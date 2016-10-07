@@ -1,3 +1,6 @@
+<?php
+include_once('z/model/products.php');
+?>
 <div id="productListing">
 
 <?php
@@ -13,12 +16,26 @@ if ($products_all_split->number_of_rows > 0) {
 			if ($products_all->fields['products_image'] == '' and PRODUCTS_IMAGE_NO_IMAGE_STATUS == 0) {
 				$display_products_image = str_repeat('<br />', substr(PRODUCT_ALL_LIST_IMAGE, 3, 1));
 			} else {
-				$display_products_image = '<a href="' . zen_href_link(zen_get_info_page($products_all->fields['products_id']), 'cPath=' . zen_get_generated_category_path_rev($products_all->fields['master_categories_id']) . '&products_id=' . $products_all->fields['products_id']) . '">' . zen_image(DIR_WS_IMAGES . $products_all->fields['products_image'], $products_all->fields['products_name'], IMAGE_PRODUCT_ALL_LISTING_WIDTH, IMAGE_PRODUCT_ALL_LISTING_HEIGHT) . '</a>' . str_repeat('<br class="clearBoth" />', substr(PRODUCT_ALL_LIST_IMAGE, 3, 1));
-			}
+				$image = json_decode($products_all->fields['products_image'], TRUE);
 
+				if (is_array($image)) {
+					$display_products_image = '<a href="' . zen_href_link(zen_get_info_page($products_all->fields['products_id']), 'cPath=' . zen_get_generated_category_path_rev($products_all->fields['master_categories_id']) . '&products_id=' . $products_all->fields['products_id']) . '">' 
+						. '<img src="' . zen_output_string( \z\products::GetImage($image[0], 150) ) . '" alt="' . zen_output_string($products_all->fields['products_name']) . '" title="' . zen_output_string($products_all->fields['products_name']) . '" width="150" height="150" />' 
+						. '</a>' . str_repeat('<br class="clearBoth" />', substr(PRODUCT_ALL_LIST_IMAGE, 3, 1));
+				} else {
+					$display_products_image = '<a href="' . zen_href_link(zen_get_info_page($products_all->fields['products_id']), 'cPath=' . zen_get_generated_category_path_rev($products_all->fields['master_categories_id']) . '&products_id=' . $products_all->fields['products_id']) . '">' 
+						. zen_image(
+							DIR_WS_IMAGES . $products_all->fields['products_image'], 
+							$products_all->fields['products_name'], 
+							IMAGE_PRODUCT_ALL_LISTING_WIDTH, 
+							IMAGE_PRODUCT_ALL_LISTING_HEIGHT) 
+						. '</a>' . str_repeat('<br class="clearBoth" />', substr(PRODUCT_ALL_LIST_IMAGE, 3, 1));
+				}
+			}
 		} else {
 			$display_products_image = '';
 		}
+
 		if (PRODUCT_ALL_LIST_NAME != '0') {
 			$display_products_name = '<div class="itemTitle"><a href="' . zen_href_link(zen_get_info_page($products_all->fields['products_id']), 'cPath=' . zen_get_generated_category_path_rev($products_all->fields['master_categories_id']) . '&products_id=' . $products_all->fields['products_id']) . '">' . $products_all->fields['products_name'] . '</a></div>' . str_repeat('<br />', substr(PRODUCT_ALL_LIST_NAME, 3, 1));
 		} else {
