@@ -1,16 +1,5 @@
 <?php
-/**
- * Page Template
- *
- * Loaded automatically by index.php?main_page=shopping_cart.<br />
- * Displays shopping-cart contents
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: picaflor-azul Wed Jan 13 18:44:28 2016 -0500 New in v1.5.5 $
- */
+include_once('z/model/products.php');
 ?>
 <div class="centerColumn" id="shoppingCartDefault">
 <?php
@@ -39,7 +28,8 @@ if ($flagHasCartContents) { ?>
 		<td scope="col" id="scQuantityHeading" style="width:150px"><?php echo TABLE_HEADING_QUANTITY; ?></td>
 	 </tr>
 <?php
-  foreach ($productArray as $product) { ?>
+	foreach ($productArray as $product) { 
+?>
      <tr class="<?php echo $product['rowClass']; ?> list-item-border">
 
 	   <td class="cartProductDisplay">
@@ -47,7 +37,7 @@ if ($flagHasCartContents) { ?>
 		<div style="padding-left: 115px">
 			<div style="width:115px; margin-left:-115px;float:left">
 				<a href="#">
-					<img alt="" src="/images/II/1_100.jpg" width="100" />
+					<img alt="" src="<?php echo \z\products::GetImage($product['image'][0], 100); ?>" width="100" />
 				</a>
 			</div>
 			<div style="float:left">

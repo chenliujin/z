@@ -59,28 +59,21 @@ li.item img {
 		<div style="padding-left:32px;">
 			<div style="float:left; width:40px; margin-left: -45px">
 				 <ul class="nostyle" style="margin: 0; margin-top: 4px; padding:0">
+					<?php 
+					$images = json_decode($products_image, TRUE);
+
+					foreach ($images as $image) { 
+						?>
 					<li class="thumbnail item spacing-small">
-						<img src="/images/II/2016/08/1/1_40.jpg" data-img="/images/II/2016/08/1/1_450.jpg" />
+						<img src="<?php echo \z\products::GetImage($image, 40); ?>" data-img="<?php echo \z\products::GetImage($image, 450); ?>" style="width:40px; height:40px" />
 					</li>
-					<li class="thumbnail item spacing-small">
-						<img src="/images/II/2016/08/1/2_40.jpg" data-img="/images/II/2016/08/1/2_450.jpg" />
-					</li>
-					<li class="thumbnail item spacing-small">
-						<img src="/images/II/2016/08/1/3_40.jpg" data-img="/images/II/2016/08/1/3_450.jpg" />
-					</li>
-					<li class="thumbnail item spacing-small">
-						<img src="/images/II/2016/08/1/4_40.jpg" data-img="/images/II/2016/08/1/4_450.jpg" />
-					</li>
-					<li class="thumbnail item spacing-small">
-						<img src="/images/II/2016/08/1/5_40.jpg" data-img="/images/II/2016/08/1/5_450.jpg" />
-					</li>
-					<li class="thumbnail item spacing-small">
-						<img src="/images/II/2016/08/1/6_40.jpg" data-img="/images/II/2016/08/1/6_450.jpg" />
-					</li>
+						<?php 
+					} 
+					?>
 				</ul>
 			</div>
 			<div style="float:left;">
-				<img id="zoomimg" src="/images/II/2016/08/1/1_450.jpg" style="max-width: 442px; max-height:442px;" />
+				<img id="zoomimg" src="<?php echo \z\products::GetImage($images[0], 450); ?>" style="max-width: 442px; max-height:442px;" />
 			</div>
 		</div>
 

@@ -1,16 +1,19 @@
 body {
 	margin:0;
 	font-family: Arial,sans-serif;
-	font-size:72.5%;
-	line-height:140%;
+	font-size: 13px;
+	line-height: 19px;
+}
+
+img {
+	vertical-align: top;
 }
 
 a img {border:none;}
-a:link, #navEZPagesTOC ul li a {text-decoration:underline;}
-a:visited {text-decoration:underline;}
+#navEZPagesTOC ul li a {text-decoration:underline;}
 .sideBoxContent a:visited{}
-a:hover, #navEZPagesTOC ul li a:hover, #navMain ul li a:hover, #navSupp ul li a:hover{}
-a:active {}
+#navEZPagesTOC ul li a:hover, #navMain ul li a:hover, #navSupp ul li a:hover{}
+
 /*heading styles*/
 h1 {font-size:1.8em;line-height:25px;}
 h2 {font-size:1.4em;}
@@ -500,14 +503,13 @@ h2 {
 	line-height: 1.3;
 }
 
-a, a:active, a:link, a:visited {
+a, a:link, a:visited {
 	text-decoration: none;
 	color: #0066c0;
 }
-a:hover {
+a:hover, a:active {
 	color: #c45500;
 	cursor: pointer;
-	text-decoration: underline;
 }
 
 input {
@@ -565,6 +567,15 @@ input[type=text]:focus {
 	font-family: Arial,sans-serif;
 	text-rendering: optimizeLegibility;
 }
+/************************************************
+ * Space 
+ ************************************************/
+.bottom-base {
+	margin-bottom: 14px;
+}
+.bottom-mini {
+	margin-bottom: 6px;
+}
 
 /************************************************
  * Button 
@@ -582,7 +593,12 @@ input.add-to-cart, input.add-to-cart:hover {
 	background: linear-gradient(to bottom,#f7dfa5,#f0c14b);
 }	
 
-
+/************************************************
+ * Item 
+ ************************************************/
+.item-container {
+	padding: 7px;
+}
 
 
 

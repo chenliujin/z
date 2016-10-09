@@ -1,27 +1,39 @@
-<div class="centerColumn" id="indexDefault">
-
 <?php
-
-$show_display_category = $db->Execute(SQL_SHOW_PRODUCT_INFO_MAIN);
-while (!$show_display_category->EOF) {
-	if ($show_display_category->fields['configuration_key'] == 'SHOW_PRODUCT_INFO_MAIN_FEATURED_PRODUCTS') { 
-		require($template->get_template_dir('tpl_modules_featured_products.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_featured_products.php'); 
-	} 
-
-	if ($show_display_category->fields['configuration_key'] == 'SHOW_PRODUCT_INFO_MAIN_SPECIALS_PRODUCTS') { 
-		require($template->get_template_dir('tpl_modules_specials_default.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_specials_default.php'); 
-	} 
-
-	if ($show_display_category->fields['configuration_key'] == 'SHOW_PRODUCT_INFO_MAIN_NEW_PRODUCTS') { 
-		require($template->get_template_dir('tpl_modules_whats_new.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_whats_new.php'); 
-	} 
-
-	if ($show_display_category->fields['configuration_key'] == 'SHOW_PRODUCT_INFO_MAIN_UPCOMING') { 
-		include(DIR_WS_MODULES . zen_get_module_directory(FILENAME_UPCOMING_PRODUCTS)); 
-	} 
-
-	$show_display_category->MoveNext();
-} 
+include_once('z/model/products.php');
 ?>
+<div class="centerColumn" id="indexDefault">
+	<ul>
+	<?php
+	$page = \z\products::GetAllProducts();
+	$data = $page->data();
+	foreach ($data as $obj) {
+		?>
+		<li style="width: 33%; margin-bottom: 50px; list-style: none; display: inline-block">
+		<div class="item-container">
+			<div class="row bottom-base">
+			<div style="position: relative; display: inline-block">
+			<a href="<?php echo zen_href_link( zen_get_info_page($obj->products_id), 'cPath=' . zen_get_generated_category_path_rev($obj->master_categories_id) . '&products_id=' . $obj->products_id); ?>" style="line-height: 1em">
+				<?php 
+				$images = json_decode($obj->products_image, TRUE);
+				echo \z\products::Image($images[0], $obj->products_name, 150, 150); 
+				?>
+				</a>
+			</div>
+			</div>
+			<div class="bottom-mini">
+				<a href="<?php echo zen_href_link( zen_get_info_page($obj->products_id), 'cPath=' . zen_get_generated_category_path_rev($obj->master_categories_id) . '&products_id=' . $obj->products_id); ?>">
+				<?php echo $obj->products_name; ?>
+				</a>
+			</div>
+			<div class="price">
+				$1.00
+			</div>
+		</div>
+		</li>
+<?php
+	}
+	?>
+	</ul>
+	<div style="clear:both"></div>
 
 </div>
