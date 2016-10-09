@@ -5,6 +5,10 @@ body {
 	line-height: 19px;
 }
 
+img {
+	vertical-align: top;
+}
+
 a img {border:none;}
 #navEZPagesTOC ul li a {text-decoration:underline;}
 .sideBoxContent a:visited{}
@@ -563,6 +567,15 @@ input[type=text]:focus {
 	font-family: Arial,sans-serif;
 	text-rendering: optimizeLegibility;
 }
+/************************************************
+ * Space 
+ ************************************************/
+.bottom-base {
+	margin-bottom: 14px;
+}
+.bottom-mini {
+	margin-bottom: 6px;
+}
 
 /************************************************
  * Button 
@@ -580,7 +593,12 @@ input.add-to-cart, input.add-to-cart:hover {
 	background: linear-gradient(to bottom,#f7dfa5,#f0c14b);
 }	
 
-
+/************************************************
+ * Item 
+ ************************************************/
+.item-container {
+	padding: 7px;
+}
 
 
 

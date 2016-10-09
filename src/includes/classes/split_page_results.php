@@ -13,7 +13,6 @@ if (!defined('IS_ADMIN_FLAG')) {
 class splitPageResults extends base {
 	var $sql_query, $number_of_rows, $current_page_number, $number_of_pages, $number_of_rows_per_page, $page_name;
 
-	/* class constructor */
 	function __construct($query, $max_rows, $count_key = '*', $page_holder = 'page', $debug = false, $countQuery = "") {
 		global $db;
 		$max_rows = ($max_rows == '' || $max_rows == 0) ? 20 : $max_rows;
@@ -83,8 +82,6 @@ class splitPageResults extends base {
 
 		$this->sql_query .= " limit " . ($offset > 0 ? $offset . ", " : '') . $this->number_of_rows_per_page;
 	}
-
-	/* class functions */
 
 	// display split-page-number-links
 	function display_links($max_page_links, $parameters = '', $outputAsUnorderedList = false) {

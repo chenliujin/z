@@ -19,25 +19,26 @@ if ($products_all_split->number_of_rows > 0) {
 				$image = json_decode($products_all->fields['products_image'], TRUE);
 
 				if (is_array($image)) {
-					$display_products_image = '<a href="' . zen_href_link(zen_get_info_page($products_all->fields['products_id']), 'cPath=' . zen_get_generated_category_path_rev($products_all->fields['master_categories_id']) . '&products_id=' . $products_all->fields['products_id']) . '">' 
+					$display_products_image = '
+						<a href="' . zen_href_link(
+							zen_get_info_page($products_all->fields['products_id']), 
+							'cPath=' . zen_get_generated_category_path_rev($products_all->fields['master_categories_id']) . '&products_id=' . $products_all->fields['products_id']) . '">' 
 						. '<img src="' . zen_output_string( \z\products::GetImage($image[0], 150) ) . '" alt="' . zen_output_string($products_all->fields['products_name']) . '" title="' . zen_output_string($products_all->fields['products_name']) . '" width="150" height="150" />' 
 						. '</a>' . str_repeat('<br class="clearBoth" />', substr(PRODUCT_ALL_LIST_IMAGE, 3, 1));
-				} else {
-					$display_products_image = '<a href="' . zen_href_link(zen_get_info_page($products_all->fields['products_id']), 'cPath=' . zen_get_generated_category_path_rev($products_all->fields['master_categories_id']) . '&products_id=' . $products_all->fields['products_id']) . '">' 
-						. zen_image(
-							DIR_WS_IMAGES . $products_all->fields['products_image'], 
-							$products_all->fields['products_name'], 
-							IMAGE_PRODUCT_ALL_LISTING_WIDTH, 
-							IMAGE_PRODUCT_ALL_LISTING_HEIGHT) 
-						. '</a>' . str_repeat('<br class="clearBoth" />', substr(PRODUCT_ALL_LIST_IMAGE, 3, 1));
-				}
+				} 
 			}
-		} else {
-			$display_products_image = '';
-		}
+		} 
 
 		if (PRODUCT_ALL_LIST_NAME != '0') {
-			$display_products_name = '<div class="itemTitle"><a href="' . zen_href_link(zen_get_info_page($products_all->fields['products_id']), 'cPath=' . zen_get_generated_category_path_rev($products_all->fields['master_categories_id']) . '&products_id=' . $products_all->fields['products_id']) . '">' . $products_all->fields['products_name'] . '</a></div>' . str_repeat('<br />', substr(PRODUCT_ALL_LIST_NAME, 3, 1));
+			$display_products_name = '
+				<div class="itemTitle">
+				<a href="' . zen_href_link(
+					zen_get_info_page($products_all->fields['products_id']), 
+					'cPath=' . zen_get_generated_category_path_rev($products_all->fields['master_categories_id']) . '&products_id=' . $products_all->fields['products_id']) . '">' 
+				. $products_all->fields['products_name'] . '
+				</a>
+				</div>' 
+				. str_repeat('<br />', substr(PRODUCT_ALL_LIST_NAME, 3, 1));
 		} else {
 			$display_products_name = '';
 		}
@@ -78,7 +79,12 @@ if ($products_all_split->number_of_rows > 0) {
 
 		if ((PRODUCT_ALL_LIST_PRICE != '0' and zen_get_products_allow_add_to_cart($products_all->fields['products_id']) == 'Y') and zen_check_show_prices() == true) {
 			$products_price = zen_get_products_display_price($products_all->fields['products_id']);
-			$display_products_price = '<b>' . TEXT_PRICE . '</b> ' . $products_price . str_repeat('<br />', substr(PRODUCT_ALL_LIST_PRICE, 3, 1)) . (zen_get_show_product_switch($products_all->fields['products_id'], 'ALWAYS_FREE_SHIPPING_IMAGE_SWITCH') ? (zen_get_product_is_always_free_shipping($products_all->fields['products_id']) ? TEXT_PRODUCT_FREE_SHIPPING_ICON . '<br />' : '') : '');
+			$display_products_price = '<b>' 
+				. TEXT_PRICE 
+				. '</b> ' 
+				. $products_price 
+				. str_repeat('<br />', substr(PRODUCT_ALL_LIST_PRICE, 3, 1)) 
+				. (zen_get_show_product_switch($products_all->fields['products_id'], 'ALWAYS_FREE_SHIPPING_IMAGE_SWITCH') ? (zen_get_product_is_always_free_shipping($products_all->fields['products_id']) ? TEXT_PRODUCT_FREE_SHIPPING_ICON . '<br />' : '') : '');
 		} else {
 			$display_products_price = '';
 		}
@@ -115,7 +121,11 @@ if ($products_all_split->number_of_rows > 0) {
 		  <div class="listing-wrapper group">
 			<div class="listing-left back">
 <?php
-		$disp_sort_order = $db->Execute("select configuration_key, configuration_value from " . TABLE_CONFIGURATION . " where configuration_group_id='" . $group_id . "' and (configuration_value >= 1000 and configuration_value <= 1999) order by LPAD(configuration_value,11,0)");
+		$disp_sort_order = $db->Execute("
+			select configuration_key, configuration_value 
+			from " . TABLE_CONFIGURATION . " 
+			where configuration_group_id='" . $group_id . "' and (configuration_value >= 1000 and configuration_value <= 1999) 
+			order by LPAD(configuration_value,11,0)");
 		while (!$disp_sort_order->EOF) {
 			if ($disp_sort_order->fields['configuration_key'] == 'PRODUCT_ALL_LIST_IMAGE') {
 				echo $display_products_image;
@@ -150,8 +160,12 @@ if ($products_all_split->number_of_rows > 0) {
 ?>
 			</div>
 			<div class="back listing-right">
-<?php
-		$disp_sort_order = $db->Execute("select configuration_key, configuration_value from " . TABLE_CONFIGURATION . " where configuration_group_id='" . $group_id . "' and (configuration_value >= 2000 and configuration_value <= 2999) order by LPAD(configuration_value,11,0)");
+		<?php
+		$disp_sort_order = $db->Execute("
+			select configuration_key, configuration_value 
+			from " . TABLE_CONFIGURATION . " 
+			where configuration_group_id='" . $group_id . "' and (configuration_value >= 2000 and configuration_value <= 2999) 
+			order by LPAD(configuration_value,11,0)");
 		while (!$disp_sort_order->EOF) {
 			if ($disp_sort_order->fields['configuration_key'] == 'PRODUCT_ALL_LIST_IMAGE') {
 				echo $display_products_image;
