@@ -1,0 +1,4 @@
+DELETE FROM configuration WHERE configuration_key = 'SHOW_PRODUCT_INFO_MAIN_NEW_PRODUCTS';
+DELETE FROM configuration WHERE configuration_key = 'SHOW_PRODUCT_INFO_MAIN_FEATURED_PRODUCTS';
+DELETE FROM configuration WHERE configuration_key = 'SHOW_PRODUCT_INFO_MAIN_SPECIALS_PRODUCTS';
+DELETE FROM configuration WHERE configuration_key = 'SHOW_PRODUCT_INFO_MAIN_UPCOMING';
