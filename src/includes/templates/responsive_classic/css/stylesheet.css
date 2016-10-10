@@ -715,7 +715,6 @@ a.selected {
 }
 
 .nav-subcates {
-	height: 500px;
 	border-left: 1px solid #ddd;
 	float: left;
 	display: none;

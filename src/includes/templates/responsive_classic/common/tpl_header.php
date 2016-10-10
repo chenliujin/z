@@ -220,6 +220,7 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 	</a>
 </div>
 <div id="nav-menus">
+	<!--
 	<a href="#">
 		<span class="nav-content">
 			Browsing History
@@ -275,6 +276,7 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 			<?php echo CATEGORIES_BOX_HEADING_PRODUCTS_ALL; ?>
 		</span>
 	</a>
+	-->
 </div>
 
 </div>
