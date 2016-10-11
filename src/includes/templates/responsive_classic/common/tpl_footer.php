@@ -36,16 +36,6 @@ if (!isset($flag_disable_footer) || !$flag_disable_footer) {
 </div>
 <!--eof-navigation display -->
 
-<!--bof-ip address display -->
-<?php
-if (SHOW_FOOTER_IP == '1') {
-?>
-<div id="siteinfoIP"><?php echo TEXT_YOUR_IP_ADDRESS . '  ' . $_SERVER['REMOTE_ADDR']; ?></div>
-<?php
-}
-?>
-<!--eof-ip address display -->
-
 <!--bof-banner #5 display -->
 <?php
   if (SHOW_BANNERS_GROUP_SET5 != '' && $banner = zen_banner_exists('dynamic', SHOW_BANNERS_GROUP_SET5)) {
