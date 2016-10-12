@@ -2900,13 +2900,6 @@ INSERT INTO configuration_group VALUES (24, 'Index Listing', 'Index Products Lis
 INSERT INTO configuration_group VALUES (25, 'Define Page Status', 'Define Pages Options Settings', '25', '1');
 INSERT INTO configuration_group VALUES (30, 'EZ-Pages Settings', 'EZ-Pages Settings', 30, '1');
 
-INSERT INTO currencies VALUES (1,'US Dollar','USD','$','','.',',','2','1.0000', now());
-INSERT INTO currencies VALUES (2,'Euro','EUR','&euro;','','.',',','2','0.7730', now());
-INSERT INTO currencies VALUES (3,'GB Pound','GBP','&pound;','','.',',','2','0.6726', now());
-INSERT INTO currencies VALUES (4,'Canadian Dollar','CAD','$','','.',',','2','1.1042', now());
-INSERT INTO currencies VALUES (5,'Australian Dollar','AUD','$','','.',',','2','1.1789', now());
-#INSERT INTO currencies VALUES (6,'Japanese Yen','JPY','&yen;','','','','0','95.5927', now());
-
 INSERT INTO languages VALUES (1,'English','en','icon.gif','english',1);
 
 INSERT INTO layout_boxes (layout_template, layout_box_name, layout_box_status, layout_box_location, layout_box_sort_order, layout_box_sort_order_single, layout_box_status_single) VALUES ('default_template_settings', 'banner_box_all.php', 1, 1, 5, 0, 0);
