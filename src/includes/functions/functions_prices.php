@@ -3,19 +3,22 @@
 function zen_get_products_special_price($product_id, $specials_price_only=false) {
 	global $db;
 	$product = $db->Execute("
-		select products_price, products_model, products_priced_by_attribute 
+		select 
+			products_price, 
+			products_model, 
+			products_priced_by_attribute 
 		from " . TABLE_PRODUCTS . " 
 		where products_id = '" . (int)$product_id . "'");
 
 	if ($product->RecordCount() > 0) {
-		//  	  $product_price = $product->fields['products_price'];
 		$product_price = zen_get_products_base_price($product_id);
 	} else {
 		return false;
 	}
 
 	$specials = $db->Execute("
-		select specials_new_products_price 
+		select 
+			specials_new_products_price 
 		from " . TABLE_SPECIALS . " 
 		where products_id = '" . (int)$product_id . "' and status='1'");
 	if ($specials->RecordCount() > 0) {
@@ -39,18 +42,17 @@ function zen_get_products_special_price($product_id, $specials_price_only=false)
 		} else {
 			return false;
 		}
-	} else {
-		// get sale price
-
-		// changed to use master_categories_id
-		//      $product_to_categories = $db->Execute("select categories_id from " . TABLE_PRODUCTS_TO_CATEGORIES . " where products_id = '" . (int)$product_id . "'");
-		//      $category = $product_to_categories->fields['categories_id'];
-
-		$product_to_categories = $db->Execute("select master_categories_id from " . TABLE_PRODUCTS . " where products_id = '" . $product_id . "'");
+	} else { // get sale price
+		$product_to_categories = $db->Execute("
+			select 
+				master_categories_id 
+			from " . TABLE_PRODUCTS . " 
+			where products_id = '" . $product_id . "'");
 		$category = $product_to_categories->fields['master_categories_id'];
 
 		$sale = $db->Execute("
-			select sale_specials_condition, sale_deduction_value, sale_deduction_type 
+			select 
+				sale_specials_condition, sale_deduction_value, sale_deduction_type 
 			from " . TABLE_SALEMAKER_SALES . " 
 			where sale_categories_all like '%," . $category . ",%' 
 				and sale_status = '1' 
@@ -67,21 +69,22 @@ function zen_get_products_special_price($product_id, $specials_price_only=false)
 		} else {
 			$tmp_special_price = $special_price;
 		}
+
 		switch ($sale->fields['sale_deduction_type']) {
-		case 0:
-			$sale_product_price = $product_price - $sale->fields['sale_deduction_value'];
-			$sale_special_price = $tmp_special_price - $sale->fields['sale_deduction_value'];
-			break;
-		case 1:
-			$sale_product_price = $product_price - (($product_price * $sale->fields['sale_deduction_value']) / 100);
-			$sale_special_price = $tmp_special_price - (($tmp_special_price * $sale->fields['sale_deduction_value']) / 100);
-			break;
-		case 2:
-			$sale_product_price = $sale->fields['sale_deduction_value'];
-			$sale_special_price = $sale->fields['sale_deduction_value'];
-			break;
-		default:
-			return $special_price;
+			case 0:
+				$sale_product_price = $product_price - $sale->fields['sale_deduction_value'];
+				$sale_special_price = $tmp_special_price - $sale->fields['sale_deduction_value'];
+				break;
+			case 1:
+				$sale_product_price = $product_price - (($product_price * $sale->fields['sale_deduction_value']) / 100);
+				$sale_special_price = $tmp_special_price - (($tmp_special_price * $sale->fields['sale_deduction_value']) / 100);
+				break;
+			case 2:
+				$sale_product_price = $sale->fields['sale_deduction_value'];
+				$sale_special_price = $sale->fields['sale_deduction_value'];
+				break;
+			default:
+				return $special_price;
 		}
 
 		if ($sale_product_price < 0) {
@@ -96,17 +99,17 @@ function zen_get_products_special_price($product_id, $specials_price_only=false)
 			return number_format($sale_product_price, 4, '.', '');
 		} else {
 			switch($sale->fields['sale_specials_condition']){
-			case 0:
-				return number_format($sale_product_price, 4, '.', '');
-				break;
-			case 1:
-				return number_format($special_price, 4, '.', '');
-				break;
-			case 2:
-				return number_format($sale_special_price, 4, '.', '');
-				break;
-			default:
-				return number_format($special_price, 4, '.', '');
+				case 0:
+					return number_format($sale_product_price, 4, '.', '');
+					break;
+				case 1:
+					return number_format($special_price, 4, '.', '');
+					break;
+				case 2:
+					return number_format($sale_special_price, 4, '.', '');
+					break;
+				default:
+					return number_format($special_price, 4, '.', '');
 			}
 		}
 	}

@@ -5,11 +5,12 @@ body {
 	line-height: 19px;
 }
 
+
 img {
+	border: none;
 	vertical-align: top;
 }
 
-a img {border:none;}
 #navEZPagesTOC ul li a {text-decoration:underline;}
 .sideBoxContent a:visited{}
 #navEZPagesTOC ul li a:hover, #navMain ul li a:hover, #navSupp ul li a:hover{}
@@ -714,7 +715,6 @@ a.selected {
 }
 
 .nav-subcates {
-	height: 500px;
 	border-left: 1px solid #ddd;
 	float: left;
 	display: none;
