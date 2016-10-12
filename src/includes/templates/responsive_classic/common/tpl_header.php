@@ -97,7 +97,7 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 <div id="navMain">
 	<div id="logo">
 		<a href="<?php echo HTTP_SERVER . DIR_WS_CATALOG; ?>">
-			<span class="nav-text">zzrig</span>
+			<span class="nav-text">Zdaylight</span>
 		</a>
 	</div>
 	
