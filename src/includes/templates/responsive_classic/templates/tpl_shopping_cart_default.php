@@ -89,6 +89,7 @@ if ($flagHasCartContents) { ?>
 				echo $product['showFixedQuantityAmount'];
 			} else {
 				echo $product['quantityField'];
+				echo '<input type="submit" value="update" />';
 			} 
 			?>
 			<br />
