@@ -957,3 +957,11 @@ table.specifications td {
 	border-top: 1px solid #ccc;
 	border-bottom: 1px solid #e7e7e7;
 }
+
+/************************************************
+ * product_info 
+ ************************************************/
+.product-qty {
+	color: #999;
+}
+

@@ -105,7 +105,7 @@ li.item img {
 							}
 							?>
 							</select>  
-							<span style="color:#999">&nbsp;(<?php echo $products_quantity . TEXT_PRODUCT_QUANTITY; ?>)</span>
+							<span class="product-qty">&nbsp;(<?php echo $products_quantity . TEXT_PRODUCT_QUANTITY; ?>)</span>
 					</td>
 				</tr>
 				
