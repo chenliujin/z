@@ -45,19 +45,3 @@ while (!$get_terms->EOF) {
 	}
 	$get_terms->movenext();
 }
-/**
- * add the products model to the breadcrumb trail
- */
-if (isset($_GET['products_id'])) {
-	$productname_query = "select products_name
-		from " . TABLE_PRODUCTS_DESCRIPTION . "
-		where products_id = '" . (int)$_GET['products_id'] . "'
-		and language_id = '" . $_SESSION['languages_id'] . "'";
-
-	$productname = $db->Execute($productname_query);
-
-	if ($productname->RecordCount() > 0) {
-		$breadcrumb->add($productname->fields['products_name'], zen_href_link(zen_get_info_page($_GET['products_id']), 'cPath=' . $cPath . '&products_id=' . $_GET['products_id']));
-	}
-}
-?>
