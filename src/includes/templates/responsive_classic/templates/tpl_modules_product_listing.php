@@ -16,6 +16,7 @@ if ($listing_split->number_of_rows && (PREV_NEXT_BAR_LOCATION == '2' || PREV_NEX
 	</div>
 	<?php
 }
+
 ?>
 
 </div>
