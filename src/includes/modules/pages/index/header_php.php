@@ -1,7 +1,4 @@
 <?php
-// This should be first line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_START_INDEX');
-
 // the following cPath references come from application_top/initSystem
 $category_depth = 'top';
 if (isset($cPath) && zen_not_null($cPath)) {
@@ -51,6 +48,3 @@ if (SKIP_SINGLE_PRODUCT_CATEGORIES=='True' and (!isset($_GET['filter_id']) and !
 		zen_redirect(zen_href_link(zen_get_info_page($listing->fields['products_id']), ($cPath ? 'cPath=' . $cPath . '&' : '') . 'products_id=' . $listing->fields['products_id']));
 	}
 }
-
-// This should be last line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_END_INDEX');
