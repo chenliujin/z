@@ -2,7 +2,6 @@
 	include(DIR_WS_MODULES . zen_get_module_directory(FILENAME_PRODUCT_LISTING));
 ?>
 
-
 <div id="productListing" class="group">
 
 <?php
@@ -15,32 +14,12 @@
 }
 ?>
 
-<?php
-// only show when there is something to submit and enabled
-    if ($show_top_submit_button == true) {
-?>
-<?php if (PREV_NEXT_BAR_LOCATION == '2' && $listing_split->number_of_rows) { ?>
-  <div class="prod-list-wrap group">
-<?php } ?>
-    <div class="forward button-top"><?php echo zen_image_submit(BUTTON_IMAGE_ADD_PRODUCTS_TO_CART, BUTTON_ADD_PRODUCTS_TO_CART_ALT, 'id="submit1" name="submit1"'); ?></div>
-<?php if (PREV_NEXT_BAR_LOCATION == '2' && $listing_split->number_of_rows) { ?>
-  </div>
-<?php } ?>
-
-<?php
-    } // show top submit
-?>
-
 <?php if ($listing_split->number_of_rows && (PREV_NEXT_BAR_LOCATION == '1' || PREV_NEXT_BAR_LOCATION == '3') ) { ?>
 </div>
-<?php } ?>
-
+<?php } ?> 
 
 <?php
-/**
- * load the list_box_content template to display the products
- */
-  require($template->get_template_dir('tpl_tabular_display.php',DIR_WS_TEMPLATE, $current_page_base,'common'). '/tpl_tabular_display.php');
+	require($template->get_template_dir('tpl_tabular_display.php',DIR_WS_TEMPLATE, $current_page_base,'common'). '/tpl_tabular_display.php');
 ?>
 
 <?php if ($listing_split->number_of_rows && (PREV_NEXT_BAR_LOCATION == '2' || PREV_NEXT_BAR_LOCATION == '3') ) { ?>
@@ -50,29 +29,8 @@
 <?php
   }
 ?>
-
-<?php
-// only show when there is something to submit and enabled
-    if ($show_bottom_submit_button == true) {
-?>
-
-<?php if (PREV_NEXT_BAR_LOCATION == '1') { ?>
-  <div class="prod-list-wrap group button-bottom">
-<?php } ?>
-    <div class="forward button-top"><?php echo zen_image_submit(BUTTON_IMAGE_ADD_PRODUCTS_TO_CART, BUTTON_ADD_PRODUCTS_TO_CART_ALT, 'id="submit2" name="submit1"'); ?></div>
-<?php if (PREV_NEXT_BAR_LOCATION == '1') { ?>
-  </div>
-<?php } ?>
-
-<?php
-    } // show_bottom_submit_button
-?>
 <?php if ($listing_split->number_of_rows && (PREV_NEXT_BAR_LOCATION == '2' || PREV_NEXT_BAR_LOCATION == '3') ) { ?>
 </div>
 <?php } ?>
 
 </div>
-
-<?php if ($how_many > 0 && PRODUCT_LISTING_MULTIPLE_ADD_TO_CART != 0 and $show_submit == true and $listing_split->number_of_rows > 0) { ?>
-</form>
-<?php } ?>
