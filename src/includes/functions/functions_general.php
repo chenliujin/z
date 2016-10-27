@@ -1097,7 +1097,9 @@ function zen_get_buy_now_button($product_id, $link, $additional_link = false) {
 
 	// show case only superceeds all other settings
 	if (STORE_STATUS != '0') {
-		return '<a href="' . zen_href_link(FILENAME_CONTACT_US, '', 'SSL') . '">' .  TEXT_SHOWCASE_ONLY . '</a>';
+		return '<a href="' . zen_href_link(FILENAME_CONTACT_US, '', 'SSL') . '">' 
+			.  TEXT_SHOWCASE_ONLY 
+			. '</a>';
 	}
 
 	// 0 = normal shopping
@@ -1105,49 +1107,58 @@ function zen_get_buy_now_button($product_id, $link, $additional_link = false) {
 	// 2 = Can browse but no prices
 	// verify display of prices
 	switch (true) {
-	case (CUSTOMERS_APPROVAL == '1' and $_SESSION['customer_id'] == ''):
-		// customer must be logged in to browse
-		$login_for_price = '<a href="' . zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' .  TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE . '</a>';
-		return $login_for_price;
-		break;
-	case (CUSTOMERS_APPROVAL == '2' and $_SESSION['customer_id'] == ''):
-		if (TEXT_LOGIN_FOR_PRICE_PRICE == '') {
+		case (CUSTOMERS_APPROVAL == '1' and $_SESSION['customer_id'] == ''):
+			// customer must be logged in to browse
+			$login_for_price = '<a href="' . zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' 
+				.  TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE 
+				. '</a>';
+			return $login_for_price;
+			break;
+
+		case (CUSTOMERS_APPROVAL == '2' and $_SESSION['customer_id'] == ''):
+			if (TEXT_LOGIN_FOR_PRICE_PRICE == '') {
+				// show room only
+				return TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE;
+			} else {
+				// customer may browse but no prices
+				$login_for_price = '<a href="' . zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' .  TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE . '</a>';
+			}
+			return $login_for_price;
+			break;
+
 			// show room only
-			return TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE;
-		} else {
-			// customer may browse but no prices
-			$login_for_price = '<a href="' . zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' .  TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE . '</a>';
-		}
-		return $login_for_price;
-		break;
-		// show room only
-	case (CUSTOMERS_APPROVAL == '3'):
-		$login_for_price = TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM;
-		return $login_for_price;
-		break;
-	case ((CUSTOMERS_APPROVAL_AUTHORIZATION != '0' and CUSTOMERS_APPROVAL_AUTHORIZATION != '3') and $_SESSION['customer_id'] == ''):
-		// customer must be logged in to browse
-		$login_for_price = TEXT_AUTHORIZATION_PENDING_BUTTON_REPLACE;
-		return $login_for_price;
-		break;
-	case ((CUSTOMERS_APPROVAL_AUTHORIZATION == '3') and $_SESSION['customer_id'] == ''):
-		// customer must be logged in and approved to add to cart
-		$login_for_price = '<a href="' . zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' .  TEXT_LOGIN_TO_SHOP_BUTTON_REPLACE . '</a>';
-		return $login_for_price;
-		break;
-	case (CUSTOMERS_APPROVAL_AUTHORIZATION != '0' and $_SESSION['customers_authorization'] > '0'):
-		// customer must be logged in to browse
-		$login_for_price = TEXT_AUTHORIZATION_PENDING_BUTTON_REPLACE;
-		return $login_for_price;
-		break;
-	case ((int)$_SESSION['customers_authorization'] >= 2):
-		// customer is logged in and was changed to must be approved to buy
-		$login_for_price = TEXT_AUTHORIZATION_PENDING_BUTTON_REPLACE;
-		return $login_for_price;
-		break;
-	default:
-		// proceed normally
-		break;
+		case (CUSTOMERS_APPROVAL == '3'):
+			$login_for_price = TEXT_LOGIN_FOR_PRICE_BUTTON_REPLACE_SHOWROOM;
+			return $login_for_price;
+			break;
+
+		case ((CUSTOMERS_APPROVAL_AUTHORIZATION != '0' and CUSTOMERS_APPROVAL_AUTHORIZATION != '3') and $_SESSION['customer_id'] == ''):
+			// customer must be logged in to browse
+			$login_for_price = TEXT_AUTHORIZATION_PENDING_BUTTON_REPLACE;
+			return $login_for_price;
+			break;
+
+		case ((CUSTOMERS_APPROVAL_AUTHORIZATION == '3') and $_SESSION['customer_id'] == ''):
+			// customer must be logged in and approved to add to cart
+			$login_for_price = '<a href="' . zen_href_link(FILENAME_LOGIN, '', 'SSL') . '">' .  TEXT_LOGIN_TO_SHOP_BUTTON_REPLACE . '</a>';
+			return $login_for_price;
+			break;
+
+		case (CUSTOMERS_APPROVAL_AUTHORIZATION != '0' and $_SESSION['customers_authorization'] > '0'):
+			// customer must be logged in to browse
+			$login_for_price = TEXT_AUTHORIZATION_PENDING_BUTTON_REPLACE;
+			return $login_for_price;
+			break;
+
+		case ((int)$_SESSION['customers_authorization'] >= 2):
+			// customer is logged in and was changed to must be approved to buy
+			$login_for_price = TEXT_AUTHORIZATION_PENDING_BUTTON_REPLACE;
+			return $login_for_price;
+			break;
+
+		default:
+			// proceed normally
+			break;
 	}
 
 	$button_check = $db->Execute("
@@ -1158,25 +1169,31 @@ function zen_get_buy_now_button($product_id, $link, $additional_link = false) {
 
 	switch (true) {
 		// cannot be added to the cart
-	case (zen_get_products_allow_add_to_cart($product_id) == 'N'):
-		return $additional_link;
-		break;
-	case ($button_check->fields['product_is_call'] == '1'):
-		$return_button = '<a href="' . zen_href_link(FILENAME_CONTACT_US, '', 'SSL') . '">' . TEXT_CALL_FOR_PRICE . '</a>';
-		break;
-	case ($button_check->fields['products_quantity'] <= 0 and SHOW_PRODUCTS_SOLD_OUT_IMAGE == '1'):
-		if ($_GET['main_page'] == zen_get_info_page($product_id)) {
-			$return_button = zen_image_button(BUTTON_IMAGE_SOLD_OUT, BUTTON_SOLD_OUT_ALT);
-		} else {
-			$return_button = zen_image_button(BUTTON_IMAGE_SOLD_OUT_SMALL, BUTTON_SOLD_OUT_SMALL_ALT);
-		}
-		break;
-	default:
-		$return_button = $link;
-		break;
+		case (zen_get_products_allow_add_to_cart($product_id) == 'N'):
+			return $additional_link;
+			break;
+
+		case ($button_check->fields['product_is_call'] == '1'):
+			$return_button = '<a href="' . zen_href_link(FILENAME_CONTACT_US, '', 'SSL') . '">' . TEXT_CALL_FOR_PRICE . '</a>';
+			break;
+
+		case ($button_check->fields['products_quantity'] <= 0 and SHOW_PRODUCTS_SOLD_OUT_IMAGE == '1'):
+			if ($_GET['main_page'] == zen_get_info_page($product_id)) {
+				$return_button = zen_image_button(BUTTON_IMAGE_SOLD_OUT, BUTTON_SOLD_OUT_ALT);
+			} else {
+				$return_button = zen_image_button(BUTTON_IMAGE_SOLD_OUT_SMALL, BUTTON_SOLD_OUT_SMALL_ALT);
+			}
+			break;
+
+		default:
+			$return_button = $link;
+			break;
 	}
+
 	if ($return_button != $link and $additional_link != false) {
-		return $additional_link . '<br />' . $return_button;
+		return $additional_link 
+			. '<br />' 
+			. $return_button;
 	} else {
 		return $return_button;
 	}
