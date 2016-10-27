@@ -6,7 +6,6 @@ if (!defined('IS_ADMIN_FLAG')) {
 }
 $show_submit = zen_run_normal();
 $listing_split = new splitPageResults($listing_sql, MAX_DISPLAY_PRODUCTS_LISTING, 'p.products_id', 'page');
-$zco_notifier->notify('NOTIFY_MODULE_PRODUCT_LISTING_RESULTCOUNT', $listing_split->number_of_rows);
 $how_many = 0;
 
 $list_box_contents[0] = array('params' => 'class="productListing-rowheading"');
@@ -101,6 +100,7 @@ if ($listing_split->number_of_rows > 0) {
 					. $listing->fields['manufacturers_name'] 
 					. '</a>';
 				break;
+
 			case 'PRODUCT_LIST_PRICE':
 				$lc_price = '<div class="list-price">' 
 					. zen_get_products_display_price($listing->fields['products_id']) 
@@ -110,46 +110,24 @@ if ($listing_split->number_of_rows > 0) {
 
 				// more info in place of buy now
 				$lc_button = '';
+
 				if (zen_has_product_attributes($listing->fields['products_id']) or PRODUCT_LIST_PRICE_BUY_NOW == '0') {
 					$lc_button = '<a class="list-more" href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id']) > 0 ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? $_GET['cPath'] : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' . MORE_INFO_TEXT . '</a>';
 				} else {
-					if (PRODUCT_LISTING_MULTIPLE_ADD_TO_CART != 0) {
-						if (
-							// not a hide qty box product
-							$listing->fields['products_qty_box_status'] != 0 &&
-							// product type can be added to cart
-							zen_get_products_allow_add_to_cart($listing->fields['products_id']) != 'N'
-							&&
-							// product is not call for price
-							$listing->fields['product_is_call'] == 0
-							&&
-							// product is in stock or customers may add it to cart anyway
-							($listing->fields['products_quantity'] > 0 || SHOW_PRODUCTS_SOLD_OUT_IMAGE == 0) ) {
-								$how_many++;
-						}
-
-						// hide quantity box
-						if ($listing->fields['products_qty_box_status'] == 0) {
-							$lc_button = '<a href="' . zen_href_link($_GET['main_page'], zen_get_all_get_params(array('action')) . 'action=buy_now&products_id=' . $listing->fields['products_id']) . '">' . zen_image_button(BUTTON_IMAGE_BUY_NOW, BUTTON_BUY_NOW_ALT) . '</a>';
-						} else {
-							$lc_button = '<div class="list-input"><span class="list-addtext">' 
-								. TEXT_PRODUCT_LISTING_MULTIPLE_ADD_TO_CART . "</span><input type=\"text\" name=\"products_id[" . $listing->fields['products_id'] . "]\" value=\"0\" size=\"4\" /></div>";
-						}
+					if (PRODUCT_LIST_PRICE_BUY_NOW == '2' && $listing->fields['products_qty_box_status'] != 0) {
+						$lc_button= '<div class="cart-add">' . zen_draw_form('cart_quantity', zen_href_link($_GET['main_page'], zen_get_all_get_params(array('action')) . 'action=add_product&products_id=' . $listing->fields['products_id']), 'post', 'enctype="multipart/form-data"') . '<input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($listing->fields['products_id'])) . '" maxlength="6" size="4" />' . zen_draw_hidden_field('products_id', $listing->fields['products_id']) . zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT) . '</form></div>';
 					} else {
-						// qty box with add to cart button
-						if (PRODUCT_LIST_PRICE_BUY_NOW == '2' && $listing->fields['products_qty_box_status'] != 0) {
-							$lc_button= '<div class="cart-add">' . zen_draw_form('cart_quantity', zen_href_link($_GET['main_page'], zen_get_all_get_params(array('action')) . 'action=add_product&products_id=' . $listing->fields['products_id']), 'post', 'enctype="multipart/form-data"') . '<input type="text" name="cart_quantity" value="' . (zen_get_buy_now_qty($listing->fields['products_id'])) . '" maxlength="6" size="4" />' . zen_draw_hidden_field('products_id', $listing->fields['products_id']) . zen_image_submit(BUTTON_IMAGE_IN_CART, BUTTON_IN_CART_ALT) . '</form></div>';
-						} else {
-							$lc_button = '<div class="cart-add"><a href="' . zen_href_link($_GET['main_page'], zen_get_all_get_params(array('action')) . 'action=buy_now&products_id=' . $listing->fields['products_id']) . '">' . zen_image_button(BUTTON_IMAGE_BUY_NOW, BUTTON_BUY_NOW_ALT, 'class="listingBuyNowButton"') . '</a></div>';
-						}
+						$lc_button = '<div class="cart-add"><a href="' . zen_href_link($_GET['main_page'], zen_get_all_get_params(array('action')) . 'action=buy_now&products_id=' . $listing->fields['products_id']) . '">' . zen_image_button(BUTTON_IMAGE_BUY_NOW, BUTTON_BUY_NOW_ALT, 'class="listingBuyNowButton"') . '</a></div>';
 					}
 				}
+
 				$the_button = $lc_button;
 				$products_link = '<a class="list-more" href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . ( ($_GET['manufacturers_id'] > 0 and $_GET['filter_id']) > 0 ? zen_get_generated_category_path_rev($_GET['filter_id']) : $_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id'])) . '&products_id=' . $listing->fields['products_id']) . '">' . MORE_INFO_TEXT . '</a>';
 				$lc_text .= '' . zen_get_buy_now_button($listing->fields['products_id'], $the_button, $products_link) . '' . zen_get_products_quantity_min_units_display($listing->fields['products_id']);
 				$lc_text .= '' . (zen_get_show_product_switch($listing->fields['products_id'], 'ALWAYS_FREE_SHIPPING_IMAGE_SWITCH') ? (zen_get_product_is_always_free_shipping($listing->fields['products_id']) ? TEXT_PRODUCT_FREE_SHIPPING_ICON . '' : '') : '');
 
 				break;
+
 			case 'PRODUCT_LIST_QUANTITY':
 				$lc_align = 'right';
 				$lc_text = '<div class="list-quantity">' 
@@ -210,21 +188,3 @@ if ($listing_split->number_of_rows > 0) {
 
 	$error_categories = true;
 }
-
-if (($how_many > 0 and $show_submit == true and $listing_split->number_of_rows > 0) and (PRODUCT_LISTING_MULTIPLE_ADD_TO_CART == 1 or  PRODUCT_LISTING_MULTIPLE_ADD_TO_CART == 3) ) {
-	$show_top_submit_button = true;
-} else {
-	$show_top_submit_button = false;
-}
-if (($how_many > 0 and $show_submit == true and $listing_split->number_of_rows > 0) and (PRODUCT_LISTING_MULTIPLE_ADD_TO_CART >= 2) ) {
-	$show_bottom_submit_button = true;
-} else {
-	$show_bottom_submit_button = false;
-}
-
-$zco_notifier->notify('NOTIFY_PRODUCT_LISTING_END', $current_page_base, $list_box_contents, $listing_split, $show_top_submit_button, $show_bottom_submit_button, $show_submit, $how_many);
-
-if ($how_many > 0 && PRODUCT_LISTING_MULTIPLE_ADD_TO_CART != 0 and $show_submit == true and $listing_split->number_of_rows > 0) {
-	echo zen_draw_form('multiple_products_cart_quantity', zen_href_link(FILENAME_DEFAULT, zen_get_all_get_params(array('action')) . 'action=multiple_products_add_product', $request_type), 'post', 'enctype="multipart/form-data"');
-}
-
