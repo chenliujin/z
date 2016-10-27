@@ -4,6 +4,8 @@ include_once('z/model/products.php');
 if (!defined('IS_ADMIN_FLAG')) {
 	die('Illegal Access');
 }
+
+
 $show_submit = zen_run_normal();
 $listing_split = new splitPageResults($listing_sql, MAX_DISPLAY_PRODUCTS_LISTING, 'p.products_id', 'page');
 $how_many = 0;
@@ -140,19 +142,22 @@ if ($listing_split->number_of_rows > 0) {
 					. $listing->fields['products_weight'] 
 					. '</div>';
 				break;
+
 			case 'PRODUCT_LIST_IMAGE':
 				$lc_align = 'center';
-				if ($listing->fields['products_image'] == '' and PRODUCTS_IMAGE_NO_IMAGE_STATUS == 0) {
-					$lc_text = '';
-				} else {
-					$images = json_decode($listing->fields['products_image'], TRUE);
+				$lc_text = '';
 
-					if ( is_array($images) ) {
-						$lc_text = '<div class="list-image"><a href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id']) > 0 ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' 
-							. \z\products::Image($images[0], $listing->fields['products_name'], 220, 220)
-							. '</a></div>';
-					} 
-				}
+				$images = json_decode($listing->fields['products_image'], TRUE);
+
+				if ( is_array($images) ) {
+					$lc_text = '
+						<div class="list-image">
+							<a href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id']) > 0 ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' 
+								. \z\products::Image($images[0], $listing->fields['products_name'], 220, 220) . '
+							</a>
+						</div>';
+				} 
+
 				break;
 			}
 
