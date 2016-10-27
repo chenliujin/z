@@ -56,11 +56,11 @@ for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
 		$lc_text = zen_create_sort_heading($_GET['sort'], $col+1, $lc_text);
 	}
 
-
-
-	$list_box_contents[0][$col] = array('align' => $lc_align,
-		'params' => 'class="productListing-heading"',
-		'text' => $lc_text );
+	$list_box_contents[0][$col] = array(
+		'align' 	=> $lc_align,
+		'params' 	=> 'class="productListing-heading"',
+		'text' 		=> $lc_text
+		);
 }
 
 if ($listing_split->number_of_rows > 0) {
@@ -83,18 +83,28 @@ if ($listing_split->number_of_rows > 0) {
 			switch ($column_list[$col]) {
 			case 'PRODUCT_LIST_MODEL':
 				$lc_align = '';
-				$lc_text = '<div class="list-model">' . $listing->fields['products_model'] . '</div>';
+				$lc_text = '<div class="list-model">' 
+					. $listing->fields['products_model'] 
+					. '</div>';
 				break;
 			case 'PRODUCT_LIST_NAME':
 				$lc_align = '';
-				$lc_text = '<h3 class="itemTitle"><a href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id'] > 0) ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' . $listing->fields['products_name'] . '</a></h3><div class="listingDescription">' . zen_trunc_string(zen_clean_html(stripslashes(zen_get_products_description($listing->fields['products_id'], $_SESSION['languages_id']))), PRODUCT_LIST_DESCRIPTION) . '</div>';
+				$lc_text = '<h3 class="itemTitle"><a href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id'] > 0) ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' 
+					. $listing->fields['products_name'] 
+					. '</a></h3><div class="listingDescription">' 
+					. zen_trunc_string(zen_clean_html(stripslashes(zen_get_products_description($listing->fields['products_id'], $_SESSION['languages_id']))), PRODUCT_LIST_DESCRIPTION) 
+					. '</div>';
 				break;
 			case 'PRODUCT_LIST_MANUFACTURER':
 				$lc_align = '';
-				$lc_text = '<a class="list-man" href="' . zen_href_link(FILENAME_DEFAULT, 'manufacturers_id=' . $listing->fields['manufacturers_id']) . '">' . $listing->fields['manufacturers_name'] . '</a>';
+				$lc_text = '<a class="list-man" href="' . zen_href_link(FILENAME_DEFAULT, 'manufacturers_id=' . $listing->fields['manufacturers_id']) . '">' 
+					. $listing->fields['manufacturers_name'] 
+					. '</a>';
 				break;
 			case 'PRODUCT_LIST_PRICE':
-				$lc_price = '<div class="list-price">' . zen_get_products_display_price($listing->fields['products_id']) . '</div>';
+				$lc_price = '<div class="list-price">' 
+					. zen_get_products_display_price($listing->fields['products_id']) 
+					. '</div>';
 				$lc_align = 'right';
 				$lc_text =  $lc_price;
 
@@ -116,12 +126,14 @@ if ($listing_split->number_of_rows > 0) {
 							// product is in stock or customers may add it to cart anyway
 							($listing->fields['products_quantity'] > 0 || SHOW_PRODUCTS_SOLD_OUT_IMAGE == 0) ) {
 								$how_many++;
-							}
+						}
+
 						// hide quantity box
 						if ($listing->fields['products_qty_box_status'] == 0) {
 							$lc_button = '<a href="' . zen_href_link($_GET['main_page'], zen_get_all_get_params(array('action')) . 'action=buy_now&products_id=' . $listing->fields['products_id']) . '">' . zen_image_button(BUTTON_IMAGE_BUY_NOW, BUTTON_BUY_NOW_ALT) . '</a>';
 						} else {
-							$lc_button = '<div class="list-input"><span class="list-addtext">' . TEXT_PRODUCT_LISTING_MULTIPLE_ADD_TO_CART . "</span><input type=\"text\" name=\"products_id[" . $listing->fields['products_id'] . "]\" value=\"0\" size=\"4\" /></div>";
+							$lc_button = '<div class="list-input"><span class="list-addtext">' 
+								. TEXT_PRODUCT_LISTING_MULTIPLE_ADD_TO_CART . "</span><input type=\"text\" name=\"products_id[" . $listing->fields['products_id'] . "]\" value=\"0\" size=\"4\" /></div>";
 						}
 					} else {
 						// qty box with add to cart button
@@ -140,11 +152,15 @@ if ($listing_split->number_of_rows > 0) {
 				break;
 			case 'PRODUCT_LIST_QUANTITY':
 				$lc_align = 'right';
-				$lc_text = '<div class="list-quantity">' . $listing->fields['products_quantity'] . '</div>';
+				$lc_text = '<div class="list-quantity">' 
+					. $listing->fields['products_quantity'] 
+					. '</div>';
 				break;
 			case 'PRODUCT_LIST_WEIGHT':
 				$lc_align = 'right';
-				$lc_text = '<div class="list-weight">' . $listing->fields['products_weight'] . '</div>';
+				$lc_text = '<div class="list-weight">' 
+					. $listing->fields['products_weight'] 
+					. '</div>';
 				break;
 			case 'PRODUCT_LIST_IMAGE':
 				$lc_align = 'center';
@@ -162,9 +178,11 @@ if ($listing_split->number_of_rows > 0) {
 				break;
 			}
 
-			$list_box_contents[$rows][$col] = array('align' => $lc_align,
-				'params' => 'class="productListing-data"',
-				'text'  => $lc_text);
+			$list_box_contents[$rows][$col] = array(
+				'align' 	=> $lc_align,
+				'params' 	=> 'class="productListing-data"',
+				'text'  	=> $lc_text
+			);
 		}
 
 		// add description and match alternating colors
@@ -207,7 +225,6 @@ if (($how_many > 0 and $show_submit == true and $listing_split->number_of_rows >
 $zco_notifier->notify('NOTIFY_PRODUCT_LISTING_END', $current_page_base, $list_box_contents, $listing_split, $show_top_submit_button, $show_bottom_submit_button, $show_submit, $how_many);
 
 if ($how_many > 0 && PRODUCT_LISTING_MULTIPLE_ADD_TO_CART != 0 and $show_submit == true and $listing_split->number_of_rows > 0) {
-	// bof: multiple products
 	echo zen_draw_form('multiple_products_cart_quantity', zen_href_link(FILENAME_DEFAULT, zen_get_all_get_params(array('action')) . 'action=multiple_products_add_product', $request_type), 'post', 'enctype="multipart/form-data"');
 }
 
