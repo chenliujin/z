@@ -2,13 +2,17 @@
 
 <div id="cat-top" class="group">
 <div id="cat-left" class="back">
-<h1 id="productListHeading"><?php echo $current_categories_name; ?></h1>
+	<h1 id="productListHeading">
+		<?php echo $current_categories_name; ?>
+	</h1>
 
 <?php
 if (PRODUCT_LIST_CATEGORIES_IMAGE_STATUS == 'true') {
 	if ($categories_image = zen_get_categories_image($current_category_id)) {
 		?>
-<div id="categoryImgListing" class="categoryImg"><?php echo zen_image(DIR_WS_IMAGES . $categories_image, '', CATEGORY_ICON_IMAGE_WIDTH, CATEGORY_ICON_IMAGE_HEIGHT); ?></div>
+<div id="categoryImgListing" class="categoryImg">
+	<?php echo zen_image(DIR_WS_IMAGES . $categories_image, '', CATEGORY_ICON_IMAGE_WIDTH, CATEGORY_ICON_IMAGE_HEIGHT); ?>
+</div>
 		<?php
 	}
 } 
@@ -67,17 +71,15 @@ if ($do_filter_list || isset($_GET['alpha_filter_id']) || ($check_for_alpha->Rec
 </form>
 	<?php
 }
-?>
 
-<?php if ($listing->RecordCount()) { ?>
+if ($listing->RecordCount()) { 
+	?>
 </div>
-<?php } 
+	<?php 
+} 
 
 require($template->get_template_dir('tpl_modules_product_listing.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_product_listing.php');
-?>
 
-
-<?php
 if ($error_categories==true) {
 	$check_category = $db->Execute("select categories_id from " . TABLE_CATEGORIES . " where categories_id='" . $cPath . "'");
 	if ($check_category->RecordCount() == 0) {
