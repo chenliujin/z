@@ -123,31 +123,30 @@ if ($category_depth == 'nested')
 		// do not set the category
 	}
 	// create column list
-	$define_list = array('PRODUCT_LIST_MODEL' => PRODUCT_LIST_MODEL,
-		'PRODUCT_LIST_NAME' => PRODUCT_LIST_NAME,
+	$define_list = array(
+		'PRODUCT_LIST_MODEL' 		=> PRODUCT_LIST_MODEL,
+		'PRODUCT_LIST_NAME' 		=> PRODUCT_LIST_NAME,
 		'PRODUCT_LIST_MANUFACTURER' => PRODUCT_LIST_MANUFACTURER,
-		'PRODUCT_LIST_PRICE' => PRODUCT_LIST_PRICE,
-		'PRODUCT_LIST_QUANTITY' => PRODUCT_LIST_QUANTITY,
-		'PRODUCT_LIST_WEIGHT' => PRODUCT_LIST_WEIGHT,
-		'PRODUCT_LIST_IMAGE' => PRODUCT_LIST_IMAGE);
+		'PRODUCT_LIST_PRICE' 		=> PRODUCT_LIST_PRICE,
+		'PRODUCT_LIST_QUANTITY' 	=> PRODUCT_LIST_QUANTITY,
+		'PRODUCT_LIST_WEIGHT' 		=> PRODUCT_LIST_WEIGHT,
+		'PRODUCT_LIST_IMAGE' 		=> PRODUCT_LIST_IMAGE
+	);
 
-  /*                         ,
-  'PRODUCT_LIST_BUY_NOW' => PRODUCT_LIST_BUY_NOW);
-   */
 	asort($define_list);
 	reset($define_list);
 	$column_list = array();
-	foreach ($define_list as $key => $value)
-	{
-		if ($value > 0) $column_list[] = $key;
+
+	foreach ($define_list as $key => $value) {
+		if ($value > 0) {
+			$column_list[] = $key;
+		}
 	}
 
 	$select_column_list = '';
 
-	for ($i=0, $n=sizeof($column_list); $i<$n; $i++)
-	{
-		switch ($column_list[$i])
-		{
+	for ($i=0, $n=sizeof($column_list); $i<$n; $i++) {
+		switch ($column_list[$i]) {
 		case 'PRODUCT_LIST_MODEL':
 			$select_column_list .= 'p.products_model, ';
 			break;
