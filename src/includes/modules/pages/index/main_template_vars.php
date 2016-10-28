@@ -110,7 +110,6 @@ if ($category_depth == 'nested')
 
 	$define_list = array(
 		'PRODUCT_LIST_NAME' 		=> PRODUCT_LIST_NAME,
-		'PRODUCT_LIST_MANUFACTURER' => PRODUCT_LIST_MANUFACTURER,
 		'PRODUCT_LIST_PRICE' 		=> PRODUCT_LIST_PRICE,
 		'PRODUCT_LIST_QUANTITY' 	=> PRODUCT_LIST_QUANTITY,
 		'PRODUCT_LIST_WEIGHT' 		=> PRODUCT_LIST_WEIGHT,
@@ -133,9 +132,6 @@ if ($category_depth == 'nested')
 		switch ($column_list[$i]) {
 			case 'PRODUCT_LIST_NAME':
 				$select_column_list .= 'pd.products_name, ';
-				break;
-			case 'PRODUCT_LIST_MANUFACTURER':
-				$select_column_list .= 'm.manufacturers_name, ';
 				break;
 			case 'PRODUCT_LIST_QUANTITY':
 				$select_column_list .= 'p.products_quantity, ';
