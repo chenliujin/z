@@ -308,9 +308,11 @@ div#checkoutShippingContentChoose{margin-bottom:20px;}
 .productListing-rowheading{padding:10px 10px;text-align:center;}
 .productListing-rowheading a{display:inline-block;padding:10px 30px;text-decoration:none;}
 .productListing-rowheading a:hover{}
-.productListing-odd{padding:20px;overflow:hidden;}
-.productListing-even{padding:20px;overflow:hidden;}
-.productListing-even, .productListing-odd{clear:both;}
+.productListing-odd, .productListing-even {
+	padding:20px;
+	overflow:hidden;
+	clear:both;
+}
 .productListing-even:hover, .productListing-odd:hover{}
 .productListing-even form, .productListing-odd form{float:right;}
 .cart-add input[type=text]{width:auto !important;}
@@ -323,7 +325,6 @@ div#checkoutShippingContentChoose{margin-bottom:20px;}
 .itemTitle{font-weight:normal;font-size:150%;margin:5px 0;width:80%;}
 .itemTitle a{text-decoration:none;}
 .itemTitle a:hover{}
-.tabTable{margin-bottom:20px;}
 .listingDescription{width:75%;margin:10px 0;}
 .cart-add{float:right;}
 .list-input{float:right;width:10%;}
@@ -482,7 +483,14 @@ h2.greeting a:hover{}
 .alignLeft {text-align: left}
 .alignCenter {text-align: center}
 .alignRight {text-align: right}
-.tabTable {width:100%;border:none;padding:0;margin:0; border-spacing:0;border-collapse:collapse;}
+.tabTable {
+	width:100%;
+	border:none;
+	padding:0;
+	margin:0; 
+	border-spacing:0;
+	border-collapse:collapse;
+}
 table{border:none;padding:0;margin:0; border-spacing:0;border-collapse:collapse;width:100%;}
 #cartContentsDisplay {width: 100%;}
 #myAccountOrdersStatus, #orderHistoryHeading, #prevOrders {width: 100%;}
