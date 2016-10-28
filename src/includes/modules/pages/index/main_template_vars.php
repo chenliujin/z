@@ -39,12 +39,6 @@ if (isset($_GET['filter_id']) && $_GET['filter_id'] <= 0) {
 	unset($filter_id);
 }
 
-// release alpha filter when nothing is there
-if (isset($_GET['alpha_filter_id']) && $_GET['alpha_filter_id'] <= 0) {
-	unset($_GET['alpha_filter_id']);
-	unset($alpha_filter_id);
-}
-
 // hook to notifier so that additional product-type-specific vars can be released too
 $zco_notifier->notify('NOTIFY_HEADER_INDEX_MAIN_TEMPLATE_VARS_RELEASE_PRODUCT_TYPE_VARS');
 
