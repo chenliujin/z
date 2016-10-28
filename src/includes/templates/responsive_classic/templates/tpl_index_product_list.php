@@ -28,7 +28,7 @@ if ($current_categories_description != '') {
 </div>
 
 <?php 
-if ($do_filter_list && $listing->RecordCount()) { 
+if ($do_filter_list) { 
 	?>
 <div id="filter-wrapper" class="group">
 	<?php 
