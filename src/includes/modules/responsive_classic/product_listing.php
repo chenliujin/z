@@ -24,31 +24,37 @@ for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
 			$lc_align = '';
 			$zc_col_count_description++;
 			break;
+
 		case 'PRODUCT_LIST_NAME':
 			$lc_text = TABLE_HEADING_PRODUCTS;
 			$lc_align = '';
 			$zc_col_count_description++;
 			break;
+
 		case 'PRODUCT_LIST_MANUFACTURER':
 			$lc_text = TABLE_HEADING_MANUFACTURER;
 			$lc_align = '';
 			$zc_col_count_description++;
 			break;
+
 		case 'PRODUCT_LIST_PRICE':
 			$lc_text = TABLE_HEADING_PRICE;
 			$lc_align = 'right' . (PRODUCTS_LIST_PRICE_WIDTH > 0 ? '" width="' . PRODUCTS_LIST_PRICE_WIDTH : '');
 			$zc_col_count_description++;
 			break;
+
 		case 'PRODUCT_LIST_QUANTITY':
 			$lc_text = TABLE_HEADING_QUANTITY;
 			$lc_align = 'right';
 			$zc_col_count_description++;
 			break;
+
 		case 'PRODUCT_LIST_WEIGHT':
 			$lc_text = TABLE_HEADING_WEIGHT;
 			$lc_align = 'right';
 			$zc_col_count_description++;
 			break;
+
 		case 'PRODUCT_LIST_IMAGE':
 			$lc_text = TABLE_HEADING_IMAGE;
 			$lc_align = 'center';
