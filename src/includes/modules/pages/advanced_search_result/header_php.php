@@ -151,31 +151,28 @@ while (list($column, $value) = each($define_list)) {
 $select_column_list = '';
 
 for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
-  if (($column_list[$col] == 'PRODUCT_LIST_NAME') || ($column_list[$col] == 'PRODUCT_LIST_PRICE')) {
-    continue;
-  }
+	if (($column_list[$col] == 'PRODUCT_LIST_NAME') || ($column_list[$col] == 'PRODUCT_LIST_PRICE')) {
+		continue;
+	}
 
-  if (zen_not_null($select_column_list)) {
-    $select_column_list .= ', ';
-  }
+	if (zen_not_null($select_column_list)) {
+		$select_column_list .= ', ';
+	}
 
-  switch ($column_list[$col]) {
-    case 'PRODUCT_LIST_MODEL':
-    $select_column_list .= 'p.products_model';
-    break;
-    case 'PRODUCT_LIST_MANUFACTURER':
-    $select_column_list .= 'm.manufacturers_name';
-    break;
-    case 'PRODUCT_LIST_QUANTITY':
-    $select_column_list .= 'p.products_quantity';
-    break;
-    case 'PRODUCT_LIST_IMAGE':
-    $select_column_list .= 'p.products_image';
-    break;
-    case 'PRODUCT_LIST_WEIGHT':
-    $select_column_list .= 'p.products_weight';
-    break;
-  }
+	switch ($column_list[$col]) {
+		case 'PRODUCT_LIST_MANUFACTURER':
+			$select_column_list .= 'm.manufacturers_name';
+			break;
+		case 'PRODUCT_LIST_QUANTITY':
+			$select_column_list .= 'p.products_quantity';
+			break;
+		case 'PRODUCT_LIST_IMAGE':
+			$select_column_list .= 'p.products_image';
+			break;
+		case 'PRODUCT_LIST_WEIGHT':
+			$select_column_list .= 'p.products_weight';
+			break;
+	}
 }
 /*
 // always add quantity regardless of whether or not it is in the listing for add to cart buttons
