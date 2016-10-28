@@ -19,12 +19,6 @@ $zc_col_count_description = 0;
 $lc_align = '';
 for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
 	switch ($column_list[$col]) {
-		case 'PRODUCT_LIST_MODEL':
-			$lc_text = TABLE_HEADING_MODEL;
-			$lc_align = '';
-			$zc_col_count_description++;
-			break;
-
 		case 'PRODUCT_LIST_NAME':
 			$lc_text = TABLE_HEADING_PRODUCTS;
 			$lc_align = '';
@@ -91,12 +85,6 @@ if ($listing_split->number_of_rows > 0) {
 		for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
 			$lc_align = '';
 			switch ($column_list[$col]) {
-			case 'PRODUCT_LIST_MODEL':
-				$lc_align = '';
-				$lc_text = '<div class="list-model">' 
-					. $listing->fields['products_model'] 
-					. '</div>';
-				break;
 			case 'PRODUCT_LIST_NAME':
 				$lc_align = '';
 				$lc_text = '<h3 class="itemTitle"><a href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id'] > 0) ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' 
