@@ -101,10 +101,6 @@ if (isset($column_list)) {
 				$listing_sql .= " order by pd.products_name " . ($sort_order == 'd' ? 'desc' : '');
 				break;
 
-			case 'PRODUCT_LIST_MANUFACTURER':
-				$listing_sql .= " order by m.manufacturers_name " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
-				break;
-
 			case 'PRODUCT_LIST_QUANTITY':
 				$listing_sql .= " order by p.products_quantity " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
 				break;
