@@ -25,12 +25,6 @@ for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
 			$zc_col_count_description++;
 			break;
 
-		case 'PRODUCT_LIST_MANUFACTURER':
-			$lc_text = TABLE_HEADING_MANUFACTURER;
-			$lc_align = '';
-			$zc_col_count_description++;
-			break;
-
 		case 'PRODUCT_LIST_PRICE':
 			$lc_text = TABLE_HEADING_PRICE;
 			$lc_align = 'right' . (PRODUCTS_LIST_PRICE_WIDTH > 0 ? '" width="' . PRODUCTS_LIST_PRICE_WIDTH : '');
@@ -92,12 +86,6 @@ if ($listing_split->number_of_rows > 0) {
 					. '</a></h3><div class="listingDescription">' 
 					. zen_trunc_string(zen_clean_html(stripslashes(zen_get_products_description($listing->fields['products_id'], $_SESSION['languages_id']))), PRODUCT_LIST_DESCRIPTION) 
 					. '</div>';
-				break;
-			case 'PRODUCT_LIST_MANUFACTURER':
-				$lc_align = '';
-				$lc_text = '<a class="list-man" href="' . zen_href_link(FILENAME_DEFAULT, 'manufacturers_id=' . $listing->fields['manufacturers_id']) . '">' 
-					. $listing->fields['manufacturers_name'] 
-					. '</a>';
 				break;
 
 			case 'PRODUCT_LIST_PRICE':
