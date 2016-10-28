@@ -380,11 +380,6 @@ if ((DISPLAY_PRICE_WITH_TAX == 'true') && ((isset($_GET['pfrom']) && zen_not_nul
   $where_str .= " group by p.products_id, tr.tax_priority";
 }
 
-// set the default sort order setting from the Admin when not defined by customer
-if (!isset($_GET['sort']) and PRODUCT_LISTING_DEFAULT_SORT_ORDER != '') {
-  $_GET['sort'] = PRODUCT_LISTING_DEFAULT_SORT_ORDER;
-}
-//die('I SEE ' . $_GET['sort'] . ' - ' . PRODUCT_LISTING_DEFAULT_SORT_ORDER);
 if ((!isset($_GET['sort'])) || (!preg_match('/[1-8][ad]/', $_GET['sort'])) || (substr($_GET['sort'], 0 , 1) > sizeof($column_list))) {
   for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
     if ($column_list[$col] == 'PRODUCT_LIST_NAME') {
@@ -392,16 +387,9 @@ if ((!isset($_GET['sort'])) || (!preg_match('/[1-8][ad]/', $_GET['sort'])) || (s
       $order_str = ' order by pd.products_name';
       break;
     } else {
-      // sort by products_sort_order when PRODUCT_LISTING_DEFAULT_SORT_ORDER ia left blank
-      // for reverse, descending order use:
-      //       $listing_sql .= " order by p.products_sort_order desc, pd.products_name";
       $order_str .= " order by p.products_sort_order, pd.products_name";
       break;
     }
-  }
-  // if set to nothing use products_sort_order and PRODUCTS_LIST_NAME is off
-  if (PRODUCT_LISTING_DEFAULT_SORT_ORDER == '') {
-    $_GET['sort'] = '20a';
   }
 } else {
 	$sort_col = substr($_GET['sort'], 0 , 1);
