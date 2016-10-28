@@ -23,15 +23,6 @@ while (!$show_display_category->EOF) {
 ?>
 
 <?php
-	if ($show_display_category->fields['configuration_key'] == 'SHOW_PRODUCT_INFO_MISSING_SPECIALS_PRODUCTS') {
-		/**
-		 * display the special product center box
-		 */
-		require($template->get_template_dir('tpl_modules_specials_default.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_specials_default.php');
-	}
-?>
-
-<?php
 	if ($show_display_category->fields['configuration_key'] == 'SHOW_PRODUCT_INFO_MISSING_NEW_PRODUCTS') {
 		/**
 		 * display the new product center box
