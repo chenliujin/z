@@ -93,10 +93,6 @@ if (!isset($select_column_list)) $select_column_list = "";
       }
     }
   }
-  // set the default sort order setting from the Admin when not defined by customer
-  if (!isset($_GET['sort']) and PRODUCT_LISTING_DEFAULT_SORT_ORDER != '') {
-    $_GET['sort'] = PRODUCT_LISTING_DEFAULT_SORT_ORDER;
-  }
   $listing_sql = str_replace('m.manufacturers_name', 'm.music_genre_name as manufacturers_name', $listing_sql);
 
   if (isset($column_list)) {
@@ -107,11 +103,6 @@ if (!isset($select_column_list)) $select_column_list = "";
 				  $listing_sql .= " order by p.products_sort_order, pd.products_name";
 				  break;
 			  }
-		  }
-
-		  // if set to nothing use products_sort_order and PRODUCTS_LIST_NAME is off
-		  if (PRODUCT_LISTING_DEFAULT_SORT_ORDER == '') {
-			  $_GET['sort'] = '20a';
 		  }
 	  } else {
 		  $sort_col = substr($_GET['sort'], 0 , 1);
