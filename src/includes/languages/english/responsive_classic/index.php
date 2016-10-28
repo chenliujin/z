@@ -10,7 +10,6 @@ if ( ($category_depth == 'products') || (zen_check_url_get_terms()) ) {
 	define('TABLE_HEADING_PRODUCTS', 'Product Name');
 	define('TABLE_HEADING_QUANTITY', 'Quantity');
 	define('TABLE_HEADING_PRICE', 'Price');
-	define('TABLE_HEADING_WEIGHT', 'Weight');
 	define('TABLE_HEADING_BUY_NOW', 'Buy Now');
 	define('TEXT_NO_PRODUCTS', 'There are no products to list in this category.');
 	define('TEXT_NO_PRODUCTS2', 'There is no product available from this manufacturer.');

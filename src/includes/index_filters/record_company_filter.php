@@ -127,9 +127,6 @@ if (!isset($select_column_list)) $select_column_list = "";
 			  case 'PRODUCT_LIST_IMAGE':
 				  $listing_sql .= " order by pd.products_name";
 				  break;
-			  case 'PRODUCT_LIST_WEIGHT':
-				  $listing_sql .= " order by p.products_weight " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
-				  break;
 			  case 'PRODUCT_LIST_PRICE':
 				  $listing_sql .= " order by p.products_price_sorter " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
 				  break;

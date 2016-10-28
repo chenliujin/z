@@ -136,7 +136,6 @@ $define_list = [
 	'PRODUCT_LIST_NAME' 		=> PRODUCT_LIST_NAME, 
 	'PRODUCT_LIST_PRICE' 		=> PRODUCT_LIST_PRICE, 
 	'PRODUCT_LIST_QUANTITY' 	=> PRODUCT_LIST_QUANTITY, 
-	'PRODUCT_LIST_WEIGHT' 		=> PRODUCT_LIST_WEIGHT, 
 	'PRODUCT_LIST_IMAGE' 		=> PRODUCT_LIST_IMAGE
 	]; 
 asort($define_list);
@@ -164,9 +163,6 @@ for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
 			break;
 		case 'PRODUCT_LIST_IMAGE':
 			$select_column_list .= 'p.products_image';
-			break;
-		case 'PRODUCT_LIST_WEIGHT':
-			$select_column_list .= 'p.products_weight';
 			break;
 	}
 }
@@ -420,9 +416,6 @@ if ((!isset($_GET['sort'])) || (!preg_match('/[1-8][ad]/', $_GET['sort'])) || (s
 			break;
 		case 'PRODUCT_LIST_IMAGE':
 			$order_str .= "pd.products_name";
-			break;
-		case 'PRODUCT_LIST_WEIGHT':
-			$order_str .= "p.products_weight " . ($sort_order == 'd' ? "desc" : "") . ", pd.products_name";
 			break;
 		case 'PRODUCT_LIST_PRICE':
 			//        $order_str .= "final_price " . ($sort_order == 'd' ? "desc" : "") . ", pd.products_name";

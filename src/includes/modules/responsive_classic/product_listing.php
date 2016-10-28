@@ -37,12 +37,6 @@ for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
 			$zc_col_count_description++;
 			break;
 
-		case 'PRODUCT_LIST_WEIGHT':
-			$lc_text = TABLE_HEADING_WEIGHT;
-			$lc_align = 'right';
-			$zc_col_count_description++;
-			break;
-
 		case 'PRODUCT_LIST_IMAGE':
 			$lc_text = TABLE_HEADING_IMAGE;
 			$lc_align = 'center';
@@ -105,12 +99,6 @@ if ($listing_split->number_of_rows > 0) {
 				$lc_align = 'right';
 				$lc_text = '<div class="list-quantity">' 
 					. $listing->fields['products_quantity'] 
-					. '</div>';
-				break;
-			case 'PRODUCT_LIST_WEIGHT':
-				$lc_align = 'right';
-				$lc_text = '<div class="list-weight">' 
-					. $listing->fields['products_weight'] 
 					. '</div>';
 				break;
 

@@ -112,7 +112,6 @@ if ($category_depth == 'nested')
 		'PRODUCT_LIST_NAME' 		=> PRODUCT_LIST_NAME,
 		'PRODUCT_LIST_PRICE' 		=> PRODUCT_LIST_PRICE,
 		'PRODUCT_LIST_QUANTITY' 	=> PRODUCT_LIST_QUANTITY,
-		'PRODUCT_LIST_WEIGHT' 		=> PRODUCT_LIST_WEIGHT,
 		'PRODUCT_LIST_IMAGE' 		=> PRODUCT_LIST_IMAGE
 	);
 
@@ -138,9 +137,6 @@ if ($category_depth == 'nested')
 				break;
 			case 'PRODUCT_LIST_IMAGE':
 				$select_column_list .= 'p.products_image, ';
-				break;
-			case 'PRODUCT_LIST_WEIGHT':
-				$select_column_list .= 'p.products_weight, ';
 				break;
 		}
 	}
