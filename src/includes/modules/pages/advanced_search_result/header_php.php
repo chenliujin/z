@@ -343,13 +343,7 @@ if (isset($keywords) && zen_not_null($keywords)) {
 if (!isset($keywords) || $keywords == "") {
   $where_str .= ')';
 }
-  if (isset($_GET['alpha_filter_id']) && (int)$_GET['alpha_filter_id'] > 0) {
-    $alpha_sort = " and (pd.products_name LIKE '" . chr((int)$_GET['alpha_filter_id']) . "%') ";
-    $where_str .= $alpha_sort;
-  } else {
-    $alpha_sort = '';
-    $where_str .= $alpha_sort;
-  }
+
 //die('I SEE ' . $where_str);
 
 if (isset($_GET['dfrom']) && zen_not_null($_GET['dfrom']) && ($_GET['dfrom'] != DOB_FORMAT_STRING)) {
