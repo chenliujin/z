@@ -117,9 +117,6 @@ if (!isset($select_column_list)) $select_column_list = "";
 		  $sort_col = substr($_GET['sort'], 0 , 1);
 		  $sort_order = substr($_GET['sort'], -1);
 		  switch ($column_list[$sort_col-1]) {
-			  case 'PRODUCT_LIST_MODEL':
-				  $listing_sql .= " order by p.products_model " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
-				  break;
 			  case 'PRODUCT_LIST_NAME':
 				  $listing_sql .= " order by pd.products_name " . ($sort_order == 'd' ? 'desc' : '');
 				  break;
