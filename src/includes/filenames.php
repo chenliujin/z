@@ -1,7 +1,4 @@
 <?php
-/**
- * define project filenames
- */
 define('FILENAME_ACCOUNT', 'account');
 define('FILENAME_ACCOUNT_EDIT', 'account_edit');
 define('FILENAME_ACCOUNT_HISTORY', 'account_history');
@@ -112,7 +109,6 @@ define('FILENAME_POPUP_CVV_HELP', 'popup_cvv_help');
 define('FILENAME_POPUP_ATTRIBUTES_QTY_PRICES', 'popup_attributes_qty_prices');
 define('FILENAME_PRIVACY', 'privacy');
 define('FILENAME_PRODUCT', 'product');
-define('FILENAME_PRODUCT_LISTING_ALPHA_SORTER','product_listing_alpha_sorter');
 define('FILENAME_PRODUCT_TYPES', 'product_types');
 define('FILENAME_PRODUCT_INFO', 'product_info');
 define('FILENAME_PRODUCT_REVIEWS', 'product_reviews');
