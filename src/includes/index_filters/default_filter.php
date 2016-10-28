@@ -54,8 +54,20 @@ if (isset($_GET['manufacturers_id']) && $_GET['manufacturers_id'] != '' ) {
         and pd.language_id = '" . (int)$_SESSION['languages_id'] . "'
         and p2c.categories_id = '" . (int)$current_category_id . "'";
     } else {
-	// We show them all
-      $listing_sql = "select " . $select_column_list . " p.products_id, p.products_type, p.master_categories_id, p.manufacturers_id, p.products_price, p.products_tax_class_id, pd.products_description, IF(s.status = 1, s.specials_new_products_price, NULL) as specials_new_products_price, IF(s.status =1, s.specials_new_products_price, p.products_price) as final_price, p.products_sort_order, p.product_is_call, p.product_is_always_free_shipping, p.products_qty_box_status
+		$listing_sql = "select " . $select_column_list . " 
+			p.products_id, 
+			p.products_type, 
+			p.master_categories_id, 
+			p.manufacturers_id, 
+			p.products_price, 
+			p.products_tax_class_id, 
+			pd.products_description, 
+			IF(s.status = 1, s.specials_new_products_price, NULL) as specials_new_products_price, 
+			IF(s.status =1, s.specials_new_products_price, p.products_price) as final_price, 
+			p.products_sort_order, 
+			p.product_is_call, 
+			p.product_is_always_free_shipping, 
+			p.products_qty_box_status
        from " . TABLE_PRODUCTS_DESCRIPTION . " pd, " .
        TABLE_PRODUCTS . " p left join " . TABLE_MANUFACTURERS . " m on p.manufacturers_id = m.manufacturers_id, " .
        TABLE_PRODUCTS_TO_CATEGORIES . " p2c left join " . TABLE_SPECIALS . " s on p2c.products_id = s.products_id
@@ -64,6 +76,8 @@ if (isset($_GET['manufacturers_id']) && $_GET['manufacturers_id'] != '' ) {
          and pd.products_id = p2c.products_id
          and pd.language_id = '" . (int)$_SESSION['languages_id'] . "'
          and p2c.categories_id = '" . (int)$current_category_id . "'";
+
+	  //echo $listing_sql;
     }
 }
 
