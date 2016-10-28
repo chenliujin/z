@@ -105,11 +105,8 @@ if ($category_depth == 'nested')
 	/////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif ($category_depth == 'products' || zen_check_url_get_terms()) {
 	if (SHOW_PRODUCT_INFO_ALL_PRODUCTS == '1') {
-		// set a category filter
 		$new_products_category_id = $cPath;
-	} else {
-		// do not set the category
-	}
+	} 
 
 	$define_list = array(
 		'PRODUCT_LIST_MODEL' 		=> PRODUCT_LIST_MODEL,
@@ -163,21 +160,22 @@ if ($category_depth == 'nested')
 
 	// set the product filters according to selected product type
 	$typefilter = 'default';
-	if (isset($_GET['typefilter'])) $typefilter = $_GET['typefilter'];
+
+	if (isset($_GET['typefilter'])) {
+		$typefilter = $_GET['typefilter'];
+	}
+
 	require(zen_get_index_filters_directory($typefilter . '_filter.php'));
 
 
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	$tpl_page_body = 'tpl_index_product_list.php';
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	$tpl_page_body = 'tpl_index_default.php';
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }
+
 $current_categories_description = "";
 $current_categories_name = "";
+
 // categories_description
 $sql = "SELECT categories_description, categories_name
 	FROM " . TABLE_CATEGORIES_DESCRIPTION . "
