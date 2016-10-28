@@ -1,6 +1,3 @@
-<?php
-//print_r($list_box_contents);
-?>
 <div id="<?php echo 'cat' . $cPath . 'List'; ?>" class="tabTable">
 <?php
 for($row=0; $row<sizeof($list_box_contents); $row++) {
