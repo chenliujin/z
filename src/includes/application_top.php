@@ -51,7 +51,6 @@ $paramsToCheck = [
 	'notify', 
 	'page_holder', 
 	'chapter', 
-	'alpha_filter_id', 
 	'typefilter', 
 	'disp_order', 
 	'id', 
