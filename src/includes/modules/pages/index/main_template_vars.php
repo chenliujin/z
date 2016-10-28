@@ -1,10 +1,4 @@
 <?php
-// This should be first line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_START_INDEX_MAIN_TEMPLATE_VARS');
-
-//die($category_depth);
-//die($_GET['music_genre_id']);
-
 // release manufacturers_id when nothing is there so a blank filter is not setup.
 // this will result in the home page, if used
 if (isset($_GET['manufacturers_id']) && $_GET['manufacturers_id'] <= 0) {
@@ -216,6 +210,3 @@ if ($current_categories_name == '' && isset($_GET['music_genre_id'])) {
 $zco_notifier->notify('NOTIFY_HEADER_INDEX_MAIN_TEMPLATE_VARS_PAGE_BODY', NULL, $tpl_page_body, $current_categories_name);
 
 require($template->get_template_dir($tpl_page_body, DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . $tpl_page_body);
-
-// This should be last line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_END_INDEX_MAIN_TEMPLATE_VARS', NULL, $current_categories_description);
