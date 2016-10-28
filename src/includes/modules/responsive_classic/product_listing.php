@@ -148,8 +148,10 @@ if ($listing_split->number_of_rows > 0) {
 	$list_box_contents = array();
 
 	$list_box_contents[0] = array('params' => 'class="productListing-odd"');
-	$list_box_contents[0][] = array('params' => 'class="productListing-data"',
-		'text' => TEXT_NO_PRODUCTS);
+	$list_box_contents[0][] = array(
+		'params' => 'class="productListing-data"',
+		'text' => TEXT_NO_PRODUCTS
+	);
 
 	$error_categories = true;
 }
