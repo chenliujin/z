@@ -3,7 +3,7 @@
 <h1 id="advSearchResultsDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
 
 <?php
-if ($do_filter_list || PRODUCT_LIST_ALPHA_SORTER == 'true') {
+if ($do_filter_list) {
 	$form = zen_draw_form('filter', zen_href_link(FILENAME_ADVANCED_SEARCH_RESULT), 'get');
 
 	echo $form; 
@@ -11,8 +11,6 @@ if ($do_filter_list || PRODUCT_LIST_ALPHA_SORTER == 'true') {
 <div id="filter-wrapper">
 	<?php
 	echo zen_post_all_get_params('currency');
-
-	require(DIR_WS_MODULES . zen_get_module_directory(FILENAME_PRODUCT_LISTING_ALPHA_SORTER));
 	?>
 </div>
 </form>
