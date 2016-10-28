@@ -3,16 +3,34 @@
  * inoculate against hack attempts which waste CPU cycles
  */
 $contaminated = (isset($_FILES['GLOBALS']) || isset($_REQUEST['GLOBALS'])) ? true : false;
-$paramsToAvoid = array('GLOBALS', '_COOKIE', '_ENV', '_FILES', '_GET', '_POST', '_REQUEST', '_SERVER', '_SESSION', 'HTTP_COOKIE_VARS', 'HTTP_ENV_VARS', 'HTTP_GET_VARS', 'HTTP_POST_VARS', 'HTTP_POST_FILES', 'HTTP_RAW_POST_DATA', 'HTTP_SERVER_VARS', 'HTTP_SESSION_VARS');
+$paramsToAvoid = [ 
+	'GLOBALS', 
+	'_COOKIE', 
+	'_ENV', 
+	'_FILES', 
+	'_GET', 
+	'_POST', 
+	'_REQUEST', 
+	'_SERVER', 
+	'_SESSION', 
+	'HTTP_COOKIE_VARS', 
+	'HTTP_ENV_VARS', 
+	'HTTP_GET_VARS', 
+	'HTTP_POST_VARS', 
+	'HTTP_POST_FILES', 
+	'HTTP_RAW_POST_DATA', 
+	'HTTP_SERVER_VARS', 
+	'HTTP_SESSION_VARS'
+];
 $paramsToAvoid[] = 'autoLoadConfig';
 $paramsToAvoid[] = 'mosConfig_absolute_path';
 $paramsToAvoid[] = 'hash';
 $paramsToAvoid[] = 'main';
 foreach($paramsToAvoid as $key) {
-  if (isset($_GET[$key]) || isset($_POST[$key]) || isset($_COOKIE[$key])) {
-    $contaminated = true;
-    break;
-  }
+	if (isset($_GET[$key]) || isset($_POST[$key]) || isset($_COOKIE[$key])) {
+		$contaminated = true;
+		break;
+	}
 }
 
 $paramsToCheck = [ 
@@ -65,28 +83,30 @@ $paramsToCheck = [
 ];
 
 if (!$contaminated) {
-  foreach($paramsToCheck as $key) {
-    if (isset($_GET[$key]) && !is_array($_GET[$key])) {
-      if (substr($_GET[$key], 0, 4) == 'http' || strstr($_GET[$key], '//')) {
-        $contaminated = true;
-        break;
-      }
-      $len = (in_array($key, array('zenid', 'error_message', 'payment_error'))) ? 255 : 43;
-      if (isset($_GET[$key]) && strlen($_GET[$key]) > $len) {
-        $contaminated = true;
-        break;
-      }
-    }
-  }
+	foreach($paramsToCheck as $key) {
+		if (isset($_GET[$key]) && !is_array($_GET[$key])) {
+			if (substr($_GET[$key], 0, 4) == 'http' || strstr($_GET[$key], '//')) {
+				$contaminated = true;
+				break;
+			}
+			$len = (in_array($key, array('zenid', 'error_message', 'payment_error'))) ? 255 : 43;
+			if (isset($_GET[$key]) && strlen($_GET[$key]) > $len) {
+				$contaminated = true;
+				break;
+			}
+		}
+	}
 }
+
 unset($paramsToCheck, $paramsToAvoid, $key);
-if ($contaminated)
-{
-  header('HTTP/1.1 406 Not Acceptable');
-  exit(0);
+
+if ($contaminated) {
+	header('HTTP/1.1 406 Not Acceptable');
+	exit(0);
 }
+
 unset($contaminated, $len);
-/* *** END OF INNOCULATION *** */
+
 /**
  * boolean used to see if we are in the admin script, obviously set to false here.
  */
