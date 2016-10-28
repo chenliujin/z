@@ -36,13 +36,17 @@ body, #mainWrapper,
 	background:#fff;
 }
 input:focus, select:focus, textarea:focus, #mainWrapper, .specialsListBoxContents:hover, .centerBoxContentsSpecials:hover, 
-.centerBoxContentsFeatured:hover, .centerBoxContentsNew:hover, .categoryListBoxContents:hover, .sideBoxContentItem:hover, .productListing-odd, #pinfo-right, #sendSpendWrapper {background:#f4f4f4;}
+.centerBoxContentsFeatured:hover, .centerBoxContentsNew:hover, .categoryListBoxContents:hover, .sideBoxContentItem:hover,
+#pinfo-right, #sendSpendWrapper {
+	background:#f4f4f4;
+}
 .messageStackCaution {background-color:#ffff66;}
 fieldset, #shippingEstimatorContent tr:nth-child(odd), #order-comments, ul.list-links li:hover, ol.list-links li:hover, #no-products, .listing-wrapper:nth-child(odd), #reviews-write-wrapper, #gvFaqDefaultContent, #checkoutPayAddressDefault .instructions, #checkoutShipAddressDefault .instructions, #addressBookDefault .instructions, #myAccountNotify, #myAccountGen, .reviews-wrapper, #accountHistInfo table td, #prevOrders td, #myAccountPaymentInfo, #myAccountShipInfo, #accountDefault #sendSpendWrapper {
 	background:#eee;
 }
 
-#navEZPagesTOCWrapper, .cartBoxTotal, .productListing-even:hover, .productListing-odd:hover, #productQuantityDiscounts tr:nth-child(even) {background:#ddd;}
+#navEZPagesTOCWrapper, .cartBoxTotal,
+#productQuantityDiscounts tr:nth-child(even) {background:#ddd;}
 #orderTotals{background:#ccc;}
 legend, #cart-box{background:#bbb;}
 #shippingEstimatorContent h2, #checkoutConfirmDefault .cartTableHeading, .navSplitPagesLinks a, .productListing-rowheading a:hover, .list-more, #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, #checkoutShipAddressDefaultAddress, #accountLinksWrapper h2, h2#addressBookDefaultPrimary, #reviewsWriteHeading, #myAccountPaymentInfo h3, #myAccountShipInfo h3, span.cssButton.normal_button.button.button_more_reviews, .button_more_reviews:hover, span.cssButton.normal_button.button.button_read_reviews, .button_read_reviews:hover {
