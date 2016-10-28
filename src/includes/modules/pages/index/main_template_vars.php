@@ -116,7 +116,7 @@ if ($category_depth == 'nested')
 	} else {
 		// do not set the category
 	}
-	// create column list
+
 	$define_list = array(
 		'PRODUCT_LIST_MODEL' 		=> PRODUCT_LIST_MODEL,
 		'PRODUCT_LIST_NAME' 		=> PRODUCT_LIST_NAME,
@@ -141,26 +141,27 @@ if ($category_depth == 'nested')
 
 	for ($i=0, $n=sizeof($column_list); $i<$n; $i++) {
 		switch ($column_list[$i]) {
-		case 'PRODUCT_LIST_MODEL':
-			$select_column_list .= 'p.products_model, ';
-			break;
-		case 'PRODUCT_LIST_NAME':
-			$select_column_list .= 'pd.products_name, ';
-			break;
-		case 'PRODUCT_LIST_MANUFACTURER':
-			$select_column_list .= 'm.manufacturers_name, ';
-			break;
-		case 'PRODUCT_LIST_QUANTITY':
-			$select_column_list .= 'p.products_quantity, ';
-			break;
-		case 'PRODUCT_LIST_IMAGE':
-			$select_column_list .= 'p.products_image, ';
-			break;
-		case 'PRODUCT_LIST_WEIGHT':
-			$select_column_list .= 'p.products_weight, ';
-			break;
+			case 'PRODUCT_LIST_MODEL':
+				$select_column_list .= 'p.products_model, ';
+				break;
+			case 'PRODUCT_LIST_NAME':
+				$select_column_list .= 'pd.products_name, ';
+				break;
+			case 'PRODUCT_LIST_MANUFACTURER':
+				$select_column_list .= 'm.manufacturers_name, ';
+				break;
+			case 'PRODUCT_LIST_QUANTITY':
+				$select_column_list .= 'p.products_quantity, ';
+				break;
+			case 'PRODUCT_LIST_IMAGE':
+				$select_column_list .= 'p.products_image, ';
+				break;
+			case 'PRODUCT_LIST_WEIGHT':
+				$select_column_list .= 'p.products_weight, ';
+				break;
 		}
 	}
+
 	// always add quantity regardless of whether or not it is in the listing for add to cart buttons
 	if (PRODUCT_LIST_QUANTITY < 1) {
 		$select_column_list .= 'p.products_quantity, ';
