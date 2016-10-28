@@ -134,7 +134,6 @@ if ($error == true) {
 
 $define_list = [
 	'PRODUCT_LIST_NAME' 		=> PRODUCT_LIST_NAME, 
-	'PRODUCT_LIST_MANUFACTURER' => PRODUCT_LIST_MANUFACTURER, 
 	'PRODUCT_LIST_PRICE' 		=> PRODUCT_LIST_PRICE, 
 	'PRODUCT_LIST_QUANTITY' 	=> PRODUCT_LIST_QUANTITY, 
 	'PRODUCT_LIST_WEIGHT' 		=> PRODUCT_LIST_WEIGHT, 
@@ -160,9 +159,6 @@ for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
 	}
 
 	switch ($column_list[$col]) {
-		case 'PRODUCT_LIST_MANUFACTURER':
-			$select_column_list .= 'm.manufacturers_name';
-			break;
 		case 'PRODUCT_LIST_QUANTITY':
 			$select_column_list .= 'p.products_quantity';
 			break;
@@ -418,9 +414,6 @@ if ((!isset($_GET['sort'])) || (!preg_match('/[1-8][ad]/', $_GET['sort'])) || (s
 	switch ($column_list[$sort_col-1]) {
 		case 'PRODUCT_LIST_NAME':
 			$order_str .= "pd.products_name " . ($sort_order == 'd' ? "desc" : "");
-			break;
-		case 'PRODUCT_LIST_MANUFACTURER':
-			$order_str .= "m.manufacturers_name " . ($sort_order == 'd' ? "desc" : "") . ", pd.products_name";
 			break;
 		case 'PRODUCT_LIST_QUANTITY':
 			$order_str .= "p.products_quantity " . ($sort_order == 'd' ? "desc" : "") . ", pd.products_name";
