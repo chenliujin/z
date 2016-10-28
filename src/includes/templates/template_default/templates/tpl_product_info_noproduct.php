@@ -41,14 +41,6 @@ while (!$show_display_category->EOF) {
 ?>
 
 <?php
-	if ($show_display_category->fields['configuration_key'] == 'SHOW_PRODUCT_INFO_MISSING_UPCOMING') {
-		/**
-		 * display the upcoming product center box
-		 */
-		include(DIR_WS_MODULES . zen_get_module_directory(FILENAME_UPCOMING_PRODUCTS));
-	}
-?>
-<?php
 	$show_display_category->MoveNext();
 } //// eof: missing
 ?>
