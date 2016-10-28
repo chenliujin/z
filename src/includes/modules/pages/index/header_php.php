@@ -30,21 +30,3 @@ if (isset($cPath) && zen_not_null($cPath)) {
 }
 
 require(DIR_WS_MODULES . zen_get_module_directory('require_languages.php'));
-
-$typefilter = isset($_GET['typefilter']) ? $_GET['typefilter'] : 'default';
-
-require(zen_get_index_filters_directory($typefilter . '_filter.php'));
-
-// query the database based on the selected filters
-$listing = $db->Execute($listing_sql);
-
-// category is invalid or has no products, so don't index it:
-if ($category_depth == 'products' && $listing->RecordCount() == 0) $robotsNoIndex = true;
-
-// if only one product in this category, go directly to the product page, instead of displaying a link to just one item:
-// if filter_id exists the 1 product redirect is ignored
-if (SKIP_SINGLE_PRODUCT_CATEGORIES=='True' and (!isset($_GET['filter_id']) )) {
-	if ($listing->RecordCount() == 1) {
-		zen_redirect(zen_href_link(zen_get_info_page($listing->fields['products_id']), ($cPath ? 'cPath=' . $cPath . '&' : '') . 'products_id=' . $listing->fields['products_id']));
-	}
-}
