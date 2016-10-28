@@ -72,22 +72,24 @@ if (!isset($_GET['sort']) and PRODUCT_LISTING_DEFAULT_SORT_ORDER != '') {
 	$_GET['sort'] = PRODUCT_LISTING_DEFAULT_SORT_ORDER;
 }
 
+
 if (isset($column_list)) {
-	if ((!isset($_GET['sort'])) || (isset($_GET['sort']) && !preg_match('/[1-8][ad]/', $_GET['sort'])) || (substr($_GET['sort'], 0, 1) > sizeof($column_list)) ) {
+	if (
+		(!isset($_GET['sort'])) 
+		|| (isset($_GET['sort']) && !preg_match('/[1-8][ad]/', $_GET['sort'])) 
+		|| (substr($_GET['sort'], 0, 1) > sizeof($column_list)) 
+	) {
 		for ($i=0, $n=sizeof($column_list); $i<$n; $i++) {
 			if (isset($column_list[$i]) && $column_list[$i] == 'PRODUCT_LIST_NAME') {
 				$_GET['sort'] = $i+1 . 'a';
 				$listing_sql .= " order by p.products_sort_order, pd.products_name";
 				break;
 			} else {
-				// sort by products_sort_order when PRODUCT_LISTING_DEFAULT_SORT_ORDER is left blank
-				// for reverse, descending order use:
-				//       $listing_sql .= " order by p.products_sort_order desc, pd.products_name";
 				$listing_sql .= " order by p.products_sort_order, pd.products_name";
 				break;
 			}
 		}
-		// if set to nothing use products_sort_order and PRODUCTS_LIST_NAME is off
+
 		if (PRODUCT_LISTING_DEFAULT_SORT_ORDER == '') {
 			$_GET['sort'] = '20a';
 		}
@@ -95,27 +97,33 @@ if (isset($column_list)) {
 		$sort_col = substr($_GET['sort'], 0 , 1);
 		$sort_order = substr($_GET['sort'], -1);
 		switch ($column_list[$sort_col-1]) {
-		case 'PRODUCT_LIST_MODEL':
-			$listing_sql .= " order by p.products_model " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
-			break;
-		case 'PRODUCT_LIST_NAME':
-			$listing_sql .= " order by pd.products_name " . ($sort_order == 'd' ? 'desc' : '');
-			break;
-		case 'PRODUCT_LIST_MANUFACTURER':
-			$listing_sql .= " order by m.manufacturers_name " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
-			break;
-		case 'PRODUCT_LIST_QUANTITY':
-			$listing_sql .= " order by p.products_quantity " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
-			break;
-		case 'PRODUCT_LIST_IMAGE':
-			$listing_sql .= " order by pd.products_name";
-			break;
-		case 'PRODUCT_LIST_WEIGHT':
-			$listing_sql .= " order by p.products_weight " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
-			break;
-		case 'PRODUCT_LIST_PRICE':
-			$listing_sql .= " order by p.products_price_sorter " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
-			break;
+			case 'PRODUCT_LIST_MODEL':
+				$listing_sql .= " order by p.products_model " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
+				break;
+
+			case 'PRODUCT_LIST_NAME':
+				$listing_sql .= " order by pd.products_name " . ($sort_order == 'd' ? 'desc' : '');
+				break;
+
+			case 'PRODUCT_LIST_MANUFACTURER':
+				$listing_sql .= " order by m.manufacturers_name " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
+				break;
+
+			case 'PRODUCT_LIST_QUANTITY':
+				$listing_sql .= " order by p.products_quantity " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
+				break;
+
+			case 'PRODUCT_LIST_IMAGE':
+				$listing_sql .= " order by pd.products_name";
+				break;
+
+			case 'PRODUCT_LIST_WEIGHT':
+				$listing_sql .= " order by p.products_weight " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
+				break;
+
+			case 'PRODUCT_LIST_PRICE':
+				$listing_sql .= " order by p.products_price_sorter " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
+				break;
 		}
 	}
 }
