@@ -19,13 +19,13 @@ if ((isset ( $_GET ['action'] ) || isset($_POST['action']) ) && $_SERVER['REQUES
 		}
 	}
 }
-if (isset($_GET['typefilter'])) $_GET['typefilter'] = preg_replace('/[^0-9a-zA-Z_-]/', '', $_GET['typefilter']);
-if (isset($_GET['products_id'])) $_GET['products_id'] = preg_replace('/[^0-9a-f:]/', '', $_GET['products_id']);
-if (isset($_GET['manufacturers_id'])) $_GET['manufacturers_id'] = preg_replace('/[^0-9]/', '', $_GET['manufacturers_id']);
-if (isset($_GET['categories_id'])) $_GET['categories_id'] = preg_replace('/[^0-9]/', '', $_GET['categories_id']);
-if (isset($_GET['cPath'])) $_GET['cPath'] = preg_replace('/[^0-9_]/', '', $_GET['cPath']);
-if (isset($_GET['main_page'])) $_GET['main_page'] = preg_replace('/[^0-9a-zA-Z_]/', '', $_GET['main_page']);
-if (isset($_GET['sort'])) $_GET['sort'] = preg_replace('/[^0-9a-zA-Z]/', '', $_GET['sort']);
+if (isset($_GET['typefilter'])) 		$_GET['typefilter'] 		= preg_replace('/[^0-9a-zA-Z_-]/', '', $_GET['typefilter']);
+if (isset($_GET['products_id'])) 		$_GET['products_id'] 		= preg_replace('/[^0-9a-f:]/', '', $_GET['products_id']);
+if (isset($_GET['manufacturers_id'])) 	$_GET['manufacturers_id'] 	= preg_replace('/[^0-9]/', '', $_GET['manufacturers_id']);
+if (isset($_GET['categories_id'])) 		$_GET['categories_id'] 		= preg_replace('/[^0-9]/', '', $_GET['categories_id']);
+if (isset($_GET['cPath'])) 				$_GET['cPath'] 				= preg_replace('/[^0-9_]/', '', $_GET['cPath']);
+if (isset($_GET['main_page'])) 			$_GET['main_page'] 			= preg_replace('/[^0-9a-zA-Z_]/', '', $_GET['main_page']);
+if (isset($_GET['sort'])) 				$_GET['sort'] 				= preg_replace('/[^0-9a-zA-Z]/', '', $_GET['sort']);
 
 $saniGroup1 = [ 
 	'action', 'addr', 
