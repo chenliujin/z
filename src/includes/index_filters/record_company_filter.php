@@ -121,9 +121,6 @@ if (!isset($select_column_list)) $select_column_list = "";
 			  case 'PRODUCT_LIST_NAME':
 				  $listing_sql .= " order by pd.products_name " . ($sort_order == 'd' ? 'desc' : '');
 				  break;
-			  case 'PRODUCT_LIST_MANUFACTURER':
-				  $listing_sql .= " order by r.record_company_name " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
-				  break;
 			  case 'PRODUCT_LIST_QUANTITY':
 				  $listing_sql .= " order by p.products_quantity " . ($sort_order == 'd' ? 'desc' : '') . ", pd.products_name";
 				  break;
