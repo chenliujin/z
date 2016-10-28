@@ -834,16 +834,20 @@ function zen_categories_lookup($categories_id, $what_field = 'categories_name', 
 function zen_get_index_filters_directory($check_file, $dir_only = 'false') {
 	global $template_dir;
 	$zv_filename = $check_file;
+
 	if (!strstr($zv_filename, '.php')) $zv_filename .= '.php';
+
 	$checkArray = array();
 	$checkArray[] = DIR_WS_INCLUDES . 'index_filters/' . $template_dir . '/' . $zv_filename;
 	$checkArray[] = DIR_WS_INCLUDES . 'index_filters/' . $zv_filename;
 	$checkArray[] = DIR_WS_INCLUDES . 'index_filters/' . $template_dir . '/' . 'default_filter.php';
+
 	foreach($checkArray as $key => $val) {
 		if (file_exists($val)) {
 			return ($dir_only == 'true') ? $val = substr($val, 0, strpos($val, '/')) : $val;
 		}
 	}
+
 	return DIR_WS_INCLUDES . 'index_filters/' . 'default_filter.php';
 }
 
