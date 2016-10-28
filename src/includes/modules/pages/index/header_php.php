@@ -31,9 +31,7 @@ if (isset($cPath) && zen_not_null($cPath)) {
 
 require(DIR_WS_MODULES . zen_get_module_directory('require_languages.php'));
 
-// set the product filters according to selected product type
-$typefilter = 'default';
-if (isset($_GET['typefilter'])) $typefilter = $_GET['typefilter'];
+$typefilter = isset($_GET['typefilter']) ? $_GET['typefilter'] : 'default';
 
 require(zen_get_index_filters_directory($typefilter . '_filter.php'));
 
