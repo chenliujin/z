@@ -7,12 +7,6 @@ if (isset($_GET['sort']) && strlen($_GET['sort']) > 3) {
   $_GET['sort'] = substr($_GET['sort'], 0, 3);
 }
 
-if (isset($_GET['alpha_filter_id']) && (int)$_GET['alpha_filter_id'] > 0) {
-	$alpha_sort = " and pd.products_name LIKE '" . chr((int)$_GET['alpha_filter_id']) . "%' ";
-} else {
-	$alpha_sort = '';
-}
-
 if (!isset($select_column_list)) $select_column_list = "";
 
 // show the products of a specified manufacturer
@@ -30,8 +24,7 @@ if (isset($_GET['manufacturers_id']) && $_GET['manufacturers_id'] != '' ) {
          and p.products_id = p2c.products_id
          and pd.products_id = p2c.products_id
          and pd.language_id = '" . (int)$_SESSION['languages_id'] . "'
-         and p2c.categories_id = '" . (int)$_GET['filter_id'] . "'" .
-         $alpha_sort;
+         and p2c.categories_id = '" . (int)$_GET['filter_id'] . "'";
     } else {
 		// We show them all
       $listing_sql = "select " . $select_column_list . " p.products_id, p.products_type, p.master_categories_id, p.manufacturers_id, p.products_price, p.products_tax_class_id, pd.products_description, IF(s.status = 1, s.specials_new_products_price, NULL) as specials_new_products_price, IF(s.status = 1, s.specials_new_products_price, p.products_price) as final_price, p.products_sort_order, p.product_is_call, p.product_is_always_free_shipping, p.products_qty_box_status
@@ -42,8 +35,7 @@ if (isset($_GET['manufacturers_id']) && $_GET['manufacturers_id'] != '' ) {
         and pd.products_id = p.products_id
         and pd.language_id = '" . (int)$_SESSION['languages_id'] . "'
         and p.manufacturers_id = m.manufacturers_id
-        and m.manufacturers_id = '" . (int)$_GET['manufacturers_id'] . "'" .
-        $alpha_sort;
+        and m.manufacturers_id = '" . (int)$_GET['manufacturers_id'] . "'";
     }
 } else {
 	// show the products in a given category
@@ -60,8 +52,7 @@ if (isset($_GET['manufacturers_id']) && $_GET['manufacturers_id'] != '' ) {
         and p.products_id = p2c.products_id
         and pd.products_id = p2c.products_id
         and pd.language_id = '" . (int)$_SESSION['languages_id'] . "'
-        and p2c.categories_id = '" . (int)$current_category_id . "'" .
-        $alpha_sort;
+        and p2c.categories_id = '" . (int)$current_category_id . "'";
     } else {
 	// We show them all
       $listing_sql = "select " . $select_column_list . " p.products_id, p.products_type, p.master_categories_id, p.manufacturers_id, p.products_price, p.products_tax_class_id, pd.products_description, IF(s.status = 1, s.specials_new_products_price, NULL) as specials_new_products_price, IF(s.status =1, s.specials_new_products_price, p.products_price) as final_price, p.products_sort_order, p.product_is_call, p.product_is_always_free_shipping, p.products_qty_box_status
@@ -72,8 +63,7 @@ if (isset($_GET['manufacturers_id']) && $_GET['manufacturers_id'] != '' ) {
          and p.products_id = p2c.products_id
          and pd.products_id = p2c.products_id
          and pd.language_id = '" . (int)$_SESSION['languages_id'] . "'
-         and p2c.categories_id = '" . (int)$current_category_id . "'" .
-         $alpha_sort;
+         and p2c.categories_id = '" . (int)$current_category_id . "'";
     }
 }
 
