@@ -1,18 +1,5 @@
 <?php
 /**
- * application_top.php Common actions carried out at the start of each page invocation.
- *
- * Initializes common classes & methods. Controlled by an array which describes
- * the elements to be initialised and the order in which that happens.
- * see {@link  http://www.zen-cart.com/wiki/index.php/Developers_API_Tutorials#InitSystem wikitutorials} for more details.
- *
- * @package initSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: zcwilt  Mon Oct 19 18:21:05 2015 +0100 Modified in v1.5.5 $
- */
-/**
  * inoculate against hack attempts which waste CPU cycles
  */
 $contaminated = (isset($_FILES['GLOBALS']) || isset($_REQUEST['GLOBALS'])) ? true : false;
@@ -27,7 +14,56 @@ foreach($paramsToAvoid as $key) {
     break;
   }
 }
-$paramsToCheck = array('main_page', 'cPath', 'products_id', 'language', 'currency', 'action', 'manufacturers_id', 'pID', 'pid', 'reviews_id', 'filter_id', 'zenid', 'sort', 'number_of_uploads', 'notify', 'page_holder', 'chapter', 'alpha_filter_id', 'typefilter', 'disp_order', 'id', 'key', 'music_genre_id', 'record_company_id', 'set_session_login', 'faq_item', 'edit', 'delete', 'search_in_description', 'dfrom', 'pfrom', 'dto', 'pto', 'inc_subcat', 'payment_error', 'order', 'gv_no', 'pos', 'addr', 'error', 'count', 'error_message', 'info_message', 'cID', 'page', 'credit_class_error_code');
+
+$paramsToCheck = [ 
+	'main_page', 
+	'cPath', 
+	'products_id', 
+	'language', 
+	'currency', 
+	'action', 
+	'manufacturers_id', 
+	'pID', 
+	'pid', 
+	'reviews_id', 
+	'filter_id', 
+	'zenid', 
+	'sort', 
+	'number_of_uploads', 
+	'notify', 
+	'page_holder', 
+	'chapter', 
+	'alpha_filter_id', 
+	'typefilter', 
+	'disp_order', 
+	'id', 
+	'key', 
+	'music_genre_id', 
+	'record_company_id', 
+	'set_session_login', 
+	'faq_item', 
+	'edit', 
+	'delete', 
+	'search_in_description', 
+	'dfrom', 
+	'pfrom', 
+	'dto', 
+	'pto', 
+	'inc_subcat', 
+	'payment_error', 
+	'order', 
+	'gv_no', 
+	'pos', 
+	'addr', 
+	'error', 
+	'count', 
+	'error_message', 
+	'info_message', 
+	'cID', 
+	'page', 
+	'credit_class_error_code'
+];
+
 if (!$contaminated) {
   foreach($paramsToCheck as $key) {
     if (isset($_GET[$key]) && !is_array($_GET[$key])) {
