@@ -72,52 +72,53 @@ if ($listing_split->number_of_rows > 0) {
 
 		for ($col=0, $n=sizeof($column_list); $col<$n; $col++) {
 			$lc_align = '';
+
 			switch ($column_list[$col]) {
-			case 'PRODUCT_LIST_NAME':
-				$lc_align = '';
-				$lc_text = '<h3 class="itemTitle"><a href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id'] > 0) ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' 
-					. $listing->fields['products_name'] 
-					. '</a></h3><div class="listingDescription">' 
-					. zen_trunc_string(zen_clean_html(stripslashes(zen_get_products_description($listing->fields['products_id'], $_SESSION['languages_id']))), PRODUCT_LIST_DESCRIPTION) 
-					. '</div>';
-				break;
+				case 'PRODUCT_LIST_NAME':
+					$lc_align = '';
+					$lc_text = '<h3 class="itemTitle"><a href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id'] > 0) ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' 
+						. $listing->fields['products_name'] 
+						. '</a></h3><div class="listingDescription">' 
+						. zen_trunc_string(zen_clean_html(stripslashes(zen_get_products_description($listing->fields['products_id'], $_SESSION['languages_id']))), PRODUCT_LIST_DESCRIPTION) 
+						. '</div>';
+					break;
 
-			case 'PRODUCT_LIST_PRICE':
-				$lc_price = '<div class="list-price">' 
-					. zen_get_products_display_price($listing->fields['products_id']) 
-					. '</div>';
-				$lc_align = 'right';
-				$lc_text =  $lc_price;
+				case 'PRODUCT_LIST_PRICE':
+					$lc_price = '<div class="list-price">' 
+						. zen_get_products_display_price($listing->fields['products_id']) 
+						. '</div>';
+					$lc_align = 'right';
+					$lc_text =  $lc_price;
 
-				$lc_text .= '' . (zen_get_show_product_switch($listing->fields['products_id'], 'ALWAYS_FREE_SHIPPING_IMAGE_SWITCH') 
-					? (zen_get_product_is_always_free_shipping($listing->fields['products_id']) ? TEXT_PRODUCT_FREE_SHIPPING_ICON . '' : '') 
-					: '');
+					$lc_text .= '' . (zen_get_show_product_switch($listing->fields['products_id'], 'ALWAYS_FREE_SHIPPING_IMAGE_SWITCH') 
+						? (zen_get_product_is_always_free_shipping($listing->fields['products_id']) ? TEXT_PRODUCT_FREE_SHIPPING_ICON . '' : '') 
+						: '');
 
-				break;
+					break;
 
-			case 'PRODUCT_LIST_QUANTITY':
-				$lc_align = 'right';
-				$lc_text = '<div class="list-quantity">' 
-					. $listing->fields['products_quantity'] 
-					. '</div>';
-				break;
+				case 'PRODUCT_LIST_QUANTITY':
+					$lc_align = 'right';
+					$lc_text = '<div class="list-quantity">' 
+						. $listing->fields['products_quantity'] 
+						. '</div>';
+					break;
 
-			case 'PRODUCT_LIST_IMAGE':
-				$lc_align = 'center';
-				$lc_text = '';
+				case 'PRODUCT_LIST_IMAGE':
+					$lc_align = 'center';
+					$lc_text = '';
 
-				$images = json_decode($listing->fields['products_image'], TRUE);
+					$images = json_decode($listing->fields['products_image'], TRUE);
 
-				if ( is_array($images) ) {
-					$lc_text = '
-						<div class="list-image">
-							<a href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id']) > 0 ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' 
-								. \z\products::Image($images[0], $listing->fields['products_name'], 220, 220) . '
-							</a>
-						</div>';
-				} 
+					if ( is_array($images) ) {
+						$lc_text = '
+							<div class="list-image">
+								<a href="' . zen_href_link(zen_get_info_page($listing->fields['products_id']), 'cPath=' . (($_GET['manufacturers_id'] > 0 and $_GET['filter_id']) > 0 ?  zen_get_generated_category_path_rev($_GET['filter_id']) : ($_GET['cPath'] > 0 ? zen_get_generated_category_path_rev($_GET['cPath']) : zen_get_generated_category_path_rev($listing->fields['master_categories_id']))) . '&products_id=' . $listing->fields['products_id']) . '">' 
+									. \z\products::Image($images[0], $listing->fields['products_name'], 220, 220) . '
+								</a>
+							</div>';
+					} 
 
-				break;
+					break;
 			}
 
 			$list_box_contents[$rows][$col] = array(
