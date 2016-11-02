@@ -2,9 +2,6 @@
 
 <div id="cat-top" class="group">
 <div id="cat-left" class="back">
-	<h1 id="productListHeading">
-		<?php echo $current_categories_name; ?>
-	</h1>
 
 <?php
 if (PRODUCT_LIST_CATEGORIES_IMAGE_STATUS == 'true') {
