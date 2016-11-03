@@ -156,6 +156,4 @@ if ($category_depth == 'nested')
 	$tpl_page_body = 'tpl_index_default.php';
 }
 
-$current_categories_description = "";
-
 require($template->get_template_dir($tpl_page_body, DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . $tpl_page_body);
