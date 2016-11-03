@@ -1,13 +1,4 @@
 <?php
-/**
- * category_icon_display module
- *
- * @package modules
- * @copyright Copyright 2003-2010 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: category_icon_display.php 16776 2010-06-24 20:48:53Z drbyte $
- */
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
 }
@@ -17,7 +8,6 @@ if ($cPath == '' || $cPath == 0) {
 if (!isset($_GET['cPath']) || $_GET['cPath'] == '') $_GET['cPath'] = $cPath;
 
 $cPath_new = zen_get_path(zen_get_products_category_id((int)$_GET['products_id']));
-//      if ((zen_get_categories_image(zen_get_products_category_id((int)$_GET['products_id']))) !='') {
 switch(true) {
   case ($module_show_categories=='1'):
   $align='left';
