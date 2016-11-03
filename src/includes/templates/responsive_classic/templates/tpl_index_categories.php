@@ -15,42 +15,17 @@
 <div id="cat-top" class="group">
 <div id="cat-left" class="back">
 
-<?php } ?>
+<?php } 
 
-<?php
-if (PRODUCT_LIST_CATEGORIES_IMAGE_STATUS_TOP == 'true') {
-	if ($categories_image = zen_get_categories_image($current_category_id)) {
-?>
-
-<div id="categoryImgListing" class="categoryImg"><?php echo zen_image(DIR_WS_IMAGES . $categories_image, '', SUBCATEGORY_IMAGE_TOP_WIDTH, SUBCATEGORY_IMAGE_TOP_HEIGHT); ?></div>
-<?php
-	}
+if ($show_welcome != true) { 
+	?>
+</div>
+</div>
+	<?php 
 } 
 ?>
 
-<?php
-if ($show_welcome != true) { ?>
-</div>
-<?php } ?>
 
-
-
-
-<?php
-	// categories_description
-	if ($current_categories_description != '') {
-?>
-<div id="categoryDescription" class="catDescContent"><?php echo $current_categories_description;  ?></div>
-<br class="clearBoth" />
-<?php } // categories_description ?>
-
-<?php
-		if ($show_welcome != true) { ?>
-</div>
-<?php } ?>
-
-
-<!-- BOF: Display grid of available sub-categories, if any -->
 <?php
 			if (PRODUCT_LIST_CATEGORY_ROW_STATUS == 0) {
 				// do nothing
@@ -62,7 +37,6 @@ if ($show_welcome != true) { ?>
 				require($template->get_template_dir('tpl_modules_category_row.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_category_row.php');
 			}
 ?>
-<!-- EOF: Display grid of available sub-categories -->
 <?php
 		$show_display_category = $db->Execute(SQL_SHOW_PRODUCT_INFO_CATEGORY);
 
