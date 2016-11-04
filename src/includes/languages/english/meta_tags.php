@@ -1,14 +1,7 @@
 <?php
-// page title
-define('TITLE', 'Zen Cart!');
-
-// Site Tagline
-define('SITE_TAGLINE', 'The Art of E-commerce');
-
-// Custom Keywords
+define('TITLE', ' - Zdaylight.com');
+define('SITE_TAGLINE', '');
 define('CUSTOM_KEYWORDS', 'ecommerce, open source, shop, online shopping, store');
-
-// Home Page Only:
 define('HOME_PAGE_META_DESCRIPTION', '');
 define('HOME_PAGE_META_KEYWORDS', '');
 
