@@ -1,5 +1,5 @@
 <?php
-define('TITLE', ' - Zdaylight.com');
+define('TITLE', 'Zdaylight.com');
 define('SITE_TAGLINE', '');
 define('CUSTOM_KEYWORDS', 'ecommerce, open source, shop, online shopping, store');
 define('HOME_PAGE_META_DESCRIPTION', '');
@@ -27,14 +27,8 @@ define('META_TAG_TITLE_page_name', '');
 // Review Page can have a lead in:
 define('META_TAGS_REVIEW', 'Reviews: ');
 
-// separators for meta tag definitions
-// Define Primary Section Output
 define('PRIMARY_SECTION', ' : ');
-
-// Define Secondary Section Output
 define('SECONDARY_SECTION', ' - ');
-
-// Define Tertiary Section Output
 define('TERTIARY_SECTION', ', ');
 
 // Define divider ... usually just a space or a comma plus a space
