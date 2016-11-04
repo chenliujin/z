@@ -4,7 +4,8 @@ include_once('z/model/products.php');
 <div class="centerColumn" id="shoppingCartDefault">
 <?php
 if ($flagHasCartContents) { ?>
-	<h2 style="margin-bottom:0"><?php echo HEADING_TITLE; ?></h2> <?php 
+	<h2 style="margin-bottom:0"><?php echo HEADING_TITLE; ?></h2> 
+	<?php 
 
 	if ($messageStack->size('shopping_cart') > 0) {
 		echo $messageStack->output('shopping_cart');
@@ -144,30 +145,7 @@ if ($flagHasCartContents) { ?>
 		require(DIR_WS_MODULES . zen_get_module_directory('shipping_estimator.php')); 
 	}
 } else { ?> 
-	<h2 id="cartEmptyText"><?php echo TEXT_CART_EMPTY; ?></h2> <?php 
-	
-	$show_display_shopping_cart_empty = $db->Execute(SQL_SHOW_SHOPPING_CART_EMPTY); 
-	  
-	while (!$show_display_shopping_cart_empty->EOF) {
-		if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_FEATURED_PRODUCTS') { 
-			require($template->get_template_dir('tpl_modules_featured_products.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_featured_products.php'); 
-		
-		} 
-		
-		if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_SPECIALS_PRODUCTS') { 
-			require($template->get_template_dir('tpl_modules_specials_default.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_specials_default.php'); 
-		} 
-
-		if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_NEW_PRODUCTS') { 
-			require($template->get_template_dir('tpl_modules_whats_new.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_whats_new.php'); 
-		} 
-		
-		if ($show_display_shopping_cart_empty->fields['configuration_key'] == 'SHOW_SHOPPING_CART_EMPTY_UPCOMING') { 
-			include(DIR_WS_MODULES . zen_get_module_directory(FILENAME_UPCOMING_PRODUCTS)); 
-		} 
-		
-		$show_display_shopping_cart_empty->MoveNext(); 
-	} 
+	<h2 class="text-center"><?php echo TEXT_CART_EMPTY; ?></h2> <?php 
 }
 ?>
 </div>
