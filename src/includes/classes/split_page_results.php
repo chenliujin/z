@@ -83,9 +83,14 @@ class splitPageResults extends base {
 		$this->sql_query .= " limit " . ($offset > 0 ? $offset . ", " : '') . $this->number_of_rows_per_page;
 	}
 
-	// display split-page-number-links
-	function display_links($max_page_links, $parameters = '', $outputAsUnorderedList = false) {
+	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-10-29
+	 */
+	public function display_links($max_page_links, $parameters = '', $outputAsUnorderedList = false) 
+	{
 		global $request_type;
+
 		if ($max_page_links == '') $max_page_links = 1;
 
 		if ($this->number_of_pages == 1) return;
@@ -97,7 +102,6 @@ class splitPageResults extends base {
 
 		if (zen_not_null($parameters) && (substr($parameters, -1) != '&')) $parameters .= '&';
 
-		// previous button - not displayed on first page
 		$link = '<a href="' . zen_href_link($_GET['main_page'], $parameters . $this->page_name . '=' . ($this->current_page_number - 1), $request_type) . '" title=" ' . PREVNEXT_TITLE_PREVIOUS_PAGE . ' ">' . PREVNEXT_BUTTON_PREV . '</a>';
 		if ($this->current_page_number > 1) {
 			$display_links_string .= $link . '&nbsp;&nbsp;';
@@ -107,14 +111,12 @@ class splitPageResults extends base {
 		}
 
 
-		// check if number_of_pages > $max_page_links
 		$cur_window_num = intval($this->current_page_number / $max_page_links);
 		if ($this->current_page_number % $max_page_links) $cur_window_num++;
 
 		$max_window_num = intval($this->number_of_pages / $max_page_links);
 		if ($this->number_of_pages % $max_page_links) $max_window_num++;
 
-		// previous group of pages
 		$link = '<a href="' . zen_href_link($_GET['main_page'], $parameters . $this->page_name . '=' . (($cur_window_num - 1) * $max_page_links), $request_type) . '" title=" ' . sprintf(PREVNEXT_TITLE_PREV_SET_OF_NO_PAGE, $max_page_links) . ' ">...</a>';
 		if ($cur_window_num > 1) {
 			$display_links_string .= $link;
@@ -123,7 +125,6 @@ class splitPageResults extends base {
 			// $ul_elements .= '  <li class="ellipsis" aria-hidden="true">' . $link . '</li>' . "\n";
 		}
 
-		// page nn button
 		for ($jump_to_page = 1 + (($cur_window_num - 1) * $max_page_links); ($jump_to_page <= ($cur_window_num * $max_page_links)) && ($jump_to_page <= $this->number_of_pages); $jump_to_page++) {
 			if ($jump_to_page == $this->current_page_number) {
 				$display_links_string .= '&nbsp;<strong class="current">' . $jump_to_page . '</strong>&nbsp;';
@@ -137,7 +138,6 @@ class splitPageResults extends base {
 			}
 		}
 
-		// next group of pages
 		if ($cur_window_num < $max_window_num) {
 			$link = '<a href="' . zen_href_link($_GET['main_page'], $parameters . $this->page_name . '=' . (($cur_window_num) * $max_page_links + 1), $request_type) . '" title=" ' . sprintf(PREVNEXT_TITLE_NEXT_SET_OF_NO_PAGE, $max_page_links) . ' ">...</a>';
 			$display_links_string .= $link . '&nbsp;';
@@ -146,7 +146,6 @@ class splitPageResults extends base {
 			// $ul_elements .= '  <li class="ellipsis" aria-hidden="true">' . $link . '</li>' . "\n";
 		}
 
-		// next button
 		if (($this->current_page_number < $this->number_of_pages) && ($this->number_of_pages != 1)) {
 			$link = '<a href="' . zen_href_link($_GET['main_page'], $parameters . 'page=' . ($this->current_page_number + 1), $request_type) . '" title=" ' . PREVNEXT_TITLE_NEXT_PAGE . ' ">' . PREVNEXT_BUTTON_NEXT . '</a>';
 			$display_links_string .= '&nbsp;' . $link . '&nbsp;';
@@ -155,14 +154,16 @@ class splitPageResults extends base {
 			// $ul_elements .= '  <li class="disabled pagination-next">' . $link . '</li>' . "\n";
 		}
 
-		// if no pagination needed, return blank
 		if ($counter_actual_page_links == 0) return;
 
-		// return <nav><ul> format with a-hrefs wrapped in <li>
 		if ($outputAsUnorderedList) {
-			return  '<nav class="pagination">' . "\n" . '<ul class="pagination" role="navigation" aria-label="Pagination">' . "\n" . $ul_elements . '</ul>' . "\n" . '</nav>';
+			return  '<nav class="pagination">' . "\n" 
+				. '<ul class="pagination" role="navigation" aria-label="Pagination">' . "\n" 
+				. $ul_elements 
+				. '</ul>' . "\n" 
+				. '</nav>';
 		}
-		// return unformatted collection of a-hrefs
+
 		return $display_links_string;
 	}
 
