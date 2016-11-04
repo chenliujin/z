@@ -25,7 +25,8 @@ h1, h2, h3, h4, h5, h6 {margin:20px 0;}
 P, ADDRESS {padding:0.5em;}
 ADDRESS {font-style:normal;}
 #logo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .centerBoxContentsAlsoPurch, .attribImg {float:left;}
-.centeredContent, TH, #cartEmptyText, #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, 
+.centeredContent, TH,
+#cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, 
 #siteinfoCredits, #siteinfoStatus, #siteinfoIP, .center,
 .cartTotalsDisplay, #cartBoxGVBalance, .leftBoxHeading, .centerBoxHeading,.rightBoxHeading, 
 .accountQuantityDisplay, .ratingRow, LABEL#textAreaReviews, #productMainImage, #reviewsInfoDefaultProductImage, #productReviewsDefaultProductImage, #reviewWriteMainImage, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, 
@@ -556,6 +557,9 @@ input[type=text]:focus {
  ************************************************/
 .text-right {
 	text-align: right!important;
+}
+.text-center {
+	text-align: center!important;
 }
 .text-bold {
 	font-weight: 700!important;
