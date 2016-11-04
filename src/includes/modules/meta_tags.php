@@ -1,13 +1,4 @@
 <?php
-/**
- * meta_tags module
- *
- * @package modules
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Mon Feb 8 15:28:43 2016 -0500 Modified in v1.5.5 $
- */
 $meta_tags_over_ride = false;
 $metatag_page_name = $current_page_base;
 if (!defined('IS_ADMIN_FLAG')) {
@@ -344,6 +335,3 @@ if ($meta_tags_over_ride == true) {
   define('META_TAG_DESCRIPTION', $metatags_description);
   define('META_TAG_KEYWORDS', $metatags_keywords);
 }
-
-// This should be last line of the script:
-$zco_notifier->notify('NOTIFY_MODULE_END_META_TAGS');
