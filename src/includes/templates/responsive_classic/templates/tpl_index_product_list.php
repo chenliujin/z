@@ -1,29 +1,5 @@
 <div class="centerColumn" id="indexProductList">
 
-<div id="cat-top" class="group">
-<div id="cat-left" class="back">
-
-<?php
-if (PRODUCT_LIST_CATEGORIES_IMAGE_STATUS == 'true') {
-	if ($categories_image = zen_get_categories_image($current_category_id)) {
-		?>
-<div id="categoryImgListing" class="categoryImg">
-	<?php echo zen_image(DIR_WS_IMAGES . $categories_image, '', CATEGORY_ICON_IMAGE_WIDTH, CATEGORY_ICON_IMAGE_HEIGHT); ?>
-</div>
-		<?php
-	}
-} 
-?>
-</div>
-
-<?php
-if ($current_categories_description != '') {
-	?>
-<div id="indexProductListCatDescription" class="content"><?php echo $current_categories_description;  ?></div>
-	<?php } 
-?>
-</div>
-
 <?php 
 if ($do_filter_list) { 
 	?>
