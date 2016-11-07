@@ -1,7 +1,6 @@
 /*bof font colors*/
 body, .messageStackSuccess, .messageStackCaution, #tagline, #productQuantityDiscounts table, .categoryListBoxContents a, h2.greeting a {color:#000000;}
 
-fieldset fieldset legend, 
 .cartOldItem, .specialsListBoxContents, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, 
 h2.greeting, #icon, .header .fa-bars {
 	color:#05a5cb;
@@ -12,7 +11,7 @@ h3, .cartAttribsList, #cart-box {color:#444;}
 .blue{color:#05a5cb !important;}
 .blue:hover{color:#036f89 !important;}
 .alert {color: #8b0000;}
-legend, .specialsListBoxContents a, .centerBoxContentsAlsoPurch a, .centerBoxContentsFeatured a, .centerBoxContentsSpecials a, .centerBoxContentsNew a {
+.specialsListBoxContents a, .centerBoxContentsAlsoPurch a, .centerBoxContentsFeatured a, .centerBoxContentsSpecials a, .centerBoxContentsNew a {
 	color:#333;
 }
 .messageStackWarning, 
@@ -44,14 +43,14 @@ input:focus, select:focus, textarea:focus, #mainWrapper, .specialsListBoxContent
 	background:#f4f4f4;
 }
 .messageStackCaution {background-color:#ffff66;}
-fieldset, #shippingEstimatorContent tr:nth-child(odd), 
+#shippingEstimatorContent tr:nth-child(odd), 
 ul.list-links li:hover, ol.list-links li:hover, #no-products, .listing-wrapper:nth-child(odd), #reviews-write-wrapper, #gvFaqDefaultContent, #checkoutPayAddressDefault .instructions, #checkoutShipAddressDefault .instructions, #addressBookDefault .instructions, #myAccountNotify, #myAccountGen, .reviews-wrapper, #accountHistInfo table td, #prevOrders td, #myAccountPaymentInfo, #myAccountShipInfo, #accountDefault #sendSpendWrapper {
 	background:#eee;
 }
 
 #navEZPagesTOCWrapper, .cartBoxTotal,
 #productQuantityDiscounts tr:nth-child(even) {background:#ddd;}
-legend, #cart-box{background:#bbb;}
+#cart-box{background:#bbb;}
 #shippingEstimatorContent h2, 
 .navSplitPagesLinks a, .productListing-rowheading a:hover, .list-more, #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, #checkoutShipAddressDefaultAddress, #accountLinksWrapper h2, h2#addressBookDefaultPrimary, #reviewsWriteHeading, #myAccountPaymentInfo h3, #myAccountShipInfo h3, span.cssButton.normal_button.button.button_more_reviews, .button_more_reviews:hover, span.cssButton.normal_button.button.button_read_reviews, .button_read_reviews:hover {
 	background:#333;
