@@ -49,7 +49,7 @@
   if ($_SESSION['sendto'] != false) {
 ?>
 <div id="checkoutShipto" class="forward">
-<h2 id="checkoutConfirmDefaultShippingAddress"><?php echo HEADING_DELIVERY_ADDRESS; ?></h2>
+<h2><?php echo HEADING_DELIVERY_ADDRESS; ?></h2>
 <div class="buttonRow forward"><?php echo '<a href="' . $editShippingButtonLink . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?></div>
 
 <address><?php echo zen_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br />'); ?></address>
