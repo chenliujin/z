@@ -1,17 +1,3 @@
-<?php
-/**
- * Page Template
- *
- * Loaded automatically by index.php?main_page=checkout_confirmation.<br />
- * Displays final checkout details, cart, payment and shipping info details.
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: picaflor-azul Fri Jan 8 02:59:52 2016 -0500 New in v1.5.5 $
- */
-?>
 <div class="centerColumn" id="checkoutConfirmDefault">
 
 <h1 id="checkoutConfirmDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
@@ -108,7 +94,7 @@
       <table id="cartContentsDisplay">
         <tr class="cartTableHeading">
         <th scope="col" id="ccQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
-        <th scope="col" id="ccProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
+        <th scope="col"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
 <?php
   // If there are tax groups, display the tax columns for price breakdown
   if (sizeof($order->info['tax_groups']) > 1) {
