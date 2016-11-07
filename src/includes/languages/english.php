@@ -577,7 +577,7 @@ define('COLON_SPACER', ':&nbsp;&nbsp;');
 define('PAYMENT_JAVASCRIPT_DISABLED', 'We could not continue with checkout as Javascript is disabled. You must enable it to continue');
 
 // table headings for cart display and upcoming products
-define('TABLE_HEADING_QUANTITY', 'Quantity');
+define('TABLE_HEADING_QUANTITY', 'Qty.');
 define('TABLE_HEADING_PRODUCTS', 'Item Name');
 define('TABLE_HEADING_TOTAL', 'Total');
 
