@@ -236,11 +236,10 @@ ul.list-links li:hover, ol.list-links li:hover{}
 }
 .cartTotalDisplay {
 	text-align:right;
-	padding: 0.5em 14px 0.5em 0;
+	padding-right: 14px!important;
 	font-size:130%;
 }
 #scUpdateQuantity {width:2em;}
-.cartQuantity {width:4.7em;}
 .cartNewItem {position:relative;}
 .cartOldItem {position:relative;}
 .cartBoxTotal {text-align:right;font-weight:bold;}
@@ -499,7 +498,14 @@ h2.greeting a:hover{}
 	border-spacing:0;
 	border-collapse:collapse;
 }
-table{border:none;padding:0;margin:0; border-spacing:0;border-collapse:collapse;width:100%;}
+table{
+	border:none;
+	padding:0;
+	margin:0; 
+	border-spacing:0;
+	border-collapse:collapse;
+	width:100%;
+}
 #cartContentsDisplay {width: 100%;}
 #myAccountOrdersStatus, #orderHistoryHeading, #prevOrders {width: 100%;}
 .accountOrderId {width:30px;}
@@ -562,6 +568,9 @@ input[type=text]:focus {
 /************************************************
  * Text 
  ************************************************/
+.text-left {
+	text-align: left!important;
+}
 .text-right {
 	text-align: right!important;
 }
@@ -968,6 +977,18 @@ table.specifications th {
 table.specifications td {
 	padding: 3px 10px;
 	border: 1px solid #ddd;
+}
+
+#checkoutConfirmDefault #cartContentsDisplay {
+	border-collapse: separate;
+	border-spacing: 2px;
+}
+#checkoutConfirmDefault #cartContentsDisplay th {
+	padding: 5px;
+	background: #eeeecc;
+}
+#checkoutConfirmDefault #cartContentsDisplay td {
+	padding: 5px;
 }
 
 
