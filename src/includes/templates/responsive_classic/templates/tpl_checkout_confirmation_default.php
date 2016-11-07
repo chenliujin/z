@@ -1,17 +1,3 @@
-<?php
-/**
- * Page Template
- *
- * Loaded automatically by index.php?main_page=checkout_confirmation.<br />
- * Displays final checkout details, cart, payment and shipping info details.
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: picaflor-azul Fri Jan 8 00:33:36 2016 -0500 New in v1.5.5 $
- */
-?>
 <div class="centerColumn" id="checkoutConfirmDefault">
 
 <h1 id="checkoutConfirmDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
@@ -92,9 +78,6 @@
 </div>
 
 <h2 id="checkoutConfirmDefaultHeadingCart"><?php echo HEADING_PRODUCTS; ?></h2>
-
-<div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_SHOPPING_CART, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?></div>
-<br class="clearBoth" />
 
 <?php  if ($flagAnyOutOfStock) { ?>
 <?php    if (STOCK_ALLOW_CHECKOUT == 'true') {  ?>
