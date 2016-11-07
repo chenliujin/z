@@ -578,7 +578,7 @@ define('PAYMENT_JAVASCRIPT_DISABLED', 'We could not continue with checkout as Ja
 
 // table headings for cart display and upcoming products
 define('TABLE_HEADING_QUANTITY', 'Qty.');
-define('TABLE_HEADING_PRODUCTS', 'Item Name');
+define('TABLE_HEADING_PRODUCTS', 'Item');
 define('TABLE_HEADING_TOTAL', 'Total');
 
 // create account - login shared
