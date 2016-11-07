@@ -33,12 +33,7 @@ if (isset($_GET['filter_id']) && $_GET['filter_id'] <= 0) {
 	unset($filter_id);
 }
 
-// hook to notifier so that additional product-type-specific vars can be released too
-$zco_notifier->notify('NOTIFY_HEADER_INDEX_MAIN_TEMPLATE_VARS_RELEASE_PRODUCT_TYPE_VARS');
-
-
-if ($category_depth == 'nested')
-{
+if ($category_depth == 'nested') {
 	$sql = "SELECT cd.categories_name, c.categories_image
 		FROM   " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd
 		WHERE      c.categories_id = :categoriesID
@@ -50,12 +45,10 @@ if ($category_depth == 'nested')
 	$sql = $db->bindVars($sql, ':languagesID', $_SESSION['languages_id'], 'integer');
 	$category = $db->Execute($sql);
 
-	if (isset($cPath) && strpos($cPath, '_'))
-	{
+	if (isset($cPath) && strpos($cPath, '_')) {
 		// check to see if there are deeper categories within the current category
 		$category_links = array_reverse($cPath_array);
-		for($i=0, $n=sizeof($category_links); $i<$n; $i++)
-		{
+		for($i=0, $n=sizeof($category_links); $i<$n; $i++) {
 			$sql = "SELECT count(*) AS total
 				FROM   " . TABLE_CATEGORIES . " c, " . TABLE_CATEGORIES_DESCRIPTION . " cd
 				WHERE      c.parent_id = :parentID
@@ -67,8 +60,7 @@ if ($category_depth == 'nested')
 			$sql = $db->bindVars($sql, ':languagesID', $_SESSION['languages_id'], 'integer');
 			$categories = $db->Execute($sql);
 
-			if ($categories->fields['total'] < 1)
-			{
+			if ($categories->fields['total'] < 1) {
 				// do nothing, go through the loop
 			} else {
 				$categories_query = "SELECT c.categories_id, cd.categories_name, c.categories_image, c.parent_id
@@ -100,9 +92,7 @@ if ($category_depth == 'nested')
 	$number_of_categories = $categories->RecordCount();
 	$new_products_category_id = $current_category_id;
 
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
 	$tpl_page_body = 'tpl_index_categories.php';
-	/////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif ($category_depth == 'products' || zen_check_url_get_terms()) {
 	if (SHOW_PRODUCT_INFO_ALL_PRODUCTS == '1') {
 		$new_products_category_id = $cPath;
