@@ -54,15 +54,11 @@
 
 <address><?php echo zen_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br />'); ?></address>
 
-<?php
-    if ($order->info['shipping_method']) {
-?>
-<h3 id="checkoutConfirmDefaultShipment"><?php echo HEADING_SHIPPING_METHOD; ?></h3>
-<h4 id="checkoutConfirmDefaultShipmentTitle"><?php echo $order->info['shipping_method']; ?></h4>
+<?php if ($order->info['shipping_method']) { ?>
+<h3><?php echo HEADING_SHIPPING_METHOD; ?></h3>
+<h4><?php echo $order->info['shipping_method']; ?></h4>
+<?php } ?>
 
-<?php
-    }
-?>
 </div>
 <?php
   }
