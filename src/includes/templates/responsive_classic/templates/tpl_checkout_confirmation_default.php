@@ -72,12 +72,10 @@
 <div class="group" id="order-comments">
 
   <h2 id="checkoutConfirmDefaultHeadingComments"><?php echo HEADING_ORDER_COMMENTS; ?></h2>
-  <div class="buttonRow forward"><?php echo  '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?></div>
   <div><?php echo (empty($order->info['comments']) ? NO_COMMENTS_TEXT : nl2br(zen_output_string_protected($order->info['comments'])) . zen_draw_hidden_field('comments', $order->info['comments'])); ?></div>
 
 </div>
 
-<h2 id="checkoutConfirmDefaultHeadingCart"><?php echo HEADING_PRODUCTS; ?></h2>
 
 <?php  if ($flagAnyOutOfStock) { ?>
 <?php    if (STOCK_ALLOW_CHECKOUT == 'true') {  ?>
@@ -102,38 +100,36 @@
 ?>
           <th scope="col" id="ccTotalHeading"><?php echo TABLE_HEADING_TOTAL; ?></th>
         </tr>
-<?php // now loop thru all products to display quantity and price ?>
 <?php for ($i=0, $n=sizeof($order->products); $i<$n; $i++) { ?>
         <tr class="<?php echo $order->products[$i]['rowClass']; ?>">
           <td  class="cartQuantity"><?php echo $order->products[$i]['qty']; ?>&nbsp;x</td>
           <td class="cartProductDisplay"><?php echo $order->products[$i]['name']; ?>
           <?php  echo $stock_check[$i]; ?>
 
-<?php // if there are attributes, loop thru them and display one per line
+<?php 
     if (isset($order->products[$i]['attributes']) && sizeof($order->products[$i]['attributes']) > 0 ) {
     echo '<ul class="cartAttribsList">';
       for ($j=0, $n2=sizeof($order->products[$i]['attributes']); $j<$n2; $j++) {
 ?>
       <li><?php echo $order->products[$i]['attributes'][$j]['option'] . ': ' . nl2br(zen_output_string_protected($order->products[$i]['attributes'][$j]['value'])); ?></li>
 <?php
-      } // end loop
+      } 
       echo '</ul>';
-    } // endif attribute-info
+    } 
 ?>
           </td>
 
-<?php // display tax info if exists ?>
 <?php if (sizeof($order->info['tax_groups']) > 1)  { ?>
         <td class="cartTotalDisplay">
           <?php echo zen_display_tax_value($order->products[$i]['tax']); ?>%</td>
-<?php    }  // endif tax info display  ?>
+<?php    } ?>
         <td class="cartTotalDisplay price">
           <?php echo $currencies->display_price($order->products[$i]['final_price'], $order->products[$i]['tax'], $order->products[$i]['qty']);
           if ($order->products[$i]['onetime_charges'] != 0 ) echo '<br /> ' . $currencies->display_price($order->products[$i]['onetime_charges'], $order->products[$i]['tax'], 1);
 ?>
         </td>
       </tr>
-<?php  }  // end for loopthru all products ?>
+<?php  } ?>
     </table>
 
 
