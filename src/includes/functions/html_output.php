@@ -427,9 +427,6 @@ function zen_draw_radio_field($name, $value = '', $checked = false, $parameters 
 	return zen_draw_selection_field($name, 'radio', $value, $checked, $parameters);
 }
 
-/*
- *  Output a form textarea field
- */
 function zen_draw_textarea_field($name, $width, $height, $text = '~*~*#', $parameters = '', $reinsert_value = true) 
 {
 	$field = '<textarea name="' . zen_output_string($name) . '" cols="' . zen_output_string($width) . '" rows="' . zen_output_string($height) . '"';
