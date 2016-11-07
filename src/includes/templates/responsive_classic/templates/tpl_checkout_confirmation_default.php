@@ -86,50 +86,50 @@
 <?php  } //endif flagAnyOutOfStock ?>
 
 
-      <table id="cartContentsDisplay">
-        <tr class="cartTableHeading">
-          <th scope="col" id="ccQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
-          <th scope="col" id="ccProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
-<?php
-  if (sizeof($order->info['tax_groups']) > 1) {
-?>
-          <th scope="col" id="ccTaxHeading"><?php echo HEADING_TAX; ?></th>
-<?php
-  }
-?>
-          <th scope="col" id="ccTotalHeading"><?php echo TABLE_HEADING_TOTAL; ?></th>
-        </tr>
-<?php for ($i=0, $n=sizeof($order->products); $i<$n; $i++) { ?>
-        <tr class="<?php echo $order->products[$i]['rowClass']; ?>">
-          <td  class="cartQuantity"><?php echo $order->products[$i]['qty']; ?>&nbsp;x</td>
-          <td class="cartProductDisplay"><?php echo $order->products[$i]['name']; ?>
-          <?php  echo $stock_check[$i]; ?>
+<table id="cartContentsDisplay">
+	<tr class="cartTableHeading">
+		<th scope="col" id="ccQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
+		<th scope="col" id="ccProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
 
-<?php 
-    if (isset($order->products[$i]['attributes']) && sizeof($order->products[$i]['attributes']) > 0 ) {
-    echo '<ul class="cartAttribsList">';
-      for ($j=0, $n2=sizeof($order->products[$i]['attributes']); $j<$n2; $j++) {
-?>
-      <li><?php echo $order->products[$i]['attributes'][$j]['option'] . ': ' . nl2br(zen_output_string_protected($order->products[$i]['attributes'][$j]['value'])); ?></li>
-<?php
-      } 
-      echo '</ul>';
-    } 
-?>
-          </td>
+		<?php if (sizeof($order->info['tax_groups']) > 1) { ?>
+		<th scope="col" id="ccTaxHeading"><?php echo HEADING_TAX; ?></th>
+		<?php } ?> 
 
-<?php if (sizeof($order->info['tax_groups']) > 1)  { ?>
-        <td class="cartTotalDisplay">
-          <?php echo zen_display_tax_value($order->products[$i]['tax']); ?>%</td>
-<?php    } ?>
-        <td class="cartTotalDisplay price">
-          <?php echo $currencies->display_price($order->products[$i]['final_price'], $order->products[$i]['tax'], $order->products[$i]['qty']);
-          if ($order->products[$i]['onetime_charges'] != 0 ) echo '<br /> ' . $currencies->display_price($order->products[$i]['onetime_charges'], $order->products[$i]['tax'], 1);
-?>
-        </td>
-      </tr>
-<?php  } ?>
-    </table>
+		<th scope="col" id="ccTotalHeading"><?php echo TABLE_HEADING_TOTAL; ?></th>
+	</tr>
+
+	<?php for ($i=0, $n=sizeof($order->products); $i<$n; $i++) { ?>
+	<tr class="<?php echo $order->products[$i]['rowClass']; ?>">
+		<td  class="cartQuantity"><?php echo $order->products[$i]['qty']; ?></td>
+		<td class="cartProductDisplay">
+			<?php echo $order->products[$i]['name']; ?>
+			<?php  echo $stock_check[$i]; ?> 
+			<?php 
+  			if (isset($order->products[$i]['attributes']) && sizeof($order->products[$i]['attributes']) > 0 ) { 
+	  			echo '<ul class="cartAttribsList">'; 
+
+				for ($j=0, $n2=sizeof($order->products[$i]['attributes']); $j<$n2; $j++) { ?> 
+					<li><?php echo $order->products[$i]['attributes'][$j]['option'] . ': ' . nl2br(zen_output_string_protected($order->products[$i]['attributes'][$j]['value'])); ?></li> <?php 
+				} 
+
+			echo '</ul>'; 
+			} ?>
+		</td>
+
+		<?php if (sizeof($order->info['tax_groups']) > 1)  { ?>
+		<td class="cartTotalDisplay">
+		<?php echo zen_display_tax_value($order->products[$i]['tax']); ?>%
+		</td>
+		<?php    } ?>
+
+		<td class="cartTotalDisplay price">
+		<?php echo $currencies->display_price($order->products[$i]['final_price'], $order->products[$i]['tax'], $order->products[$i]['qty']);
+		if ($order->products[$i]['onetime_charges'] != 0 ) echo '<br /> ' . $currencies->display_price($order->products[$i]['onetime_charges'], $order->products[$i]['tax'], 1); ?>
+		</td>
+
+	</tr>
+	<?php  } ?>
+</table>
 
 
 <?php
