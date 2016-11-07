@@ -938,6 +938,11 @@ hr {
 	padding: 14px 18px 50px 18px;
 	background: #fff;
 }
+#contentMainWrapper:after {
+	content: "";
+	display: table;
+	clear: both;
+}
 
 /************************************************
  * Table
