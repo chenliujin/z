@@ -146,12 +146,6 @@ if (method_exists(${$_SESSION['payment']}, 'alterShippingEditButton')) {
   $theLink = ${$_SESSION['payment']}->alterShippingEditButton();
   if ($theLink) $editShippingButtonLink = $theLink;
 }
-// deal with billing address edit button
-$flagDisablePaymentAddressChange = false;
-if (isset(${$_SESSION['payment']}->flagDisablePaymentAddressChange)) {
-  $flagDisablePaymentAddressChange = ${$_SESSION['payment']}->flagDisablePaymentAddressChange;
-}
-
 
 require(DIR_WS_MODULES . zen_get_module_directory('require_languages.php'));
 $breadcrumb->add(NAVBAR_TITLE_1, zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
