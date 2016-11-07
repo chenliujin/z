@@ -1,12 +1,4 @@
 <?php
-/**
- * zcAjaxPayment
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: zcwilt  Fri Feb 5 10:22:33 2016 +0000 Modified in v1.5.5 $
- */
 class zcAjaxPayment extends base
 {
   /**
@@ -172,11 +164,6 @@ class zcAjaxPayment extends base
       $theLink = ${$_SESSION['payment']}->alterShippingEditButton ();
       if ($theLink)
         $editShippingButtonLink = $theLink;
-    }
-    // deal with billing address edit button
-    $flagDisablePaymentAddressChange = false;
-    if (isset (${$_SESSION['payment']}->flagDisablePaymentAddressChange)) {
-      $flagDisablePaymentAddressChange = ${$_SESSION['payment']}->flagDisablePaymentAddressChange;
     }
 
     $current_page_base = FILENAME_CHECKOUT_CONFIRMATION;
