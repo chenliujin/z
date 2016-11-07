@@ -1,6 +1,7 @@
 <?php
 // the following cPath references come from application_top/initSystem
 $category_depth = 'top';
+
 if (isset($cPath) && zen_not_null($cPath)) {
 	$categories_products_query = "
 		SELECT count(*) AS total
@@ -22,9 +23,9 @@ if (isset($cPath) && zen_not_null($cPath)) {
 		$category_parent = $db->Execute($category_parent_query);
 
 		if ($category_parent->fields['total'] > 0) {
-			$category_depth = 'nested'; // navigate through the categories
+			$category_depth = 'nested'; 
 		} else {
-			$category_depth = 'products'; // category has no products, but display the 'no products' message
+			$category_depth = 'products'; 
 		}
 	}
 }
