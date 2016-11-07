@@ -11,4 +11,3 @@ if ($zc_show_also_purchased == true) {
 	</div>
 	<?php 
 } 
-?>
