@@ -7,74 +7,60 @@
 <?php if ($messageStack->size('checkout') > 0)              echo $messageStack->output('checkout'); ?>
 
 <div id="checkoutBillto" class="back">
-  <h2 id="checkoutConfirmDefaultBillingAddress"><?php echo HEADING_BILLING_ADDRESS; ?></h2>
-<?php if (!$flagDisablePaymentAddressChange) { ?>
-  <div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?></div>
-<?php } ?>
+	<fieldset>
+		<legend><?php echo HEADING_BILLING_ADDRESS; ?></legend>
+		<?php if (!$flagDisablePaymentAddressChange) { ?>
+		  <div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?></div>
+		<?php } ?> 
+		<address><?php echo zen_address_format($order->billing['format_id'], $order->billing, 1, ' ', '<br />'); ?></address>
+	</fieldset>
 
-  <address><?php echo zen_address_format($order->billing['format_id'], $order->billing, 1, ' ', '<br />'); ?></address>
-
-<?php
-  $class = &$_SESSION['payment'];
-?>
-
-  <h3 id="checkoutConfirmDefaultPayment"><?php echo HEADING_PAYMENT_METHOD; ?></h3>
-  <h4 id="checkoutConfirmDefaultPaymentTitle"><?php echo $GLOBALS[$class]->title; ?></h4>
+<fieldset>
+	<?php $class = &$_SESSION['payment']; ?>
+	<legend><?php echo HEADING_PAYMENT_METHOD; ?></legend>
+	<div><?php echo $GLOBALS[$class]->title; ?></div>
+</fieldset>
 
 <?php
   if (is_array($payment_modules->modules)) {
-    if ($confirmation = $payment_modules->confirmation()) {
-?>
-  <div class="important"><?php echo $confirmation['title']; ?></div>
-<?php
-    }
-?>
+    if ($confirmation = $payment_modules->confirmation()) { ?>
+  	<div class="important"><?php echo $confirmation['title']; ?></div>
+	<?php } ?>
+
   <div class="important">
-<?php
-      for ($i=0, $n=sizeof($confirmation['fields']); $i<$n; $i++) {
-?>
+	<?php for ($i=0, $n=sizeof($confirmation['fields']); $i<$n; $i++) { ?>
     <div class="back"><?php echo $confirmation['fields'][$i]['title']; ?></div>
     <div ><?php echo $confirmation['fields'][$i]['field']; ?></div>
-<?php
-       }
-?>
+	<?php } ?>
   </div>
-<?php
-  }
-?>
+<?php } ?>
 
 </div>
 
-<?php
-  if ($_SESSION['sendto'] != false) {
-?>
+<?php if ($_SESSION['sendto'] != false) { ?>
 <div id="checkoutShipto" class="forward">
-  <h2 id="checkoutConfirmDefaultShippingAddress"><?php echo HEADING_DELIVERY_ADDRESS; ?></h2>
-  <div class="buttonRow forward"><?php echo '<a href="' . $editShippingButtonLink . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?></div>
+	<fieldset>
+		<legend><?php echo HEADING_DELIVERY_ADDRESS; ?></legend>
+  		<div class="buttonRow forward"><?php echo '<a href="' . $editShippingButtonLink . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?></div>
+  		<address><?php echo zen_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br />'); ?></address>
+	</fieldset>
 
-  <address><?php echo zen_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br />'); ?></address>
+  <?php if ($order->info['shipping_method']) { ?>
+  <fieldset>
+	<legend><?php echo HEADING_SHIPPING_METHOD; ?></legend>
+	<div><?php echo $order->info['shipping_method']; ?></div>
+  </fieldset>
+  <?php } ?>
 
-<?php
-    if ($order->info['shipping_method']) {
-?>
-  <h3 id="checkoutConfirmDefaultShipment"><?php echo HEADING_SHIPPING_METHOD; ?></h3>
-  <h4 id="checkoutConfirmDefaultShipmentTitle"><?php echo $order->info['shipping_method']; ?></h4>
-
-<?php
-    }
-?>
   </div>
-<?php
-  }
-?>
-  <br class="clearBoth" />
+<?php } ?>
 
-<div class="group" id="order-comments">
+<br class="clearBoth" />
 
-  <h2 id="checkoutConfirmDefaultHeadingComments"><?php echo HEADING_ORDER_COMMENTS; ?></h2>
-  <div><?php echo (empty($order->info['comments']) ? NO_COMMENTS_TEXT : nl2br(zen_output_string_protected($order->info['comments'])) . zen_draw_hidden_field('comments', $order->info['comments'])); ?></div>
-
-</div>
+<fieldset>
+	<legend><?php echo HEADING_ORDER_COMMENTS; ?></legend>
+  	<div><?php echo (empty($order->info['comments']) ? NO_COMMENTS_TEXT : nl2br(zen_output_string_protected($order->info['comments'])) . zen_draw_hidden_field('comments', $order->info['comments'])); ?></div>
+</fieldset>
 
 
 <?php  if ($flagAnyOutOfStock) { ?>
@@ -88,8 +74,8 @@
 
 <table id="cartContentsDisplay">
 	<tr class="cartTableHeading">
+		<th scope="col" class="text-left"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
 		<th scope="col" id="ccQuantityHeading"><?php echo TABLE_HEADING_QUANTITY; ?></th>
-		<th scope="col" id="ccProductsHeading"><?php echo TABLE_HEADING_PRODUCTS; ?></th>
 
 		<?php if (sizeof($order->info['tax_groups']) > 1) { ?>
 		<th scope="col" id="ccTaxHeading"><?php echo HEADING_TAX; ?></th>
@@ -100,7 +86,6 @@
 
 	<?php for ($i=0, $n=sizeof($order->products); $i<$n; $i++) { ?>
 	<tr class="<?php echo $order->products[$i]['rowClass']; ?>">
-		<td  class="cartQuantity"><?php echo $order->products[$i]['qty']; ?></td>
 		<td class="cartProductDisplay">
 			<?php echo $order->products[$i]['name']; ?>
 			<?php  echo $stock_check[$i]; ?> 
@@ -112,9 +97,10 @@
 					<li><?php echo $order->products[$i]['attributes'][$j]['option'] . ': ' . nl2br(zen_output_string_protected($order->products[$i]['attributes'][$j]['value'])); ?></li> <?php 
 				} 
 
-			echo '</ul>'; 
+				echo '</ul>'; 
 			} ?>
 		</td>
+		<td class="text-center"><?php echo $order->products[$i]['qty']; ?></td>
 
 		<?php if (sizeof($order->info['tax_groups']) > 1)  { ?>
 		<td class="cartTotalDisplay">
@@ -132,13 +118,11 @@
 </table>
 
 
-<?php
-  if (MODULE_ORDER_TOTAL_INSTALLED) {
-    $order_totals = $order_total_modules->process();
-?>
-<div id="orderTotals"><?php $order_total_modules->output(); ?></div>
-<?php
-  }
+<?php 
+		if (MODULE_ORDER_TOTAL_INSTALLED) { 
+			$order_totals = $order_total_modules->process(); ?> 
+			<div id="orderTotals"><?php $order_total_modules->output(); ?></div> <?php 
+		}
 ?>
 
 <?php
