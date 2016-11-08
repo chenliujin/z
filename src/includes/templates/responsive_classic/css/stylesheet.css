@@ -60,7 +60,12 @@ ADDRESS {font-style:normal;}
 CODE {font-family:arial, verdana, helvetica, sans-serif;font-size:1em;}
 SELECT, INPUT {display:inline;font-size:1em;margin:0 0.1em 0 0;}
 input{height:35px;padding-left:5px;margin-bottom:10px;}
-TEXTAREA {margin:auto;display:block;width:66%;}
+
+textarea {
+	margin:auto;
+	display:block;
+	width: 100%;
+}
 input:focus, select:focus, textarea:focus {}
 
 fieldset{
@@ -112,7 +117,8 @@ select#country, select#stateZone, #state {margin-left:0;}
 #mainWrapper{}
 #sendSpendWrapper {padding:20px 0;width:100%;}
 #sendSpendWrapper .buttonRow{margin-right:20px;}
-.floatingBox, #accountLinksWrapper, #checkoutShipto, #checkoutBillto, #navEZPagesTOCWrapper {margin:0;width:47%;}
+.floatingBox, #accountLinksWrapper, 
+#navEZPagesTOCWrapper {margin:0;width:47%;}
 .floatingBox{width:46%;}
 #loginDefault .floatingBox{min-height:240px;}
 .shippingEstimatorWrapper {padding:0.5em;}
@@ -279,7 +285,6 @@ TR.tableHeading {}
 /*bof checkout*/
 #order-comments{padding:5px 20px 20px 20px;margin:20px 0;}
 #checkoutConfirmDefault .cartTableHeading{height:40px;}
-#checkoutShipping .important{margin-right:20px;}
 #checkoutShipping input[type=radio]{margin-left:20px;}
 #checkoutOrderTotals div, #csNotifications .buttonRow{margin-right:20px;}
 #checkoutPayment label, #csNotifications input{margin-left:20px;}
