@@ -1,17 +1,3 @@
-<?php
-/**
- * Page Template
- *
- * Loaded automatically by index.php?main_page=checkout_shipping.<br />
- * Displays allowed shipping modules for selection by customer.
- *
- * @package templateSystem
- * @copyright Copyright 2003-2013 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version GIT: $Id: Author: Ian Wilson  Mon Oct 28 17:54:33 2013 +0000 Modified in v1.5.2 $
- */
-?>
 <div class="centerColumn" id="checkoutShipping">
 
 <?php echo zen_draw_form('checkout_address', zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL')) . zen_draw_hidden_field('action', 'process'); ?>
