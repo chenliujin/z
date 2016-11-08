@@ -5,7 +5,6 @@ define('NAVBAR_TITLE_2', 'Shipping Method');
 define('HEADING_TITLE', 'Step 1 of 3 - Delivery Information');
 
 define('TABLE_HEADING_SHIPPING_ADDRESS', 'Shipping Address');
-define('TEXT_CHOOSE_SHIPPING_DESTINATION', 'Your order will be shipped to the address at the left or you may change the shipping address by clicking the <em>Change Address</em> button.');
 define('TITLE_SHIPPING_ADDRESS', 'Shipping Information');
 
 define('TABLE_HEADING_SHIPPING_METHOD', 'Shipping Method');
@@ -18,7 +17,6 @@ define('TABLE_HEADING_COMMENTS', 'Special Instructions or Comments About Your Or
 define('TITLE_CONTINUE_CHECKOUT_PROCEDURE', 'Continue to Step 2');
 define('TEXT_CONTINUE_CHECKOUT_PROCEDURE', '- choose your payment method.');
 
-// when free shipping for orders over $XX.00 is active
 define('FREE_SHIPPING_DESCRIPTION', 'Free shipping for orders over %s');
 
 define('ERROR_PLEASE_RESELECT_SHIPPING_METHOD', 'Your available shipping options have changed. Please re-select your desired shipping method.');
