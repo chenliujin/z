@@ -9,23 +9,20 @@
 <?php if ($messageStack->size('checkout') > 0) echo $messageStack->output('checkout'); ?>
 <?php if ($messageStack->size('checkout_payment') > 0) echo $messageStack->output('checkout_payment'); ?>
 
-<?php // ** BEGIN PAYPAL EXPRESS CHECKOUT **
-      if (!$payment_modules->in_special_checkout()) {
-      // ** END PAYPAL EXPRESS CHECKOUT ** ?>
-<h2 id="checkoutPaymentHeadingAddress"><?php echo TITLE_BILLING_ADDRESS; ?></h2>
+<?php if (!$payment_modules->in_special_checkout()) { ?>
+<fieldset>
+	<legend><?php echo TITLE_BILLING_ADDRESS; ?></legend>
 
-<div id="checkoutBillto" class="floatingBox back">
-<?php if (MAX_ADDRESS_BOOK_ENTRIES >= 2) { ?>
-<div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHANGE_ADDRESS, BUTTON_CHANGE_ADDRESS_ALT) . '</a>'; ?></div>
+	<div id="checkoutBillto" class="floatingBox back">
+	<?php if (MAX_ADDRESS_BOOK_ENTRIES >= 2) { ?>
+	<div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHANGE_ADDRESS, BUTTON_CHANGE_ADDRESS_ALT) . '</a>'; ?></div>
+	<?php } ?>
+		<address><?php echo zen_address_label($_SESSION['customer_id'], $_SESSION['billto'], true, ' ', '<br />'); ?></address>
+	</div>
+
+	<div class="floatingBox important forward"><?php echo TEXT_SELECTED_BILLING_DESTINATION; ?></div>
+</fieldset>
 <?php } ?>
-<address><?php echo zen_address_label($_SESSION['customer_id'], $_SESSION['billto'], true, ' ', '<br />'); ?></address>
-</div>
-
-<div class="floatingBox important forward"><?php echo TEXT_SELECTED_BILLING_DESTINATION; ?></div>
-<br class="clearBoth" />
-<?php // ** BEGIN PAYPAL EXPRESS CHECKOUT **
-      }
-      // ** END PAYPAL EXPRESS CHECKOUT ** ?>
 
 <fieldset id="checkoutOrderTotals">
 <legend id="checkoutPaymentHeadingTotal"><?php echo TEXT_YOUR_TOTAL; ?></legend>
@@ -169,10 +166,15 @@
         ?><input type="hidden" name="payment" value="<?php echo $_SESSION['payment']; ?>" /><?php
       }
       // ** END PAYPAL EXPRESS CHECKOUT ** ?>
+	  
+
 <fieldset>
-<legend><?php echo TABLE_HEADING_COMMENTS; ?></legend>
-<?php echo zen_draw_textarea_field('comments', '45', '3'); ?>
+	<legend><?php echo TABLE_HEADING_COMMENTS; ?></legend>
+	<div>
+		<?php echo zen_draw_textarea_field('comments', '45', '5'); ?>
+  	</div>
 </fieldset>
+
 
 <?php
   if (DISPLAY_CONDITIONS_ON_CHECKOUT == 'true') {
