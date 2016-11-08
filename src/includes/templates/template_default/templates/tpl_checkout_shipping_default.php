@@ -5,21 +5,31 @@
 <h1 id="checkoutShippingHeading"><?php echo HEADING_TITLE; ?></h1>
 
 <?php if ($messageStack->size('checkout_shipping') > 0) echo $messageStack->output('checkout_shipping'); ?>
+
+
+<fieldset>
+	<legend><?php echo TITLE_SHIPPING_ADDRESS; ?></legend>
  
-<h2 id="checkoutShippingHeadingAddress"><?php echo TITLE_SHIPPING_ADDRESS; ?></h2>
- 
-<div id="checkoutShipto" class="floatingBox back">
-<?php if ($displayAddressEdit) { ?>
-<div class="buttonRow forward"><?php echo '<a href="' . $editShippingButtonLink . '">' . zen_image_button(BUTTON_IMAGE_CHANGE_ADDRESS, BUTTON_CHANGE_ADDRESS_ALT) . '</a>'; ?></div>
-<?php } ?>
-<address class=""><?php echo zen_address_label($_SESSION['customer_id'], $_SESSION['sendto'], true, ' ', '<br />'); ?></address>
-</div>
-<div class="floatingBox important forward"><?php echo TEXT_CHOOSE_SHIPPING_DESTINATION; ?></div>
-<br class="clearBoth" />
+	<div id="checkoutShipto" class="floatingBox back">
+		<?php if ($displayAddressEdit) { ?>
+		<div class="buttonRow forward">
+			<?php echo '<a href="' . $editShippingButtonLink . '">' . zen_image_button(BUTTON_IMAGE_CHANGE_ADDRESS, BUTTON_CHANGE_ADDRESS_ALT) . '</a>'; ?>
+		</div>
+		<?php } ?>
+
+		<address>
+			<?php echo zen_address_label($_SESSION['customer_id'], $_SESSION['sendto'], true, ' ', '<br />'); ?>
+		</address>
+	</div>
+</fieldset>
+
  
 <?php
 if ( !empty($quotes) ) { ?>
-	<h2 id="checkoutShippingHeadingMethod"><?php echo TABLE_HEADING_SHIPPING_METHOD; ?></h2>
+	<fieldset>
+		<legend><?php echo TABLE_HEADING_SHIPPING_METHOD; ?></legend>
+		<div style="padding: 20px;">
+
 <style>
 table {
 	padding: 0 20px;
@@ -73,7 +83,10 @@ tr td {
 		<?php
 	}
 	?>
-	</table> <?php
+		</table> 
+		</div>
+	</fieldset>
+	<?php
 } else { ?>
 	<h2 id="checkoutShippingHeadingMethod"><?php echo TITLE_NO_SHIPPING_AVAILABLE; ?></h2>
 	<div id="checkoutShippingContentChoose" class="important"><?php echo TEXT_NO_SHIPPING_AVAILABLE; ?></div><?php
@@ -81,11 +94,14 @@ tr td {
 ?>
 
 
-<fieldset class="shipping" id="comments" style="margin-top:40px">
+<fieldset class="shipping" id="comments">
 	<legend><?php echo TABLE_HEADING_COMMENTS; ?></legend>
-	<?php echo zen_draw_textarea_field('comments', '45', '3'); ?>
+	<div>
+		<?php echo zen_draw_textarea_field('comments', '45', '5'); ?>
+	</div>
 </fieldset>
  
+
 <div class="buttonRow forward"><?php echo zen_image_submit(BUTTON_IMAGE_CONTINUE_CHECKOUT, BUTTON_CONTINUE_ALT); ?></div>
 <div class="buttonRow back"><?php echo '<strong>' . TITLE_CONTINUE_CHECKOUT_PROCEDURE . '</strong><br />' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?></div>
  
