@@ -52,7 +52,14 @@
 
 <fieldset>
 	<legend><?php echo HEADING_ORDER_COMMENTS; ?></legend>
-  	<div><?php echo (empty($order->info['comments']) ? NO_COMMENTS_TEXT : nl2br(zen_output_string_protected($order->info['comments'])) . zen_draw_hidden_field('comments', $order->info['comments'])); ?></div>
+	<div> 
+		<?php 
+		if ($order->info['comments']) {
+			echo nl2br(zen_output_string_protected($order->info['comments']));
+			echo zen_draw_hidden_field('comments', $order->info['comments']);
+		}
+		?>
+	</div>
 </fieldset>
 
 
