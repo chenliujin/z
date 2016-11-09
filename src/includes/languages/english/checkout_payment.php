@@ -8,7 +8,6 @@ define('TABLE_HEADING_BILLING_ADDRESS', 'Billing Address');
 define('TITLE_BILLING_ADDRESS', 'Billing Address');
 
 define('TABLE_HEADING_PAYMENT_METHOD', 'Payment Method');
-define('TEXT_SELECT_PAYMENT_METHOD', 'Please select a payment method for this order.');
 define('TITLE_PLEASE_SELECT', 'Please Select');
 define('TEXT_ENTER_PAYMENT_INFORMATION', '');
 define('TABLE_HEADING_COMMENTS', 'Special Instructions or Order Comments');
