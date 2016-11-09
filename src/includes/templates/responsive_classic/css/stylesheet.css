@@ -24,9 +24,6 @@ ADDRESS,
 .larger{font-size:1.1em;}
 h1, h2, h3, h4, h5, h6 {margin:20px 0;}
 .biggerText {font-size:1.2em;line-height:160%;}
-P {
-	padding:0.5em;
-}
 #logo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .centerBoxContentsAlsoPurch, .attribImg {float:left;}
 .centeredContent, TH,
 #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, 
@@ -84,8 +81,7 @@ legend{
 
 body:not(:-moz-handler-blocked) fieldset{display:table-cell;}
 fieldset > fieldset{}
-fieldset p{margin-left:20px;}
-fieldset .inputLabel, fieldset h3, 
+fieldset h3, 
 #advSearchDefault input, fieldset .buttonRow.back, fieldset select, 
 fieldset input[type=radio], fieldset input[type=checkbox] {
 	margin-left:20px;
@@ -93,7 +89,7 @@ fieldset input[type=radio], fieldset input[type=checkbox] {
 
 fieldset .buttonRow.forward{margin-right:20px;}
 option{font-size:110%;}
-LABEL, h4.optionName {line-height:1.5em;padding:0.2em;}
+h4.optionName {line-height:1.5em;padding:0.2em;}
 LABEL.checkboxLabel, LABEL.radioButtonLabel {margin:0.5em 0.3em;}
 LABEL.inputLabel {width:11em;float:left;}
 LABEL.inputLabelPayment {width:15em;float:left;}
@@ -455,7 +451,8 @@ h4.optionName{margin:1% 30px 0 30px;padding:0;}
 #myAccountGen li a, #myAccountNotify li a{text-decoration:none;}
 .accountTotalDisplay, .accountTaxDisplay {width:20%;text-align:right;}
 .accountQuantityDisplay {width:10%;vertical-align:top;}
-#gvFaqDefaultContent, #checkoutPayAddressDefault .instructions, #checkoutShipAddressDefault .instructions, #addressBookDefault .instructions, #myAccountNotify, #myAccountGen{padding:20px 20px 20px 30px;margin-top:0;}
+#gvFaqDefaultContent, #checkoutPayAddressDefault .instructions, 
+#addressBookDefault .instructions, #myAccountNotify, #myAccountGen{padding:20px 20px 20px 30px;margin-top:0;}
 #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, 
 #accountLinksWrapper h2, h2#addressBookDefaultPrimary{padding:10px;font-weight:normal;margin-bottom:0;text-align:center;}
 #gvFaqDefaultSubHeading{clear:both;}
@@ -463,7 +460,8 @@ h4.optionName{margin:1% 30px 0 30px;padding:0;}
 #accountDefault #sendSpendWrapper{margin-top:30px;}
 #accountDefault #sendSpendWrapper .buttonRow.forward{margin:0 20px 20px 0;}
 #addressBookDefault .instructions{padding-bottom:40px;}
-#checkoutPayAddressDefault address, #checkoutShipAddressDefault address, #addressBookDefault address{padding:20px 10% 20px 30px;}
+#checkoutPayAddressDefault address, 
+#addressBookDefault address{padding:20px 10% 20px 30px;}
 #accountLinksWrapper{width:100%;}
 #prevOrders td{padding:10px;}
 #accountHistoryDefault .content.back{margin-right:5%;}
