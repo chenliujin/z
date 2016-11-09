@@ -45,7 +45,8 @@ input:focus, select:focus, textarea:focus, #mainWrapper, .specialsListBoxContent
 }
 .messageStackCaution {background-color:#ffff66;}
 #shippingEstimatorContent tr:nth-child(odd), 
-ul.list-links li:hover, ol.list-links li:hover, #no-products, .listing-wrapper:nth-child(odd), #reviews-write-wrapper, #gvFaqDefaultContent, #checkoutPayAddressDefault .instructions, #checkoutShipAddressDefault .instructions, #addressBookDefault .instructions, #myAccountNotify, #myAccountGen, .reviews-wrapper, #accountHistInfo table td, #prevOrders td, #myAccountPaymentInfo, #myAccountShipInfo, #accountDefault #sendSpendWrapper {
+ul.list-links li:hover, ol.list-links li:hover, #no-products, .listing-wrapper:nth-child(odd), #reviews-write-wrapper, #gvFaqDefaultContent, #checkoutPayAddressDefault .instructions, 
+#addressBookDefault .instructions, #myAccountNotify, #myAccountGen, .reviews-wrapper, #accountHistInfo table td, #prevOrders td, #myAccountPaymentInfo, #myAccountShipInfo, #accountDefault #sendSpendWrapper {
 	background:#eee;
 }
 
