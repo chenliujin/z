@@ -4,7 +4,7 @@ define('NAVBAR_TITLE_2', 'Confirmation');
 
 define('HEADING_TITLE', 'Step 3 of 3 - Order Confirmation');
 
-define('HEADING_DELIVERY_ADDRESS', 'Delivery/Shipping Information');
+define('HEADING_DELIVERY_ADDRESS', 'Shipping Address');
 define('HEADING_SHIPPING_METHOD', 'Shipping Method');
 define('HEADING_PAYMENT_METHOD', 'Payment Method');
 define('HEADING_TAX', 'Tax');
