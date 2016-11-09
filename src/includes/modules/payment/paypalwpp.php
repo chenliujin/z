@@ -248,17 +248,21 @@ class paypalwpp extends base
 	function javascript_validation() {
 		return false;
 	}
+
 	/**
-	 * Display Credit Card Information Submission Fields on the Checkout Payment Page
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-11-09
 	 */
-	function selection() {
+	public function selection() 
+	{
 		$this->cc_type_check = '';
-		/**
-		 * since we are NOT processing via the gateway, we will only display MarkFlow payment option, and no CC fields
-		 */
-		return array('id' => $this->code,
-			'module' => '<img src="' . MODULE_PAYMENT_PAYPALEC_MARK_BUTTON_IMG . '" alt="' . MODULE_PAYMENT_PAYPALWPP_TEXT_BUTTON_ALTTEXT . '" /><span style="font-size:11px; font-family: Arial, Verdana;"> ' . MODULE_PAYMENT_PAYPALWPP_MARK_BUTTON_TXT . '</span>');
+
+		return [ 
+			'id' 		=> $this->code,
+			'module' 	=> '<img src="' . MODULE_PAYMENT_PAYPALEC_MARK_BUTTON_IMG . '" alt="' . MODULE_PAYMENT_PAYPALWPP_TEXT_BUTTON_ALTTEXT . '" /><span style="font-size:11px; font-family: Arial, Verdana;"> ' . MODULE_PAYMENT_PAYPALWPP_MARK_BUTTON_TXT . '</span>'
+		];
 	}
+
 	function pre_confirmation_check() {
 		// Since this is an EC checkout, do nothing.
 		return false;
