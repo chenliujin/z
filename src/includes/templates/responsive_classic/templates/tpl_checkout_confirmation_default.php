@@ -6,56 +6,44 @@
 <?php if ($messageStack->size('checkout_confirmation') > 0) echo $messageStack->output('checkout_confirmation'); ?>
 <?php if ($messageStack->size('checkout') > 0)              echo $messageStack->output('checkout'); ?>
 
-<div id="checkoutBillto" class="back">
-	<fieldset>
-		<legend><?php echo HEADING_BILLING_ADDRESS; ?></legend>
-		<?php if (!$flagDisablePaymentAddressChange) { ?>
-		  <div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?></div>
-		<?php } ?> 
-		<address><?php echo zen_address_format($order->billing['format_id'], $order->billing, 1, ' ', '<br />'); ?></address>
-	</fieldset>
-
 <fieldset>
 	<?php $class = &$_SESSION['payment']; ?>
 	<legend><?php echo HEADING_PAYMENT_METHOD; ?></legend>
 	<div><?php echo $GLOBALS[$class]->title; ?></div>
+	<?php
+	  if (is_array($payment_modules->modules)) {
+		if ($confirmation = $payment_modules->confirmation()) { ?>
+		<div class="important"><?php echo $confirmation['title']; ?></div>
+		<?php } ?>
+
+	  <div class="important">
+		<?php for ($i=0, $n=sizeof($confirmation['fields']); $i<$n; $i++) { ?>
+		<div class="back"><?php echo $confirmation['fields'][$i]['title']; ?></div>
+		<div ><?php echo $confirmation['fields'][$i]['field']; ?></div>
+		<?php } ?>
+	  </div>
+	<?php } ?>
+
 </fieldset>
 
-<?php
-  if (is_array($payment_modules->modules)) {
-    if ($confirmation = $payment_modules->confirmation()) { ?>
-  	<div class="important"><?php echo $confirmation['title']; ?></div>
-	<?php } ?>
-
-  <div class="important">
-	<?php for ($i=0, $n=sizeof($confirmation['fields']); $i<$n; $i++) { ?>
-    <div class="back"><?php echo $confirmation['fields'][$i]['title']; ?></div>
-    <div ><?php echo $confirmation['fields'][$i]['field']; ?></div>
-	<?php } ?>
-  </div>
-<?php } ?>
-
-</div>
 
 <?php if ($_SESSION['sendto'] != false) { ?>
-<div id="checkoutShipto" class="forward">
+<div>
 	<fieldset>
 		<legend><?php echo HEADING_DELIVERY_ADDRESS; ?></legend>
-  		<div class="buttonRow forward"><?php echo '<a href="' . $editShippingButtonLink . '">' . zen_image_button(BUTTON_IMAGE_EDIT_SMALL, BUTTON_EDIT_SMALL_ALT) . '</a>'; ?></div>
   		<address><?php echo zen_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br />'); ?></address>
 	</fieldset>
 
-  <?php if ($order->info['shipping_method']) { ?>
-  <fieldset>
-	<legend><?php echo HEADING_SHIPPING_METHOD; ?></legend>
-	<div><?php echo $order->info['shipping_method']; ?></div>
-  </fieldset>
-  <?php } ?>
+  	<?php if ($order->info['shipping_method']) { ?>
+  	<fieldset>
+  	  	<legend><?php echo HEADING_SHIPPING_METHOD; ?></legend>
+  	  	<div><?php echo $order->info['shipping_method']; ?></div>
+  	</fieldset>
+  	<?php } ?>
 
-  </div>
+</div>
 <?php } ?>
 
-<br class="clearBoth" />
 
 <fieldset>
 	<legend><?php echo HEADING_ORDER_COMMENTS; ?></legend>
