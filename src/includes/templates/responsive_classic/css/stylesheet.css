@@ -22,7 +22,9 @@ h3 {font-size:1.3em;}
 h4, h5, h6, h4.optionName, LEGEND, ADDRESS, .larger{font-size:1.1em;}
 h1, h2, h3, h4, h5, h6 {margin:20px 0;}
 .biggerText {font-size:1.2em;line-height:160%;}
-P, ADDRESS {padding:0.5em;}
+P, ADDRESS {
+	padding:0.5em;
+}
 ADDRESS {font-style:normal;}
 #logo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .centerBoxContentsAlsoPurch, .attribImg {float:left;}
 .centeredContent, TH,
@@ -64,12 +66,13 @@ input{height:35px;padding-left:5px;margin-bottom:10px;}
 textarea {
 	margin:auto;
 	display:block;
-	width: 100%;
+	width: 99%;
 }
 input:focus, select:focus, textarea:focus {}
 
 fieldset{
-	padding:0.01em 0 0 0;padding-bottom:20px;padding-top:20px;margin:0;min-width:0;margin-bottom:20px;
+	padding: 20px;
+	margin:0;min-width:0;margin-bottom:20px;
 	border: #ccc 1px solid;
 	border-radius: 2px;
 }
@@ -83,8 +86,13 @@ legend{
 body:not(:-moz-handler-blocked) fieldset{display:table-cell;}
 fieldset > fieldset{}
 fieldset p{margin-left:20px;}
-fieldset label, fieldset .inputLabel, fieldset h3, fieldset address, #advSearchDefault input, fieldset .buttonRow.back, fieldset select, fieldset input[type=radio], fieldset input[type=checkbox], fieldset div{margin-left:20px;}
-fieldset div, fieldset .buttonRow.forward{margin-right:20px;}
+fieldset .inputLabel, fieldset h3, 
+#advSearchDefault input, fieldset .buttonRow.back, fieldset select, 
+fieldset input[type=radio], fieldset input[type=checkbox] {
+	margin-left:20px;
+}
+
+fieldset .buttonRow.forward{margin-right:20px;}
 option{font-size:110%;}
 LABEL, h4.optionName {line-height:1.5em;padding:0.2em;}
 LABEL.checkboxLabel, LABEL.radioButtonLabel {margin:0.5em 0.3em;}
@@ -287,7 +295,7 @@ TR.tableHeading {}
 #checkoutConfirmDefault .cartTableHeading{height:40px;}
 #checkoutShipping input[type=radio]{margin-left:20px;}
 #checkoutOrderTotals div, #csNotifications .buttonRow{margin-right:20px;}
-#checkoutPayment label, #csNotifications input{margin-left:20px;}
+#csNotifications input{margin-left:20px;}
 div#checkoutShippingContentChoose{margin-bottom:20px;}
 #sendSpendWrapper h2{margin-top:-20px;}
 
