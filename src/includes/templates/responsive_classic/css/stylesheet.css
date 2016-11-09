@@ -19,13 +19,14 @@ img {
 h1 {font-size:1.8em;line-height:25px;}
 h2 {font-size:1.4em;}
 h3 {font-size:1.3em;}
-h4, h5, h6, h4.optionName, LEGEND, ADDRESS, .larger{font-size:1.1em;}
+h4, h5, h6, h4.optionName, LEGEND, 
+ADDRESS, 
+.larger{font-size:1.1em;}
 h1, h2, h3, h4, h5, h6 {margin:20px 0;}
 .biggerText {font-size:1.2em;line-height:160%;}
-P, ADDRESS {
+P {
 	padding:0.5em;
 }
-ADDRESS {font-style:normal;}
 #logo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .centerBoxContentsAlsoPurch, .attribImg {float:left;}
 .centeredContent, TH,
 #cartBoxGVButton, #cartBoxEmpty, #cartBoxVoucherBalance, #navCatTabsWrapper, #navEZPageNextPrev, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix, 
@@ -71,14 +72,12 @@ textarea {
 input:focus, select:focus, textarea:focus {}
 
 fieldset{
-	padding: 20px;
+	padding: 30px;
 	margin:0;min-width:0;margin-bottom:20px;
 	border: #ccc 1px solid;
 	border-radius: 2px;
 }
 legend{
-	margin: 0 0.5em;
-	padding: 0 0.5em;
 	font-weight: bold;
 	font-size: 1.2em;
 }
