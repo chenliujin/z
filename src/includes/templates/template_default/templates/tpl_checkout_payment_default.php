@@ -22,35 +22,31 @@
 
 
 <?php
-  $selection =  $order_total_modules->credit_selection();
-  if (sizeof($selection)>0) {
-    for ($i=0, $n=sizeof($selection); $i<$n; $i++) {
-      if ($_GET['credit_class_error_code'] == $selection[$i]['id']) {
-?>
-<div class="messageStackError"><?php echo zen_output_string_protected($_GET['credit_class_error']); ?></div>
+$selection =  $order_total_modules->credit_selection();
 
-<?php
-      }
-      for ($j=0, $n2=sizeof($selection[$i]['fields']); $j<$n2; $j++) {
-?>
-<fieldset>
-<legend><?php echo $selection[$i]['module']; ?></legend>
-<?php echo $selection[$i]['redeem_instructions']; ?>
-<div class="gvBal larger"><?php echo $selection[$i]['checkbox']; ?></div>
-<label class="inputLabel"<?php echo ($selection[$i]['fields'][$j]['tag']) ? ' for="'.$selection[$i]['fields'][$j]['tag'].'"': ''; ?>><?php echo $selection[$i]['fields'][$j]['title']; ?></label>
-<?php echo $selection[$i]['fields'][$j]['field']; ?>
-</fieldset>
-<?php
-      }
-    }
-?>
+if (sizeof($selection)>0) {
+	for ($i=0, $n=sizeof($selection); $i<$n; $i++) {
+    	if ($_GET['credit_class_error_code'] == $selection[$i]['id']) { ?>
+			<div class="messageStackError"><?php echo zen_output_string_protected($_GET['credit_class_error']); ?></div> <?php
+		}
 
-<?php
-    }
-?>
+		for ($j=0, $n2=sizeof($selection[$i]['fields']); $j<$n2; $j++) { ?>
+			<fieldset>
+				<legend><?php echo $selection[$i]['module']; ?></legend>
+				<?php echo $selection[$i]['redeem_instructions']; ?>
+				<div class="gvBal larger"><?php echo $selection[$i]['checkbox']; ?></div>
 
+				<label class="inputLabel"<?php echo ($selection[$i]['fields'][$j]['tag']) ? ' for="'.$selection[$i]['fields'][$j]['tag'].'"': ''; ?>>
+					<?php echo $selection[$i]['fields'][$j]['title']; ?>
+				</label>
 
-<?php if (!$payment_modules->in_special_checkout()) { ?>
+				<?php echo $selection[$i]['fields'][$j]['field']; ?>
+			</fieldset> <?php
+		}
+	}
+}
+
+if (!$payment_modules->in_special_checkout()) { ?>
 <fieldset class="payment">
 	<legend><?php echo TABLE_HEADING_PAYMENT_METHOD; ?></legend> 
 	<?php 
