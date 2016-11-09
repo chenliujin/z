@@ -49,110 +49,76 @@
     }
 ?>
 
-<?php // ** BEGIN PAYPAL EXPRESS CHECKOUT **
-      if (!$payment_modules->in_special_checkout()) {
-      // ** END PAYPAL EXPRESS CHECKOUT ** ?>
+<?php if (!$payment_modules->in_special_checkout()) { ?>
 <fieldset class="payment">
-<legend><?php echo TABLE_HEADING_PAYMENT_METHOD; ?></legend>
+	<legend><?php echo TABLE_HEADING_PAYMENT_METHOD; ?></legend> 
+	<?php 
+  	if (SHOW_ACCEPTED_CREDIT_CARDS != '0') {
+    	if (SHOW_ACCEPTED_CREDIT_CARDS == '1') {
+      		echo TEXT_ACCEPTED_CREDIT_CARDS . zen_get_cc_enabled();
+    	}
 
-<?php
-  if (SHOW_ACCEPTED_CREDIT_CARDS != '0') {
-?>
+    	if (SHOW_ACCEPTED_CREDIT_CARDS == '2') {
+      		echo TEXT_ACCEPTED_CREDIT_CARDS . zen_get_cc_enabled('IMAGE_');
+    	}
+		?>
+		<br class="clearBoth" />
+	<?php } ?>
 
-<?php
-    if (SHOW_ACCEPTED_CREDIT_CARDS == '1') {
-      echo TEXT_ACCEPTED_CREDIT_CARDS . zen_get_cc_enabled();
-    }
-    if (SHOW_ACCEPTED_CREDIT_CARDS == '2') {
-      echo TEXT_ACCEPTED_CREDIT_CARDS . zen_get_cc_enabled('IMAGE_');
-    }
-?>
-<br class="clearBoth" />
-<?php } ?>
+	<?php
+	$selection = $payment_modules->selection(); 
 
-<?php
-  $selection = $payment_modules->selection();
+	if (sizeof($selection) > 1) { ?> 
+		<p class="important"><?php echo TEXT_SELECT_PAYMENT_METHOD; ?></p> <?php 
+	} elseif (sizeof($selection) == 0) { ?> 
+		<p class="important"><?php echo TEXT_NO_PAYMENT_OPTIONS_AVAILABLE; ?></p> <?php 
+	} 
+	
+	$radio_buttons = 0; 
+	
+	for ($i=0, $n=sizeof($selection); $i<$n; $i++) { 
+		if (sizeof($selection) > 1) { 
+			if (empty($selection[$i]['noradio'])) {
+				echo zen_draw_radio_field('payment', $selection[$i]['id'], ($selection[$i]['id'] == $_SESSION['payment'] ? true : false), 'id="pmt-'.$selection[$i]['id'].'"'); 
+			} 
+		} else {
+			echo zen_draw_hidden_field('payment', $selection[$i]['id'], 'id="pmt-'.$selection[$i]['id'].'"');
+		} ?> 
 
-  if (sizeof($selection) > 1) {
-?>
-<p class="important"><?php echo TEXT_SELECT_PAYMENT_METHOD; ?></p>
-<?php
-  } elseif (sizeof($selection) == 0) {
-?>
-<p class="important"><?php echo TEXT_NO_PAYMENT_OPTIONS_AVAILABLE; ?></p>
+		<label for="pmt-<?php echo $selection[$i]['id']; ?>" class="radioButtonLabel"><?php echo $selection[$i]['module']; ?></label> 
 
-<?php
-  }
-?>
+		<?php
+		if (defined('MODULE_ORDER_TOTAL_COD_STATUS') && MODULE_ORDER_TOTAL_COD_STATUS == 'true' and $selection[$i]['id'] == 'cod') { ?> 
+			<div class="alert"><?php echo TEXT_INFO_COD_FEES; ?></div> <?php 
+		} 
+		?>
+		<br class="clearBoth" />
 
-<?php
-  $radio_buttons = 0;
-  for ($i=0, $n=sizeof($selection); $i<$n; $i++) {
-?>
-<?php
-    if (sizeof($selection) > 1) {
-        if (empty($selection[$i]['noradio'])) {
- ?>
-<?php echo zen_draw_radio_field('payment', $selection[$i]['id'], ($selection[$i]['id'] == $_SESSION['payment'] ? true : false), 'id="pmt-'.$selection[$i]['id'].'"'); ?>
-<?php   } ?>
-<?php
-    } else {
+		<?php
+    	if (isset($selection[$i]['error'])) { ?>
+    		<div><?php echo $selection[$i]['error']; ?></div> <?php
+		} elseif (isset($selection[$i]['fields']) && is_array($selection[$i]['fields'])) { ?> 
+			<div class="ccinfo"> <?php 
 
-?>
-<?php echo zen_draw_hidden_field('payment', $selection[$i]['id'], 'id="pmt-'.$selection[$i]['id'].'"'); ?>
-<?php
-    }
-?>
-<label for="pmt-<?php echo $selection[$i]['id']; ?>" class="radioButtonLabel"><?php echo $selection[$i]['module']; ?></label>
+			for ($j=0, $n2=sizeof($selection[$i]['fields']); $j<$n2; $j++) { ?> 
+				<label <?php echo (isset($selection[$i]['fields'][$j]['tag']) ? 'for="'.$selection[$i]['fields'][$j]['tag'] . '" ' : ''); ?>class="inputLabelPayment"><?php echo $selection[$i]['fields'][$j]['title']; ?></label><?php echo $selection[$i]['fields'][$j]['field']; ?> 
+				<br class="clearBoth" /> <?php
+      		} ?>
 
-<?php
-    if (defined('MODULE_ORDER_TOTAL_COD_STATUS') && MODULE_ORDER_TOTAL_COD_STATUS == 'true' and $selection[$i]['id'] == 'cod') {
-?>
-<div class="alert"><?php echo TEXT_INFO_COD_FEES; ?></div>
-<?php
-    } else {
-      // echo 'WRONG ' . $selection[$i]['id'];
-?>
-<?php
-    }
-?>
-<br class="clearBoth" />
+			</div>
+			<br class="clearBoth" /> <?php
+    	}
 
-<?php
-    if (isset($selection[$i]['error'])) {
-?>
-    <div><?php echo $selection[$i]['error']; ?></div>
+    	$radio_buttons++; ?>
+		<br class="clearBoth" /> <?php
+  	}
+	?>
+</fieldset> <?php 
 
-<?php
-    } elseif (isset($selection[$i]['fields']) && is_array($selection[$i]['fields'])) {
+} else { ?>
+	<input type="hidden" name="payment" value="<?php echo $_SESSION['payment']; ?>" /><?php
+}
 ?>
-
-<div class="ccinfo">
-<?php
-      for ($j=0, $n2=sizeof($selection[$i]['fields']); $j<$n2; $j++) {
-?>
-<label <?php echo (isset($selection[$i]['fields'][$j]['tag']) ? 'for="'.$selection[$i]['fields'][$j]['tag'] . '" ' : ''); ?>class="inputLabelPayment"><?php echo $selection[$i]['fields'][$j]['title']; ?></label><?php echo $selection[$i]['fields'][$j]['field']; ?>
-<br class="clearBoth" />
-<?php
-      }
-?>
-</div>
-<br class="clearBoth" />
-<?php
-    }
-    $radio_buttons++;
-?>
-<br class="clearBoth" />
-<?php
-  }
-?>
-
-</fieldset>
-<?php // ** BEGIN PAYPAL EXPRESS CHECKOUT **
-      } else {
-        ?><input type="hidden" name="payment" value="<?php echo $_SESSION['payment']; ?>" /><?php
-      }
-      // ** END PAYPAL EXPRESS CHECKOUT ** ?>
 	  
 
 <fieldset>
@@ -163,18 +129,15 @@
 </fieldset>
 
 
-<?php
-  if (DISPLAY_CONDITIONS_ON_CHECKOUT == 'true') {
-?>
+<?php if (DISPLAY_CONDITIONS_ON_CHECKOUT == 'true') { ?>
 <fieldset>
-<legend><?php echo TABLE_HEADING_CONDITIONS; ?></legend>
-<div><?php echo TEXT_CONDITIONS_DESCRIPTION;?></div>
-<?php echo  zen_draw_checkbox_field('conditions', '1', false, 'id="conditions"');?>
-<label class="checkboxLabel" for="conditions"><?php echo TEXT_CONDITIONS_CONFIRM; ?></label>
+	<legend><?php echo TABLE_HEADING_CONDITIONS; ?></legend>
+	<div><?php echo TEXT_CONDITIONS_DESCRIPTION;?></div>
+	<?php echo  zen_draw_checkbox_field('conditions', '1', false, 'id="conditions"');?>
+	<label class="checkboxLabel" for="conditions"><?php echo TEXT_CONDITIONS_CONFIRM; ?></label>
 </fieldset>
-<?php
-  }
-?>
+<?php } ?>
+
 
 <div class="buttonRow forward" id="paymentSubmit"><?php echo zen_image_submit(BUTTON_IMAGE_CONTINUE_CHECKOUT, BUTTON_CONTINUE_ALT, 'onclick="submitFunction('.zen_user_has_gv_account($_SESSION['customer_id']).','.$order->info['total'].')"'); ?></div>
 
