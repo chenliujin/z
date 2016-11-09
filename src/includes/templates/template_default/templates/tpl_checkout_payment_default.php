@@ -10,32 +10,16 @@
 <?php if ($messageStack->size('checkout_payment') > 0) echo $messageStack->output('checkout_payment'); ?>
 
 
-<?php if (!$payment_modules->in_special_checkout()) { ?>
-<fieldset>
-	<legend><?php echo TITLE_BILLING_ADDRESS; ?></legend>
-
-	<div id="checkoutBillto" class="floatingBox back">
-		<?php if (MAX_ADDRESS_BOOK_ENTRIES >= 2) { ?>
-		<div class="buttonRow forward"><?php echo '<a href="' . zen_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL') . '">' . zen_image_button(BUTTON_IMAGE_CHANGE_ADDRESS, BUTTON_CHANGE_ADDRESS_ALT) . '</a>'; ?></div>
-		<?php } ?>
-
-		<address>
-			<?php echo zen_address_label($_SESSION['customer_id'], $_SESSION['billto'], true, ' ', '<br />'); ?>
-		</address>
-	</div>
-</fieldset>
-<?php } ?>
-
-
 <fieldset id="checkoutOrderTotals">
-<legend id="checkoutPaymentHeadingTotal"><?php echo TEXT_YOUR_TOTAL; ?></legend>
-<?php
-  if (MODULE_ORDER_TOTAL_INSTALLED) {
-    $order_totals = $order_total_modules->process();
-	$order_total_modules->output(); 
-  }
-?>
+	<legend><?php echo TEXT_YOUR_TOTAL; ?></legend>
+	<?php
+	if (MODULE_ORDER_TOTAL_INSTALLED) {
+		$order_totals = $order_total_modules->process();
+		$order_total_modules->output(); 
+	}
+	?>
 </fieldset>
+
 
 <?php
   $selection =  $order_total_modules->credit_selection();
