@@ -259,7 +259,7 @@ class paypalwpp extends base
 
 		return [ 
 			'id' 		=> $this->code,
-			'module' 	=> '<img src="' . MODULE_PAYMENT_PAYPALEC_MARK_BUTTON_IMG . '" alt="' . MODULE_PAYMENT_PAYPALWPP_TEXT_BUTTON_ALTTEXT . '" /><span style="font-size:11px; font-family: Arial, Verdana;"> ' . MODULE_PAYMENT_PAYPALWPP_MARK_BUTTON_TXT . '</span>'
+			'module' 	=> '<img src="' . MODULE_PAYMENT_PAYPALEC_MARK_BUTTON_IMG . '" alt="' . MODULE_PAYMENT_PAYPALWPP_TEXT_BUTTON_ALTTEXT . '" />' . ( !empty(MODULE_PAYMENT_PAYPALWPP_MARK_BUTTON_TXT) ? '<span> ' . MODULE_PAYMENT_PAYPALWPP_MARK_BUTTON_TXT . '</span>' : '' ) 
 		];
 	}
 
