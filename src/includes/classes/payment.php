@@ -152,26 +152,41 @@ class payment extends base {
     return $js;
   }
 
-  function selection() {
-    $selection_array = array();
-    if (is_array($this->modules)) {
-      reset($this->modules);
-      while (list(, $value) = each($this->modules)) {
-        $class = substr($value, 0, strrpos($value, '.'));
-        if ($GLOBALS[$class]->enabled) {
-          $selection = $GLOBALS[$class]->selection();
-          if (isset($GLOBALS[$class]->collectsCardDataOnsite) && $GLOBALS[$class]->collectsCardDataOnsite == true) {
-            $selection['fields'][] = array('title' => '',
-                                         'field' => zen_draw_hidden_field($this->code . '_collects_onsite', 'true', 'id="' . $this->code. '_collects_onsite"'),
-                                         'tag' => '');
+  	/**
+	 * @author chenliujin <liujin.chen@qq.com>
+	 * @since 2016-11-09
+	 */
+	public function selection() 
+	{
+		$selection_array = array();
 
-          }
-          if (is_array($selection)) $selection_array[] = $selection;
-        }
-      }
-    }
-    return $selection_array;
-  }
+		if (is_array($this->modules)) {
+
+			reset($this->modules);
+
+			while (list(, $value) = each($this->modules)) {
+				$class = substr($value, 0, strrpos($value, '.'));
+
+				if ($GLOBALS[$class]->enabled) {
+
+					$selection = $GLOBALS[$class]->selection();
+
+					if (isset($GLOBALS[$class]->collectsCardDataOnsite) && $GLOBALS[$class]->collectsCardDataOnsite == true) {
+						$selection['fields'][] = array(
+							'title' => '',
+							'field' => zen_draw_hidden_field($this->code . '_collects_onsite', 'true', 'id="' . $this->code. '_collects_onsite"'),
+							'tag' => ''
+						);
+					}
+
+					if (is_array($selection)) $selection_array[] = $selection;
+				}
+			}
+		}
+
+		return $selection_array;
+	}
+
   function in_special_checkout() {
     $result = false;
     if (is_array($this->modules)) {
