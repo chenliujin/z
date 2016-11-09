@@ -1,19 +1,8 @@
 <?php
-/**
- * checkout_new_address.php
- *
- * @package modules
- * @copyright Copyright 2003-2013 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version GIT: $Id: Author: Ian Wilson  Mon Oct 28 17:54:33 2013 +0000 Modified in v1.5.2 $
- */
-// This should be first line of the script:
-$zco_notifier->notify('NOTIFY_MODULE_START_CHECKOUT_NEW_ADDRESS');
-
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
 }
+
 /**
  * Set some defaults
  */
@@ -250,5 +239,3 @@ if (isset($_POST['action']) && ($_POST['action'] == 'submit')) {
   $state = ($flag_show_pulldown_states) ? $state : $zone_name;
   $state_field_label = ($flag_show_pulldown_states) ? '' : ENTRY_STATE;
 
-// This should be last line of the script:
-$zco_notifier->notify('NOTIFY_MODULE_END_CHECKOUT_NEW_ADDRESS');
