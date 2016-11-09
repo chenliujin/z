@@ -3,8 +3,6 @@ define('NAVBAR_TITLE', 'Change Shipping Address');
 define('NAVBAR_TITLE_1', 'Checkout');
 define('NAVBAR_TITLE_2', 'Change Shipping Address');
 
-define('HEADING_TITLE', 'Change the Shipping Address');
-
 define('TABLE_HEADING_SHIPPING_ADDRESS', 'Shipping Address');
 define('TITLE_SHIPPING_ADDRESS', 'Current Shipping Address');
 
