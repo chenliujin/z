@@ -1,20 +1,5 @@
-<?php
-/**
- * Page Template
- *
- * Loaded automatically by index.php?main_page=checkout_payment_address.<br />
- * Allows customer to change the billing address.
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: picaflor-azul Sun Dec 13 16:32:43 2015 -0500 New in v1.5.5 $
- */
-?>
 <div class="centerColumn" id="checkoutPayAddressDefault">
 
-<?php echo zen_draw_form('checkout_address', zen_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL'), 'post', 'class="group"'); ?>
 
 <h1 id="checkoutPayAddressDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
 
@@ -28,37 +13,29 @@
 
 
 <?php
-     if ($addresses_count < MAX_ADDRESS_BOOK_ENTRIES) {
-?>
-<?php
-/**
- * require template to collect address details
- */
- require($template->get_template_dir('tpl_modules_checkout_new_address.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_checkout_new_address.php');
-?>
-<div class="buttonRow forward"><?php echo zen_draw_hidden_field('action', 'submit') . zen_image_submit(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT); ?></div>
-</form>
+if ($addresses_count < MAX_ADDRESS_BOOK_ENTRIES) {
+	require($template->get_template_dir('tpl_modules_checkout_new_address.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_checkout_new_address.php');
+}
 
-<?php
-    }
-    if ($addresses_count > 1) {
-?>
-<?php echo zen_draw_form('checkout_address_book', zen_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL'), 'post', 'class="group"'); ?>
 
-<fieldset>
-<legend><?php echo TABLE_HEADING_NEW_PAYMENT_ADDRESS; ?></legend>
-<?php
-      require($template->get_template_dir('tpl_modules_checkout_address_book.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_checkout_address_book.php');
-?>
-</fieldset>
-<div class="buttonRow forward"><?php echo zen_draw_hidden_field('action', 'submit') . zen_image_submit(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT); ?></div>
-<?php
-     }
+if ($addresses_count > 1) {
+	echo zen_draw_form('checkout_address_book', zen_href_link(FILENAME_CHECKOUT_PAYMENT_ADDRESS, '', 'SSL'), 'post', 'class="group"'); ?> 
+	<fieldset>
+		<legend><?php echo TABLE_HEADING_NEW_PAYMENT_ADDRESS; ?></legend> 
+		<?php
+		require($template->get_template_dir('tpl_modules_checkout_address_book.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_checkout_address_book.php'); 
+		?>
+		<div class="buttonRow">
+			<?php echo zen_draw_hidden_field('action', 'submit') . zen_image_submit(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT); ?>
+		</div> 
+	</fieldset>
+	</form>
+	<?php
+}
 ?>
 
 <div class="buttonRow back"><?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br />' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?></div>
 
-</form>
 <?php
   if ($process == true) {
 ?>
