@@ -9,7 +9,14 @@
 <fieldset>
 	<?php $class = &$_SESSION['payment']; ?>
 	<legend><?php echo HEADING_PAYMENT_METHOD; ?></legend>
-	<div><?php echo $GLOBALS[$class]->title; ?></div>
+	<div>
+		<?php 
+		$selection = $GLOBALS[$class]->selection();
+
+		echo $selection['module'];
+		?>
+	</div>
+
 	<?php
 	  if (is_array($payment_modules->modules)) {
 		if ($confirmation = $payment_modules->confirmation()) { ?>
