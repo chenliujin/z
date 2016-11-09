@@ -148,31 +148,37 @@ function zen_address_label($customers_id, $address_id = 1, $html = false, $boln 
     return $orders_check->fields['total'];
   }
 
-  function zen_count_customer_address_book_entries($id = '', $check_session = true) {
-    global $db;
 
-    if (is_numeric($id) == false) {
-      if ($_SESSION['customer_id']) {
-        $id = $_SESSION['customer_id'];
-      } else {
-        return 0;
-      }
-    }
+/**
+ *
+ * @author chenliujin <liujin.chen@qq.com>
+ * @since 2016-11-09
+ */
+function zen_count_customer_address_book_entries($id = '', $check_session = true) {
+	global $db;
 
-    if ($check_session == true) {
-      if ( ($_SESSION['customer_id'] == false) || ($id != $_SESSION['customer_id']) ) {
-        return 0;
-      }
-    }
+	if (is_numeric($id) == false) {
+		if ($_SESSION['customer_id']) {
+			$id = $_SESSION['customer_id'];
+		} else {
+			return 0;
+		}
+	}
 
-    $addresses_query = "select count(*) as total
-                        from " . TABLE_ADDRESS_BOOK . "
-                        where customers_id = '" . (int)$id . "'";
+	if ($check_session == true) {
+		if ( ($_SESSION['customer_id'] == false) || ($id != $_SESSION['customer_id']) ) {
+			return 0;
+		}
+	}
 
-    $addresses = $db->Execute($addresses_query);
+	$addresses_query = "select count(*) as total
+		from " . TABLE_ADDRESS_BOOK . "
+		where customers_id = '" . (int)$id . "'";
 
-    return $addresses->fields['total'];
-  }
+	$addresses = $db->Execute($addresses_query);
+
+	return $addresses->fields['total'];
+}
 
 ////
 // validate customer matches session
