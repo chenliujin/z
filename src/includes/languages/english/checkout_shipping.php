@@ -5,7 +5,7 @@ define('NAVBAR_TITLE_2', 'Shipping Method');
 define('HEADING_TITLE', 'Step 1 of 3 - Delivery Information');
 
 define('TABLE_HEADING_SHIPPING_ADDRESS', 'Shipping Address');
-define('TITLE_SHIPPING_ADDRESS', 'Shipping Information');
+define('TITLE_SHIPPING_ADDRESS', 'Shipping Address');
 
 define('TABLE_HEADING_SHIPPING_METHOD', 'Shipping Method');
 define('TITLE_PLEASE_SELECT', 'Please Select');
