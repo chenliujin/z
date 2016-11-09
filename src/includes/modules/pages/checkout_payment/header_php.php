@@ -54,11 +54,9 @@ if ($_SESSION['cc_id']) {
 	$discount_coupon = $db->Execute($discount_coupon_query);
 }
 
-// if no billing destination address was selected, use the customers own address as default
 if (!$_SESSION['billto']) {
 	$_SESSION['billto'] = $_SESSION['customer_default_address_id'];
 } else {
-	// verify the selected billing address
 	$check_address_query = "SELECT count(*) AS total FROM " . TABLE_ADDRESS_BOOK . "
 		WHERE customers_id = :customersID
 		AND address_book_id = :addressBookID";
