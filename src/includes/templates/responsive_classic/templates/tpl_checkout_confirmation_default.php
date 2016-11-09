@@ -1,10 +1,10 @@
 <div class="centerColumn" id="checkoutConfirmDefault">
 
-<h1 id="checkoutConfirmDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
+	<h1 id="checkoutConfirmDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
 
-<?php if ($messageStack->size('redemptions') > 0)           echo $messageStack->output('redemptions'); ?>
-<?php if ($messageStack->size('checkout_confirmation') > 0) echo $messageStack->output('checkout_confirmation'); ?>
-<?php if ($messageStack->size('checkout') > 0)              echo $messageStack->output('checkout'); ?>
+	<?php if ($messageStack->size('redemptions') > 0)           echo $messageStack->output('redemptions'); ?>
+	<?php if ($messageStack->size('checkout_confirmation') > 0) echo $messageStack->output('checkout_confirmation'); ?>
+	<?php if ($messageStack->size('checkout') > 0)              echo $messageStack->output('checkout'); ?>
 
 <fieldset>
 	<?php $class = &$_SESSION['payment']; ?>
@@ -27,8 +27,7 @@
 </fieldset>
 
 
-<?php if ($_SESSION['sendto'] != false) { ?>
-<div>
+	<?php if ($_SESSION['sendto'] != false) { ?>
 	<fieldset>
 		<legend><?php echo HEADING_DELIVERY_ADDRESS; ?></legend>
   		<address><?php echo zen_address_format($order->delivery['format_id'], $order->delivery, 1, ' ', '<br />'); ?></address>
@@ -41,8 +40,7 @@
   	</fieldset>
   	<?php } ?>
 
-</div>
-<?php } ?>
+	<?php } ?>
 
 
 <fieldset>
@@ -56,8 +54,8 @@
 <div class="messageStackError"><?php echo OUT_OF_STOCK_CAN_CHECKOUT; ?></div>
 <?php    } else { ?>
 <div class="messageStackError"><?php echo OUT_OF_STOCK_CANT_CHECKOUT; ?></div>
-<?php    } //endif STOCK_ALLOW_CHECKOUT ?>
-<?php  } //endif flagAnyOutOfStock ?>
+<?php    } ?>
+<?php  } ?>
 
 
 <table id="cartContentsDisplay">
