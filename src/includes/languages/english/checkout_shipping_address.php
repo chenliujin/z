@@ -10,8 +10,6 @@ define('TABLE_HEADING_ADDRESS_BOOK_ENTRIES', '...Or Choose From Your Address Boo
 define('TITLE_PLEASE_SELECT', 'Add a new address');
 
 define('TABLE_HEADING_NEW_SHIPPING_ADDRESS', 'New Shipping Address');
-define('TEXT_CREATE_NEW_SHIPPING_ADDRESS', 'Please use the following form to create a new shipping address for use with this order.');
-define('TEXT_SELECT_OTHER_SHIPPING_DESTINATION', 'Please select the preferred shipping address if this order is to be delivered elsewhere.');
 
 define('SET_AS_PRIMARY', 'Set as Primary Address');
 define('NEW_ADDRESS_TITLE', 'Enter new address');
