@@ -13,8 +13,6 @@ define('TEXT_ENTER_PAYMENT_INFORMATION', '');
 define('TABLE_HEADING_COMMENTS', 'Special Instructions or Order Comments');
 
 define('TITLE_NO_PAYMENT_OPTIONS_AVAILABLE', 'Not Available At This Time');
-define('TEXT_NO_PAYMENT_OPTIONS_AVAILABLE','<span class="alert">Sorry, we are not accepting payments from your region at this time.</span><br />Please contact us for alternate arrangements.');
-
 define('TITLE_CONTINUE_CHECKOUT_PROCEDURE', '<strong>Continue to Step 3</strong>');
 define('TEXT_CONTINUE_CHECKOUT_PROCEDURE', '- to confirm your order.');
 
