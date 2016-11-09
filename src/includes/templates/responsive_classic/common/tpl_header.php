@@ -165,22 +165,29 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 	</div>
 	<div id="nav-flyout-account" class="nav-flyout">
 		<div class="nav-flyout-content">
-		<?php if (!$_SESSION['customer_id']) {?>
-		<a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>" class="nav-link nav-item">
-			<span class="nav-text"><?php echo HEADER_TITLE_LOGIN; ?></span>
-		</a>
-		<?php } ?>
-		<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-link nav-item">
-			<span class="nav-text"><?php echo HEADER_TITLE_MY_ACCOUNT; ?></span>
-		</a>
-		<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-link nav-item">
-			<span class="nav-text">My Orders</span>
-		</a>
-		<?php if ($_SESSION['customer_id']) { ?>
-		<a href="<?php echo zen_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="nav-link nav-item">
-			<span class="nav-text"><?php echo HEADER_TITLE_LOGOFF; ?></span>
-		</a>
-		<?php } ?>
+			<?php if (!$_SESSION['customer_id']) {?>
+			<a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>" class="nav-link nav-item">
+				<span class="nav-text"><?php echo HEADER_TITLE_LOGIN; ?></span>
+			</a>
+			<?php } ?>
+
+			<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-link nav-item">
+				<span class="nav-text"><?php echo HEADER_TITLE_MY_ACCOUNT; ?></span>
+			</a>
+
+			<a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>" class="nav-link nav-item">
+				<span class="nav-text">My Orders</span>
+			</a>
+
+			<a href="<?php echo zen_href_link(FILENAME_ADDRESS_BOOK, '', 'SSL'); ?>" class="nav-link nav-item">
+				<span class="nav-text"><?php echo HEADER_TITLE_MY_ADDRESS_BOOK; ?></span>
+			</a>
+
+			<?php if ($_SESSION['customer_id']) { ?>
+			<a href="<?php echo zen_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>" class="nav-link nav-item">
+				<span class="nav-text"><?php echo HEADER_TITLE_LOGOFF; ?></span>
+			</a>
+			<?php } ?>
 		</div>
 	</div>
 </div>

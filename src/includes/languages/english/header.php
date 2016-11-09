@@ -1,6 +1,7 @@
 <?php
 define('HEADER_TITLE_CREATE_ACCOUNT', 'Create Account');
 define('HEADER_TITLE_MY_ACCOUNT', 'My Account');
+define('HEADER_TITLE_MY_ADDRESS_BOOK', 'My Address Book');
 define('HEADER_TITLE_CART_CONTENTS', 'Cart');
 define('HEADER_TITLE_CHECKOUT', 'Checkout');
 define('HEADER_TITLE_TOP', 'Top');
