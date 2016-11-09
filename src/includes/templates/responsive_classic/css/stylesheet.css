@@ -456,7 +456,8 @@ h4.optionName{margin:1% 30px 0 30px;padding:0;}
 .accountTotalDisplay, .accountTaxDisplay {width:20%;text-align:right;}
 .accountQuantityDisplay {width:10%;vertical-align:top;}
 #gvFaqDefaultContent, #checkoutPayAddressDefault .instructions, #checkoutShipAddressDefault .instructions, #addressBookDefault .instructions, #myAccountNotify, #myAccountGen{padding:20px 20px 20px 30px;margin-top:0;}
-#sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, #checkoutShipAddressDefaultAddress, #accountLinksWrapper h2, h2#addressBookDefaultPrimary{padding:10px;font-weight:normal;margin-bottom:0;text-align:center;}
+#sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, 
+#accountLinksWrapper h2, h2#addressBookDefaultPrimary{padding:10px;font-weight:normal;margin-bottom:0;text-align:center;}
 #gvFaqDefaultSubHeading{clear:both;}
 #accountDefault #sendSpendWrapper h2{margin-top:-20px;clear:both;}
 #accountDefault #sendSpendWrapper{margin-top:30px;}
