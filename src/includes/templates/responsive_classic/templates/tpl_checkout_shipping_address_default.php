@@ -1,17 +1,3 @@
-<?php
-/**
- * Page Template
- *
- * Loaded automatically by index.php?main_page=checkout_shipping_adresss.<br />
- * Allows customer to change the shipping address.
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: picaflor-azul Sun Dec 13 16:32:43 2015 -0500 New in v1.5.5 $
- */
-?>
 <div class="centerColumn" id="checkoutShipAddressDefault">
 
 <?php echo zen_draw_form('checkout_address', zen_href_link(FILENAME_CHECKOUT_SHIPPING_ADDRESS, '', 'SSL'), 'post', 'class="group"'); ?>
@@ -33,9 +19,6 @@
      if ($addresses_count < MAX_ADDRESS_BOOK_ENTRIES) {
 ?>
 <?php
-/**
- * require template to display new address form
- */
   require($template->get_template_dir('tpl_modules_checkout_new_address.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_checkout_new_address.php');
 ?>
 <div class="buttonRow forward"><?php echo zen_draw_hidden_field('action', 'submit') . zen_image_submit(BUTTON_IMAGE_CONTINUE, BUTTON_CONTINUE_ALT); ?></div>
