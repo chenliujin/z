@@ -1,7 +1,5 @@
 <div class="centerColumn" id="addressBookDefault">
 
-<h1 id="addressBookDefaultHeading"><?php echo HEADING_TITLE; ?></h1>
- 
 <?php if ($messageStack->size('addressbook') > 0) echo $messageStack->output('addressbook'); ?> 
       
 <h2 id="addressBookDefaultPrimary"><?php echo PRIMARY_ADDRESS_TITLE; ?></h2>
