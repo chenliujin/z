@@ -49,6 +49,7 @@
     }
 ?>
 
+
 <?php if (!$payment_modules->in_special_checkout()) { ?>
 <fieldset class="payment">
 	<legend><?php echo TABLE_HEADING_PAYMENT_METHOD; ?></legend> 
@@ -68,33 +69,29 @@
 	<?php
 	$selection = $payment_modules->selection(); 
 
-	if (sizeof($selection) > 1) { ?> 
-		<p class="important"><?php echo TEXT_SELECT_PAYMENT_METHOD; ?></p> <?php 
-	} elseif (sizeof($selection) == 0) { ?> 
-		<p class="important"><?php echo TEXT_NO_PAYMENT_OPTIONS_AVAILABLE; ?></p> <?php 
-	} 
-	
 	$radio_buttons = 0; 
 	
 	for ($i=0, $n=sizeof($selection); $i<$n; $i++) { 
-		if (sizeof($selection) > 1) { 
-			if (empty($selection[$i]['noradio'])) {
-				echo zen_draw_radio_field('payment', $selection[$i]['id'], ($selection[$i]['id'] == $_SESSION['payment'] ? true : false), 'id="pmt-'.$selection[$i]['id'].'"'); 
-			} 
-		} else {
-			echo zen_draw_hidden_field('payment', $selection[$i]['id'], 'id="pmt-'.$selection[$i]['id'].'"');
-		} ?> 
+		?>
 
-		<label for="pmt-<?php echo $selection[$i]['id']; ?>" class="radioButtonLabel"><?php echo $selection[$i]['module']; ?></label> 
+		<label for="pmt-<?php echo $selection[$i]['id']; ?>" style="vertical-align:middle; line-height: 70px">
+			<?php
+			if (sizeof($selection) > 1) { 
+				if (empty($selection[$i]['noradio'])) {
+					echo zen_draw_radio_field('payment', $selection[$i]['id'], ($selection[$i]['id'] == $_SESSION['payment'] ? true : false), 'id="pmt-'.$selection[$i]['id'].'"'); 
+				} 
+			} else {
+				echo zen_draw_hidden_field('payment', $selection[$i]['id'], 'id="pmt-'.$selection[$i]['id'].'"');
+			} ?> 
+
+			<?php echo $selection[$i]['module']; ?>
+		</label> 
 
 		<?php
 		if (defined('MODULE_ORDER_TOTAL_COD_STATUS') && MODULE_ORDER_TOTAL_COD_STATUS == 'true' and $selection[$i]['id'] == 'cod') { ?> 
 			<div class="alert"><?php echo TEXT_INFO_COD_FEES; ?></div> <?php 
 		} 
-		?>
-		<br class="clearBoth" />
 
-		<?php
     	if (isset($selection[$i]['error'])) { ?>
     		<div><?php echo $selection[$i]['error']; ?></div> <?php
 		} elseif (isset($selection[$i]['fields']) && is_array($selection[$i]['fields'])) { ?> 
@@ -102,15 +99,14 @@
 
 			for ($j=0, $n2=sizeof($selection[$i]['fields']); $j<$n2; $j++) { ?> 
 				<label <?php echo (isset($selection[$i]['fields'][$j]['tag']) ? 'for="'.$selection[$i]['fields'][$j]['tag'] . '" ' : ''); ?>class="inputLabelPayment"><?php echo $selection[$i]['fields'][$j]['title']; ?></label><?php echo $selection[$i]['fields'][$j]['field']; ?> 
-				<br class="clearBoth" /> <?php
+				<?php
       		} ?>
 
 			</div>
-			<br class="clearBoth" /> <?php
+			<?php
     	}
 
-    	$radio_buttons++; ?>
-		<br class="clearBoth" /> <?php
+    	$radio_buttons++;
   	}
 	?>
 </fieldset> <?php 
