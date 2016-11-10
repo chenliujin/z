@@ -12,6 +12,3 @@ define('TEXT_SELECT_OTHER_PAYMENT_DESTINATION', 'Please select the preferred bil
 define('TITLE_PLEASE_SELECT', 'Add a new address');
 
 define('TABLE_HEADING_NEW_PAYMENT_ADDRESS', '...Or Choose From Your Address Book Entries');
-
-define('TITLE_CONTINUE_CHECKOUT_PROCEDURE', '<strong>Continue</strong>');
-define('TEXT_CONTINUE_CHECKOUT_PROCEDURE', '- to payment method.');
