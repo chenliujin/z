@@ -34,8 +34,6 @@ if ($addresses_count > 1) {
 }
 ?>
 
-<div class="buttonRow back"><?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br />' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?></div>
-
 <?php
   if ($process == true) {
 ?>
