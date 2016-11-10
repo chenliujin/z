@@ -72,7 +72,7 @@ if (!$payment_modules->in_special_checkout()) { ?>
 
 		<label for="pmt-<?php echo $selection[$i]['id']; ?>" style="vertical-align:middle; line-height: 70px">
 			<?php
-			if (sizeof($selection) > 1) { 
+			if (sizeof($selection) >= 1) { 
 				if (empty($selection[$i]['noradio'])) {
 					echo zen_draw_radio_field('payment', $selection[$i]['id'], ($selection[$i]['id'] == $_SESSION['payment'] ? true : false), 'id="pmt-'.$selection[$i]['id'].'"'); 
 				} 
@@ -132,8 +132,6 @@ if (!$payment_modules->in_special_checkout()) { ?>
 
 
 <div class="buttonRow forward" id="paymentSubmit"><?php echo zen_image_submit(BUTTON_IMAGE_CONTINUE_CHECKOUT, BUTTON_CONTINUE_ALT, 'onclick="submitFunction('.zen_user_has_gv_account($_SESSION['customer_id']).','.$order->info['total'].')"'); ?></div>
-
-<div class="buttonRow back"><?php echo TITLE_CONTINUE_CHECKOUT_PROCEDURE . '<br />' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?></div>
 
 </form>
 </div>
