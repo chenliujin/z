@@ -87,7 +87,7 @@ tr td {
 		</div>
 	<?php
 } else { ?>
-	<div id="checkoutShippingContentChoose" class="important">
+	<div class="text-bold">
 		<?php echo TEXT_NO_SHIPPING_AVAILABLE; ?>
 	</div><?php
 }

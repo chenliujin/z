@@ -285,7 +285,6 @@ TR.tableHeading {}
 #checkoutShipping input[type=radio]{margin-left:20px;}
 #checkoutOrderTotals div, #csNotifications .buttonRow{margin-right:20px;}
 #csNotifications input{margin-left:20px;}
-div#checkoutShippingContentChoose{margin-bottom:20px;}
 #sendSpendWrapper h2{margin-top:-20px;}
 
 /*bof images*/
@@ -587,9 +586,11 @@ input[type=text]:focus {
 .text-center {
 	text-align: center!important;
 }
+
 .text-bold {
 	font-weight: 700!important;
 }
+
 .text-strike {
 	text-decoration: line-through!important;
 }
