@@ -87,8 +87,9 @@ tr td {
 		</div>
 	<?php
 } else { ?>
-	<h2 id="checkoutShippingHeadingMethod"><?php echo TITLE_NO_SHIPPING_AVAILABLE; ?></h2>
-	<div id="checkoutShippingContentChoose" class="important"><?php echo TEXT_NO_SHIPPING_AVAILABLE; ?></div><?php
+	<div id="checkoutShippingContentChoose" class="important">
+		<?php echo TEXT_NO_SHIPPING_AVAILABLE; ?>
+	</div><?php
 }
 ?>
 </fieldset>
