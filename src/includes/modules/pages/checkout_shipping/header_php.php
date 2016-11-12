@@ -1,15 +1,4 @@
 <?php
-/**
- * Checkout Shipping Page
- *
- * @package page
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Mon Dec 7 14:40:03 2015 -0500 Modified in v1.5.5 $
- */
-// This should be first line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_START_CHECKOUT_SHIPPING');
 require_once(DIR_WS_CLASSES . 'http_client.php');
 
 // if there is nothing in the customers cart, redirect them to the shopping cart page
@@ -212,6 +201,3 @@ $payment_modules = new payment;
 
 $breadcrumb->add(NAVBAR_TITLE_1, zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
 $breadcrumb->add(NAVBAR_TITLE_2);
-
-// This should be last line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_END_CHECKOUT_SHIPPING');
