@@ -366,18 +366,25 @@ class order extends base {
 			'telephone' => $customer_address->fields['customers_telephone'],
 			'email_address' => $customer_address->fields['customers_email_address']);
 
-		$this->delivery = array('firstname' => $shipping_address->fields['entry_firstname'],
-			'lastname' => $shipping_address->fields['entry_lastname'],
-			'company' => $shipping_address->fields['entry_company'],
-			'street_address' => $shipping_address->fields['entry_street_address'],
-			'suburb' => $shipping_address->fields['entry_suburb'],
-			'city' => $shipping_address->fields['entry_city'],
-			'postcode' => $shipping_address->fields['entry_postcode'],
-			'state' => ((zen_not_null($shipping_address->fields['entry_state'])) ? $shipping_address->fields['entry_state'] : $shipping_address->fields['zone_name']),
-			'zone_id' => $shipping_address->fields['entry_zone_id'],
-			'country' => array('id' => $shipping_address->fields['countries_id'], 'title' => $shipping_address->fields['countries_name'], 'iso_code_2' => $shipping_address->fields['countries_iso_code_2'], 'iso_code_3' => $shipping_address->fields['countries_iso_code_3']),
-			'country_id' => $shipping_address->fields['entry_country_id'],
-			'format_id' => (int)$shipping_address->fields['address_format_id']);
+		$this->delivery = [
+			'firstname' 		=> $shipping_address->fields['entry_firstname'],
+			'lastname' 			=> $shipping_address->fields['entry_lastname'],
+			'company' 			=> $shipping_address->fields['entry_company'],
+			'street_address' 	=> $shipping_address->fields['entry_street_address'],
+			'suburb' 			=> $shipping_address->fields['entry_suburb'],
+			'city' 				=> $shipping_address->fields['entry_city'],
+			'postcode' 			=> $shipping_address->fields['entry_postcode'],
+			'state' 			=> ((zen_not_null($shipping_address->fields['entry_state'])) ? $shipping_address->fields['entry_state'] : $shipping_address->fields['zone_name']),
+			'zone_id' 			=> $shipping_address->fields['entry_zone_id'],
+			'country' 			=> [
+				'id' 			=> $shipping_address->fields['countries_id'], 
+				'title' 		=> $shipping_address->fields['countries_name'], 
+				'iso_code_2' 	=> $shipping_address->fields['countries_iso_code_2'], 
+				'iso_code_3' 	=> $shipping_address->fields['countries_iso_code_3']
+				],
+			'country_id' 		=> $shipping_address->fields['entry_country_id'],
+			'format_id' 		=> (int)$shipping_address->fields['address_format_id']
+			];
 
 		$this->billing = array('firstname' => $billing_address->fields['entry_firstname'],
 			'lastname' => $billing_address->fields['entry_lastname'],
