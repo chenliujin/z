@@ -82,7 +82,7 @@ class shipping extends base
 				$cheapest = $rates[$i];
 			}
 		}
-		$this->notify('NOTIFY_SHIPPING_MODULE_CALCULATE_CHEAPEST', $cheapest, $cheapest, $rates);
+
 		return $cheapest;
 	}
 }
