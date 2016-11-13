@@ -167,10 +167,6 @@ if (isset($_SESSION['shipping'])) {
 	}
 }
 
-// If no shipping method has been selected, automatically select the cheapest method.
-// If the module's status was changed when none were available, to save on implementing
-// a javascript force-selection method, also automatically select the cheapest shipping
-// method if more than one module is now enabled
 if ( empty($_SESSION['shipping']['id']) ) {
 	$_SESSION['shipping'] = $shipping_modules->cheapest();
 }
