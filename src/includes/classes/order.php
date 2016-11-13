@@ -248,16 +248,28 @@ class order extends base {
 
 		$customer_address = $db->Execute($customer_address_query);
 
-		$shipping_address_query = "select ab.entry_firstname, ab.entry_lastname, ab.entry_company,
-			ab.entry_street_address, ab.entry_suburb, ab.entry_postcode,
-			ab.entry_city, ab.entry_zone_id, z.zone_name, ab.entry_country_id,
-			c.countries_id, c.countries_name, c.countries_iso_code_2,
-			c.countries_iso_code_3, c.address_format_id, ab.entry_state
+		$shipping_address_query = "
+			select 
+				ab.entry_firstname, 
+				ab.entry_lastname, 
+				ab.entry_company,
+				ab.entry_street_address, 
+				ab.entry_suburb, 
+				ab.entry_postcode,
+				ab.entry_city, 
+				ab.entry_zone_id, 
+				z.zone_name, 
+				ab.entry_country_id,
+				c.countries_id, 
+				c.countries_name, 
+				c.countries_iso_code_2,
+				c.countries_iso_code_3, 
+				c.address_format_id, 
+				ab.entry_state
 			from " . TABLE_ADDRESS_BOOK . " ab
-			left join " . TABLE_ZONES . " z on (ab.entry_zone_id = z.zone_id)
-			left join " . TABLE_COUNTRIES . " c on (ab.entry_country_id = c.countries_id)
-			where ab.customers_id = '" . (int)$_SESSION['customer_id'] . "'
-			and ab.address_book_id = '" . (int)$_SESSION['sendto'] . "'";
+				left join " . TABLE_ZONES . " z on (ab.entry_zone_id = z.zone_id)
+				left join " . TABLE_COUNTRIES . " c on (ab.entry_country_id = c.countries_id)
+			where ab.customers_id = '" . (int)$_SESSION['customer_id'] . "' and ab.address_book_id = '" . (int)$_SESSION['sendto'] . "'";
 
 		$shipping_address = $db->Execute($shipping_address_query);
 
