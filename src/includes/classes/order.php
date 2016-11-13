@@ -1,22 +1,8 @@
 <?php
-/**
- * File contains the order-processing class ("order")
- *
- * @package classes
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Fri Jan 1 12:23:19 2016 -0500 Modified in v1.5.5 $
- */
-/**
- * order class
- *
- * Handles all order-processing functions
- *
- * @package classes
- */
 if (!defined('IS_ADMIN_FLAG')) {
 	die('Illegal Access');
 }
+
 class order extends base {
 	var $info, $totals, $products, $customer, $delivery, $content_type, $email_low_stock, $products_ordered_attributes,
 		$products_ordered, $products_ordered_email, $attachArray;
@@ -28,7 +14,6 @@ class order extends base {
 		$this->customer = array();
 		$this->delivery = array();
 
-		$this->notify('NOTIFY_ORDER_INSTANTIATE', array(), $order_id);
 		if (zen_not_null($order_id)) {
 			$this->query($order_id);
 		} else {
@@ -41,7 +26,7 @@ class order extends base {
 
 		$order_id = zen_db_prepare_input($order_id);
 		$this->queryReturnFlag = NULL;
-		$this->notify('NOTIFY_ORDER_BEFORE_QUERY', array(), $order_id);
+
 		if ($this->queryReturnFlag === TRUE) return;
 
 		$order_query = "select customers_id, customers_name, customers_company,
