@@ -1,7 +1,4 @@
 <?php
-/**
- * inoculate against hack attempts which waste CPU cycles
- */
 $contaminated = (isset($_FILES['GLOBALS']) || isset($_REQUEST['GLOBALS'])) ? true : false;
 $paramsToAvoid = [ 
 	'GLOBALS', 
@@ -106,30 +103,19 @@ if ($contaminated) {
 
 unset($contaminated, $len);
 
-/**
- * boolean used to see if we are in the admin script, obviously set to false here.
- */
 define('IS_ADMIN_FLAG', false);
-/**
- * integer saves the time at which the script started.
- */
 define('PAGE_PARSE_START_TIME', microtime());
+
 //  define('DISPLAY_PAGE_PARSE_TIME', 'true');
 @ini_set("arg_separator.output","&");
 @ini_set("html_errors","0");
-/**
- * Set the local configuration parameters - mainly for developers
- */
-if (file_exists('includes/local/configure.php')) {
-  /**
-   * load any local(user created) configure file.
-   */
-  include('includes/local/configure.php');
+
+if (file_exists('includes/local/configure.php')) { 
+	include('includes/local/configure.php');
 }
-/**
- * boolean if true the autoloader scripts will be parsed and their output shown. For debugging purposes only.
- */
+
 define('DEBUG_AUTOLOAD', false);
+
 /**
  * set the level of error reporting
  *
@@ -154,19 +140,15 @@ if (version_compare(PHP_VERSION, 5.3, '>='))
 {
   @date_default_timezone_set(date_default_timezone_get());
 }
-/**
- * check for and include load application parameters
- */
+
 if (file_exists('includes/configure.php')) {
-  /**
-   * load the main configure file.
-   */
-  include('includes/configure.php');
+	include('includes/configure.php');
 } else if (!defined('DIR_FS_CATALOG') && !defined('HTTP_SERVER') && !defined('DIR_WS_CATALOG') && !defined('DIR_WS_INCLUDES')) {
-  $problemString = 'includes/configure.php not found';
-  require('includes/templates/template_default/templates/tpl_zc_install_suggested_default.php');
-  exit;
+	$problemString = 'includes/configure.php not found';
+	require('includes/templates/template_default/templates/tpl_zc_install_suggested_default.php');
+	exit;
 }
+
 /**
  * if main configure file doesn't contain valid info (ie: is dummy or doesn't match filestructure, display assistance page to suggest running the installer)
  */
@@ -175,27 +157,17 @@ if (!defined('DIR_FS_CATALOG') || !is_dir(DIR_FS_CATALOG.'/includes/classes')) {
   require('includes/templates/template_default/templates/tpl_zc_install_suggested_default.php');
   exit;
 }
-/**
- * check for and load system defined path constants
- */
+
 if (file_exists('includes/defined_paths.php')) {
-    /**
-     * load the system-defined path constants
-     */
     require('includes/defined_paths.php');
 } else {
     die('ERROR: /includes/defined_paths.php file not found. Cannot continue.');
     exit;
 }
-/**
- * include the list of extra configure files
- */
+
 if ($za_dir = @dir(DIR_WS_INCLUDES . 'extra_configures')) {
   while ($zv_file = $za_dir->read()) {
     if (preg_match('~^[^\._].*\.php$~i', $zv_file) > 0) {
-      /**
-       * load any user/contribution specific configuration files.
-       */
       include(DIR_WS_INCLUDES . 'extra_configures/' . $zv_file);
     }
   }
@@ -210,28 +182,21 @@ if (isset($loaderPrefix)) {
 }
 $loader_file = $loaderPrefix . '.core.php';
 require('includes/initsystem.php');
-/**
- * determine install status
- */
+
 if (( (!file_exists('includes/configure.php') && !file_exists('includes/local/configure.php')) ) || (DB_TYPE == '') || (!file_exists('includes/classes/db/' .DB_TYPE . '/query_factory.php')) || !file_exists('includes/autoload_func.php')) {
   $problemString = 'includes/configure.php file empty or file not found, OR wrong DB_TYPE set, OR cannot find includes/autoload_func.php which suggests paths are wrong or files were not uploaded correctly';
   require('includes/templates/template_default/templates/tpl_zc_install_suggested_default.php');
   header('location: zc_install/index.php');
   exit;
 }
-/**
- * load the autoloader interpreter code.
-*/
+
 require('includes/autoload_func.php');
-/**
- * load the counter code
-**/
+
 if ($spider_flag == false) {
-// counter and counter history
   require(DIR_WS_INCLUDES . 'counter.php');
 }
-// get customers unique IP that paypal does not touch
+
 $customers_ip_address = $_SERVER['REMOTE_ADDR'];
 if (!isset($_SESSION['customers_ip_address'])) {
-  $_SESSION['customers_ip_address'] = $customers_ip_address;
+	$_SESSION['customers_ip_address'] = $customers_ip_address;
 }
