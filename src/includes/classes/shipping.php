@@ -1,13 +1,4 @@
 <?php
-/**
- * shipping class
- *
- * @package classes
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Sun Oct 18 01:50:12 2015 -0400 Modified in v1.5.5 $
- */
 if (!defined('IS_ADMIN_FLAG')) {
 	die('Illegal Access');
 }
@@ -16,12 +7,6 @@ include_once('z/model/transportation.php');
 include_once('z/model/transportation_zone.php');
 include_once('z/model/transportation_description.php');
 
-/**
- * shipping class
- * Class used for interfacing with shipping modules
- *
- * @package classes
- */
 class shipping extends base 
 {
 	var $modules;
