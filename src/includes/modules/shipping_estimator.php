@@ -240,9 +240,7 @@ if ($_SESSION['cart']->count_contents() > 0) {
 		}
 	}
 
-	if (!isset($tplVars['flagShippingPopUp']) || $tplVars['flagShippingPopUp'] !== true) {
-		require($template->get_template_dir('tpl_modules_shipping_estimator.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_shipping_estimator.php');
-	}
+	require($template->get_template_dir('tpl_modules_shipping_estimator.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_shipping_estimator.php');
 } 
 ?>
 <script type="text/javascript">update_zone(document.estimator); </script>
