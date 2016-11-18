@@ -6,7 +6,7 @@
 
 
 <?php if ( USE_SPLIT_LOGIN_MODE == 'True' || $ec_button_enabled) { ?>
-<fieldset class="floatingBox back" style="padding: 20px">
+<fieldset class="floatingBox back" style="padding: 10px">
 	<legend><?php echo HEADING_NEW_CUSTOMER_SPLIT; ?></legend>
 	<?php if ($ec_button_enabled) { ?>
 	<div class="information"><?php echo TEXT_NEW_CUSTOMER_INTRODUCTION_SPLIT; ?></div>
@@ -22,7 +22,7 @@
 	</form>
 </fieldset>
 
-<fieldset class="floatingBox forward" style="padding: 20px">
+<fieldset class="floatingBox forward" style="padding: 10px">
 	<legend><?php echo HEADING_RETURNING_CUSTOMER_SPLIT; ?></legend>
 	<div class="information"><?php echo TEXT_RETURNING_CUSTOMER_SPLIT; ?></div>
 	
