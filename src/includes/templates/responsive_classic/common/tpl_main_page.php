@@ -143,16 +143,6 @@ if (DISPLAY_PAGE_PARSE_TIME == 'true') {
 ?>
 <!--eof- parse time display -->
 
-<?php
-if  ($detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-	echo '</div>';
-} else if ( $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ){
-	echo '</div>';
-} else {
-	//
-}
-?>
-
 <?php /* add any end-of-page code via an observer class */
 $zco_notifier->notify('NOTIFY_FOOTER_END', $current_page);
 ?>
