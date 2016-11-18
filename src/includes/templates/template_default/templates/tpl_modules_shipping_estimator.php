@@ -63,6 +63,7 @@
 <?php
       }
     }
+
     if($_SESSION['cart']->get_content_type() == 'virtual'){
 ?>
 <?php echo CART_SHIPPING_METHOD_FREE_TEXT .  ' ' . CART_SHIPPING_METHOD_ALL_DOWNLOADS; ?>
@@ -89,7 +90,6 @@
 <?php
       for ($i=0, $n=sizeof($quotes); $i<$n; $i++) {
         if(sizeof($quotes[$i]['methods'])==1){
-          // simple shipping method
           $thisquoteid = $quotes[$i]['id'].'_'.$quotes[$i]['methods'][0]['id'];
 ?>
      <tr class="<?php echo $extra; ?>">
