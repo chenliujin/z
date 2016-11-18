@@ -347,24 +347,24 @@ class order extends base {
 			$coupon_code = $db->Execute($coupon_code_query);
 		}
 
-		$this->info = array(
-			'order_status' => DEFAULT_ORDERS_STATUS_ID,
-			'currency' => $_SESSION['currency'],
-			'currency_value' => $currencies->currencies[$_SESSION['currency']]['value'],
-			'payment_method' => $GLOBALS[$class]->title,
-			'payment_module_code' => $GLOBALS[$class]->code,
-			'coupon_code' => $coupon_code->fields['coupon_code'],
-			'shipping_method' => (isset($_SESSION['shipping']['title'])) ? $_SESSION['shipping']['title'] : '',
-			'shipping_module_code' => (isset($_SESSION['shipping']['id']) && strpos($_SESSION['shipping']['id'], '_') > 0 ? $_SESSION['shipping']['id'] : $_SESSION['shipping']),
-			'shipping_cost' => isset($_SESSION['shipping']['cost']) ? $_SESSION['shipping']['cost'] : 0,
-			'subtotal' => 0,
-			'shipping_tax' => 0,
-			'tax' => 0,
-			'total' => 0,
-			'tax_groups' => array(),
-			'comments' => (isset($_SESSION['comments']) ? $_SESSION['comments'] : ''),
-			'ip_address' => $_SESSION['customers_ip_address'] . ' - ' . $_SERVER['REMOTE_ADDR']
-		);
+		$this->info = [ 
+			'order_status' 			=> DEFAULT_ORDERS_STATUS_ID,
+			'currency' 				=> $_SESSION['currency'],
+			'currency_value' 		=> $currencies->currencies[$_SESSION['currency']]['value'],
+			'payment_method' 		=> $GLOBALS[$class]->title,
+			'payment_module_code' 	=> $GLOBALS[$class]->code,
+			'coupon_code' 			=> $coupon_code->fields['coupon_code'],
+			'shipping_method' 		=> isset($_SESSION['shipping']['title']) ? $_SESSION['shipping']['title'] : '',
+			'shipping_module_code' 	=> (isset($_SESSION['shipping']['id']) && strpos($_SESSION['shipping']['id'], '_') > 0 ? $_SESSION['shipping']['id'] : $_SESSION['shipping']),
+			'shipping_cost' 		=> isset($_SESSION['shipping']['cost']) ? $_SESSION['shipping']['cost'] : 0,
+			'subtotal' 				=> 0,
+			'shipping_tax' 			=> 0,
+			'tax' 					=> 0,
+			'total' 				=> 0,
+			'tax_groups' 			=> [],
+			'comments' 				=> isset($_SESSION['comments']) ? $_SESSION['comments'] : '',
+			'ip_address' 			=> $_SESSION['customers_ip_address'] . ' - ' . $_SERVER['REMOTE_ADDR']
+		];
 
 		$this->customer = array('firstname' => $customer_address->fields['customers_firstname'],
 			'lastname' => $customer_address->fields['customers_lastname'],
