@@ -76,6 +76,7 @@ $order = new order;
 // Load the selected shipping module(needed to calculate tax correctly)
 require(DIR_WS_CLASSES . 'shipping.php');
 $shipping_modules = new shipping($_SESSION['shipping']);
+
 require(DIR_WS_CLASSES . 'order_total.php');
 $order_total_modules = new order_total;
 $order_total_modules->collect_posts();
