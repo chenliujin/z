@@ -3,7 +3,8 @@ class ot_shipping
 {
 	var $title, $output;
 
-	function __construct() {
+	function __construct() 
+	{
 		global $order, $currencies;
 		$this->code = 'ot_shipping';
 		$this->title = MODULE_ORDER_TOTAL_SHIPPING_TITLE;
@@ -85,10 +86,11 @@ class ot_shipping
 			'title' 	=> $order->info['shipping_method'] . ':',
 			'text' 		=> $currencies->format($order->info['shipping_cost'], true, $order->info['currency'], $order->info['currency_value']),
 			'value' 	=> $order->info['shipping_cost']
-			];
+		];
 	}
 
-	function check() {
+	function check() 
+	{
 		global $db;
 		if (!isset($this->_check)) {
 			$check_query = $db->Execute("select configuration_value from " . TABLE_CONFIGURATION . " where configuration_key = 'MODULE_ORDER_TOTAL_SHIPPING_STATUS'");
@@ -97,11 +99,13 @@ class ot_shipping
 		return $this->_check;
 	}
 
-	function keys() {
+	function keys() 
+	{
 		return array('MODULE_ORDER_TOTAL_SHIPPING_STATUS', 'MODULE_ORDER_TOTAL_SHIPPING_SORT_ORDER', 'MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING', 'MODULE_ORDER_TOTAL_SHIPPING_FREE_SHIPPING_OVER', 'MODULE_ORDER_TOTAL_SHIPPING_DESTINATION');
 	}
 
-	function install() {
+	function install() 
+	{
 		global $db;
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('This module is installed', 'MODULE_ORDER_TOTAL_SHIPPING_STATUS', 'true', '', '6', '1','zen_cfg_select_option(array(\'true\'), ', now())");
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, date_added) values ('Sort Order', 'MODULE_ORDER_TOTAL_SHIPPING_SORT_ORDER', '200', 'Sort order of display.', '6', '2', now())");
@@ -110,7 +114,8 @@ class ot_shipping
 		$db->Execute("insert into " . TABLE_CONFIGURATION . " (configuration_title, configuration_key, configuration_value, configuration_description, configuration_group_id, sort_order, set_function, date_added) values ('Provide Free Shipping For Orders Made', 'MODULE_ORDER_TOTAL_SHIPPING_DESTINATION', 'national', 'Provide free shipping for orders sent to the set destination.', '6', '5', 'zen_cfg_select_option(array(\'national\', \'international\', \'both\'), ', now())");
 	}
 
-	function remove() {
+	function remove() 
+	{
 		global $db;
 		$db->Execute("delete from " . TABLE_CONFIGURATION . " where configuration_key in ('" . implode("', '", $this->keys()) . "')");
 	}
