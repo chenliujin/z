@@ -283,7 +283,7 @@ TR.tableHeading {}
 #order-comments{padding:5px 20px 20px 20px;margin:20px 0;}
 #checkoutConfirmDefault .cartTableHeading{height:40px;}
 #checkoutShipping input[type=radio]{margin-left:20px;}
-#checkoutOrderTotals div, #csNotifications .buttonRow{margin-right:20px;}
+#csNotifications .buttonRow{margin-right:20px;}
 #csNotifications input{margin-left:20px;}
 #sendSpendWrapper h2{margin-top:-20px;}
 
