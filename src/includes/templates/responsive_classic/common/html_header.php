@@ -6,20 +6,9 @@ header('X-Frame-Options:SAMEORIGIN');
 
 require(DIR_WS_MODULES . zen_get_module_directory('meta_tags.php'));
 
-?>
-<?php
+if (!isset($layoutType)) $layoutType = 'default';
 
-// ZCAdditions.com, ZCA Responsive Template Default (BOF-addition 1 of 2)
-if (!class_exists('Mobile_Detect')) {
-  include_once(DIR_WS_CLASSES . 'Mobile_Detect.php');
-}
-  $detect = new Mobile_Detect;
-  $isMobile = $detect->isMobile();
-  $isTablet = $detect->isTablet();
-  if (!isset($layoutType)) $layoutType = ($isMobile ? ($isTablet ? 'tablet' : 'mobile') : 'default');
-// ZCAdditions.com, ZCA Responsive Template Default (BOF-addition 1 of 2)
-
-  $paginateAsUL = true;
+$paginateAsUL = true;
 
 ?>
 <!DOCTYPE html>
@@ -166,19 +155,14 @@ if ($_SERVER['REMOTE_ADDR'] != '192.168.145.1') {
 ?>
 
 <?php // ZCAdditions.com, ZCA Responsive Template Default (BOF-addition 2 of 2)
-$responsive_mobile = '<link rel="stylesheet" type="text/css" href="' . $template->get_template_dir('.css',DIR_WS_TEMPLATE, $current_page_base,'css') . '/' . 'responsive_mobile.css' . '" /><link rel="stylesheet" type="text/css" href="' . $template->get_template_dir('.css',DIR_WS_TEMPLATE, $current_page_base,'css') . '/' . 'jquery.mmenu.all.css' . '" />';
-$responsive_tablet = '<link rel="stylesheet" type="text/css" href="' . $template->get_template_dir('.css',DIR_WS_TEMPLATE, $current_page_base,'css') . '/' . 'responsive_tablet.css' . '" /><link rel="stylesheet" type="text/css" href="' . $template->get_template_dir('.css',DIR_WS_TEMPLATE, $current_page_base,'css') . '/' . 'jquery.mmenu.all.css' . '" />';
 $responsive_default = '<link rel="stylesheet" type="text/css" href="' . $template->get_template_dir('.css',DIR_WS_TEMPLATE, $current_page_base,'css') . '/' . 'responsive_default.css' . '" />';
 
 if (in_array($current_page_base,explode(",",'popup_image,popup_image_additional')) ) {
   echo '';
 } else {
   echo '<link rel="stylesheet" type="text/css" href="' . $template->get_template_dir('.css',DIR_WS_TEMPLATE, $current_page_base,'css') . '/' . 'responsive.css' . '" />';
-  if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-    echo $responsive_mobile;
-  } else if ( $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ){
-    echo $responsive_tablet;
-  } else if ( $_SESSION['layoutType'] == 'full' ) {
+
+  if ( $_SESSION['layoutType'] == 'full' ) {
     echo '';
   } else {
     echo $responsive_default;
