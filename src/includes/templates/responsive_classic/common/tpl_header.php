@@ -18,81 +18,6 @@ if (!isset($flag_disable_header) || !$flag_disable_header) {
 <div id="headerWrapper">
 
 <div id="navMainWrapper" class="group onerow-fluid">
-<?php 
- if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-echo '<div class="header Fixed"><a href="#menu" title="Menu"><i class="fa fa-bars"></i></a></div>';
- } else if ( $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ){
-echo '<div class="header Fixed"><a href="#menu" title="Menu"><i class="fa fa-bars"></i></a></div>';
-} else { 
-}
-if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
-  
-<div id="navMain">
-  <ul>
-    <li><?php echo '<a href="' . HTTP_SERVER . DIR_WS_CATALOG . '">'; ?><i class="fa fa-home" title="Home"></i></a></li>
-    <li><a href="#top"><i class="fa fa-arrow-circle-up" title="Back to Top"></i></a></li>
-<?php if ($_SESSION['customer_id']) { ?>
-    <li><a href="<?php echo zen_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>"><i class="fa fa-sign-out" title="Log Off"></i></a></li>
-<?php if ($_SESSION['cart']->count_contents() != 0) { ?>
-    <li><a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><i class="fa fa-user" title="My Account"></i></a></li>
-<?php } else { ?>
-    <li class="last"><a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><i class="fa fa-user" title="My Account"></i></a></li>
-<?php } 
-      } else {
-        if (STORE_STATUS == '0') {
-if ($_SESSION['cart']->count_contents() != 0) { ?>
-    <li><a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>"><i class="fa fa-sign-in" title="Log In"></i></a></li>
-<?php } else { ?>
-    <li class="last"><a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>"><i class="fa fa-sign-in" title="Log In"></i></a></li>
-<?php } 
-  } 
-} 
-?>
-
-<?php if ($_SESSION['cart']->count_contents() != 0) { ?>
-    <li><a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, '', 'NONSSL'); ?>"><i class="fa fa-shopping-cart" title="Shopping Cart"></i></a></li>
-    <li class="last"><a class="blue" href="<?php echo zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'); ?>"><i class="fa fa-check-square" title="Checkout"></i></a></li>
-<?php }?>
-  </ul>
-<div id="navMainSearch" class="forward"><?php require(DIR_WS_MODULES . 'sideboxes/search_header.php'); ?></div>
-</div>
-</div>
-
-<?php  } else if ( $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ){ ?> 
-
-<div id="navMain">
-    <ul>
-<li class="hide"><a href="#top"><i class="fa fa-arrow-circle-up" title="Back to Top"></i></a></li>
-    <li><?php echo '<a href="' . HTTP_SERVER . DIR_WS_CATALOG . '">'; ?><?php echo HEADER_TITLE_CATALOG; ?></a></li>
-<?php if ($_SESSION['customer_id']) { ?>
-    <li><a href="<?php echo zen_href_link(FILENAME_LOGOFF, '', 'SSL'); ?>"><?php echo HEADER_TITLE_LOGOFF; ?></a></li>
-<?php if ($_SESSION['cart']->count_contents() != 0) { ?>
-<li><a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo HEADER_TITLE_MY_ACCOUNT; ?></a></li>
-	    <?php } else { ?>
-<li class="last"><a href="<?php echo zen_href_link(FILENAME_ACCOUNT, '', 'SSL'); ?>"><?php echo HEADER_TITLE_MY_ACCOUNT; ?></a></li>
-      
-      <?php } ?>
-<?php
-      } else {
-        if (STORE_STATUS == '0') {
-?>
-<?php if ($_SESSION['cart']->count_contents() != 0) { ?>
-    <li><a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>"><?php echo HEADER_TITLE_LOGIN; ?></a></li>
-	    <?php } else { ?>
-    <li class="last"><a href="<?php echo zen_href_link(FILENAME_LOGIN, '', 'SSL'); ?>"><?php echo HEADER_TITLE_LOGIN; ?></a></li>
-
-	    <?php } ?>
-<?php } } ?>
-
-<?php if ($_SESSION['cart']->count_contents() != 0) { ?>
-    <li><a href="<?php echo zen_href_link(FILENAME_SHOPPING_CART, '', 'NONSSL'); ?>"><?php echo HEADER_TITLE_CART_CONTENTS; ?></a></li>
-    <li class="last"><a class="blue" href="<?php echo zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'); ?>"><?php echo HEADER_TITLE_CHECKOUT; ?></a></li>
-<?php }?>
-</ul>
-<div id="navMainSearch" class="forward"><?php require(DIR_WS_MODULES . 'sideboxes/search_header.php'); ?></div>
-</div>
-</div>
-<?php  } else { ?>
 
 <div id="navMain">
 	<div id="logo">
@@ -107,7 +32,6 @@ if ($_SESSION['cart']->count_contents() != 0) { ?>
 	</div>
 </div>
 </div>
-<?php  } ?>
 
 
 <div id="nav" class="nav">
