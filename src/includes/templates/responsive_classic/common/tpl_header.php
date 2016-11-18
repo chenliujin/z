@@ -311,15 +311,6 @@ if (SHOW_BANNERS_GROUP_SET2 != '' && $banner = zen_banner_exists('dynamic', SHOW
 </div>
 -->
 
-<?php if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) { ?>
-  <div id="navMainSearch1" class="forward"><?php require(DIR_WS_MODULES . 'sideboxes/search_header.php'); ?></div>
-<?php  } else if ( $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) { ?>
-  <div id="navMainSearch1" class="forward"><?php require(DIR_WS_MODULES . 'sideboxes/search_header.php'); ?></div>
-<?php  } else if ( $_SESSION['layoutType'] == 'full' ) {
-  } else {
-  }
-?>
-
 <?php if (EZPAGES_STATUS_HEADER == '1' or (EZPAGES_STATUS_HEADER == '2' and (strstr(EXCLUDE_ADMIN_IP_FOR_MAINTENANCE, $_SERVER['REMOTE_ADDR'])))) { ?>
 <?php   require($template->get_template_dir('tpl_ezpages_bar_header.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_ezpages_bar_header.php'); ?>
 <?php } ?>
