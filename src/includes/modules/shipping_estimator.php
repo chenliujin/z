@@ -1,30 +1,15 @@
 <?php
-/**
- * Shipping Estimator module
- *
- * Customized by: Linda McGrath osCommerce@WebMakers.com to:
- * - Handles Free Shipping for orders over $total as defined in the Admin
- * - Shows Free Shipping on Virtual products
- *
- * @package modules
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * portions Copyright (c) 2003 Edwin Bekaert (edwin@ednique.com)
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Wed Jan 6 12:47:43 2016 -0500 Modified in v1.5.5 $
- */
 if (!defined('IS_ADMIN_FLAG')) {
 	die('Illegal Access');
 }
+
 if (isset($_POST['zone_country_id'])) $_POST['zone_country_id'] = (int)$_POST['zone_country_id'];
 if (isset($_POST['scid'])) $_POST['scid'] = preg_replace('/[^a-z_0-9\- ]/i', '', $_POST['scid']);
 
-// load JS updater
 if ($current_page_base != 'popup_shipping_estimator') {
 	require(DIR_WS_MODULES . '/pages/popup_shipping_estimator/jscript_addr_pulldowns.php');
 }
 ?>
-<!-- shipping_estimator //-->
 
 <script type="text/javascript">
 function shipincart_submit(){
@@ -34,7 +19,6 @@ function shipincart_submit(){
 </script>
 
 <?php
-// Only do when something is in the cart
 if ($_SESSION['cart']->count_contents() > 0) {
 	$zip_code = (isset($_SESSION['cart_zip_code'])) ? $_SESSION['cart_zip_code'] : '';
 	$zip_code = (isset($_POST['zip_code'])) ? strip_tags(addslashes($_POST['zip_code'])) : $zip_code;
@@ -114,15 +98,14 @@ if ($_SESSION['cart']->count_contents() > 0) {
 		'currency' => $currency,
 		'currency_value'=> $currencies->currencies[$currency]['value']);
 	}
-	// weight and count needed for shipping !
+
 	$total_weight = $_SESSION['cart']->show_weight();
 	$shipping_estimator_display_weight = $total_weight;
 	$total_count = $_SESSION['cart']->count_contents();
 	require(DIR_WS_CLASSES . 'shipping.php');
 	$shipping_modules = new shipping;
 	$quotes = $shipping_modules->quote();
-	//print_r($quotes);
-	//die('here');
+
 	$order->info['subtotal'] = $_SESSION['cart']->show_total();
 
 	// set selections for displaying
@@ -151,7 +134,7 @@ if ($_SESSION['cart']->count_contents() > 0) {
 	} else {
 		$free_shipping = false;
 	}
-	// begin shipping cost
+
 	if(!$free_shipping && $_SESSION['cart']->get_content_type() !== 'virtual'){
 		if (zen_not_null($_POST['scid'])){
 			list($module, $method) = explode('_', $_POST['scid']);
@@ -256,18 +239,11 @@ if ($_SESSION['cart']->count_contents() > 0) {
 	}
 
 	if (!isset($tplVars['flagShippingPopUp']) || $tplVars['flagShippingPopUp'] !== true) {
-		/**
-		 * use the template tpl_modules_shipping_estimator.php to display the result
-		 *
-		 **/
 		require($template->get_template_dir('tpl_modules_shipping_estimator.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_shipping_estimator.php');
 	}
-} else { // Only do when something is in the cart
-?>
-<h2><?php echo CART_SHIPPING_OPTIONS; ?></h2>
-<div class="cartTotalsDisplay important"><?php echo EMPTY_CART_TEXT_NO_QUOTE; ?></div>
-<?php
+} else { ?>
+	<h2><?php echo CART_SHIPPING_OPTIONS; ?></h2>
+	<div class="cartTotalsDisplay important"><?php echo EMPTY_CART_TEXT_NO_QUOTE; ?></div> <?php
 }
 ?>
 <script type="text/javascript">update_zone(document.estimator); </script>
-<!-- shipping_estimator_eof //-->
