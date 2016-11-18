@@ -39,16 +39,6 @@ $body_id = ($this_is_home_page) ? 'indexHome' : str_replace('_', '', $_GET['main
 <body id="<?php echo $body_id . 'Body'; ?>"<?php if($zv_onload !='') echo ' onload="'.$zv_onload.'"'; ?>>
 
 <?php
-if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-	echo '<div id="page">';
-} else if ( $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ){
-	echo '<div id="page">';
-} else {
-	//
-}
-?>
-
-<?php
 if (SHOW_BANNERS_GROUP_SET1 != '' && $banner = zen_banner_exists('dynamic', SHOW_BANNERS_GROUP_SET1)) {
 	if ($banner->RecordCount() > 0) {
 ?>
