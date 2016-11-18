@@ -166,7 +166,6 @@ if ($_SESSION['cart']->count_contents() > 0) {
 			}
 
 			if($selected_quote[0]['error'] || !zen_not_null($selected_quote[0]['methods'][0]['cost'])){
-				//        $selected_shipping = $shipping_modules->cheapest();
 				$order->info['shipping_method'] = $selected_shipping['title'];
 				$order->info['shipping_cost'] = $selected_shipping['cost'];
 				$order->info['total']+= $selected_shipping['cost'];
@@ -179,17 +178,18 @@ if ($_SESSION['cart']->count_contents() > 0) {
 				$selected_shipping['id'] = $selected_quote[0]['id'].'_'.$selected_quote[0]['methods'][0]['id'];
 			}
 		}else{
-			//      $selected_shipping = $shipping_modules->cheapest();
 			$order->info['shipping_method'] = $selected_shipping['title'];
 			$order->info['shipping_cost'] = $selected_shipping['cost'];
 			$order->info['total']+= $selected_shipping['cost'];
 		}
 	}
+
 	// virtual products need a free shipping
 	if($_SESSION['cart']->get_content_type() == 'virtual') {
 		$order->info['shipping_method'] = CART_SHIPPING_METHOD_FREE_TEXT . ' ' . CART_SHIPPING_METHOD_ALL_DOWNLOADS;
 		$order->info['shipping_cost'] = 0;
 	}
+
 	if($free_shipping) {
 		$order->info['shipping_method'] = MODULE_ORDER_TOTAL_SHIPPING_TITLE;
 		$order->info['shipping_cost'] = 0;
@@ -203,10 +203,9 @@ if ($_SESSION['cart']->count_contents() > 0) {
 	} else {
 		$show_in = FILENAME_SHOPPING_CART;
 	}
-	//  if(sizeof($quotes)) {
+
 	if ($_SESSION['customer_id']) {
 		$addresses = $db->execute("select address_book_id, entry_city as city, entry_postcode as postcode, entry_state as state, entry_zone_id as zone_id, entry_country_id as country_id from " . TABLE_ADDRESS_BOOK . " where customers_id = '" . (int)$_SESSION['customer_id'] . "'");
-		// only display addresses if more than 1
 		if ($addresses->RecordCount() > 1){
 			while (!$addresses->EOF) {
 				$addresses_array[] = array('id' => $addresses->fields['address_book_id'], 'text' => zen_address_format(zen_get_address_format_id($addresses->fields['country_id']), $addresses->fields, 0, ' ', ' '));
@@ -224,7 +223,6 @@ if ($_SESSION['cart']->count_contents() > 0) {
 			}
 		}
 	}
-	//  }
 
 	// This is done after quote-calcs in order to include Tare info accurately.  NOTE: tare values are *not* included in weights shown on-screen.
 	$totalsDisplay = '';
