@@ -1,13 +1,4 @@
 <?php
-/**
- * ot_total order-total module
- *
- * @package orderTotal
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Thu Apr 2 14:27:45 2015 -0400 Modified in v1.5.5 $
- */
 class ot_subtotal {
 	var $title, $output;
 
@@ -60,4 +51,3 @@ class ot_subtotal {
 		$db->Execute("delete from " . TABLE_CONFIGURATION . " where configuration_key in ('" . implode("', '", $this->keys()) . "')");
 	}
 }
-?>
