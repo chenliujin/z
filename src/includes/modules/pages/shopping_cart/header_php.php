@@ -18,15 +18,13 @@ if (isset($_SESSION['valid_to_checkout']) && $_SESSION['valid_to_checkout'] == f
 $shipping_weight = $_SESSION['cart']->show_weight();
 
 /*
-  $shipping_weight = 0;
-  require(DIR_WS_CLASSES . 'order.php');
-  $order = new order;
-  require_once('includes/classes/http_client.php'); // shipping in basket
-  $total_weight = $_SESSION['cart']->show_weight();
-  $total_count = $_SESSION['cart']->count_contents();
-  require(DIR_WS_CLASSES . 'shipping.php');
-  $shipping_modules = new shipping;
-  $quotes = $shipping_modules->quote();
+require(DIR_WS_CLASSES . 'order.php');
+$order = new order;
+$total_weight = $_SESSION['cart']->show_weight();
+$total_count = $_SESSION['cart']->count_contents();
+require(DIR_WS_CLASSES . 'shipping.php');
+$shipping_modules = new shipping;
+$quotes = $shipping_modules->quote();
  */
 
 $flagHasCartContents = ($_SESSION['cart']->count_contents() > 0);
