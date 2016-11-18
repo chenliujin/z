@@ -20,11 +20,11 @@ function shipincart_submit(){
 
 <?php
 if ($_SESSION['cart']->count_contents() > 0) {
-	$zip_code = (isset($_SESSION['cart_zip_code'])) ? $_SESSION['cart_zip_code'] : '';
-	$zip_code = (isset($_POST['zip_code'])) ? strip_tags(addslashes($_POST['zip_code'])) : $zip_code;
-	$state_zone_id = (isset($_SESSION['cart_zone'])) ? (int)$_SESSION['cart_zone'] : '';
-	$state_zone_id = (isset($_POST['zone_id'])) ? (int)$_POST['zone_id'] : $state_zone_id;
-	$selectedState = zen_output_string_protected($_POST['state']);
+	$zip_code 		= (isset($_SESSION['cart_zip_code'])) ? $_SESSION['cart_zip_code'] : '';
+	$zip_code 		= (isset($_POST['zip_code'])) ? strip_tags(addslashes($_POST['zip_code'])) : $zip_code;
+	$state_zone_id 	= (isset($_SESSION['cart_zone'])) ? (int)$_SESSION['cart_zone'] : '';
+	$state_zone_id 	= (isset($_POST['zone_id'])) ? (int)$_POST['zone_id'] : $state_zone_id;
+	$selectedState 	= zen_output_string_protected($_POST['state']);
 
 	if (file_exists(DIR_WS_CLASSES . 'http_client.php')) require_once(DIR_WS_CLASSES . 'http_client.php');
 
