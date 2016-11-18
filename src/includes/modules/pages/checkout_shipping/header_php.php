@@ -78,7 +78,6 @@ if ($order->content_type == 'virtual') {
 $total_weight = $_SESSION['cart']->show_weight();
 $total_count = $_SESSION['cart']->count_contents();
 
-// load all enabled shipping modules
 require(DIR_WS_CLASSES . 'shipping.php');
 $shipping_modules = new shipping;
 
@@ -148,10 +147,8 @@ if ( isset($_POST['action']) && ($_POST['action'] == 'process') ) {
 	}
 }
 
-// get all available shipping quotes
 $quotes = $shipping_modules->quote();
 
-// check that the currently selected shipping method is still valid (in case a zone restriction has disabled it, etc)
 if (isset($_SESSION['shipping'])) {
 	$checklist = array();
 	foreach ($quotes as $key=>$val) {
@@ -171,7 +168,6 @@ if ( empty($_SESSION['shipping']['id']) ) {
 	$_SESSION['shipping'] = $shipping_modules->cheapest();
 }
 
-// Should address-edit button be offered?
 $displayAddressEdit = (MAX_ADDRESS_BOOK_ENTRIES >= 2);
 
 // if shipping-edit button should be overridden, do so
