@@ -32,7 +32,6 @@ if ($order->content_type == 'virtual') {
 $addressType = "shipto";
 require(DIR_WS_MODULES . zen_get_module_directory('checkout_new_address'));
 
-// if no shipping destination address was selected, use their own address as default
 if (!$_SESSION['sendto']) {
 	$_SESSION['sendto'] = $_SESSION['customer_default_address_id'];
 }

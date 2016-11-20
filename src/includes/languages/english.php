@@ -536,7 +536,6 @@ define('CART_ITEMS','Items in Cart: ');
 define('CART_SELECT','Select');
 define('ERROR_CART_UPDATE', '<strong>Please update your order.</strong> ');
 define('IMAGE_BUTTON_UPDATE_CART', 'Update');
-define('EMPTY_CART_TEXT_NO_QUOTE', 'Whoops! Your session has expired ... Please update your shopping cart for Shipping Quote ...');
 define('CART_SHIPPING_QUOTE_CRITERIA', 'Shipping quotes are based on the address information you selected:');
 
 // multiple product add to cart

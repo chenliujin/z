@@ -1,14 +1,3 @@
-<?php
-/**
- * Module Template - for shipping-estimator display
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Wed Jan 6 16:47:38 2016 -0500 Modified in v1.5.5 $
- */
-?>
 <div id="shippingEstimatorContent">
 <?php echo zen_draw_form('estimator', zen_href_link($show_in . '#view', '', $request_type), 'post'); ?>
 <?php echo zen_draw_hidden_field('scid', $selected_shipping['id']); ?>
@@ -74,6 +63,7 @@
 <?php
       }
     }
+
     if($_SESSION['cart']->get_content_type() == 'virtual'){
 ?>
 <?php echo CART_SHIPPING_METHOD_FREE_TEXT .  ' ' . CART_SHIPPING_METHOD_ALL_DOWNLOADS; ?>
@@ -100,7 +90,6 @@
 <?php
       for ($i=0, $n=sizeof($quotes); $i<$n; $i++) {
         if(sizeof($quotes[$i]['methods'])==1){
-          // simple shipping method
           $thisquoteid = $quotes[$i]['id'].'_'.$quotes[$i]['methods'][0]['id'];
 ?>
      <tr class="<?php echo $extra; ?>">

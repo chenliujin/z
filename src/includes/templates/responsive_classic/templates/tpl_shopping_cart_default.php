@@ -74,10 +74,6 @@ if ($flagHasCartContents) { ?>
 		<td class="price size-medium text-bold  cartUnitDisplay">
 			<div style="margin: 14px 0">
 			<?php 
-			if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' or $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ) {
-				echo '<b class="hide">' . TABLE_HEADING_PRICE . '&#58;&nbsp;&nbsp;</b>'; 
-			} 
-
 			echo $product['productsPriceEach']; 
 			?>
 			</div>
@@ -90,7 +86,10 @@ if ($flagHasCartContents) { ?>
 				echo $product['showFixedQuantityAmount'];
 			} else {
 				echo $product['quantityField'];
-				echo '<input type="submit" value="update" />';
+				?>
+				<br />
+				<input type="submit" value="update" style="height: 20px; display: none" />
+				<?php
 			} 
 			?>
 			<br />

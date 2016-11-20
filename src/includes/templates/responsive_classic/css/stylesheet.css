@@ -15,7 +15,6 @@ img {
 .sideBoxContent a:visited{}
 #navEZPagesTOC ul li a:hover, #navMain ul li a:hover, #navSupp ul li a:hover{}
 
-/*heading styles*/
 h1 {font-size:1.8em;line-height:25px;}
 h2 {font-size:1.4em;}
 h3 {font-size:1.3em;}
@@ -32,7 +31,7 @@ h1, h2, h3, h4, h5, h6 {margin:20px 0;}
 .accountQuantityDisplay, .ratingRow, LABEL#textAreaReviews, #productMainImage, #reviewsInfoDefaultProductImage, #productReviewsDefaultProductImage, #reviewWriteMainImage, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, 
 .centerBoxContentsFeatured, .centerBoxContentsNew, .gvBal, .attribImg {text-align:center;}
 #navCategoryIcon, .buttonRow, #indexProductListCatDescription {margin:0.5em;}
-/*floats and clears*/
+
 .back {float:left;}
 .forward, #shoppingCartDefault #PPECbutton {float:right;}
 .clearBoth {clear:both;}
@@ -40,26 +39,36 @@ h1, h2, h3, h4, h5, h6 {margin:20px 0;}
 .hiddenField {display:none;}
 .visibleField {display:inline;}
 #contentColumnMain, #navColumnOne, #navColumnTwo, .centerBoxContents, .specialsListBoxContents, .categoryListBoxContents, .additionalImages, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, .alert {vertical-align:top;}
-.alert {margin-left:0.5em;}
+
+.alert {
+	color: #8b0000;
+}
+
 .important {font-weight:bold;}
 .gvBal {float:right;}
 .centerColumn, #bannerOne, #bannerTwo,  #bannerThree,  #bannerFour,  #bannerFive,  #bannerSix {padding:0.8em;}
 .smallText, #siteinfoCredits, #siteinfoStatus, #siteinfoIP {font-size:0.9em;}
 .information {padding: 10px 3px; line-height: 150%;}
 .group:after {content: "";display:table;clear:both;}
-/*blue text color change to your color*/
-.blue{}
-.blue:hover{}
+
 .last{border:none !important;}
 .no-fouc {display: none;}
 .italic{font-style:italic;}
 .back-margin{margin-top:30px;}
 .onerow-fluid{width:75% !important;margin:auto;}
 
-/*bof form elements*/
 CODE {font-family:arial, verdana, helvetica, sans-serif;font-size:1em;}
-SELECT, INPUT {display:inline;font-size:1em;margin:0 0.1em 0 0;}
-input{height:35px;padding-left:5px;margin-bottom:10px;}
+SELECT {
+	display:inline;
+	font-size:1em;
+	margin:0 0.1em 0 0;
+}
+
+input{
+	height:35px;
+	padding-left:5px;
+	margin-bottom:10px;
+}
 
 textarea {
 	margin:auto;
@@ -83,7 +92,7 @@ body:not(:-moz-handler-blocked) fieldset{display:table-cell;}
 fieldset > fieldset{}
 fieldset h3, 
 #advSearchDefault input, fieldset .buttonRow.back, fieldset select, 
-fieldset input[type=radio], fieldset input[type=checkbox] {
+fieldset input[type=checkbox] {
 	margin-left:20px;
 }
 
@@ -106,13 +115,11 @@ select#country, select#stateZone, #state {margin-left:0;}
 .sideBoxContent select{width:auto;}
 #currenciesContent select{height:35px;}
 
-/*bof warnings, errors, messages*/
 .messageStackWarning, .messageStackError, .messageStackSuccess, .messageStackCaution {line-height:1.8em;padding:20px;}
 .messageStackWarning, .messageStackError {}
 .messageStackSuccess {}
 .messageStackCaution {}
 
-/*bof wrappers - page or section containers*/
 #mainWrapper {text-align:left;width:100%;vertical-align:top;}
 #logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage,
 #popupImage {margin:0;padding:0;}
@@ -132,7 +139,6 @@ select#country, select#stateZone, #state {margin-left:0;}
 	border-bottom: 1px solid #e9e9e9;
 }
 
-/*top left navigation*/
 #navMainWrapper {
 	margin:0;
 	padding:30px 0 10px 0;
@@ -148,7 +154,6 @@ select#country, select#stateZone, #state {margin-left:0;}
 }
 
 #navMainSearch input[type=text]{vertical-align:top;display:inline-block;
-	/*border:0;*/
 	width:65% !important;
 	height:35px;
 	margin:0;font-size:0.9em;-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
@@ -160,10 +165,8 @@ select#country, select#stateZone, #state {margin-left:0;}
 .cart-add input[type=submit], #navMainSearch input[type=submit]{-moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;display:inline-block;margin:0;height:32px;}
 
 
-/*top middle*/
 #logo{margin:10px 0;}
 #tagline {font-size:1.8em;text-align:center;margin-top:10px;}
-/*top categories tabs navigation*/
 #navCatTabsWrapper {margin:0;width:100%;}
 #navCatTabs ul {font-size:0;text-align:center;overflow:hidden;}
 #navCatTabs li {font-size:0.75rem;display: inline-block;margin-top:0;}
@@ -171,7 +174,7 @@ select#country, select#stateZone, #state {margin-left:0;}
 #navCatTabs li a {text-decoration: none;padding: 1.2em 1.0em;display: block;}
 #navCatTabs li a:hover {}
 #navCatTabs li:hover{}
-/*top ezpages links*/
+
 #navEZPagesTop {margin:0;width:100%;}
 #navEZPagesTop ul {font-size:0;text-align:center;overflow:hidden;}
 #navEZPagesTop li {font-size:0.75rem;display: inline-block;margin-top:0;}
@@ -187,38 +190,30 @@ select#country, select#stateZone, #state {margin-left:0;}
 .pagination li a:hover {}
 .pagination .current{padding:1.2em 1.0em;}
 
-/*breadcrumbs*/
 #navBreadCrumb {margin:0;padding:0.5em;}
 #navBreadCrumb a{text-decoration:none;}
 #navBreadCrumb a:visited{}
-/*view cart icon for phones*/
 #navMain i.fa.fa-share{position:relative;top:-10px;left:-10px;}
 
-/*bof footer*/
-/*bottom ezpages links*/
 #navSuppWrapper {margin:0;width:100%;}
 #navSupp ul {font-size:0;text-align:center;}
 #navSupp li {font-size:0.75rem;display: inline-block;margin-top:0;}
 #navSupp ul li:last-child{}
 #navSupp li a {text-decoration: none;padding: 1.2em 1.0em;display: block;}
 #navSupp li a:hover {}
-/*footer copyright*/
 #siteinfoIP, #bannerSix{font-weight:normal;padding:1.0em 0;margin:0;}
 
-/*bof ezpages*/
 #navEZPagesTOCWrapper {float:right;padding:0 20px 20px 20px;margin:0 0 20px 20px;}
 #navEZPagesTOC ul {margin:0;padding:0.5em 0;list-style-type:none;line-height:1.5em;}
 #navEZPagesTOC ul li {white-space:nowrap;font-size:130%;line-height:150%;}
 #navEZPagesTOC ul li a {padding:0 0.5em;margin:0;text-decoration:none;/*remove text decoration if you want an underline*/}
 #navEZPageNextPrev{margin-bottom:30px;}
 
-/*bof left and right hand columns*/
-/*styles for centerbox, left and right hand headings*/
 h2.centerBoxHeading, h3.rightBoxHeading, h3.leftBoxHeading{font-size:1.2em;font-weight:normal;}
 h3.rightBoxHeading a, h3.leftBoxHeading a{color: #ffffff;font-weight:normal;text-decoration:none;/*remove text decoration if you want an underline*/}
 h3.rightBoxHeading a:hover, h3.leftBoxHeading a:hover {text-decoration:none;}
 .rightBoxHeading, .leftBoxHeading, .centerBoxHeading {margin:0;padding:1.0em 0.2em;}
-/*sidebox content styles*/
+
 .sideBoxContent {padding:1.0em;margin-bottom:10px;}
 .sideBoxContent a{padding:0.3em 0;display:inline-block;font-size:1.1em;text-decoration:none; /*remove text decoration for underlined links*/}
 .sideBoxContent a:hover{}
@@ -240,7 +235,6 @@ ul.list-links li:hover, ol.list-links li:hover{}
 .cartBoxTotal{padding:10px !important;}
 .sideBoxContent .productPriceDiscount{font-size:130%;margin-top:3px;}
 
-/*bof shopping cart*/
 .tableHeading TH {padding:10px 0;}
 #cartSubTotal {text-align:right;line-height:2.2em;padding:10px 0 20px 0;font-size:130%;}
 .tableRow, .tableHeading, #cartSubTotal {height:2.2em;}
@@ -289,9 +283,8 @@ TR.tableHeading {}
 #order-comments{padding:5px 20px 20px 20px;margin:20px 0;}
 #checkoutConfirmDefault .cartTableHeading{height:40px;}
 #checkoutShipping input[type=radio]{margin-left:20px;}
-#checkoutOrderTotals div, #csNotifications .buttonRow{margin-right:20px;}
+#csNotifications .buttonRow{margin-right:20px;}
 #csNotifications input{margin-left:20px;}
-div#checkoutShippingContentChoose{margin-bottom:20px;}
 #sendSpendWrapper h2{margin-top:-20px;}
 
 /*bof images*/
@@ -593,9 +586,11 @@ input[type=text]:focus {
 .text-center {
 	text-align: center!important;
 }
+
 .text-bold {
 	font-weight: 700!important;
 }
+
 .text-strike {
 	text-decoration: line-through!important;
 }

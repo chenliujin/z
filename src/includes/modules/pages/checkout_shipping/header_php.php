@@ -1,35 +1,20 @@
 <?php
-/**
- * Checkout Shipping Page
- *
- * @package page
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Mon Dec 7 14:40:03 2015 -0500 Modified in v1.5.5 $
- */
-// This should be first line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_START_CHECKOUT_SHIPPING');
 require_once(DIR_WS_CLASSES . 'http_client.php');
 
-// if there is nothing in the customers cart, redirect them to the shopping cart page
 if ($_SESSION['cart']->count_contents() <= 0) {
 	zen_redirect(zen_href_link(FILENAME_TIME_OUT));
 }
 
-// if the customer is not logged on, redirect them to the login page
 if (!isset($_SESSION['customer_id']) || !$_SESSION['customer_id']) {
 	$_SESSION['navigation']->set_snapshot();
 	zen_redirect(zen_href_link(FILENAME_LOGIN, '', 'SSL'));
 } else {
-	// validate customer
 	if (zen_get_customer_validate_session($_SESSION['customer_id']) == false) {
 		$_SESSION['navigation']->set_snapshot(array('mode' => 'SSL', 'page' => FILENAME_CHECKOUT_SHIPPING));
 		zen_redirect(zen_href_link(FILENAME_LOGIN, '', 'SSL'));
 	}
 }
 
-// Validate Cart for checkout
 $_SESSION['valid_to_checkout'] = true;
 $_SESSION['cart']->get_products(true);
 if ($_SESSION['valid_to_checkout'] == false) {
@@ -37,12 +22,10 @@ if ($_SESSION['valid_to_checkout'] == false) {
 	zen_redirect(zen_href_link(FILENAME_SHOPPING_CART));
 }
 
-// Stock Check
 if ( (STOCK_CHECK == 'true') && (STOCK_ALLOW_CHECKOUT != 'true') ) {
 	$products = $_SESSION['cart']->get_products();
 	for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		$qtyAvailable = zen_get_products_stock($products[$i]['id']);
-		// compare against product inventory, and against mixed=YES
 		if ($qtyAvailable - $products[$i]['quantity'] < 0 || $qtyAvailable - $_SESSION['cart']->in_cart_mixed($products[$i]['id']) < 0) {
 			zen_redirect(zen_href_link(FILENAME_SHOPPING_CART));
 			break;
@@ -50,11 +33,9 @@ if ( (STOCK_CHECK == 'true') && (STOCK_ALLOW_CHECKOUT != 'true') ) {
 	}
 }
 
-// if no shipping destination address was selected, use the customers own address as default
 if (!$_SESSION['sendto']) {
 	$_SESSION['sendto'] = $_SESSION['customer_default_address_id'];
 } else {
-	// verify the selected shipping address
 	$check_address_query = "SELECT count(*) AS total
 		FROM   " . TABLE_ADDRESS_BOOK . "
 		WHERE  customers_id = :customersID
@@ -97,7 +78,6 @@ if ($order->content_type == 'virtual') {
 $total_weight = $_SESSION['cart']->show_weight();
 $total_count = $_SESSION['cart']->count_contents();
 
-// load all enabled shipping modules
 require(DIR_WS_CLASSES . 'shipping.php');
 $shipping_modules = new shipping;
 
@@ -167,10 +147,8 @@ if ( isset($_POST['action']) && ($_POST['action'] == 'process') ) {
 	}
 }
 
-// get all available shipping quotes
 $quotes = $shipping_modules->quote();
 
-// check that the currently selected shipping method is still valid (in case a zone restriction has disabled it, etc)
 if (isset($_SESSION['shipping'])) {
 	$checklist = array();
 	foreach ($quotes as $key=>$val) {
@@ -178,9 +156,7 @@ if (isset($_SESSION['shipping'])) {
 			foreach($val['methods'] as $key2=>$method) {
 				$checklist[] = $val['id'] . '_' . $method['id'];
 			}
-		} else {
-			// skip
-		}
+		} 
 	}
 	$checkval = $_SESSION['shipping']['id'];
 	if (!in_array($checkval, $checklist) && $_SESSION['shipping']['id'] != 'free_free') {
@@ -188,13 +164,10 @@ if (isset($_SESSION['shipping'])) {
 	}
 }
 
-// If no shipping method has been selected, automatically select the cheapest method.
-// If the module's status was changed when none were available, to save on implementing
-// a javascript force-selection method, also automatically select the cheapest shipping
-// method if more than one module is now enabled
-if ( empty($_SESSION['shipping']['id']) ) $_SESSION['shipping'] = $shipping_modules->cheapest();
+if ( empty($_SESSION['shipping']['id']) ) {
+	$_SESSION['shipping'] = $shipping_modules->cheapest();
+}
 
-// Should address-edit button be offered?
 $displayAddressEdit = (MAX_ADDRESS_BOOK_ENTRIES >= 2);
 
 // if shipping-edit button should be overridden, do so
@@ -212,6 +185,3 @@ $payment_modules = new payment;
 
 $breadcrumb->add(NAVBAR_TITLE_1, zen_href_link(FILENAME_CHECKOUT_SHIPPING, '', 'SSL'));
 $breadcrumb->add(NAVBAR_TITLE_2);
-
-// This should be last line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_END_CHECKOUT_SHIPPING');

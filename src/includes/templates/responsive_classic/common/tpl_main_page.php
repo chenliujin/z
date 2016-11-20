@@ -39,16 +39,6 @@ $body_id = ($this_is_home_page) ? 'indexHome' : str_replace('_', '', $_GET['main
 <body id="<?php echo $body_id . 'Body'; ?>"<?php if($zv_onload !='') echo ' onload="'.$zv_onload.'"'; ?>>
 
 <?php
-if ( $detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-	echo '<div id="page">';
-} else if ( $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ){
-	echo '<div id="page">';
-} else {
-	//
-}
-?>
-
-<?php
 if (SHOW_BANNERS_GROUP_SET1 != '' && $banner = zen_banner_exists('dynamic', SHOW_BANNERS_GROUP_SET1)) {
 	if ($banner->RecordCount() > 0) {
 ?>
@@ -153,17 +143,18 @@ if (DISPLAY_PAGE_PARSE_TIME == 'true') {
 ?>
 <!--eof- parse time display -->
 
-<?php
-if  ($detect->isMobile() && !$detect->isTablet() || $_SESSION['layoutType'] == 'mobile' ) {
-	echo '</div>';
-} else if ( $detect->isTablet() || $_SESSION['layoutType'] == 'tablet' ){
-	echo '</div>';
-} else {
-	//
-}
-?>
-
 <?php /* add any end-of-page code via an observer class */
 $zco_notifier->notify('NOTIFY_FOOTER_END', $current_page);
 ?>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-87299509-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>

@@ -23,11 +23,11 @@
 	</div>
 </fieldset>
 
- 
+<fieldset>
+	<legend><?php echo TABLE_HEADING_SHIPPING_METHOD; ?></legend>
+
 <?php
 if ( !empty($quotes) ) { ?>
-	<fieldset>
-		<legend><?php echo TABLE_HEADING_SHIPPING_METHOD; ?></legend>
 		<div style="padding: 20px;">
 
 <style>
@@ -85,17 +85,17 @@ tr td {
 	?>
 		</table> 
 		</div>
-	</fieldset>
 	<?php
 } else { ?>
-	<h2 id="checkoutShippingHeadingMethod"><?php echo TITLE_NO_SHIPPING_AVAILABLE; ?></h2>
-	<div id="checkoutShippingContentChoose" class="important"><?php echo TEXT_NO_SHIPPING_AVAILABLE; ?></div><?php
+	<div class="text-bold">
+		<?php echo TEXT_NO_SHIPPING_AVAILABLE; ?>
+	</div><?php
 }
 ?>
+</fieldset>
 
 
 <div class="buttonRow forward"><?php echo zen_image_submit(BUTTON_IMAGE_CONTINUE_CHECKOUT, BUTTON_CONTINUE_ALT); ?></div>
-<div class="buttonRow back"><?php echo '<strong>' . TITLE_CONTINUE_CHECKOUT_PROCEDURE . '</strong><br />' . TEXT_CONTINUE_CHECKOUT_PROCEDURE; ?></div>
  
 </form>
 </div>

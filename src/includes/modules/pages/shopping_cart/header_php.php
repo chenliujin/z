@@ -1,34 +1,30 @@
 <?php
-$zco_notifier->notify('NOTIFY_HEADER_START_SHOPPING_CART');
-
 require(DIR_WS_MODULES . zen_get_module_directory('require_languages.php'));
+
 $breadcrumb->add(NAVBAR_TITLE);
+
 if (isset($_GET['jscript']) && $_GET['jscript'] == 'no') {
 	$messageStack->add('shopping_cart', PAYMENT_JAVASCRIPT_DISABLED, 'error');
 }
-// Validate Cart for checkout
+
 $_SESSION['valid_to_checkout'] = true;
 $_SESSION['cart_errors'] = '';
 $_SESSION['cart']->get_products(true);
 
-// used to display invalid cart issues when checkout is selected that validated cart and returned to cart due to errors
 if (isset($_SESSION['valid_to_checkout']) && $_SESSION['valid_to_checkout'] == false) {
 	$messageStack->add('shopping_cart', ERROR_CART_UPDATE . $_SESSION['cart_errors'] , 'caution');
 }
 
-// build shipping with Tare included
 $shipping_weight = $_SESSION['cart']->show_weight();
 
 /*
-  $shipping_weight = 0;
-  require(DIR_WS_CLASSES . 'order.php');
-  $order = new order;
-  require_once('includes/classes/http_client.php'); // shipping in basket
-  $total_weight = $_SESSION['cart']->show_weight();
-  $total_count = $_SESSION['cart']->count_contents();
-  require(DIR_WS_CLASSES . 'shipping.php');
-  $shipping_modules = new shipping;
-  $quotes = $shipping_modules->quote();
+require(DIR_WS_CLASSES . 'order.php');
+$order = new order;
+$total_weight = $_SESSION['cart']->show_weight();
+$total_count = $_SESSION['cart']->count_contents();
+require(DIR_WS_CLASSES . 'shipping.php');
+$shipping_modules = new shipping;
+$quotes = $shipping_modules->quote();
  */
 
 $flagHasCartContents = ($_SESSION['cart']->count_contents() > 0);
@@ -149,6 +145,3 @@ for ($i=0, $n=sizeof($products); $i<$n; $i++) {
 		'attributes'				=> $attrArray
 		];
 } 
-
-// This should be last line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_END_SHOPPING_CART');

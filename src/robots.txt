@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /images
+Disallow: /II
+Disallow: /index.php?main_page=popup_image*
