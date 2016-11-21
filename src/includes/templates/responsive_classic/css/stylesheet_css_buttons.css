@@ -15,7 +15,7 @@ input.cssButton.submit_button.button.button_search, .button_search:hover{padding
 .button-left{margin-right:10px;}
 .button-right{margin-left:10px;}
 span.cssButton.normal_button.button.button_checkout, .button_checkout:hover{display:block;padding:15px 30px;display:block;}
-span.cssButton.normal_button.button.button_continue_shopping, .button_continue_shopping:hover, span.cssButton.normal_button.button.button_shipping_estimator, .button_shipping_estimator:hover, span.cssButton.normal_button.button.button_back, .button_back:hover{}
+span.cssButton.normal_button.button.button_continue_shopping, .button_continue_shopping:hover, span.cssButton.normal_button.button.button_back, .button_back:hover{}
 #reviewsInfoDefault span.cssButton.normal_button.button.button_in_cart, #reviewsInfoDefault .button_in_cart:hover{display:block;text-align:center;padding:12px 20px !important;}
 #reviewsInfoDefault .button_in_cart:hover, #reviewsDefault .button_in_cart:hover{display:block !important;}
 #reviewsDefault .button_in_cart:hover{text-align:center;padding:12px 20px;}
