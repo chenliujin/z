@@ -1,8 +1,4 @@
 <?php
-if (!defined('IS_ADMIN_FLAG')) {
-	die('Illegal Access');
-}
-
 if (isset($_POST['zone_country_id'])) $_POST['zone_country_id'] = (int)$_POST['zone_country_id'];
 if (isset($_POST['scid'])) $_POST['scid'] = preg_replace('/[^a-z_0-9\- ]/i', '', $_POST['scid']);
 
@@ -25,8 +21,6 @@ if ($_SESSION['cart']->count_contents() > 0) {
 	$state_zone_id 	= (isset($_SESSION['cart_zone'])) ? (int)$_SESSION['cart_zone'] : '';
 	$state_zone_id 	= (isset($_POST['zone_id'])) ? (int)$_POST['zone_id'] : $state_zone_id;
 	$selectedState 	= zen_output_string_protected($_POST['state']);
-
-	if (file_exists(DIR_WS_CLASSES . 'http_client.php')) require_once(DIR_WS_CLASSES . 'http_client.php');
 
 	if ($_SESSION['customer_id']) {
 		if (isset($_POST['address_id'])){
@@ -72,22 +66,21 @@ if ($_SESSION['cart']->count_contents() > 0) {
 			$_SESSION['cart_zip_code'] 		= $zip_code;
 
 		} elseif ($_SESSION['cart_country_id']){
-
-			$_SESSION['country_info'] = 
-				zen_get_countries($_SESSION['cart_country_id'],true);
+			$_SESSION['country_info'] = zen_get_countries($_SESSION['cart_country_id'],true);
 			$country_info = $_SESSION['country_info'];
+
 			$order->delivery = array(
 				'postcode' => $_SESSION['cart_zip_code'],
-				'country' => array('id' => $_SESSION['cart_country_id'], 
-				'title' => $country_info['countries_name'], 'iso_code_2' => 
-				$country_info['countries_iso_code_2'], 'iso_code_3' =>  
-				$country_info['countries_iso_code_3']),
+				'country' => array(
+					'id' 			=> $_SESSION['cart_country_id'], 
+					'title' 		=> $country_info['countries_name'], 
+					'iso_code_2' 	=> $country_info['countries_iso_code_2'], 
+					'iso_code_3' 	=> $country_info['countries_iso_code_3']
+					),
 				'country_id' => $_SESSION['cart_country_id'],
 				'zone_id' => $state_zone_id,
-				'format_id' => 
-				zen_get_address_format_id($_SESSION['cart_country_id'])
-				);
-
+				'format_id' => zen_get_address_format_id($_SESSION['cart_country_id'])
+			);
 		} else {
 			$_SESSION['cart_country_id'] = STORE_COUNTRY;
 			$_SESSION['country_info'] = zen_get_countries(STORE_COUNTRY,true);
