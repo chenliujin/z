@@ -15,20 +15,44 @@ if (isset($_SESSION['valid_to_checkout']) && $_SESSION['valid_to_checkout'] == f
 	$messageStack->add('shopping_cart', ERROR_CART_UPDATE . $_SESSION['cart_errors'] , 'caution');
 }
 
-$shipping_weight = $_SESSION['cart']->show_weight();
+$shipping_weight = $total_weight = $_SESSION['cart']->show_weight();
 
-/*
+
+if ($_SESSION['customer_id'] && !$_SESSION['sendto']) {
+	$_SESSION['sendto'] = $_SESSION['customer_default_address_id'];
+}
+
 require(DIR_WS_CLASSES . 'order.php');
 $order = new order;
-$total_weight = $_SESSION['cart']->show_weight();
-$total_count = $_SESSION['cart']->count_contents();
-require(DIR_WS_CLASSES . 'shipping.php');
-$shipping_modules = new shipping;
-$quotes = $shipping_modules->quote();
- */
+
+if ( empty($_SESSION['shipping']) ) {
+	require(DIR_WS_CLASSES . 'shipping.php');
+	$shipping_modules = new shipping;
+
+	if ($_SESSION['customer_id']) {
+		if ( empty($_SESSION['shipping']['id']) ) {
+			$_SESSION['shipping'] = $shipping_modules->cheapest();
+
+			$order->info['shipping_method'] 		= $_SESSION['shipping']['title'];
+			$order->info['shipping_module_code'] 	= (isset($_SESSION['shipping']['id']) && strpos($_SESSION['shipping']['id'], '_') > 0 ? $_SESSION['shipping']['id'] : $_SESSION['shipping']);
+			$order->info['shipping_cost'] 			= isset($_SESSION['shipping']['cost']) ? $_SESSION['shipping']['cost'] : 0;
+		}
+	} else {
+		$order->delivery = [
+			'country'	=> [
+				'iso_code_2' 	=> $_SESSION['customers_ip_country'], 
+			],
+		];
+
+		$shipping = $shipping_modules->cheapest();
+
+		$order->info['shipping_method'] 		= $shipping['title'];
+		$order->info['shipping_module_code'] 	= $shipping['id'];
+		$order->info['shipping_cost']			= $shipping['cost'];
+	}
+}
 
 $flagHasCartContents = ($_SESSION['cart']->count_contents() > 0);
-$cartShowTotal = $currencies->format($_SESSION['cart']->show_total());
 
 $flagAnyOutOfStock = false;
 $flagStockCheck = '';
