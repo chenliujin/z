@@ -39,7 +39,6 @@ define('BUTTON_IMAGE_SEARCH', 'button_search.gif');
 define('BUTTON_IMAGE_SEND', 'button_send.gif');
 define('BUTTON_IMAGE_SEND_A_GIFT_CERT', 'button_send_a_gift_cert.gif');
 define('BUTTON_IMAGE_SEND_ANOTHER', 'button_send_another.gif');
-define('BUTTON_IMAGE_SHIPPING_ESTIMATOR', 'button_shipping_estimator.gif');
 define('BUTTON_IMAGE_SOLD_OUT','button_sold_out.gif');
 define('BUTTON_IMAGE_SOLD_OUT_SMALL','button_sold_out_sm.gif');
 define('BUTTON_IMAGE_SUBMIT', 'button_submit.gif');
