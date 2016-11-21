@@ -26,7 +26,6 @@ require(DIR_WS_CLASSES . 'order.php');
 $order = new order;
 
 require(DIR_WS_CLASSES . 'shipping.php');
-$shipping_modules = new shipping;
 
 if (!$_SESSION['customer_id']) {
 	$order->delivery = [
@@ -37,11 +36,22 @@ if (!$_SESSION['customer_id']) {
 }
 
 //改变产品数量后需要重新计算
-$shipping = $shipping_modules->cheapest();
+if ($_SESSION['shipping']) {
+	list($module, $method) = explode('_', $_SESSION['id']);
+	$shipping_modules = new shipping($method, $module);
+	$shipping = $shipping_modules->cheapest();
+} else {
+	$shipping_modules = new shipping;
+	$shipping = $shipping_modules->cheapest();
+}
 
 $order->info['shipping_method'] 		= $shipping['title'];
 $order->info['shipping_module_code'] 	= $shipping['id'];
 $order->info['shipping_cost']			= $shipping['cost'];
+
+//TODO
+//会跳到登录页
+//$_SESSION['shipping'] = $shipping;
 
 $flagHasCartContents = ($_SESSION['cart']->count_contents() > 0);
 
