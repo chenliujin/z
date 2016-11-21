@@ -237,7 +237,7 @@ ul.list-links li:hover, ol.list-links li:hover{}
 
 .tableHeading TH {padding:10px 0;}
 #cartSubTotal {text-align:right;line-height:2.2em;padding:10px 0 20px 0;font-size:130%;}
-.tableRow, .tableHeading, #cartSubTotal {height:2.2em;}
+.tableRow, .tableHeading {height:2.2em;}
 .cartProductDisplay, 
 .cartTotalsDisplay {
 	padding: 0.5em 0em;
