@@ -199,5 +199,10 @@ if ($spider_flag == false) {
 $customers_ip_address = $_SERVER['REMOTE_ADDR'];
 if (!isset($_SESSION['customers_ip_address'])) {
 	$_SESSION['customers_ip_address'] = $customers_ip_address;
-	$_SESSION['customers_ip_country'] = 'US';
+
+	include('includes/classes/geoip.inc');
+	$gi = geoip_open("/usr/share/GeoIP/GeoIP.dat", GEOIP_STANDARD);
+	$code =  geoip_country_code_by_addr($gi, $customers_ip_address);
+
+	$_SESSION['customers_ip_country'] = $code ? $code : 'US';
 }
