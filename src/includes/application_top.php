@@ -199,4 +199,5 @@ if ($spider_flag == false) {
 $customers_ip_address = $_SERVER['REMOTE_ADDR'];
 if (!isset($_SESSION['customers_ip_address'])) {
 	$_SESSION['customers_ip_address'] = $customers_ip_address;
+	$_SESSION['customers_ip_country'] = 'US';
 }
