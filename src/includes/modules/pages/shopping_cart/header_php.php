@@ -25,32 +25,23 @@ if ($_SESSION['customer_id'] && !$_SESSION['sendto']) {
 require(DIR_WS_CLASSES . 'order.php');
 $order = new order;
 
-if ( empty($_SESSION['shipping']) ) {
-	require(DIR_WS_CLASSES . 'shipping.php');
-	$shipping_modules = new shipping;
+require(DIR_WS_CLASSES . 'shipping.php');
+$shipping_modules = new shipping;
 
-	if ($_SESSION['customer_id']) {
-		if ( empty($_SESSION['shipping']['id']) ) {
-			$_SESSION['shipping'] = $shipping_modules->cheapest();
-
-			$order->info['shipping_method'] 		= $_SESSION['shipping']['title'];
-			$order->info['shipping_module_code'] 	= (isset($_SESSION['shipping']['id']) && strpos($_SESSION['shipping']['id'], '_') > 0 ? $_SESSION['shipping']['id'] : $_SESSION['shipping']);
-			$order->info['shipping_cost'] 			= isset($_SESSION['shipping']['cost']) ? $_SESSION['shipping']['cost'] : 0;
-		}
-	} else {
-		$order->delivery = [
-			'country'	=> [
-				'iso_code_2' 	=> $_SESSION['customers_ip_country'], 
-			],
-		];
-
-		$shipping = $shipping_modules->cheapest();
-
-		$order->info['shipping_method'] 		= $shipping['title'];
-		$order->info['shipping_module_code'] 	= $shipping['id'];
-		$order->info['shipping_cost']			= $shipping['cost'];
-	}
+if (!$_SESSION['customer_id']) {
+	$order->delivery = [
+		'country'	=> [
+			'iso_code_2' 	=> $_SESSION['customers_ip_country'], 
+		],
+	];
 }
+
+//改变产品数量后需要重新计算
+$shipping = $shipping_modules->cheapest();
+
+$order->info['shipping_method'] 		= $shipping['title'];
+$order->info['shipping_module_code'] 	= $shipping['id'];
+$order->info['shipping_cost']			= $shipping['cost'];
 
 $flagHasCartContents = ($_SESSION['cart']->count_contents() > 0);
 
