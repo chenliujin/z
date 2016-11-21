@@ -236,7 +236,11 @@ ul.list-links li:hover, ol.list-links li:hover{}
 .sideBoxContent .productPriceDiscount{font-size:130%;margin-top:3px;}
 
 .tableHeading TH {padding:10px 0;}
-#cartSubTotal {text-align:right;line-height:2.2em;padding:10px 0 20px 0;font-size:130%;}
+
+#order-total {
+	padding: 10px 15px 20px;
+}
+
 .tableRow, .tableHeading {height:2.2em;}
 .cartProductDisplay, 
 .cartTotalsDisplay {
