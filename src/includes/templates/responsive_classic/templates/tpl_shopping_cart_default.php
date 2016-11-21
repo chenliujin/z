@@ -126,22 +126,8 @@ if ($flagHasCartContents) { ?>
 <br class="clearBoth" />
 
 <?php
-	if (SHOW_SHIPPING_ESTIMATOR_BUTTON == '1') { ?> 
-		<div class="buttonRow back"> <?php 
-		echo '<a href="javascript:popupWindow(\'' 
-		. zen_href_link(FILENAME_POPUP_SHIPPING_ESTIMATOR) . '\')">' 
-		. zen_image_button(BUTTON_IMAGE_SHIPPING_ESTIMATOR, BUTTON_SHIPPING_ESTIMATOR_ALT) 
-		. '</a>'; ?>
-		</div> <?php
-    }
-
-	// the tpl_ec_button template only displays EC option if cart contents >0 and value >0
 	if (defined('MODULE_PAYMENT_PAYPALWPP_STATUS') && MODULE_PAYMENT_PAYPALWPP_STATUS == 'True') {
 		include(DIR_FS_CATALOG . DIR_WS_MODULES . 'payment/paypal/tpl_ec_button.php');
-	}
-
-	if (SHOW_SHIPPING_ESTIMATOR_BUTTON == '2') {
-		require(DIR_WS_MODULES . zen_get_module_directory('shipping_estimator.php')); 
 	}
 } else { ?> 
 	<h2 class="text-center"><?php echo TEXT_CART_EMPTY; ?></h2> <?php 
