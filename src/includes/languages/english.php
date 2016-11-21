@@ -395,8 +395,6 @@ define('TEXT_BANNER_BOX_ALL','Please Visit Our Sponsors ...');
 // boxes defines
 define('PULL_DOWN_ALL','Please Select');
 define('PULL_DOWN_MANUFACTURERS','- Reset -');
-// shipping estimator
-define('PULL_DOWN_SHIPPING_ESTIMATOR_SELECT', 'Please Select');
 
 // general Sort By
 define('TEXT_INFO_SORT_BY','Sort by: ');
