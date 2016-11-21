@@ -106,13 +106,13 @@ if ($flagHasCartContents) { ?>
 ?>
 </table>
 
-<div id="cartSubTotal" class="size-medium text-bold">
-	<?php 
-	$item_count  = $_SESSION['cart']->count_contents();
-	$item_count .= $item_count > 1 ? ' items' : ' item';
-	echo SUB_TITLE_SUB_TOTAL . ' (' . $item_count . '):'; 
+<div id="order-total">
+	<?php
+	require(DIR_WS_CLASSES . 'order_total.php');
+	$order_total = new order_total;
+	$order_total->process();
+	$order_total->output();
 	?>
-	<span class="price size-medium text-bold"><?php echo $cartShowTotal; ?></span>
 </div>
 
 <br class="clearBoth" />
