@@ -1,17 +1,4 @@
 <?php
-/**
- * @package languageDefines
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Fri Jan 8 01:41:14 2016 -0500 Modified in v1.5.5 $
- */
-
-
-/**
- * define the button images used in the project
- */
-
 define('BUTTON_IMAGE_ADD_TO_CART', 'button_add_to_cart.gif');
 define('BUTTON_IMAGE_ADD_ADDRESS', 'button_add_address.gif');
 define('BUTTON_IMAGE_ADD_PRODUCTS_TO_CART','button_add_selected.gif');
@@ -91,7 +78,6 @@ define('BUTTON_SEARCH_ALT', 'Search');
 define('BUTTON_SEND_ALT', 'Send Now');
 define('BUTTON_SEND_ANOTHER_ALT', 'Send Another Gift Certificate');
 define('BUTTON_SEND_A_GIFT_CERT_ALT', 'Send A Gift Certificate');
-define('BUTTON_SHIPPING_ESTIMATOR_ALT', 'Shipping Estimator');
 define('BUTTON_SOLD_OUT_ALT', 'Sold Out');
 define('BUTTON_SOLD_OUT_SMALL_ALT', 'Sold Out');
 define('BUTTON_SUBMIT_ALT', 'Submit the Information');
