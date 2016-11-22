@@ -1,4 +1,5 @@
-body, .messageStackSuccess, .messageStackCaution, #tagline, #productQuantityDiscounts table, .categoryListBoxContents a, h2.greeting a {color:#000000;}
+body, .messageStackSuccess, .messageStackCaution, #tagline, 
+.categoryListBoxContents a, h2.greeting a {color:#000000;}
 
 .cartOldItem, .specialsListBoxContents, .centerBoxContentsSpecials, .centerBoxContentsAlsoPurch, .centerBoxContentsFeatured, .centerBoxContentsNew, 
 h2.greeting, #icon, .header .fa-bars {
@@ -19,7 +20,8 @@ h3, .cartAttribsList, #cart-box {color:#444;}
 #bannerSix, 
 h2.centerBoxHeading, 
 h3.rightBoxHeading, h3.leftBoxHeading, h3.rightBoxHeading a, h3.leftBoxHeading a, .seDisplayedAddressLabel, #shippingEstimatorContent h2, #shippingEstimatorContent th, 
-#filter-wrapper, .navSplitPagesLinks a, .current, .productListing-rowheading a, .productListing-rowheading a, .prod-list-wrap, #productQuantityDiscounts table tr:first-child td, #reviewsWriteHeading, #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, 
+#filter-wrapper, .navSplitPagesLinks a, .current, .productListing-rowheading a, .productListing-rowheading a, .prod-list-wrap, 
+#reviewsWriteHeading, #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, 
 #accountLinksWrapper h2, h2#addressBookDefaultPrimary, #myAccountPaymentInfo h3, #myAccountShipInfo h3, #myAccountPaymentInfo h4, #myAccountShipInfo h4, input.submit_button, input.submit_button:hover, input.cssButtonHover, span.normal_button {
 	color: #ffffff;
 }
@@ -32,7 +34,8 @@ h3.rightBoxHeading, h3.leftBoxHeading, h3.rightBoxHeading a, h3.leftBoxHeading a
 
 body, #mainWrapper, 
 #logoWrapper, #cartBoxListWrapper, #ezPageBoxList, #cartBoxListWrapper ul, #ezPageBoxList ul, #mainWrapper, #popupAdditionalImage, 
-.sideBoxContent, .rightBoxContent, .rowOdd, #productQuantityDiscounts table, #accountLinksWrapper {
+.sideBoxContent, .rightBoxContent, .rowOdd, 
+#accountLinksWrapper {
 	background:#fff;
 }
 input:focus, select:focus, textarea:focus, #mainWrapper, .specialsListBoxContents:hover, .centerBoxContentsSpecials:hover, 
@@ -47,8 +50,7 @@ ul.list-links li:hover, ol.list-links li:hover, #no-products, .listing-wrapper:n
 	background:#eee;
 }
 
-#navEZPagesTOCWrapper, .cartBoxTotal,
-#productQuantityDiscounts tr:nth-child(even) {background:#ddd;}
+#navEZPagesTOCWrapper, .cartBoxTotal {background:#ddd;}
 #cart-box{background:#bbb;}
 #shippingEstimatorContent h2, 
 .navSplitPagesLinks a, .productListing-rowheading a:hover, .list-more, #sendSpendWrapper h2, #accountDefault #sendSpendWrapper h2, #gvFaqDefaultSubHeading, #checkoutPayAddressDefaultAddress, 
@@ -61,7 +63,7 @@ span.cssButton.normal_button.button.button_logoff, span.cssButton.normal_button.
 #navEZPagesTop li a:hover, .pagination li a:hover {background:#777;}
 .messageStackWarning, .messageStackError {background-color:#8b0000;}
 .messageStackSuccess {background-color:#99ff99;}
-#shippingEstimatorContent th, .navSplitPagesLinks a:hover, .productListing-rowheading, #productQuantityDiscounts table tr:first-child td{background:#999;}
+#shippingEstimatorContent th, .navSplitPagesLinks a:hover, .productListing-rowheading {background:#999;}
 #navCatTabsWrapper, .current, .productListing-rowheading a, .list-more:hover, input.submit_button, span.normal_button {background:#05a5cb;}
 .button_goto_prod_details:hover{background:#05a5cb !important;}
 #navCatTabs li a:hover, input.submit_button:hover, input.cssButtonHover {background:#028fba;}
@@ -79,7 +81,6 @@ span.cssButton.normal_button.button.button_logoff, span.cssButton.normal_button.
 ol.list-links li{border-bottom:1px solid #ddd;}
 #shoppingcartContent hr{border-bottom:3px solid #666;}
 .tableHeading TH {border-bottom:1px solid #ccc;}
-#productQuantityDiscounts td{border-right:1px solid #eee;}
 #seQuoteResults td, .listBoxContentTable td, .tableBorder1 td {border: 1px solid #000;}
 
 ::-moz-placeholder, :-moz-placeholder, ::-webkit-input-placeholder, :-ms-input-placeholder, :placeholder-shown {color: #D01;}
