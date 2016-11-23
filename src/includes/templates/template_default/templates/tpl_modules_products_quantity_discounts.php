@@ -1,19 +1,4 @@
 <div id="productQuantityDiscounts">
-<?php
-if ($zc_hidden_discounts_on) { ?>
-  <table id="quantityDiscountsDetails">
-	<tr>
-	  <td colspan="1" class="alignCenter">
-	  <?php echo TEXT_HEADER_DISCOUNTS_OFF; ?>
-	  </td>
-	</tr>
-	<tr>
-	  <td colspan="1" class="alignCenter">
-	  <?php echo $zc_hidden_discounts_text; ?>
-	  </td>
-	</tr>
-  </table> <?php 
-} else { ?>
   <table id="quantityDiscountsDetails">
 	<tr>
 	  <td colspan="<?php echo $columnCount+1; ?>" class="alignCenter">
@@ -66,6 +51,5 @@ if ($zc_hidden_discounts_on) { ?>
 	} 
 	?>
 </table> 
-<?php 
-} // hide discounts ?>
+
 </div>
