@@ -88,7 +88,7 @@ if ($flagHasCartContents) { ?>
 				echo $product['quantityField'];
 				?>
 				<br />
-				<input type="submit" value="update" style="height: 20px; display: none" />
+				<input type="submit" value="update" style="height: 20px" />
 				<?php
 			} 
 			?>
