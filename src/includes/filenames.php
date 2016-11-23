@@ -104,7 +104,6 @@ define('FILENAME_POPUP_COUPON_HELP', 'popup_coupon_help');
 define('FILENAME_POPUP_IMAGE', 'popup_image');
 define('FILENAME_POPUP_IMAGE_ADDITIONAL', 'popup_image_additional');
 define('FILENAME_POPUP_SEARCH_HELP', 'popup_search_help');
-define('FILENAME_POPUP_SHIPPING_ESTIMATOR', 'popup_shipping_estimator');
 define('FILENAME_POPUP_CVV_HELP', 'popup_cvv_help');
 define('FILENAME_POPUP_ATTRIBUTES_QTY_PRICES', 'popup_attributes_qty_prices');
 define('FILENAME_PRIVACY', 'privacy');

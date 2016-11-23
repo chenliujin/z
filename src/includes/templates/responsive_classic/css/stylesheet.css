@@ -236,8 +236,12 @@ ul.list-links li:hover, ol.list-links li:hover{}
 .sideBoxContent .productPriceDiscount{font-size:130%;margin-top:3px;}
 
 .tableHeading TH {padding:10px 0;}
-#cartSubTotal {text-align:right;line-height:2.2em;padding:10px 0 20px 0;font-size:130%;}
-.tableRow, .tableHeading, #cartSubTotal {height:2.2em;}
+
+#order-total {
+	padding: 10px 15px 20px;
+}
+
+.tableRow, .tableHeading {height:2.2em;}
 .cartProductDisplay, 
 .cartTotalsDisplay {
 	padding: 0.5em 0em;
@@ -389,11 +393,10 @@ span.list-addtext{display:block;text-align:center;}
 #productPrices{font-size:1.5em;text-align:center;margin:10px 0 10px 0;font-weight:normal;}
 #mediaManagerHeading{font-weight:normal;}
 #freeShippingIcon{margin:10px 0 10px 30px;}
-#productQuantityDiscounts table{margin:0 auto 20px auto;border:none !important;border-spacing:0 !important;border-collapse:separate !important;}
-#productQuantityDiscounts td{padding:10px;border:none;}
-#productQuantityDiscounts td:last-child{border:none;}
-#productQuantityDiscounts tr:nth-child(even){}
-#productQuantityDiscounts table tr:first-child td{padding:5px 10px;border:none !important;}
+#productQuantityDiscounts td {
+	padding:10px;
+	border:1px solid #eee;
+}
 #mediaManager {width:50%;margin:0.2em 0 0.2em 30px;padding:0.5em 0;}
 .mediaTitle {float:left;}
 .mediaTypeLink {float:right;}

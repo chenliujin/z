@@ -258,14 +258,14 @@ class order extends base {
 				ab.entry_postcode,
 				ab.entry_city, 
 				ab.entry_zone_id, 
-				z.zone_name, 
 				ab.entry_country_id,
+				ab.entry_state,
 				c.countries_id, 
 				c.countries_name, 
 				c.countries_iso_code_2,
 				c.countries_iso_code_3, 
 				c.address_format_id, 
-				ab.entry_state
+				z.zone_name 
 			from " . TABLE_ADDRESS_BOOK . " ab
 				left join " . TABLE_ZONES . " z on (ab.entry_zone_id = z.zone_id)
 				left join " . TABLE_COUNTRIES . " c on (ab.entry_country_id = c.countries_id)
