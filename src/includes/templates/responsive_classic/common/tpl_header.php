@@ -39,7 +39,7 @@ if (!isset($flag_disable_header) || !$flag_disable_header) {
 
 <div id="nav-flyout-list">
 	<div id="nav-flyout-categories" class="nav-flyout-categories nav-flyout">
-		<div class="nav-flyout-content" style="width: 180px; float:left">
+		<div class="nav-flyout-content" style="width: 200px; float:left">
 			<?php $data = \z\categories::root(); ?>
 			<?php foreach ($data as $category) {?>
 			<a href="<?php echo zen_href_link( FILENAME_DEFAULT, $category->path ); ?>" class="nav-hasSubcate nav-item nav-link">
