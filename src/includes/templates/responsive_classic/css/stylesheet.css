@@ -368,7 +368,7 @@ span.list-addtext{display:block;text-align:center;}
 .listings-description a {margin-left:10px;}
 
 /*bof product info page*/
-#prod-info-top{width:100%;clear:both;}
+#prod-info{width:100%;clear:both;}
 .categoryIcon {float:left;width:35%;}
 .categoryIcon a{text-decoration:none;}
 .categoryIcon img{margin-bottom:5px;}
