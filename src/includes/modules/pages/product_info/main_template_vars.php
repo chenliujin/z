@@ -1,11 +1,4 @@
 <?php
-/*
- * Extracts and constructs the data to be used in the product-type template tpl_TYPEHANDLER_info_display.php
- */
-
-// This should be first line of the script:
-$zco_notifier->notify('NOTIFY_MAIN_TEMPLATE_VARS_START_PRODUCT_INFO');
-
 $module_show_categories = PRODUCT_INFO_CATEGORIES;
 
 $sql = "select count(*) as total
@@ -162,12 +155,6 @@ $flag_show_product_info_free_shipping = zen_get_show_product_switch($_GET['produ
 
 require(DIR_WS_MODULES . zen_get_module_directory(FILENAME_PRODUCTS_QUANTITY_DISCOUNTS));
 
-$zco_notifier->notify('NOTIFY_MAIN_TEMPLATE_VARS_EXTRA_PRODUCT_INFO');
-
-
 require($template->get_template_dir($tpl_page_body,DIR_WS_TEMPLATE, $current_page_base,'templates'). $tpl_page_body);
 
 //require(DIR_WS_MODULES . zen_get_module_directory(FILENAME_ALSO_PURCHASED_PRODUCTS));
-
-// This should be last line of the script:
-$zco_notifier->notify('NOTIFY_MAIN_TEMPLATE_VARS_END_PRODUCT_INFO');
