@@ -24,8 +24,13 @@ if ($pr_attr->fields['total'] > 0) {
 		$options_order_by= ' order by popt.products_options_name';
 	}
 
-	$sql = "select distinct popt.products_options_id, popt.products_options_name, popt.products_options_sort_order,
-		popt.products_options_type, popt.products_options_length, popt.products_options_comment,
+	$sql = "select 
+		distinct popt.products_options_id, 
+		popt.products_options_name, 
+		popt.products_options_sort_order,
+		popt.products_options_type, 
+		popt.products_options_length, 
+		popt.products_options_comment,
 		popt.products_options_size,
 		popt.products_options_images_per_row,
 		popt.products_options_images_style,
