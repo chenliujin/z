@@ -1,16 +1,3 @@
-<?php
-/**
- * Module Template
- *
- * Template used to render attribute display/input fields
- *
- * @package templateSystem
- * @copyright Copyright 2003-2016 Zen Cart Development Team
- * @copyright Portions Copyright 2003 osCommerce
- * @license http://www.zen-cart.com/license/2_0.txt GNU Public License V2.0
- * @version $Id: Author: DrByte  Sat Oct 17 21:58:04 2015 -0400 Modified in v1.5.5 $
- */
-?>
 <div id="productAttributes">
 <?php if ($zv_display_select_option > 0) { ?>
 <h3 id="attribsOptionsText"><?php echo TEXT_PRODUCT_OPTIONS; ?></h3>
