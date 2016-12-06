@@ -379,8 +379,8 @@ span.list-addtext{display:block;text-align:center;}
 #prod-info li {
 	margin: 0 5px 5px 0;
 	border: 1px solid #ddd;
-	border-radius: 2px;
 	display: inline-block;
+	position: relative;
 }
 #prod-info li.select {
 	border-color: #E47911;
