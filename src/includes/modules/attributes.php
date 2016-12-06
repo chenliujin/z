@@ -60,12 +60,6 @@ if ($pr_attr->fields['total'] > 0) {
 	while (!$products_options_names->EOF) {
 		$products_options_array = array();
 
-				/*
-				pa.options_values_price, pa.price_prefix,
-				pa.products_options_sort_order, pa.product_attribute_is_free, pa.products_attributes_weight, pa.products_attributes_weight_prefix,
-				pa.attributes_default, pa.attributes_discounted, pa.attributes_image
-				 */
-
 		$sql = "select    pov.products_options_values_id,
 			pov.products_options_values_name,
 			pa.*
