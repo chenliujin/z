@@ -60,9 +60,11 @@ if ($pr_attr->fields['total'] > 0) {
 	while (!$products_options_names->EOF) {
 		$products_options_array = array();
 
-		$sql = "select    pov.products_options_values_id,
-			pov.products_options_values_name,
-			pa.*
+		$sql = "
+			select    
+				pov.products_options_values_id,
+				pov.products_options_values_name,
+				pa.*
 			from      " . TABLE_PRODUCTS_ATTRIBUTES . " pa, " . TABLE_PRODUCTS_OPTIONS_VALUES . " pov
 			where     pa.products_id = '" . (int)$_GET['products_id'] . "'
 			and       pa.options_id = '" . (int)$products_options_names->fields['products_options_id'] . "'
@@ -93,12 +95,18 @@ if ($pr_attr->fields['total'] > 0) {
 			$new_attributes_price= '';
 			$price_onetime = '';
 
-			$products_options_array[] = array('id' => $products_options->fields['products_options_values_id'],
-				'text' => $products_options->fields['products_options_values_name']);
+			$products_options_array[] = array(
+				'id' => $products_options->fields['products_options_values_id'],
+				'text' => $products_options->fields['products_options_values_name']
+				);
 
 			$zco_notifier->notify('NOTIFY_ATTRIBUTES_MODULE_START_OPTIONS_LOOP', $i++, $products_options->fields);
 
-			if (((CUSTOMERS_APPROVAL == '2' and $_SESSION['customer_id'] == '') or (STORE_STATUS == '1')) or ((CUSTOMERS_APPROVAL_AUTHORIZATION == '1' or CUSTOMERS_APPROVAL_AUTHORIZATION == '2') and $_SESSION['customers_authorization'] == '') or (CUSTOMERS_APPROVAL == '2' and $_SESSION['customers_authorization'] == '2') or (CUSTOMERS_APPROVAL_AUTHORIZATION == '2' and $_SESSION['customers_authorization'] != 0) ) {
+			if (((CUSTOMERS_APPROVAL == '2' and $_SESSION['customer_id'] == '') 
+				or (STORE_STATUS == '1')) 
+				or ((CUSTOMERS_APPROVAL_AUTHORIZATION == '1' or CUSTOMERS_APPROVAL_AUTHORIZATION == '2') and $_SESSION['customers_authorization'] == '') 
+				or (CUSTOMERS_APPROVAL == '2' and $_SESSION['customers_authorization'] == '2') 
+				or (CUSTOMERS_APPROVAL_AUTHORIZATION == '2' and $_SESSION['customers_authorization'] != 0) ) {
 
 				$new_attributes_price = '';
 				$new_options_values_price = 0;
