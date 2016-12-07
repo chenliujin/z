@@ -1,5 +1,8 @@
 <?php
-include_once('z/model/products.php'); ?>
+include_once('z/model/products.php'); 
+include_once('z/model/products_attributes.php'); 
+?>
+
 <div class="centerColumn" id="productGeneral"> 
 	<?php 
 	echo zen_draw_form(
@@ -53,7 +56,7 @@ li.item img {
 
 
 </style>
-<div id="prod-info-top">
+<div id="prod-info">
 	<div style="width: 100%">
 		<div style="width: 500px; float:left;">
 		<div style="padding-left:32px;">
@@ -85,6 +88,45 @@ li.item img {
 				<?php
 				\z\products::ShowPriceList( (int) $_GET['products_id'] );
 				?>
+				<?php
+				$products =  new \z\products;
+				$products  = $products->get(intval($_GET['products_id']));
+
+				if ($products->parent_id) {
+
+					$attributes = \z\products_attributes::GetAttributes($products->products_id, $products->parent_id, $_SESSION['languages_id']);
+					
+					foreach ($attributes as $attribute => $arr1) { 
+						?>
+				<tr>
+					<td class="size-base text-right"><?php echo $attribute; ?>:</td>
+					<td style="width: 105%">
+						<ul>
+					<?php 
+					foreach ($arr1 as $attribute_value => $arr2) {
+						foreach ($arr2 as $product_attribute) {
+							$selected = FALSE;
+							if ($product_attribute->products_id == intval($_GET['products_id'])) $selected = TRUE;
+
+							$product_link = zen_href_link(zen_get_info_page($product_attribute->products_id), 'products_id=' . $product_attribute->products_id);
+
+							echo '<li' . ($selected ? ' class="select"' : '') . '>';
+							echo '<a href="' . $product_link . '">';
+							echo $product_attribute->attributes_image ? ('<img src="' . $product_attribute->attributes_image . '" alt="' . $product_attribute->products_options_values_name . '" />') : ('<span style="padding: 5px 9px">' . $product_attribute->products_options_values_name . '</span>'); 
+							echo $selected ? '<i></i>' : '';
+							echo '</a>';
+							echo '</li>';
+						}
+					}
+					?>
+						</ul>
+					</td>
+				</tr>
+						<?php 
+					} 
+				}
+				?>
+
 				<tr>
 					<td class="size-base text-right">Qty:</td>
 					<td style="width: 105%;">
@@ -108,7 +150,8 @@ li.item img {
 							<span class="product-qty">&nbsp;(<?php echo $products_quantity . TEXT_PRODUCT_QUANTITY; ?>)</span>
 					</td>
 				</tr>
-				
+
+			
 				<tr>
 					<td></td>
 					<td><input type="submit" value="Add to Cart" class="add-to-cart" /></td>
@@ -141,10 +184,6 @@ li.item img {
 
 <div style="width: 100%; padding: 1em 0">
 <?php
-if ($pr_attr->fields['total'] > 0) { 
-	require($template->get_template_dir('/tpl_modules_attributes.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_attributes.php'); 
-}
-
 if ($products_discount_type != 0) { 
 	require($template->get_template_dir('/tpl_modules_products_quantity_discounts.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_modules_products_quantity_discounts.php'); 
 }
@@ -213,7 +252,7 @@ if (zen_not_null($products_url)) {
 	} 
 }
 
-require($template->get_template_dir('tpl_modules_also_purchased_products.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_also_purchased_products.php');
+//require($template->get_template_dir('tpl_modules_also_purchased_products.php', DIR_WS_TEMPLATE, $current_page_base,'templates'). '/' . 'tpl_modules_also_purchased_products.php');
 ?>
 
 </form>
