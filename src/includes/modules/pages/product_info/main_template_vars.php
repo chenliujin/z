@@ -59,8 +59,6 @@ if ( $res->fields['total'] < 1 ) {
 
 	// set flag for attributes module usage:
 	$flag_show_weight_attrib_for_this_prod_type = SHOW_PRODUCT_INFO_WEIGHT_ATTRIBUTES;
-	// get attributes
-	require(DIR_WS_MODULES . zen_get_module_directory(FILENAME_ATTRIBUTES));
 
 	// if review must be approved or disabled do not show review
 	$review_status = " and r.status = '1'";
