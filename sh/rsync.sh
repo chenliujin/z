@@ -2,6 +2,7 @@
 
 rsync --exclude "*.swp" -avz --exclude "zc_install" --delete ../src/images/ /data/www/z/images/
 rsync --exclude "*.swp" -avz --exclude "zc_install" --exclude "*configure.php" ../src/* /data/www/z/
+rsync --exclude "*.swp" -avz --exclude "zc_install" --exclude "*configure.php" ../src/admin/* /data/www/z/chen/
 rsync --exclude "*.swp" -avz --exclude "zc_install" --exclude "*configure.php" --delete ../src/includes/* /data/www/z/includes/
 
 

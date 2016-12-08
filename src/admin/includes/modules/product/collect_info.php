@@ -439,50 +439,8 @@ updateGross();
 ?>
 
           <tr>
-            <td colspan="2"><?php echo zen_draw_separator('pixel_black.gif', '100%', '3'); ?></td>
-          </tr>
-
-          <tr>
 			<td class="main" colspan="2">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-              <tr>
-                <td class="main"><?php echo TEXT_PRODUCTS_IMAGE; ?></td>
-				<td class="main">
-					<?php 
-  						echo 
-							zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . 
-							zen_draw_file_field('products_image') . '&nbsp;' . ($pInfo->products_image !='' ? TEXT_IMAGE_CURRENT . $pInfo->products_image : TEXT_IMAGE_CURRENT . '&nbsp;' . NONE) . 
-							zen_draw_hidden_field('products_previous_image', $pInfo->products_image); ?>
-				</td>
-				<td valign = "center" class="main">
-					<?php echo TEXT_PRODUCTS_IMAGE_DIR; ?>&nbsp;
-					<?php echo zen_draw_pull_down_menu('img_dir', $dir_info, $default_directory); ?>
-				</td>
-			  </tr>
-              <tr>
-                <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15'); ?></td>
-				<td class="main" valign="top">
-				<?php echo 
-					TEXT_IMAGES_DELETE . ' ' . zen_draw_radio_field('image_delete', '0', $off_image_delete) . '&nbsp;' . 
-					TABLE_HEADING_NO . ' ' . zen_draw_radio_field('image_delete', '1', $on_image_delete) . '&nbsp;' . TABLE_HEADING_YES; 
-				?>
-				</td>
-	  	      </tr>
-              <tr>
-                <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15'); ?></td>
-				<td colspan="3" class="main" valign="top">
-				<?php echo 
-				TEXT_IMAGES_OVERWRITE  . ' ' . zen_draw_radio_field('overwrite', '0', $off_overwrite) . '&nbsp;' . 
-				TABLE_HEADING_NO . ' ' . zen_draw_radio_field('overwrite', '1', $on_overwrite) . '&nbsp;' . TABLE_HEADING_YES; ?>
-				<?php echo '<br />' . TEXT_PRODUCTS_IMAGE_MANUAL . '&nbsp;' . zen_draw_input_field('products_image_manual'); ?>
-				</td>
-              </tr>
-			</table>
 		    </td>
-          </tr>
-
-          <tr>
-            <td colspan="2"><?php echo zen_draw_separator('pixel_black.gif', '100%', '3'); ?></td>
           </tr>
 
 <?php
@@ -517,4 +475,25 @@ updateGross();
       <tr>
         <td class="main" align="right"><?php echo zen_draw_hidden_field('products_date_added', (zen_not_null($pInfo->products_date_added) ? $pInfo->products_date_added : date('Y-m-d'))) . ( (isset($_GET['search']) && !empty($_GET['search'])) ? zen_draw_hidden_field('search', $_GET['search']) : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? zen_draw_hidden_field('search', $_POST['search']) : '') . zen_image_submit('button_preview.gif', IMAGE_PREVIEW) . '&nbsp;&nbsp;<a href="' . zen_href_link(FILENAME_CATEGORIES, 'cPath=' . $cPath . (isset($_GET['pID']) ? '&pID=' . $_GET['pID'] : '') . (isset($_GET['page']) ? '&page=' . $_GET['page'] : '') . ( (isset($_GET['search']) && !empty($_GET['search'])) ? '&search=' . $_GET['search'] : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? '&search=' . $_POST['search'] : '')) . '">' . zen_image_button('button_cancel.gif', IMAGE_CANCEL) . '</a>'; ?></td>
       </tr>
-    </table></form>
+	</table>
+				<fieldset>
+					<legend><?php echo TEXT_PRODUCTS_IMAGE; ?></legend>
+					<div>
+						<label>products_image 1:</label><input type="file" name="product_image[]" /><strong>Default</strong>
+					</div>
+					<div>
+						<label>products_image 2:</label><input type="file" name="product_image[]" />
+					</div>
+					<div>
+						<label>products_image 3:</label><input type="file" name="product_image[]" />
+					</div>
+					<div>
+						<label>products_image 4:</label><input type="file" name="product_image[]" />
+					</div>
+					<div>
+						<label>products_image 5:</label><input type="file" name="product_image[]" />
+					</div>
+				</fieldset>
+
+
+</form>

@@ -1,7 +1,17 @@
 <?php
+include_once('z/model/products.php');
+
+
+
+
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
 }
+
+$products_id = intval($_GET['pID']);
+
+\z\products::UploadProductImage($products_id);
+
     if (zen_not_null($_POST)) {
       $pInfo = new objectInfo($_POST);
       $products_name = $_POST['products_name'];
