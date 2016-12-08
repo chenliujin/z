@@ -443,23 +443,42 @@ updateGross();
           </tr>
 
           <tr>
-            <td class="main" colspan="2"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+			<td class="main" colspan="2">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0">
               <tr>
                 <td class="main"><?php echo TEXT_PRODUCTS_IMAGE; ?></td>
-                <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . zen_draw_file_field('products_image') . '&nbsp;' . ($pInfo->products_image !='' ? TEXT_IMAGE_CURRENT . $pInfo->products_image : TEXT_IMAGE_CURRENT . '&nbsp;' . NONE) . zen_draw_hidden_field('products_previous_image', $pInfo->products_image); ?></td>
-                <td valign = "center" class="main"><?php echo TEXT_PRODUCTS_IMAGE_DIR; ?>&nbsp;<?php echo zen_draw_pull_down_menu('img_dir', $dir_info, $default_directory); ?></td>
-						  </tr>
+				<td class="main">
+					<?php 
+  						echo 
+							zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . 
+							zen_draw_file_field('products_image') . '&nbsp;' . ($pInfo->products_image !='' ? TEXT_IMAGE_CURRENT . $pInfo->products_image : TEXT_IMAGE_CURRENT . '&nbsp;' . NONE) . 
+							zen_draw_hidden_field('products_previous_image', $pInfo->products_image); ?>
+				</td>
+				<td valign = "center" class="main">
+					<?php echo TEXT_PRODUCTS_IMAGE_DIR; ?>&nbsp;
+					<?php echo zen_draw_pull_down_menu('img_dir', $dir_info, $default_directory); ?>
+				</td>
+			  </tr>
               <tr>
                 <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15'); ?></td>
-                <td class="main" valign="top"><?php echo TEXT_IMAGES_DELETE . ' ' . zen_draw_radio_field('image_delete', '0', $off_image_delete) . '&nbsp;' . TABLE_HEADING_NO . ' ' . zen_draw_radio_field('image_delete', '1', $on_image_delete) . '&nbsp;' . TABLE_HEADING_YES; ?></td>
-	  	    	  </tr>
-
+				<td class="main" valign="top">
+				<?php echo 
+					TEXT_IMAGES_DELETE . ' ' . zen_draw_radio_field('image_delete', '0', $off_image_delete) . '&nbsp;' . 
+					TABLE_HEADING_NO . ' ' . zen_draw_radio_field('image_delete', '1', $on_image_delete) . '&nbsp;' . TABLE_HEADING_YES; 
+				?>
+				</td>
+	  	      </tr>
               <tr>
                 <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15'); ?></td>
-                <td colspan="3" class="main" valign="top"><?php echo TEXT_IMAGES_OVERWRITE  . ' ' . zen_draw_radio_field('overwrite', '0', $off_overwrite) . '&nbsp;' . TABLE_HEADING_NO . ' ' . zen_draw_radio_field('overwrite', '1', $on_overwrite) . '&nbsp;' . TABLE_HEADING_YES; ?>
-                  <?php echo '<br />' . TEXT_PRODUCTS_IMAGE_MANUAL . '&nbsp;' . zen_draw_input_field('products_image_manual'); ?></td>
+				<td colspan="3" class="main" valign="top">
+				<?php echo 
+				TEXT_IMAGES_OVERWRITE  . ' ' . zen_draw_radio_field('overwrite', '0', $off_overwrite) . '&nbsp;' . 
+				TABLE_HEADING_NO . ' ' . zen_draw_radio_field('overwrite', '1', $on_overwrite) . '&nbsp;' . TABLE_HEADING_YES; ?>
+				<?php echo '<br />' . TEXT_PRODUCTS_IMAGE_MANUAL . '&nbsp;' . zen_draw_input_field('products_image_manual'); ?>
+				</td>
               </tr>
-            </table></td>
+			</table>
+		    </td>
           </tr>
 
           <tr>
