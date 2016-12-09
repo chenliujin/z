@@ -1,4 +1,6 @@
 <?php
+include_once('z/model/products.php');
+
 //get specials price or sale price
 function zen_get_products_special_price($product_id, $specials_price_only=false) {
 	global $db;
@@ -116,54 +118,16 @@ function zen_get_products_special_price($product_id, $specials_price_only=false)
 }
 
 
-////
-// computes products_price + option groups lowest attributes price of each group when on
-function zen_get_products_base_price($products_id) {
-	global $db;
-	$product_check = $db->Execute("
-		select 
-			products_price, 
-			products_priced_by_attribute 
-		from " . TABLE_PRODUCTS . " 
-		where products_id = '" . (int)$products_id . "'");
+/**
+ * @author chenliujin <liujin.chen@qq.com>
+ * @since 2016-12-09
+ */
+function zen_get_products_base_price($products_id) 
+{
+	$products = \z\products::GetInstance();
+	$products = $products->get((int)$products_id);
 
-	// is there a products_price to add to attributes
-	$products_price = $product_check->fields['products_price'];
-
-	// do not select display only attributes and attributes_price_base_included is true
-	$product_att_query = $db->Execute("
-		select 
-			options_id, 
-			price_prefix, 
-			options_values_price, 
-			attributes_display_only, 
-			attributes_price_base_included, 
-			round(concat(price_prefix, options_values_price), 5) as value 
-		from " . TABLE_PRODUCTS_ATTRIBUTES . " 
-		where 
-			products_id = '" . (int)$products_id . "' 
-			and attributes_display_only != '1' 
-			and attributes_price_base_included='1'". " 
-		order by options_id, value");
-
-	$the_options_id= 'x';
-	$the_base_price= 0;
-
-	// add attributes price to price
-	if ($product_check->fields['products_priced_by_attribute'] == '1' and $product_att_query->RecordCount() >= 1) {
-		while (!$product_att_query->EOF) {
-			if ( $the_options_id != $product_att_query->fields['options_id']) {
-				$the_options_id = $product_att_query->fields['options_id'];
-				$the_base_price += (($product_att_query->fields['price_prefix'] == '-') ? -1 : 1) * $product_att_query->fields['options_values_price'];
-			}
-			$product_att_query->MoveNext();
-		}
-
-		$the_base_price = $products_price + $the_base_price;
-	} else {
-		$the_base_price = $products_price;
-	}
-	return $the_base_price;
+	return $products->products_price;
 }
 
 
