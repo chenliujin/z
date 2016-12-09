@@ -1,5 +1,6 @@
 <?php
 include_once('z/model/products.php');
+include_once('z/model/products_attributes.php');
 
 
 
@@ -11,6 +12,26 @@ if (!defined('IS_ADMIN_FLAG')) {
 $products_id = intval($_GET['pID']);
 
 \z\products::UploadProductImage($products_id);
+
+if ($products_id) {
+	$products = \z\products::GetInstance(); 
+	$products = $products->get($products_id);
+	$products->parent_id = (int) $_POST['parent_id'];
+	$products->update();
+
+	if ($products->parent_id) {
+		$params = [
+			'products_id'	=> $products_id
+		];
+		$products_attributes 		= \z\products_attributes::GetInstance();
+		$products_attributes_list 	= $products_attributes->findAll($params);
+
+		foreach ($products_attributes_list as $products_attributes) {
+			$products_attributes->parent_id = $products->parent_id;
+			$products_attributes->update();
+		}
+	}
+}
 
     if (zen_not_null($_POST)) {
       $pInfo = new objectInfo($_POST);

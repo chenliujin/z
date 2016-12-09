@@ -31,7 +31,8 @@ if (!defined('IS_ADMIN_FLAG')) {
                        'products_discount_type' => '0',
                        'products_discount_type_from' => '0',
                        'products_price_sorter' => '0',
-                       'master_categories_id' => ''
+					   'master_categories_id' => '',
+					   'parent_id'	=> 0
                        );
 
     $pInfo = new objectInfo($parameters);
@@ -49,7 +50,8 @@ if (!defined('IS_ADMIN_FLAG')) {
                                       p.product_is_always_free_shipping, p.products_qty_box_status, p.products_quantity_order_max,
                                       p.products_sort_order,
                                       p.products_discount_type, p.products_discount_type_from,
-                                      p.products_price_sorter, p.master_categories_id
+									  p.products_price_sorter, p.master_categories_id,
+									  p.parent_id
                               from " . TABLE_PRODUCTS . " p, " . TABLE_PRODUCTS_DESCRIPTION . " pd
                               where p.products_id = '" . (int)$_GET['pID'] . "'
                               and p.products_id = pd.products_id
@@ -458,7 +460,9 @@ updateGross();
           </tr>
           <tr>
             <td class="main"><?php echo TEXT_PRODUCTS_WEIGHT; ?></td>
-            <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . zen_draw_input_field('products_weight', $pInfo->products_weight); ?></td>
+			<td class="main">
+				<?php echo zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . zen_draw_input_field('products_weight', $pInfo->products_weight); ?>
+			</td>
           </tr>
           <tr>
             <td colspan="2"><?php echo zen_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
@@ -476,24 +480,29 @@ updateGross();
         <td class="main" align="right"><?php echo zen_draw_hidden_field('products_date_added', (zen_not_null($pInfo->products_date_added) ? $pInfo->products_date_added : date('Y-m-d'))) . ( (isset($_GET['search']) && !empty($_GET['search'])) ? zen_draw_hidden_field('search', $_GET['search']) : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? zen_draw_hidden_field('search', $_POST['search']) : '') . zen_image_submit('button_preview.gif', IMAGE_PREVIEW) . '&nbsp;&nbsp;<a href="' . zen_href_link(FILENAME_CATEGORIES, 'cPath=' . $cPath . (isset($_GET['pID']) ? '&pID=' . $_GET['pID'] : '') . (isset($_GET['page']) ? '&page=' . $_GET['page'] : '') . ( (isset($_GET['search']) && !empty($_GET['search'])) ? '&search=' . $_GET['search'] : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? '&search=' . $_POST['search'] : '')) . '">' . zen_image_button('button_cancel.gif', IMAGE_CANCEL) . '</a>'; ?></td>
       </tr>
 	</table>
-				<fieldset>
-					<legend><?php echo TEXT_PRODUCTS_IMAGE; ?></legend>
-					<div>
-						<label>products_image 1:</label><input type="file" name="product_image[]" /><strong>Default</strong>
-					</div>
-					<div>
-						<label>products_image 2:</label><input type="file" name="product_image[]" />
-					</div>
-					<div>
-						<label>products_image 3:</label><input type="file" name="product_image[]" />
-					</div>
-					<div>
-						<label>products_image 4:</label><input type="file" name="product_image[]" />
-					</div>
-					<div>
-						<label>products_image 5:</label><input type="file" name="product_image[]" />
-					</div>
-				</fieldset>
+	<fieldset>
+		<legend>Product Attribute</legend>
+		<label>parent_id:</label><input type="text" name="parent_id" value="<?php echo $pInfo->parent_id; ?>" />
+	</fieldset>
+
+	<fieldset>
+		<legend><?php echo TEXT_PRODUCTS_IMAGE; ?></legend>
+		<div>
+			<label>products_image 1:</label><input type="file" name="product_image[]" /><strong>Default</strong>
+		</div>
+		<div>
+			<label>products_image 2:</label><input type="file" name="product_image[]" />
+		</div>
+		<div>
+			<label>products_image 3:</label><input type="file" name="product_image[]" />
+		</div>
+		<div>
+			<label>products_image 4:</label><input type="file" name="product_image[]" />
+		</div>
+		<div>
+			<label>products_image 5:</label><input type="file" name="product_image[]" />
+		</div>
+	</fieldset>
 
 
 </form>

@@ -1,4 +1,9 @@
 <?php
+include_once('z/model/products.php');
+include_once('z/model/products_attributes.php');
+include_once('z/model/products_options.php');
+
+
   require('includes/application_top.php');
 
   // troubleshooting/debug of option name/value IDs:
@@ -448,6 +453,34 @@ if ($_POST['image_delete'] == 1) {
           $db->Execute("update " . TABLE_PRODUCTS_ATTRIBUTES . "
                         set attributes_image = '" .  zen_db_input($attributes_image_name) . "'
                         where products_attributes_id = '" . (int)$attribute_id . "'");
+
+			  $products_id 				= (int)$products_id;
+			  $products_attributes_id 	= (int)$attribute_id;
+
+			  $products = \z\products::GetInstance();
+			  $products = $products->get($products_id);
+
+
+			  $products_attributes = \z\products_attributes::GetInstance(); 
+			  $products_attributes = $products_attributes->get($products_attributes_id);
+
+			  $products_options = \z\products_options::GetInstance();
+			  $products_options = $products_options->get(['products_options_id' => $products_attributes->options_id, 'language_id' => 1]);
+
+			  $products_attributes->parent_id 			= $products->parent_id;
+
+			  if (strtoupper($products_options->products_options_name) == 'COLOR') {
+				  $products_image = json_decode($products->products_image);
+
+				  if (!empty($products_image[0])) {
+					  $pathinfo = pathinfo($products_image[0]);
+
+					  $products_attributes->attributes_image = $pathinfo['dirname'] . '/' . $pathinfo['filename'] . '_40.' . $pathinfo['extension']; 
+				  }
+			  }
+			  
+			  $products_attributes->update();
+
 
             $db->Execute("update " . TABLE_PRODUCTS_ATTRIBUTES . "
                           set products_id = '" . (int)$products_id . "',
