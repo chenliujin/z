@@ -126,8 +126,8 @@ function zen_get_products_base_price($products_id)
 {
 	$products = \z\products::GetInstance();
 	$products = $products->get((int)$products_id);
-
-	return $products->products_price;
+	
+	return $products->base_price();
 }
 
 
