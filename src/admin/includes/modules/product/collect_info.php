@@ -2,7 +2,22 @@
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
 }
-    $parameters = array('products_name' => '',
+
+include_once('z/model/products.php');
+
+$products_id = (int)$_GET['pID'];
+
+if ($products_id) {
+	$products = \z\products::GetInstance();
+	$products = $products->get($products_id);
+} else {
+	$products = \z\products::GetInstance();
+
+	$products->product_gross_rate 	= 0.2;
+	$products->parent_id 			= 0;
+}
+
+$parameters = array('products_name' => '',
                        'products_description' => '',
                        'products_url' => '',
                        'products_id' => '',
@@ -32,8 +47,6 @@ if (!defined('IS_ADMIN_FLAG')) {
                        'products_discount_type_from' => '0',
                        'products_price_sorter' => '0',
 					   'master_categories_id' => '',
-					   'parent_id'	=> 0,
-					   'product_gross_rate'	=> 0.2,
                        );
 
     $pInfo = new objectInfo($parameters);
@@ -474,7 +487,7 @@ updateGross();
 			<label><?php echo TEXT_PRODUCTS_PRICE_GROSS; ?></label><?php echo zen_draw_input_field('products_price_gross', $pInfo->products_price, 'OnKeyUp="updateNet()"'); ?>
 		</div>
 		<div>
-			<label>product_gross_rate:</label><input type="text" name="product_gross_rate" value="<?php echo $pInfo->product_gross_rate; ?>" />
+			<label>product_gross_rate:</label><input type="text" name="product_gross_rate" value="<?php echo $products->product_gross_rate; ?>" />
 		</div>
 		<div>
 			<label><?php echo TEXT_PRODUCTS_QUANTITY; ?></label><?php echo zen_draw_input_field('products_quantity', $pInfo->products_quantity); ?>
@@ -487,7 +500,7 @@ updateGross();
 
 	<fieldset>
 		<legend>Product Attribute</legend>
-		<label>parent_id:</label><input type="text" name="parent_id" value="<?php echo $pInfo->parent_id; ?>" />
+		<label>parent_id:</label><input type="text" name="parent_id" value="<?php echo $products->parent_id; ?>" />
 	</fieldset>
 
 	<?php echo zen_draw_hidden_field('products_date_added', (zen_not_null($pInfo->products_date_added) ? $pInfo->products_date_added : date('Y-m-d'))) . ( (isset($_GET['search']) && !empty($_GET['search'])) ? zen_draw_hidden_field('search', $_GET['search']) : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? zen_draw_hidden_field('search', $_POST['search']) : '') . zen_image_submit('button_preview.gif', IMAGE_PREVIEW) . '&nbsp;&nbsp;<a href="' . zen_href_link(FILENAME_CATEGORIES, 'cPath=' . $cPath . (isset($_GET['pID']) ? '&pID=' . $_GET['pID'] : '') . (isset($_GET['page']) ? '&page=' . $_GET['page'] : '') . ( (isset($_GET['search']) && !empty($_GET['search'])) ? '&search=' . $_GET['search'] : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? '&search=' . $_POST['search'] : '')) . '">' . zen_image_button('button_cancel.gif', IMAGE_CANCEL) . '</a>'; ?>
