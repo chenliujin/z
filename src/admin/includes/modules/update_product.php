@@ -1,4 +1,7 @@
 <?php
+include_once('z/model/products.php');
+include_once('z/model/products_to_categories.php');
+
   if (!defined('IS_ADMIN_FLAG')) {
     die('Illegal Access');
   }
@@ -55,31 +58,52 @@
     }
 	 */
 
-    if ($action == 'insert_product') {
-      $insert_sql_data = array( 'products_date_added' => 'now()',
-                                'master_categories_id' => (int)$current_category_id);
+if ($action == 'insert_product') {
+	$products = \z\products::GetInstance();
 
-      $sql_data_array = array_merge($sql_data_array, $insert_sql_data);
+	$products->products_type 					= $_GET['product_type'];
+	$products->products_model 					= $_POST['products_model'];
+	$products->product_gross_rate 				= $_POST['product_gross_rate'];
+	$products->products_status 					= (int)$_POST['products_status'];
+	$products->parent_id 						= (int)$_POST['parent_id'];
+	$products->products_date_added 				= 'now()';
+	$products->master_categories_id				= (int)$current_category_id;
+	$products->product_is_free 					= (int)$_POST['product_is_free'];
+	$products->product_is_call 					= (int)$_POST['product_is_call'];
+	$products->products_quantity_mixed 			= $_POST['products_quantity_mixed'];
+	$products->product_is_always_free_shipping 	= (int)$_POST['product_is_always_free_shipping'];
+	$products->products_qty_box_status 			= $_POST['products_qty_box_status'];
+	$products->products_quantity_order_max 		= $_POST['products_quantity_order_max'];
+	$products->products_sort_order 				= (int)$_POST['products_sort_order'];
+	$products->products_discount_type 			= $_POST['products_discount_type'];
+	$products->products_discount_type_from 		= $_POST['products_discount_type_from'];
+	$products->products_price_sorter 			= $_POST['products_price_sorter'];
+	$products->products_virtual 				= (int)$_POST['products_virtual'];
+	$products->products_tax_class_id 			= (int)$_POST['products_tax_class_id'];
+	$products->products_quantity_order_min		= ($_POST['products_quantity_order_min'] == 0 ? 1 : $_POST['products_quantity_order_min']);
+	$products->products_quantity_order_units	= ($_POST['products_quantity_order_units'] == 0 ? 1 : $_POST['products_quantity_order_units']);
+	$products->products_priced_by_attribute		= (int)$_POST['products_priced_by_attribute'];
+	$products->products_date_available			= (date('Y-m-d') < $_POST['products_date_available']) ? $_POST['products_date_available'] : 'null';
+	$products->products_quantity				= (int)$_POST['products_quantity'];
+	$products->products_price					= $_POST['products_price'];
+	$products->products_weight					= $_POST['products_weight'];
+	$products->manufacturers_id 				= $_POST['manufacturers_id']; 
+	$products->products_id 						= $products->insert();
 
-      zen_db_perform(TABLE_PRODUCTS, $sql_data_array);
-      $products_id = zen_db_insert_id();
+	$products_id = $products->products_id;
 
-      // reset products_price_sorter for searches etc.
-      zen_update_products_price_sorter($products_id);
+	$products->products_image 	= $products->UploadProductImage();
+	$products->update();
 
-      $db->Execute("insert into " . TABLE_PRODUCTS_TO_CATEGORIES . "
-                    (products_id, categories_id)
-                    values ('" . (int)$products_id . "', '" . (int)$current_category_id . "')");
+	$products_to_categories = \z\products_to_categories::GetInstance();
+	$products_to_categories->products_id 	= $products->products_id;
+	$products_to_categories->categories_id 	= (int)$current_category_id;
+	$products_to_categories->insert();
 
-      zen_record_admin_activity('New product ' . (int)$products_id . ' added via admin console.', 'info');
+	zen_update_products_price_sorter($products->products_id);
+	zen_record_admin_activity('New product ' . $products->products_id . ' added via admin console.', 'info');
 
-      ///////////////////////////////////////////////////////
-      //// INSERT PRODUCT-TYPE-SPECIFIC *INSERTS* HERE //////
-
-
-      ////    *END OF PRODUCT-TYPE-SPECIFIC INSERTS* ////////
-      ///////////////////////////////////////////////////////
-    } elseif ($action == 'update_product') {
+} elseif ($action == 'update_product') {
       $update_sql_data = array( 'products_last_modified' => 'now()',
                                 'master_categories_id' => ($_POST['master_category'] > 0 ? zen_db_prepare_input($_POST['master_category']) : zen_db_prepare_input($_POST['master_categories_id'])));
 

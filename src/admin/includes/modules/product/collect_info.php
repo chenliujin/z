@@ -6,6 +6,7 @@ if (!defined('IS_ADMIN_FLAG')) {
 include_once('z/model/products.php');
 
 $products_id = (int)$_GET['pID'];
+$form_action = (isset($_GET['pID'])) ? 'new_product_preview' : 'insert_product';
 
 if ($products_id) {
 	$products = \z\products::GetInstance();
@@ -236,7 +237,21 @@ function updateNet() {
 //--></script>
     <?php
 //  echo $type_admin_handler;
-echo zen_draw_form('new_product', $type_admin_handler , 'cPath=' . $cPath . (isset($_GET['product_type']) ? '&product_type=' . $_GET['product_type'] : '') . (isset($_GET['pID']) ? '&pID=' . $_GET['pID'] : '') . '&action=new_product_preview' . (isset($_GET['page']) ? '&page=' . $_GET['page'] : '') . ( (isset($_GET['search']) && !empty($_GET['search'])) ? '&search=' . $_GET['search'] : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? '&search=' . $_POST['search'] : ''), 'post', 'enctype="multipart/form-data"');
+  echo zen_draw_form(
+	  'new_product', 
+	  $type_admin_handler , 
+
+	  'cPath=' . $cPath 
+	  	. (isset($_GET['product_type']) ? '&product_type=' . $_GET['product_type'] : '') 
+	  	. (isset($_GET['pID']) ? '&pID=' . $_GET['pID'] : '') 
+	  	. '&action=' . $form_action 
+	  	. (isset($_GET['page']) ? '&page=' . $_GET['page'] : '') 
+	  	. ( (isset($_GET['search']) && !empty($_GET['search'])) ? '&search=' . $_GET['search'] : '') 
+	  	. ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? '&search=' . $_POST['search'] : ''), 
+	  
+	'post', 
+	'enctype="multipart/form-data"'
+	);
     ?>
     <table border="0" width="100%" cellspacing="0" cellpadding="2">
       <tr>
