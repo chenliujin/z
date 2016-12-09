@@ -421,10 +421,6 @@ updateGross();
           <tr>
             <td colspan="2"><?php echo zen_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
           </tr>
-
-          <tr>
-            <td colspan="2"><?php echo zen_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
-          </tr>
           <tr>
             <td class="main"><?php echo TEXT_PRODUCTS_MODEL; ?></td>
             <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . zen_draw_input_field('products_model', htmlspecialchars(stripslashes($pInfo->products_model), ENT_COMPAT, CHARSET, TRUE), zen_set_field_length(TABLE_PRODUCTS, 'products_model')); ?></td>
@@ -465,23 +461,6 @@ updateGross();
       </tr>
 	</table>
 
-
-	<fieldset>
-		<legend>Products</legend>
-		<div>
-			<label><?php echo TEXT_PRODUCTS_QUANTITY; ?></label><?php echo zen_draw_input_field('products_quantity', $pInfo->products_quantity); ?>
-		</div>
-		<div>
-			<label><?php echo TEXT_PRODUCTS_WEIGHT; ?></label><?php echo zen_draw_input_field('products_weight', $pInfo->products_weight); ?>
-		</div>
-	</fieldset>
-
-
-	<fieldset>
-		<legend>Product Attribute</legend>
-		<label>parent_id:</label><input type="text" name="parent_id" value="<?php echo $pInfo->parent_id; ?>" />
-	</fieldset>
-
 	<fieldset>
 		<legend><?php echo TEXT_PRODUCTS_IMAGE; ?></legend>
 		<div>
@@ -499,6 +478,23 @@ updateGross();
 		<div>
 			<label>products_image 5:</label><input type="file" name="product_image[]" />
 		</div>
+	</fieldset>
+
+
+	<fieldset>
+		<legend>Products</legend>
+		<div>
+			<label><?php echo TEXT_PRODUCTS_QUANTITY; ?></label><?php echo zen_draw_input_field('products_quantity', $pInfo->products_quantity); ?>
+		</div>
+		<div>
+			<label><?php echo TEXT_PRODUCTS_WEIGHT; ?></label><?php echo zen_draw_input_field('products_weight', $pInfo->products_weight); ?>
+		</div>
+	</fieldset>
+
+
+	<fieldset>
+		<legend>Product Attribute</legend>
+		<label>parent_id:</label><input type="text" name="parent_id" value="<?php echo $pInfo->parent_id; ?>" />
 	</fieldset>
 
 
