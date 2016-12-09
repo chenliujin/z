@@ -16,7 +16,9 @@ $products_id = intval($_GET['pID']);
 if ($products_id) {
 	$products = \z\products::GetInstance(); 
 	$products = $products->get($products_id);
-	$products->parent_id = (int) $_POST['parent_id'];
+
+	$products->product_gross_rate 	= $_POST['product_gross_rate'];
+	$products->parent_id 			= (int)$_POST['parent_id'];
 	$products->update();
 
 	if ($products->parent_id) {

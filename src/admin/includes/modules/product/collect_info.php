@@ -32,7 +32,8 @@ if (!defined('IS_ADMIN_FLAG')) {
                        'products_discount_type_from' => '0',
                        'products_price_sorter' => '0',
 					   'master_categories_id' => '',
-					   'parent_id'	=> 0
+					   'parent_id'	=> 0,
+					   'product_gross_rate'	=> 0.2,
                        );
 
     $pInfo = new objectInfo($parameters);
@@ -336,21 +337,6 @@ echo zen_draw_hidden_field('products_price_sorter', $pInfo->products_price_sorte
           <tr>
             <td colspan="2"><?php echo zen_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
           </tr>
-          <tr bgcolor="#ebebff">
-            <td class="main"><?php echo TEXT_PRODUCTS_TAX_CLASS; ?></td>
-            <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . zen_draw_pull_down_menu('products_tax_class_id', $tax_class_array, $pInfo->products_tax_class_id, 'onchange="updateGross()"'); ?></td>
-          </tr>
-          <tr bgcolor="#ebebff">
-            <td class="main"><?php echo TEXT_PRODUCTS_PRICE_NET; ?></td>
-            <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . zen_draw_input_field('products_price', $pInfo->products_price, 'onKeyUp="updateGross()"'); ?></td>
-          </tr>
-          <tr bgcolor="#ebebff">
-            <td class="main"><?php echo TEXT_PRODUCTS_PRICE_GROSS; ?></td>
-            <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . zen_draw_input_field('products_price_gross', $pInfo->products_price, 'OnKeyUp="updateNet()"'); ?></td>
-          </tr>
-          <tr>
-            <td colspan="2"><?php echo zen_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
-          </tr>
           <tr>
             <td class="main"><?php echo TEXT_PRODUCTS_VIRTUAL; ?></td>
             <td class="main"><?php echo zen_draw_separator('pixel_trans.gif', '24', '15') . '&nbsp;' . zen_draw_radio_field('products_virtual', '1', $is_virtual) . '&nbsp;' . TEXT_PRODUCT_IS_VIRTUAL . '&nbsp;' . zen_draw_radio_field('products_virtual', '0', $not_virtual) . '&nbsp;' . TEXT_PRODUCT_NOT_VIRTUAL . ' ' . ($pInfo->products_virtual == 1 ? '<br /><span class="errorText">' . TEXT_VIRTUAL_EDIT . '</span>' : ''); ?></td>
@@ -453,12 +439,7 @@ updateGross();
           </tr>
         </table></td>
       </tr>
-      <tr>
-        <td><?php echo zen_draw_separator('pixel_trans.gif', '1', '10'); ?></td>
-      </tr>
-      <tr>
-        <td class="main" align="right"><?php echo zen_draw_hidden_field('products_date_added', (zen_not_null($pInfo->products_date_added) ? $pInfo->products_date_added : date('Y-m-d'))) . ( (isset($_GET['search']) && !empty($_GET['search'])) ? zen_draw_hidden_field('search', $_GET['search']) : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? zen_draw_hidden_field('search', $_POST['search']) : '') . zen_image_submit('button_preview.gif', IMAGE_PREVIEW) . '&nbsp;&nbsp;<a href="' . zen_href_link(FILENAME_CATEGORIES, 'cPath=' . $cPath . (isset($_GET['pID']) ? '&pID=' . $_GET['pID'] : '') . (isset($_GET['page']) ? '&page=' . $_GET['page'] : '') . ( (isset($_GET['search']) && !empty($_GET['search'])) ? '&search=' . $_GET['search'] : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? '&search=' . $_POST['search'] : '')) . '">' . zen_image_button('button_cancel.gif', IMAGE_CANCEL) . '</a>'; ?></td>
-      </tr>
+
 	</table>
 
 	<fieldset>
@@ -484,6 +465,18 @@ updateGross();
 	<fieldset>
 		<legend>Products</legend>
 		<div>
+			<label><?php echo TEXT_PRODUCTS_TAX_CLASS; ?></label><?php echo zen_draw_pull_down_menu('products_tax_class_id', $tax_class_array, $pInfo->products_tax_class_id, 'onchange="updateGross()"'); ?>
+		</div>
+		<div>
+			<label><?php echo TEXT_PRODUCTS_PRICE_NET; ?></label><?php echo zen_draw_input_field('products_price', $pInfo->products_price, 'onKeyUp="updateGross()"'); ?>
+		</div>
+		<div>
+			<label><?php echo TEXT_PRODUCTS_PRICE_GROSS; ?></label><?php echo zen_draw_input_field('products_price_gross', $pInfo->products_price, 'OnKeyUp="updateNet()"'); ?>
+		</div>
+		<div>
+			<label>product_gross_rate:</label><input type="text" name="product_gross_rate" value="<?php echo $pInfo->product_gross_rate; ?>" />
+		</div>
+		<div>
 			<label><?php echo TEXT_PRODUCTS_QUANTITY; ?></label><?php echo zen_draw_input_field('products_quantity', $pInfo->products_quantity); ?>
 		</div>
 		<div>
@@ -497,5 +490,6 @@ updateGross();
 		<label>parent_id:</label><input type="text" name="parent_id" value="<?php echo $pInfo->parent_id; ?>" />
 	</fieldset>
 
+	<?php echo zen_draw_hidden_field('products_date_added', (zen_not_null($pInfo->products_date_added) ? $pInfo->products_date_added : date('Y-m-d'))) . ( (isset($_GET['search']) && !empty($_GET['search'])) ? zen_draw_hidden_field('search', $_GET['search']) : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? zen_draw_hidden_field('search', $_POST['search']) : '') . zen_image_submit('button_preview.gif', IMAGE_PREVIEW) . '&nbsp;&nbsp;<a href="' . zen_href_link(FILENAME_CATEGORIES, 'cPath=' . $cPath . (isset($_GET['pID']) ? '&pID=' . $_GET['pID'] : '') . (isset($_GET['page']) ? '&page=' . $_GET['page'] : '') . ( (isset($_GET['search']) && !empty($_GET['search'])) ? '&search=' . $_GET['search'] : '') . ( (isset($_POST['search']) && !empty($_POST['search']) && empty($_GET['search'])) ? '&search=' . $_POST['search'] : '')) . '">' . zen_image_button('button_cancel.gif', IMAGE_CANCEL) . '</a>'; ?>
 
 </form>
