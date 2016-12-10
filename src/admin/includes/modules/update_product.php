@@ -122,27 +122,27 @@ if ($action == 'insert_product') {
 
       ////    *END OF PRODUCT-TYPE-SPECIFIC UPDATES* ////////
       ///////////////////////////////////////////////////////
-    }
+}
 
-    $languages = zen_get_languages();
-    for ($i=0, $n=sizeof($languages); $i<$n; $i++) {
-      $language_id = $languages[$i]['id'];
+$languages = zen_get_languages();
+for ($i=0, $n=sizeof($languages); $i<$n; $i++) {
+	$language_id = $languages[$i]['id'];
 
-      $sql_data_array = array('products_name' => zen_db_prepare_input($_POST['products_name'][$language_id]),
-                              'products_description' => zen_db_prepare_input($_POST['products_description'][$language_id]),
-                              'products_url' => zen_db_prepare_input($_POST['products_url'][$language_id]));
+	$sql_data_array = array('products_name' => zen_db_prepare_input($_POST['products_name'][$language_id]),
+		'products_description' => zen_db_prepare_input($_POST['products_description'][$language_id]),
+		'products_url' => zen_db_prepare_input($_POST['products_url'][$language_id]));
 
-      if ($action == 'insert_product') {
-        $insert_sql_data = array('products_id' => (int)$products_id,
-                                 'language_id' => (int)$language_id);
+	if ($action == 'insert_product') {
+		$insert_sql_data = array('products_id' => (int)$products_id,
+			'language_id' => (int)$language_id);
 
-        $sql_data_array = array_merge($sql_data_array, $insert_sql_data);
+		$sql_data_array = array_merge($sql_data_array, $insert_sql_data);
 
-        zen_db_perform(TABLE_PRODUCTS_DESCRIPTION, $sql_data_array);
-      } elseif ($action == 'update_product') {
-        zen_db_perform(TABLE_PRODUCTS_DESCRIPTION, $sql_data_array, 'update', "products_id = '" . (int)$products_id . "' and language_id = '" . (int)$language_id . "'");
-      }
-    }
+		zen_db_perform(TABLE_PRODUCTS_DESCRIPTION, $sql_data_array);
+	} elseif ($action == 'update_product') {
+		zen_db_perform(TABLE_PRODUCTS_DESCRIPTION, $sql_data_array, 'update', "products_id = '" . (int)$products_id . "' and language_id = '" . (int)$language_id . "'");
+	}
+}
 
     // add meta tags
     $languages = zen_get_languages();

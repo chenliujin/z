@@ -69,14 +69,6 @@
           require(DIR_WS_MODULES . 'new_product_preview_meta_tags.php');
          }
         break;
-      case 'new_product_preview':
-        if (file_exists(DIR_WS_MODULES . $zc_products->get_handler($product_type) . '/new_product_preview.php')) {
-          require(DIR_WS_MODULES . $zc_products->get_handler($product_type) . '/new_product_preview.php');
-         } else {
-          require(DIR_WS_MODULES . 'new_product_preview.php');
-         }
-        break;
-
     }
   }
 
