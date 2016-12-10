@@ -1014,9 +1014,13 @@ table.specifications th {
 	text-align: right;
 	border: 1px solid #ddd;
 }
-table.specifications td {
+table.specifications td, table.size-info td {
 	padding: 3px 10px;
 	border: 1px solid #ddd;
+}
+
+table.size-info td {
+	text-align: center;
 }
 
 #checkoutConfirmDefault #cartContentsDisplay {
