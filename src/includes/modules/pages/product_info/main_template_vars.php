@@ -78,8 +78,8 @@ require(DIR_WS_MODULES . zen_get_module_directory('product_prev_next.php'));
 
 $products_name = $product_info->fields['products_name'];
 $products_model = $product_info->fields['products_model'];
-// if no common markup tags in description, add line breaks for readability:
-$products_description = (!preg_match('/(<br|<p|<div|<dd|<li|<span)/i', $product_info->fields['products_description']) ? nl2br($product_info->fields['products_description']) : $product_info->fields['products_description']);
+
+$products_description = $product_info->fields['products_description'];
 
 if ($product_info->fields['products_image'] == '' and PRODUCTS_IMAGE_NO_IMAGE_STATUS == '1') {
 	$products_image = PRODUCTS_IMAGE_NO_IMAGE;
