@@ -1,5 +1,6 @@
 <?php
 include_once('z/model/products.php');
+include_once('z/model/products_attributes.php');
 include_once('z/model/products_to_categories.php');
 
   if (!defined('IS_ADMIN_FLAG')) {
@@ -134,10 +135,17 @@ if ($action == 'insert_product') {
 	$products->products_weight					= $_POST['products_weight'];
 	$products->manufacturers_id 				= $_POST['manufacturers_id'];
 
-
 	$products->update();
 
+	if ($products->parent_id) {
+		$products_attributes 		= \z\products_attributes::GetInstance();
+		$products_attributes_list 	= $products_attributes->findAll(['products_id' => $products->products_id]);
 
+		foreach ($products_attributes_list as $products_attributes) {
+			$products_attributes->parent_id = $products->parent_id;
+			$products_attributes->update();
+		}
+	}
 
 
 
