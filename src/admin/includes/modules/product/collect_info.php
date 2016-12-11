@@ -456,6 +456,11 @@ updateGross();
 		<div>
 			<label>products_image 5:</label><input type="file" name="product_image[]" />
 		</div>
+		<div>
+			<label>products_image 6:</label><input type="file" name="product_image[]" />
+		</div>
+
+
 	</fieldset>
 
 
