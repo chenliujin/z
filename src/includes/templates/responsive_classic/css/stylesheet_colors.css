@@ -7,7 +7,7 @@ h2.greeting, #icon, .header .fa-bars {
 }
 
 .itemTitle a:hover, h2.greeting a:hover {color:#666;}
-h3, .cartAttribsList, #cart-box {color:#444;}
+.cartAttribsList, #cart-box {color:#444;}
 .blue{color:#05a5cb !important;}
 .blue:hover{color:#036f89 !important;}
 .specialsListBoxContents a, .centerBoxContentsAlsoPurch a, .centerBoxContentsFeatured a, .centerBoxContentsSpecials a, .centerBoxContentsNew a {
