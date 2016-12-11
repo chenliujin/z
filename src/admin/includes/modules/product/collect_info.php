@@ -461,6 +461,12 @@ updateGross();
 		<div>
 			<label>products_image 6:</label><input type="file" name="product_image[]" />
 		</div>
+		<div>
+			<label>products_image:</label><?php echo $products->products_image; ?>
+		</div>
+		<div>
+			<label>products_image_referer:</label><input type="text" name="products_image_referer" value="" />
+		</div>
 
 
 	</fieldset>
