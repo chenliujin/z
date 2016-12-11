@@ -1014,12 +1014,19 @@ table.specifications th {
 	text-align: right;
 	border: 1px solid #ddd;
 }
-table.specifications td, table.size-info td {
+table.specifications td {
 	padding: 3px 10px;
 	border: 1px solid #ddd;
 }
 
+table.size-info th {
+	padding: 3px 10px;
+	border: 1px solid #ddd;
+	text-align: center;
+}
 table.size-info td {
+	padding: 3px 10px;
+	border: 1px solid #ddd;
 	text-align: center;
 }
 
