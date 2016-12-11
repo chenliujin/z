@@ -6,7 +6,7 @@ if (!defined('IS_ADMIN_FLAG')) {
 include_once('z/model/products.php');
 
 $products_id = (int)$_GET['pID'];
-$form_action = (isset($_GET['pID'])) ? 'new_product_preview' : 'insert_product';
+$form_action = (isset($_GET['pID'])) ? 'update_product' : 'insert_product';
 
 if ($products_id) {
 	$products = \z\products::GetInstance();
