@@ -3,7 +3,7 @@ include_once('z/model/products.php');
 include_once('z/model/products_attributes.php'); 
 ?>
 
-<div class="centerColumn" id="productGeneral"> 
+<div class="centerColumn" id="productGeneral" itemscope itemtype="http://schema.org/Product"> 
 	<?php 
 	echo zen_draw_form(
 		'cart_quantity', 
@@ -76,13 +76,13 @@ li.item img {
 				</ul>
 			</div>
 			<div style="float:left;">
-				<img id="zoomimg" src="<?php echo \z\products::GetImage($images[0], 450); ?>" style="max-width: 442px; max-height:442px;" />
+				<img id="zoomimg" src="<?php echo \z\products::GetImage($images[0], 450); ?>" itemprop="image" style="max-width: 442px; max-height:442px;" />
 			</div>
 		</div>
 
 		</div>
 		<div style="margin-left: 500px;">
-			<h1 id="productName" class="productGeneral"><?php echo $products_name; ?></h1>
+			<h1 id="productName" class="productGeneral" itemprop="name"><?php echo $products_name; ?></h1>
 			<hr>
 			<table class="line-item">
 				<?php
