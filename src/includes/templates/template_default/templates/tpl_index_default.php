@@ -7,7 +7,7 @@ include_once('z/model/products.php');
 	$page = \z\products::GetAllProducts();
 	$data = $page->data();
 	foreach ($data as $obj) {
-		$products_link = zen_href_link( zen_get_info_page($obj->products_id), 'cPath=' . zen_get_generated_category_path_rev($obj->master_categories_id) . '&products_id=' . $obj->products_id);
+		$products_link = zen_href_link('product_info', 'products_id=' . $obj->products_id);
 		$price = \z\products::GetPriceList($obj->products_id);
 		?>
 		<li style="width: 24%; margin-bottom: 50px; list-style: none; display: inline-block; vertical-align: top">
