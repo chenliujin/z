@@ -442,6 +442,16 @@ updateGross();
 	</table>
 
 	<fieldset>
+		<legend><?php echo TEXT_PRODUCTS_NAME; ?></legend>
+		<div>
+		<?php for ($i=0, $n=sizeof($languages); $i<$n; $i++) { ?>
+			<label><?php echo zen_image(DIR_WS_CATALOG_LANGUAGES . $languages[$i]['directory'] . '/images/' . $languages[$i]['image'], $languages[$i]['name']) . '&nbsp' . $languages[$i]['name']; ?></label>
+			<input name="<?php echo 'products_name[' . $languages[$i]['id'] . ']'; ?>" value="<?php echo htmlspecialchars(isset($products_name[$languages[$i]['id']]) ? stripslashes($products_name[$languages[$i]['id']]) : zen_get_products_name($pInfo->products_id, $languages[$i]['id']), ENT_COMPAT, CHARSET, TRUE); ?>" style="width: 75%" />
+		<?php } ?>
+		</div>
+	</fieldset>
+
+	<fieldset>
 		<legend><?php echo TEXT_PRODUCTS_IMAGE; ?></legend>
 		<div>
 			<label>products_image 1:</label><input type="file" name="product_image[]" /><strong>Default</strong>
@@ -479,18 +489,6 @@ updateGross();
 
 
 	</fieldset>
-
-
-	<fieldset>
-		<legend><?php echo TEXT_PRODUCTS_NAME; ?></legend>
-		<div>
-		<?php for ($i=0, $n=sizeof($languages); $i<$n; $i++) { ?>
-			<label><?php echo zen_image(DIR_WS_CATALOG_LANGUAGES . $languages[$i]['directory'] . '/images/' . $languages[$i]['image'], $languages[$i]['name']) . '&nbsp' . $languages[$i]['name']; ?></label>
-			<input name="<?php echo 'products_name[' . $languages[$i]['id'] . ']'; ?>" value="<?php echo htmlspecialchars(isset($products_name[$languages[$i]['id']]) ? stripslashes($products_name[$languages[$i]['id']]) : zen_get_products_name($pInfo->products_id, $languages[$i]['id']), ENT_COMPAT, CHARSET, TRUE); ?>" style="width: 75%" />
-		<?php } ?>
-		</div>
-	</fieldset>
-
 
 
 	<fieldset>
