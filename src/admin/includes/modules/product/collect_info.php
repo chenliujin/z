@@ -462,6 +462,15 @@ updateGross();
 			<label>products_image 6:</label><input type="file" name="product_image[]" />
 		</div>
 		<div>
+			<label>products_image 7:</label><input type="file" name="product_image[]" />
+		</div>
+		<div>
+			<label>products_image 8:</label><input type="file" name="product_image[]" />
+		</div>
+		<div>
+			<label>products_image 9:</label><input type="file" name="product_image[]" />
+		</div>
+		<div>
 			<label>products_image:</label><?php echo $products->products_image; ?>
 		</div>
 		<div>
