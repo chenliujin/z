@@ -506,6 +506,9 @@ updateGross();
 			<label>product_gross_rate:</label><input type="text" name="product_gross_rate" value="<?php echo $products->product_gross_rate; ?>" />
 		</div>
 		<div>
+			<label>product_gross_rate_special:</label><input type="text" name="product_gross_rate_special" value="<?php echo $products->product_gross_rate_special; ?>" />
+		</div>
+		<div>
 			<label><?php echo TEXT_PRODUCTS_QUANTITY; ?></label><?php echo zen_draw_input_field('products_quantity', $pInfo->products_quantity); ?>
 		</div>
 		<div>

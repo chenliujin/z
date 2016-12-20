@@ -65,6 +65,7 @@ if ($action == 'insert_product') {
 	$products->products_type 					= $_GET['product_type'];
 	$products->products_model 					= $_POST['products_model'];
 	$products->product_gross_rate 				= $_POST['product_gross_rate'];
+	$products->product_gross_rate_special 		= $_POST['product_gross_rate_special'];
 	$products->products_status 					= (int)$_POST['products_status'];
 	$products->parent_id 						= (int)$_POST['parent_id'];
 	$products->products_date_added 				= 'now()';
@@ -113,6 +114,7 @@ if ($action == 'insert_product') {
 	$products->products_image 					= $products->UploadProductImage();
 	$products->products_status 					= (int)$_POST['products_status'];
 	$products->product_gross_rate 				= $_POST['product_gross_rate'];
+	$products->product_gross_rate_special 		= $_POST['product_gross_rate_special'];
 	$products->parent_id 						= (int)$_POST['parent_id'];
 	$products->product_is_free 					= (int)$_POST['product_is_free'];
 	$products->product_is_call 					= (int)$_POST['product_is_call'];
