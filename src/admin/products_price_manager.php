@@ -1,5 +1,7 @@
 <?php
-  require('includes/application_top.php');
+include_once('z/model/products_discount_quantity.php');
+
+require('includes/application_top.php');
 
   // verify products exist
   $chk_products = $db->Execute("select * from " . TABLE_PRODUCTS . " limit 1");
@@ -205,21 +207,27 @@
             where products_id='" . $products_filter . "'");
         }
 
-        $db->Execute("delete from " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . " where products_id='" . $products_filter . "'");
-        $i=1;
-        $new_id = 0;
-        $discount_cnt = 0;
-        for ($i=1, $n=sizeof($_POST['discount_qty']); $i<=$n; $i++) {
-          if ($_POST['discount_qty'][$i] > 0) {
-            $new_id++;
-            $db->Execute("insert into " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . "
-                          (discount_id, products_id, discount_qty, discount_price)
-                          values ('" . $new_id . "', '" . $products_filter . "', '" . zen_db_input($_POST['discount_qty'][$i]) . "', '" . zen_db_input($_POST['discount_price'][$i]) . "')");
-            $discount_cnt++;
-          } else {
-            loop;
-          }
-        }
+		$db->Execute("delete from " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . " where products_id='" . $products_filter . "'");
+		$i=1;
+		$new_id = 0;
+		$discount_cnt = 0;
+		for ($i=1, $n=sizeof($_POST['discount_qty']); $i<=$n; $i++) {
+			if ($_POST['discount_qty'][$i] > 0) {
+				$new_id++;
+
+				$products_discount_quantity = \z\products_discount_quantity::GetInstance();
+				$products_discount_quantity->discount_id 		= $new_id;
+				$products_discount_quantity->products_id 		= $products_filter;
+				$products_discount_quantity->discount_qty 		= $_POST['discount_qty'][$i];
+				$products_discount_quantity->discount_price 	= $_POST['discount_price'][$i];
+				$products_discount_quantity->gross_rate_qty 	= $_POST['gross_rate_qty'][$i];
+				$products_discount_quantity->insert();
+
+				$discount_cnt++;
+			} else {
+				loop;
+			}
+		}
 
         if ($discount_cnt <= 0) {
           $db->Execute("update " . TABLE_PRODUCTS . " set products_discount_type='0' where products_id='" . $products_filter . "'");
@@ -521,10 +529,13 @@ if ($products_filter == '') {
     }
 
 // Product is product discount type - None, Percentage, Actual Price, $$ off
-  $discount_type_array = array(array('id' => '0', 'text' => DISCOUNT_TYPE_DROPDOWN_0),
-                                array('id' => '1', 'text' => DISCOUNT_TYPE_DROPDOWN_1),
-                                array('id' => '2', 'text' => DISCOUNT_TYPE_DROPDOWN_2),
-                                array('id' => '3', 'text' => DISCOUNT_TYPE_DROPDOWN_3));
+	$discount_type_array = array(
+		array('id' => '0', 'text' => DISCOUNT_TYPE_DROPDOWN_0),
+		array('id' => '1', 'text' => DISCOUNT_TYPE_DROPDOWN_1),
+		array('id' => '2', 'text' => DISCOUNT_TYPE_DROPDOWN_2),
+		array('id' => '3', 'text' => DISCOUNT_TYPE_DROPDOWN_3),
+		array('id' => '4', 'text' => 'Gross Rate Qty'),
+	);
 
 // Product is product discount type from price or special
   $discount_type_from_array = array(array('id' => '0', 'text' => DISCOUNT_TYPE_FROM_DROPDOWN_0),
@@ -917,9 +928,12 @@ updateSpecialsGross();
     $i = 0;
     while (!$discounts_qty->EOF) {
       $i++;
-      $discount_name[] = array('id' => $i,
-                                 'discount_qty' => $discounts_qty->fields['discount_qty'],
-                                 'discount_price' => $discounts_qty->fields['discount_price']);
+	  $discount_name[] = array(
+		  'id' => $i, 
+		  'discount_qty' => $discounts_qty->fields['discount_qty'], 
+		  'discount_price' => $discounts_qty->fields['discount_price'],
+		  'gross_rate_qty' => $discounts_qty->fields['gross_rate_qty']
+	  );
       $discounts_qty->MoveNext();
     }
 ?>
@@ -929,10 +943,10 @@ updateSpecialsGross();
 ?>
 
           <tr>
-            <td colspan="5" class="main" valign="top"><?php echo TEXT_PRODUCTS_MIXED_DISCOUNT_QUANTITY; ?>&nbsp;&nbsp;<?php echo zen_draw_radio_field('products_mixed_discount_quantity', '1', $in_products_mixed_discount_quantity==1) . '&nbsp;' . TEXT_YES . '&nbsp;&nbsp;' . zen_draw_radio_field('products_mixed_discount_quantity', '0', $out_products_mixed_discount_quantity) . '&nbsp;' . TEXT_NO; ?></td>
+            <td colspan="6" class="main" valign="top"><?php echo TEXT_PRODUCTS_MIXED_DISCOUNT_QUANTITY; ?>&nbsp;&nbsp;<?php echo zen_draw_radio_field('products_mixed_discount_quantity', '1', $in_products_mixed_discount_quantity==1) . '&nbsp;' . TEXT_YES . '&nbsp;&nbsp;' . zen_draw_radio_field('products_mixed_discount_quantity', '0', $out_products_mixed_discount_quantity) . '&nbsp;' . TEXT_NO; ?></td>
           </tr>
           <tr>
-            <td colspan="5" class="main" align="center">
+            <td colspan="6" class="main" align="center">
               <?php
                 if ($action != '') {
                   echo TEXT_ADD_ADDITIONAL_DISCOUNT . '<br />';
@@ -945,16 +959,16 @@ updateSpecialsGross();
             </td>
           </tr>
           <tr>
-            <td colspan="5"><?php echo zen_draw_separator('pixel_black.gif', '100%', '2'); ?></td>
+            <td colspan="6"><?php echo zen_draw_separator('pixel_black.gif', '100%', '2'); ?></td>
           </tr>
           <tr>
             <td class="main">
               <?php echo TEXT_DISCOUNT_TYPE_INFO; ?>
             </td>
-            <td colspan="2" class="main">
+            <td colspan="3" class="main">
               <?php echo TEXT_DISCOUNT_TYPE . ' ' . zen_draw_pull_down_menu('products_discount_type', $discount_type_array, $pInfo->products_discount_type); ?>
             </td>
-            <td colspan="2" class="main">
+            <td colspan="3" class="main">
               <?php echo TEXT_DISCOUNT_TYPE_FROM . ' ' . zen_draw_pull_down_menu('products_discount_type_from', $discount_type_from_array, $pInfo->products_discount_type_from); ?>
             </td>
           </tr>
@@ -962,6 +976,7 @@ updateSpecialsGross();
             <td class="main" align="center"><?php echo TEXT_PRODUCTS_DISCOUNT_QTY_TITLE; ?></td>
             <td class="main" align="center"><?php echo TEXT_PRODUCTS_DISCOUNT_QTY; ?></td>
             <td class="main" align="center"><?php echo TEXT_PRODUCTS_DISCOUNT_PRICE; ?></td>
+            <td class="main" align="center">Gross Rate Qty</td>
 <?php
   if (DISPLAY_PRICE_WITH_TAX_ADMIN == 'true') {
 ?>
@@ -1024,6 +1039,7 @@ updateSpecialsGross();
             <td class="main"><?php echo TEXT_PRODUCTS_DISCOUNT . ' ' . $discount_name[$i]['id']; ?></td>
             <td class="main"><?php echo zen_draw_input_field('discount_qty[' . $discount_name[$i]['id'] . ']', $discount_name[$i]['discount_qty']); ?></td>
             <td class="main"><?php echo zen_draw_input_field('discount_price[' . $discount_name[$i]['id'] . ']', $discount_name[$i]['discount_price']); ?></td>
+            <td class="main"><?php echo zen_draw_input_field('gross_rate_qty[' . $discount_name[$i]['id'] . ']', $discount_name[$i]['gross_rate_qty']); ?></td>
 <?php
   if (DISPLAY_PRICE_WITH_TAX_ADMIN == 'true') {
 ?>
