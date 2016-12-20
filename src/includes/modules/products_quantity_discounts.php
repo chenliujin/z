@@ -95,6 +95,10 @@ while (!$products_discounts_query->EOF) {
 				}
 			}
 			break;
+
+		case '4':
+			$quantityDiscounts[$columnCount]['discounted_price'] = $products->products_price * (1 + $products_discounts_query->fields['gross_rate_qty']/100); 
+			break;
 	}
 
 	$quantityDiscounts[$columnCount]['show_qty'] = number_format($products_discounts_query->fields['discount_qty']);

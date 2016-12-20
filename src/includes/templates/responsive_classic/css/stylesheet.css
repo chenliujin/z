@@ -419,10 +419,13 @@ span.list-addtext{display:block;text-align:center;}
 #productPrices{font-size:1.5em;text-align:center;margin:10px 0 10px 0;font-weight:normal;}
 #mediaManagerHeading{font-weight:normal;}
 #freeShippingIcon{margin:10px 0 10px 30px;}
-#productQuantityDiscounts td {
-	padding:10px;
+
+#productQuantityDiscounts th, #productQuantityDiscounts td {
+	padding: 5px 10px;
 	border:1px solid #eee;
+	text-align: center;
 }
+
 #mediaManager {width:50%;margin:0.2em 0 0.2em 30px;padding:0.5em 0;}
 .mediaTitle {float:left;}
 .mediaTypeLink {float:right;}

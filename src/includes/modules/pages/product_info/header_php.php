@@ -1,9 +1,12 @@
 <?php
-
-// This should be first line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_START_PRODUCT_INFO');
+include_once('z/model/products.php');
 
 require(DIR_WS_MODULES . zen_get_module_directory('require_languages.php'));
+
+$products_id = (int)$_GET['products_id'];
+
+$products = \z\products::GetInstance();
+$products = $products->get($products_id);
 
 // if specified product_id is disabled or doesn't exist, ensure that metatags and breadcrumbs don't share inappropriate information
 $sql = "select count(*) as total
@@ -26,5 +29,4 @@ if (!$_SESSION['customer_id']) {
 	$_SESSION['navigation']->set_snapshot();
 }
 
-// This should be last line of the script:
-$zco_notifier->notify('NOTIFY_HEADER_END_PRODUCT_INFO');
+
