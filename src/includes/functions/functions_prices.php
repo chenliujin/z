@@ -1,35 +1,23 @@
 <?php
 include_once('z/model/products.php');
 
-//get specials price or sale price
-function zen_get_products_special_price($product_id, $specials_price_only=false) {
+function zen_get_products_special_price($product_id, $specials_price_only=false) 
+{
 	global $db;
-	$product = $db->Execute("
-		select 
-			products_price, 
-			products_model, 
-			products_priced_by_attribute 
-		from " . TABLE_PRODUCTS . " 
-		where products_id = '" . (int)$product_id . "'");
 
-	if ($product->RecordCount() > 0) {
-		$product_price = zen_get_products_base_price($product_id);
-	} else {
-		return false;
+	$product_id = (int)$product_id;
+
+	$products = \z\products::GetInstance();
+	$products = $products->get($product_id);
+
+	if (!$products) {
+		return FALSE;
 	}
 
-	$specials = $db->Execute("
-		select 
-			specials_new_products_price 
-		from " . TABLE_SPECIALS . " 
-		where products_id = '" . (int)$product_id . "' and status='1'");
-	if ($specials->RecordCount() > 0) {
-		$special_price = $specials->fields['specials_new_products_price'];
-	} else {
-		$special_price = false;
-	}
+	$product_price = $products->base_price(); 
+	$special_price = $products->special_price();
 
-	if(substr($product->fields['products_model'], 0, 4) == 'GIFT') {    //Never apply a salededuction to Ian Wilson's Giftvouchers
+	if(substr($products->products_model, 0, 4) == 'GIFT') {    //Never apply a salededuction to Ian Wilson's Giftvouchers
 		if (zen_not_null($special_price)) {
 			return $special_price;
 		} else {
@@ -45,12 +33,7 @@ function zen_get_products_special_price($product_id, $specials_price_only=false)
 			return false;
 		}
 	} else { // get sale price
-		$product_to_categories = $db->Execute("
-			select 
-				master_categories_id 
-			from " . TABLE_PRODUCTS . " 
-			where products_id = '" . $product_id . "'");
-		$category = $product_to_categories->fields['master_categories_id'];
+		$category = $products->master_categories_id;
 
 		$sale = $db->Execute("
 			select 
