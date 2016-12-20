@@ -541,13 +541,6 @@ define('TEXT_PRODUCT_FEATURED_LISTING_MULTIPLE_ADD_TO_CART', 'Add: ');
 define('TEXT_PRODUCT_NEW_LISTING_MULTIPLE_ADD_TO_CART', 'Add: ');
 //moved SUBMIT_BUTTON_ADD_PRODUCTS_TO_CART to button_names.php as BUTTON_ADD_PRODUCTS_TO_CART_ALT
 
-// discount qty table
-define('TEXT_HEADER_DISCOUNT_PRICES_PERCENTAGE', 'Qty Discounts Off Price');
-define('TEXT_HEADER_DISCOUNT_PRICES_ACTUAL_PRICE', 'Qty Discounts New Price');
-define('TEXT_HEADER_DISCOUNT_PRICES_AMOUNT_OFF', 'Qty Discounts Off Price');
-define('TEXT_FOOTER_DISCOUNT_QUANTITIES', '* Discounts may vary based on options above');
-define('TEXT_HEADER_DISCOUNTS_OFF', 'Qty Discounts Unavailable ...');
-
 // sort order titles for dropdowns
 define('PULL_DOWN_ALL_RESET','- RESET - ');
 define('TEXT_INFO_SORT_BY_PRODUCTS_NAME', 'Product Name');
