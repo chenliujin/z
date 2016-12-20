@@ -1224,20 +1224,28 @@ function zen_get_letters_count_price($string, $free=0, $price) {
 }
 
 
-////
-// compute discount based on qty
-function zen_get_products_discount_price_qty($product_id, $check_qty, $check_amount=0) {
+/**
+ * @author chenliujin <liujin.chen@qq.com>
+ * @since 2016-12-20
+ */
+function zen_get_products_discount_price_qty($product_id, $check_qty, $check_amount=0) 
+{
+	include_once('z/model/products.php');
+
+	$product_id = (int)$product_id;
+
 	global $db;
 	$new_qty = $_SESSION['cart']->in_cart_mixed_discount_quantity($product_id);
 	// check for discount qty mix
 	if ($new_qty > $check_qty) {
 		$check_qty = $new_qty;
 	}
+
 	$product_id = (int)$product_id;
-	$products_query = $db->Execute("
-		select products_discount_type, products_discount_type_from, products_priced_by_attribute 
-		from " . TABLE_PRODUCTS . " 
-		where products_id='" . (int)$product_id . "'");
+
+	$product = \z\products::GetInstance();
+	$product = $product->get($product_id);
+
 	$products_discounts_query = $db->Execute("
 		select * 
 		from " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . " 
@@ -1247,28 +1255,20 @@ function zen_get_products_discount_price_qty($product_id, $check_qty, $check_amo
 	$display_price = zen_get_products_base_price($product_id);
 	$display_specials_price = zen_get_products_special_price($product_id, false);
 
-	switch ($products_query->fields['products_discount_type']) {
+	switch ($product->products_discount_type) {
 		// none
-	case ($products_discounts_query->EOF):
-		//no discount applies
-		$discounted_price = zen_get_products_actual_price($product_id);
-		break;
-	case '0':
-		$discounted_price = zen_get_products_actual_price($product_id);
-		break;
+		case ($products_discounts_query->EOF):
+			//no discount applies
+			$discounted_price = zen_get_products_actual_price($product_id);
+			break;
+
+		case '0':
+			$discounted_price = zen_get_products_actual_price($product_id);
+			break;
+
 		// percentage discount
-	case '1':
-		if ($products_query->fields['products_discount_type_from'] == '0') {
-			// priced by attributes
-			if ($check_amount != 0) {
-				$discounted_price = $check_amount - ($check_amount * ($products_discounts_query->fields['discount_price']/100));
-				//echo 'ID#' . $product_id . ' Amount is: ' . $check_amount . ' discount: ' . $discounted_price . '<br />';
-				//echo 'I SEE 2 for ' . $products_query->fields['products_discount_type'] . ' - ' . $products_query->fields['products_discount_type_from'] . ' - '. $check_amount . ' new: ' . $discounted_price . ' qty: ' . $check_qty;
-			} else {
-				$discounted_price = $display_price - ($display_price * ($products_discounts_query->fields['discount_price']/100));
-			}
-		} else {
-			if (!$display_specials_price) {
+		case '1':
+			if ($product->products_discount_type_from == '0') {
 				// priced by attributes
 				if ($check_amount != 0) {
 					$discounted_price = $check_amount - ($check_amount * ($products_discounts_query->fields['discount_price']/100));
@@ -1276,31 +1276,46 @@ function zen_get_products_discount_price_qty($product_id, $check_qty, $check_amo
 					$discounted_price = $display_price - ($display_price * ($products_discounts_query->fields['discount_price']/100));
 				}
 			} else {
-				$discounted_price = $display_specials_price - ($display_specials_price * ($products_discounts_query->fields['discount_price']/100));
+				if (!$display_specials_price) {
+					// priced by attributes
+					if ($check_amount != 0) {
+						$discounted_price = $check_amount - ($check_amount * ($products_discounts_query->fields['discount_price']/100));
+					} else {
+						$discounted_price = $display_price - ($display_price * ($products_discounts_query->fields['discount_price']/100));
+					}
+				} else {
+					$discounted_price = $display_specials_price - ($display_specials_price * ($products_discounts_query->fields['discount_price']/100));
+				}
 			}
-		}
 
-		break;
+			break;
+
 		// actual price
-	case '2':
-		if ($products_query->fields['products_discount_type_from'] == '0') {
-			$discounted_price = $products_discounts_query->fields['discount_price'];
-		} else {
-			$discounted_price = $products_discounts_query->fields['discount_price'];
-		}
-		break;
+		case '2':
+			if ($product->products_discount_type_from == '0') {
+				$discounted_price = $products_discounts_query->fields['discount_price'];
+			} else {
+				$discounted_price = $products_discounts_query->fields['discount_price'];
+			}
+			break;
+
 		// amount offprice
-	case '3':
-		if ($products_query->fields['products_discount_type_from'] == '0') {
-			$discounted_price = $display_price - $products_discounts_query->fields['discount_price'];
-		} else {
-			if (!$display_specials_price) {
+		case '3':
+			if ($product->products_discount_type_from == '0') {
 				$discounted_price = $display_price - $products_discounts_query->fields['discount_price'];
 			} else {
-				$discounted_price = $display_specials_price - $products_discounts_query->fields['discount_price'];
+				if (!$display_specials_price) {
+					$discounted_price = $display_price - $products_discounts_query->fields['discount_price'];
+				} else {
+					$discounted_price = $display_specials_price - $products_discounts_query->fields['discount_price'];
+				}
 			}
-		}
-		break;
+			break;
+
+		// Gross Rate Qty
+		case '4':
+			$discounted_price = $product->products_price * (1 + $products_discounts_query->fields['gross_rate_qty']/100);
+			break;
 	}
 
 	return $discounted_price;
