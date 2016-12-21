@@ -204,5 +204,7 @@ if (!isset($_SESSION['customers_ip_address'])) {
 	$gi = geoip_open("/usr/share/GeoIP/GeoIP.dat", GEOIP_STANDARD);
 	$code =  geoip_country_code_by_addr($gi, $customers_ip_address);
 
+	$code = $code == 'CN' ? 'US' : $code;
+
 	$_SESSION['customers_ip_country'] = $code ? $code : 'US';
 }
