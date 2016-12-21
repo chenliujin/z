@@ -208,17 +208,14 @@ if ($products_discount_type != 0) {
 	})
 	</script>
 
-<?php 
-if ($products_description != '') { ?>
-	<div class="title-border">
-		<h2 style="margin:0">Product Description</h2>
-	</div>
-	<div id="productDescription" class="productGeneral biggerText">
-		<?php echo stripslashes($products_description); ?>
-	</div>
-	<?php 
-} 
-?>
+
+<div id="productDescription" class="productGeneral biggerText">
+	<h2 class="title-border">Product Description</h2>
+
+	<?php if ($products_description != '') { ?>
+	<?php echo stripslashes($products_description); ?>
+	<?php } ?>
+</div>
 <div>
 	<div class="box-title">Packaging Details</div>
 	<ul class="packaging-list">
