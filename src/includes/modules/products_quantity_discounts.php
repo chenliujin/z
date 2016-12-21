@@ -97,7 +97,7 @@ while (!$products_discounts_query->EOF) {
 			break;
 
 		case '4':
-			$quantityDiscounts[$columnCount]['discounted_price'] = $products->products_price * (1 + $products_discounts_query->fields['gross_rate_qty']/100); 
+			$quantityDiscounts[$columnCount]['discounted_price'] = $product->products_price * (1 + $products_discounts_query->fields['gross_rate_qty']/100); 
 			break;
 	}
 
