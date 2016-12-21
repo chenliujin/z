@@ -210,15 +210,26 @@ if ($products_discount_type != 0) {
 
 <?php 
 if ($products_description != '') { ?>
-	<div>
-		<div class="title-border">
-			<h2 style="margin:0">Product Description</h2>
-		</div>
+	<div class="title-border">
+		<h2 style="margin:0">Product Description</h2>
 	</div>
 	<div id="productDescription" class="productGeneral biggerText">
 		<?php echo stripslashes($products_description); ?>
-	</div><?php 
+	</div>
+	<?php 
 } 
+?>
+<div>
+	<div class="box-title">Packaging Details</div>
+	<ul class="packaging-list">
+		<li class="packaging-item">
+			<span class="packaging-title">Package Weight: </span>
+			<span><?php echo $product->products_weight; ?>kg</span>
+		</li>
+	</ul>
+</div>
+<?php
+
 
 if (PRODUCT_INFO_PREVIOUS_NEXT == 2 or PRODUCT_INFO_PREVIOUS_NEXT == 3) { 
 	require($template->get_template_dir('/tpl_products_next_previous.php',DIR_WS_TEMPLATE, $current_page_base,'templates'). '/tpl_products_next_previous.php'); 

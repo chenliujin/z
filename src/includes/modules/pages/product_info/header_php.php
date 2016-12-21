@@ -5,8 +5,8 @@ require(DIR_WS_MODULES . zen_get_module_directory('require_languages.php'));
 
 $products_id = (int)$_GET['products_id'];
 
-$products = \z\products::GetInstance();
-$products = $products->get($products_id);
+$product = \z\products::GetInstance();
+$product = $product->get($products_id);
 
 // if specified product_id is disabled or doesn't exist, ensure that metatags and breadcrumbs don't share inappropriate information
 $sql = "select count(*) as total
