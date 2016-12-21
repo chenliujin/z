@@ -1182,7 +1182,10 @@ class shoppingCart extends base
 	 * @param boolean whether to check if cart contents are valid
 	 * @return array
 	 */
-	function get_products($check_for_valid_cart = false) {
+	function get_products($check_for_valid_cart = false) 
+	{
+		include_once('z/model/products.php');
+
 		global $db;
 
 		$this->notify('NOTIFIER_CART_GET_PRODUCTS_START', array(), $check_for_valid_cart);
@@ -1204,8 +1207,14 @@ class shoppingCart extends base
 
 			if ($products = $db->Execute($products_query)) {
 
+				$products_id = (int)$products_id;
+
+				$product = \z\products::GetInstance();
+				$product = $product->get($products_id);
+
+
 				$prid = $products->fields['products_id'];
-				$products_price = $products->fields['products_price'];
+				$products_price = $product->base_price(); 
 
 				$special_price = zen_get_products_special_price($prid);
 				if ($special_price and $products->fields['products_priced_by_attribute'] == 0) {
