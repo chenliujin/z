@@ -1039,7 +1039,9 @@ updateSpecialsGross();
             <td class="main"><?php echo TEXT_PRODUCTS_DISCOUNT . ' ' . $discount_name[$i]['id']; ?></td>
             <td class="main"><?php echo zen_draw_input_field('discount_qty[' . $discount_name[$i]['id'] . ']', $discount_name[$i]['discount_qty']); ?></td>
             <td class="main"><?php echo zen_draw_input_field('discount_price[' . $discount_name[$i]['id'] . ']', $discount_name[$i]['discount_price']); ?></td>
-            <td class="main"><?php echo zen_draw_input_field('gross_rate_qty[' . $discount_name[$i]['id'] . ']', $discount_name[$i]['gross_rate_qty']); ?></td>
+			<td class="main">
+			<input name="gross_rate_qty[<?php echo $discount_name[$i]['id']; ?>]" value="<?php echo $discount_name[$i]['gross_rate_qty']; ?>" type="text" style="text-align: right; padding-right: 0.5em; width: 100px" />%
+			</td>
 <?php
   if (DISPLAY_PRICE_WITH_TAX_ADMIN == 'true') {
 ?>
