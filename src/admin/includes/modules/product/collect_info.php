@@ -503,10 +503,10 @@ updateGross();
 			<label><?php echo TEXT_PRODUCTS_PRICE_GROSS; ?></label><?php echo zen_draw_input_field('products_price_gross', $pInfo->products_price, 'OnKeyUp="updateNet()"'); ?>
 		</div>
 		<div>
-			<label>product_gross_rate:</label><input type="text" name="product_gross_rate" value="<?php echo $products->product_gross_rate; ?>" />%
+			<label>product_gross_rate:</label><input type="text" name="product_gross_rate" value="<?php echo $products->product_gross_rate; ?>" style="text-align: right; padding-right: 0.5em" />%
 		</div>
 		<div>
-			<label>product_gross_rate_special:</label><input type="text" name="product_gross_rate_special" value="<?php echo $products->product_gross_rate_special; ?>" />%
+			<label>product_gross_rate_special:</label><input type="text" name="product_gross_rate_special" value="<?php echo $products->product_gross_rate_special; ?>" style="text-align: right; padding-right: 0.5em" />%
 		</div>
 		<div>
 			<label><?php echo TEXT_PRODUCTS_QUANTITY; ?></label><?php echo zen_draw_input_field('products_quantity', $pInfo->products_quantity); ?>
