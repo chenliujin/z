@@ -512,7 +512,7 @@ updateGross();
 			<label><?php echo TEXT_PRODUCTS_QUANTITY; ?></label><?php echo zen_draw_input_field('products_quantity', $pInfo->products_quantity); ?>
 		</div>
 		<div>
-			<label><?php echo TEXT_PRODUCTS_WEIGHT; ?></label><?php echo zen_draw_input_field('products_weight', $pInfo->products_weight); ?>
+			<label><?php echo TEXT_PRODUCTS_WEIGHT; ?></label><?php echo zen_draw_input_field('products_weight', $pInfo->products_weight); ?>kg
 		</div>
 	</fieldset>
 
