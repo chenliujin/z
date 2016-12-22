@@ -39,7 +39,6 @@ if (isset($_POST['products_id']) && isset($_POST['categories_id'])) {
 		$product_new->products_quantity 		= 0;
 		$product_new->products_date_added 		= date('Y-m-d H:i:s');
 		$product_new->products_last_modified 	= date('Y-m-d H:i:s');
-		$product_new->products_status 			= 0;
 		$product_new->master_categories_id 		= $categories_id;
 		$product_new->products_id 				= $product_new->insert();
 
