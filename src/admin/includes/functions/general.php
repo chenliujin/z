@@ -9,7 +9,7 @@
 
 ////
 // Redirect to another page or site
-  function zen_redirect($url) {
+function zen_redirect($url) {
     global $logger;
 
 // clean up URL before executing it
@@ -3397,7 +3397,7 @@ function zen_copy_products_attributes($products_id_from, $products_id_to) {
 /**
  * check if products has quantity-discounts defined
  */
-  function zen_has_product_discounts($look_up) {
+function zen_has_product_discounts($look_up) {
     global $db;
 
     $check_discount_query = "select products_id from " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . " where products_id='" . (int)$look_up . "'";
@@ -3408,31 +3408,36 @@ function zen_copy_products_attributes($products_id_from, $products_id_to) {
     } else {
       return 'false';
     }
-  }
+}
 
 /**
- * copy quantity-discounts from one product to another
+ * @author chenliujin <liujin.chen@qq.com>
+ * @since 2016-12-12
  */
-  function zen_copy_discounts_to_product($copy_from, $copy_to) {
-    global $db;
+function zen_copy_discounts_to_product($copy_from, $copy_to) 
+{
+	include_once('z/model/products_discount_quantity.php');
 
-    $check_discount_type_query = "select products_discount_type, products_discount_type_from, products_mixed_discount_quantity from " . TABLE_PRODUCTS . " where products_id='" . (int)$copy_from . "'";
-    $check_discount_type = $db->Execute($check_discount_type_query);
-    if ($check_discount_type->EOF) return FALSE;
+	global $db;
 
-    $db->Execute("update " . TABLE_PRODUCTS . " set products_discount_type='" . $check_discount_type->fields['products_discount_type'] . "', products_discount_type_from='" . $check_discount_type->fields['products_discount_type_from'] . "', products_mixed_discount_quantity='" . $check_discount_type->fields['products_mixed_discount_quantity'] . "' where products_id='" . (int)$copy_to . "'");
+	$check_discount_type_query = "select products_discount_type, products_discount_type_from, products_mixed_discount_quantity from " . TABLE_PRODUCTS . " where products_id='" . (int)$copy_from . "'";
+	$check_discount_type = $db->Execute($check_discount_type_query);
+	if ($check_discount_type->EOF) return FALSE;
 
-    $check_discount_query = "select * from " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . " where products_id='" . (int)$copy_from . "' order by discount_id";
-    $check_discount = $db->Execute($check_discount_query);
-    $cnt_discount=1;
-    while (!$check_discount->EOF) {
-      $db->Execute("insert into " . TABLE_PRODUCTS_DISCOUNT_QUANTITY . "
-                  (discount_id, products_id, discount_qty, discount_price )
-                  values ('" . (int)$cnt_discount . "', '" . (int)$copy_to . "', '" . $check_discount->fields['discount_qty'] . "', '" . $check_discount->fields['discount_price'] . "')");
-      $cnt_discount++;
-      $check_discount->MoveNext();
-    }
-  }
+	$db->Execute("update " . TABLE_PRODUCTS . " set products_discount_type='" . $check_discount_type->fields['products_discount_type'] . "', products_discount_type_from='" . $check_discount_type->fields['products_discount_type_from'] . "', products_mixed_discount_quantity='" . $check_discount_type->fields['products_mixed_discount_quantity'] . "' where products_id='" . (int)$copy_to . "'");
+
+	$params = [
+		'products_id'	=> $copy_from
+	];
+
+	$products_discount_quantity			= \z\products_discount_quantity::GetInstance();
+	$products_discount_quantity_list	= $products_discount_quantity->findAll($params);
+
+	foreach ($products_discount_quantity_list as $products_discount_quantity) {
+		$products_discount_quantity->products_id = (int)$copy_to;
+		$products_discount_quantity->insert();
+	}
+}
 
 
 /**
