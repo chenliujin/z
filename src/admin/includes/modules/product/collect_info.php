@@ -14,7 +14,7 @@ if ($products_id) {
 } else {
 	$products = \z\products::GetInstance();
 
-	$products->product_gross_rate 	= 0.2;
+	$products->product_gross_rate 	= 50;
 	$products->parent_id 			= 0;
 }
 
