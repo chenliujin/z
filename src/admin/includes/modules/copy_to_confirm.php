@@ -1,7 +1,10 @@
 <?php
+include_once('z/model/products.php');
+
 if (!defined('IS_ADMIN_FLAG')) {
   die('Illegal Access');
 }
+
 if (isset($_POST['products_id']) && isset($_POST['categories_id'])) {
 	$products_id = zen_db_prepare_input($_POST['products_id']);
 	$categories_id = zen_db_prepare_input($_POST['categories_id']);
@@ -27,70 +30,20 @@ if (isset($_POST['products_id']) && isset($_POST['categories_id'])) {
 		}
 	} elseif ($_POST['copy_as'] == 'duplicate') {
 		$old_products_id = (int)$products_id;
-		$product = $db->Execute("select products_type, products_quantity, products_model, products_image,
-			products_price, products_virtual, products_date_available, products_weight,
-			products_tax_class_id, manufacturers_id,
-			products_quantity_order_min, products_quantity_order_units, products_priced_by_attribute,
-			product_is_free, product_is_call, products_quantity_mixed,
-			product_is_always_free_shipping, products_qty_box_status, products_quantity_order_max, products_sort_order,
-			products_price_sorter, master_categories_id
-			from " . TABLE_PRODUCTS . "
-			where products_id = '" . (int)$products_id . "'");
 
-		// fix Product copy from if Unit is 0
-		if ($product->fields['products_quantity_order_units'] == 0) {
-			$sql = "UPDATE " . TABLE_PRODUCTS . " SET products_quantity_order_units = 1 WHERE products_id = '" . (int)$products_id . "'";
-			$results = $db->Execute($sql);
-		}
-		// fix Product copy from if Minimum is 0
-		if ($product->fields['products_quantity_order_min'] == 0) {
-			$sql = "UPDATE " . TABLE_PRODUCTS . " SET products_quantity_order_min = 1 WHERE products_id = '" . (int)$products_id . "'";
-			$results = $db->Execute($sql);
-		}
+		$product = \z\products::GetInstance();
+		$product = $product->get((int)$products_id);
 
-		$tmp_value = zen_db_input($product->fields['products_quantity']);
-		$products_quantity = (!zen_not_null($tmp_value) || $tmp_value=='' || $tmp_value == 0) ? 0 : $tmp_value;
-		$tmp_value = zen_db_input($product->fields['products_price']);
-		$products_price = (!zen_not_null($tmp_value) || $tmp_value=='' || $tmp_value == 0) ? 0 : $tmp_value;
-		$tmp_value = zen_db_input($product->fields['products_weight']);
-		$products_weight = (!zen_not_null($tmp_value) || $tmp_value=='' || $tmp_value == 0) ? 0 : $tmp_value;
+		$product_new = clone $product;
+		$product_new->products_id 				= NULL;
+		$product_new->products_quantity 		= 0;
+		$product_new->products_date_added 		= date('Y-m-d H:i:s');
+		$product_new->products_last_modified 	= date('Y-m-d H:i:s');
+		$product_new->products_status 			= 0;
+		$product_new->master_categories_id 		= $categories_id;
+		$product_new->products_id 				= $product_new->insert();
 
-		$db->Execute("insert into " . TABLE_PRODUCTS . "
-			(products_type, products_quantity, products_model, products_image,
-			products_price, products_virtual, products_date_added, products_date_available,
-			products_weight, products_status, products_tax_class_id,
-			manufacturers_id,
-			products_quantity_order_min, products_quantity_order_units, products_priced_by_attribute,
-			product_is_free, product_is_call, products_quantity_mixed,
-			product_is_always_free_shipping, products_qty_box_status, products_quantity_order_max, products_sort_order,
-			products_price_sorter, master_categories_id
-		)
-		values ('" . zen_db_input($product->fields['products_type']) . "',
-			'" . $products_quantity . "',
-			'" . zen_db_input($product->fields['products_model']) . "',
-			'" . zen_db_input($product->fields['products_image']) . "',
-			'" . $products_price . "',
-			'" . zen_db_input($product->fields['products_virtual']) . "',
-			now(),
-		" . (zen_not_null(zen_db_input($product->fields['products_date_available'])) ? "'" . zen_db_input($product->fields['products_date_available']) . "'" : 'null') . ",
-		'" . $products_weight . "', '0',
-		'" . (int)$product->fields['products_tax_class_id'] . "',
-		'" . (int)$product->fields['manufacturers_id'] . "',
-		'" . zen_db_input(($product->fields['products_quantity_order_min'] == 0 ? 1 : $product->fields['products_quantity_order_min'])) . "',
-		'" . zen_db_input(($product->fields['products_quantity_order_units'] == 0 ? 1 : $product->fields['products_quantity_order_units'])) . "',
-		'" . zen_db_input($product->fields['products_priced_by_attribute']) . "',
-		'" . (int)$product->fields['product_is_free'] . "',
-		'" . (int)$product->fields['product_is_call'] . "',
-		'" . (int)$product->fields['products_quantity_mixed'] . "',
-		'" . zen_db_input($product->fields['product_is_always_free_shipping']) . "',
-		'" . zen_db_input($product->fields['products_qty_box_status']) . "',
-		'" . zen_db_input($product->fields['products_quantity_order_max']) . "',
-		'" . zen_db_input($product->fields['products_sort_order']) . "',
-		'" . zen_db_input($product->fields['products_price_sorter']) . "',
-		'" . zen_db_input($categories_id) .
-		"')");
-
-		$dup_products_id = $db->Insert_ID();
+		$dup_products_id = $product_new->products_id; 
 
 		$description = $db->Execute("select language_id, products_name, products_description,
 			products_url
